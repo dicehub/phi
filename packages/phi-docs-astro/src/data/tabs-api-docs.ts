@@ -1,0 +1,48 @@
+export const tabsApiSections = [
+  {
+    id: "tabs",
+    title: "Tabs",
+    description: "Closed tab-list component with controlled and uncontrolled selection.",
+    rows: [
+      { name: "tabs", type: "TabsItem[]", defaultValue: "[]", description: "Items rendered in the tab list. No root is rendered when this array is empty." },
+      { name: "value", type: "string", defaultValue: "-", description: "Controlled selected tab value." },
+      { name: "modelValue", type: "string", defaultValue: "-", description: "`v-model` alias for controlled selected value." },
+      { name: "selectedValue", type: "string", defaultValue: "first tab", description: "Initial selected value for uncontrolled usage." },
+      { name: "onValueChange", type: "(value: string) => void", defaultValue: "-", description: "Selection callback. Vue consumers can also use `@value-change`." },
+      { name: "activateOnFocus", type: "boolean", defaultValue: "false", description: "When `true`, arrow-key focus also activates the focused tab." },
+      { name: "variant", type: '"segmented" | "underline"', defaultValue: '"segmented"', description: "Visual variant." },
+      { name: "size", type: '"base" | "sm"', defaultValue: '"base"', description: "Tab control size." },
+      { name: "labels", type: "TabsLabels", defaultValue: "English labels", description: "Overrides accessible labels for the overflow scroll buttons." },
+      { name: "className", type: "string", defaultValue: "-", description: "Additional classes applied to the root." },
+      { name: "listClassName", type: "string", defaultValue: "-", description: "Additional classes applied to the tab list." },
+      { name: "indicatorClassName", type: "string", defaultValue: "-", description: "Additional classes applied to the active indicator." },
+      { name: "$attrs", type: "HTMLAttributes", defaultValue: "-", description: "Native attributes are forwarded to the Ark `TabsRoot` element." },
+      { name: "@value-change", type: "(value: string, details: TabsValueChangeDetails) => void", defaultValue: "-", description: "Emitted when the selected value changes." },
+      { name: "@update:value", type: "(value: string) => void", defaultValue: "-", description: "`v-model:value` update event." },
+      { name: "@update:model-value", type: "(value: string) => void", defaultValue: "-", description: "`v-model` update event." },
+    ],
+  },
+  {
+    id: "tabsitem",
+    title: "TabsItem",
+    description: "Item descriptor passed through the `tabs` prop.",
+    rows: [
+      { name: "value", type: "string", defaultValue: "required", description: "Unique value used by Ark UI for selection." },
+      { name: "label", type: "string", defaultValue: "required", description: "Visible text label for the tab." },
+      { name: "className", type: "string", defaultValue: "-", description: "Additional classes applied to this tab trigger." },
+      { name: "as", type: "string | Component", defaultValue: "-", description: "Custom element or Vue component for the trigger." },
+      { name: "href", type: "string", defaultValue: "-", description: "Shortcut for rendering an anchor tab trigger." },
+      { name: "target", type: "string", defaultValue: "-", description: "Anchor target when `href` is provided." },
+      { name: "rel", type: "string", defaultValue: "-", description: "Anchor rel attribute. Defaults to `noopener noreferrer` for `_blank` targets." },
+    ],
+  },
+  {
+    id: "tabslabels",
+    title: "TabsLabels",
+    description: "Accessible labels for horizontal overflow controls.",
+    rows: [
+      { name: "scrollStart", type: "string", defaultValue: '"Scroll tabs left"', description: "Label for the control that reveals earlier tabs." },
+      { name: "scrollEnd", type: "string", defaultValue: '"Scroll tabs right"', description: "Label for the control that reveals later tabs." },
+    ],
+  },
+] as const;

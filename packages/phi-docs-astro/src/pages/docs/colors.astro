@@ -1,0 +1,230 @@
+---
+import CodeBlock from "../../components/CodeBlock.astro";
+import ColorsDocsDemo from "../../components/ColorsDocsDemo.vue";
+import CopyPageControls from "../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
+import {
+  availableThemes,
+  colorTableSections,
+  colorTokenCount,
+  colorTokenGroups,
+  colorsGeneratorCode,
+  colorsIncorrectCode,
+  colorsModeCode,
+  colorsNewThemeCode,
+  colorsSetupCode,
+  colorsThemeCode,
+  colorsUsageCode,
+} from "../../data/colors-docs";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import "../../styles/component-docs.css";
+import "../../styles/colors-docs.css";
+import "../../styles/colors-utilities.css";
+
+const toc = [
+  { id: "usage", label: "Usage" },
+  { id: "mode", label: "Mode" },
+  {
+    id: "themes",
+    label: "Themes",
+    children: [
+      { id: "available-themes", label: "Available Themes" },
+      { id: "theme-generator", label: "Theme Generator" },
+      { id: "creating-a-new-theme", label: "Creating a New Theme" },
+    ],
+  },
+  {
+    id: "semantic-tokens",
+    label: "Semantic Tokens",
+    children: colorTableSections.map((section) => ({ id: section.id, label: section.title })),
+  },
+  { id: "token-reference", label: "Token Reference" },
+];
+---
+
+<DocsLayout title="Colors" description="Use Phi semantic Tailwind color utilities that adapt to mode and theme.">
+  <div class="docs-page docs-page--colors">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Colors</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            Phi uses semantic Tailwind color utilities that adapt to light mode, dark mode, and product themes.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article">
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>
+            Always use semantic tokens instead of raw Tailwind colors. Select a token by its role. The same class then stays correct when the mode or theme changes.
+          </p>
+
+          <h3 id="tailwind-setup"><a class="docs-section-anchor" href="#tailwind-setup">Tailwind Setup</a></h3>
+          <p>Register Phi before Tailwind in your application stylesheet.</p>
+          <CodeBlock code={colorsSetupCode} lang="css" />
+
+          <h4 id="correct"><a class="docs-section-anchor" href="#correct">Correct</a></h4>
+          <CodeBlock code={colorsUsageCode} lang="vue" />
+
+          <h4 id="incorrect"><a class="docs-section-anchor" href="#incorrect">Incorrect</a></h4>
+          <CodeBlock code={colorsIncorrectCode} lang="vue" />
+
+          <aside class="docs-colors-callout">
+            <strong>Repository enforcement</strong>
+            <p>
+              <code>pnpm lint</code> rejects raw palette utilities such as <code>bg-blue-600</code>, Tailwind <code>dark:</code> variants, and unknown Phi token names in library source.
+            </p>
+          </aside>
+        </section>
+
+        <section id="mode" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#mode">Mode</a></h2>
+          <p>
+            Set <code>data-mode</code> on a parent element. Do not add <code>dark:</code> classes. Phi defines explicit light and dark values for each semantic token.
+          </p>
+          <CodeBlock code={colorsModeCode} lang="html" />
+        </section>
+
+        <section id="themes" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#themes">Themes</a></h2>
+          <p>
+            A theme changes token values but keeps the utility names stable. Set <code>data-theme</code> on the same element as <code>data-mode</code>, or scope it to one product area.
+          </p>
+          <CodeBlock code={colorsThemeCode} lang="html" />
+
+          <h3 id="available-themes"><a class="docs-section-anchor" href="#available-themes">Available Themes</a></h3>
+          <ul class="docs-section-list">
+            {availableThemes.map((theme) => <li><code>{theme}</code> — default product-agnostic Phi theme</li>)}
+          </ul>
+
+          <h3 id="theme-generator"><a class="docs-section-anchor" href="#theme-generator">Theme Generator</a></h3>
+          <p>
+            The canonical token contract is <code>packages/phi/scripts/theme-generator/config.ts</code>. Generated CSS is checked in and package checks detect drift.
+          </p>
+          <CodeBlock code={colorsGeneratorCode} lang="bash" />
+
+          <h3 id="creating-a-new-theme"><a class="docs-section-anchor" href="#creating-a-new-theme">Creating a New Theme</a></h3>
+          <p>
+            Add the theme name to <code>AVAILABLE_THEMES</code>, then add overrides only to tokens that change. Every token without an override inherits its light and dark values from the base <code>phi</code> theme.
+          </p>
+          <CodeBlock code={colorsNewThemeCode} lang="typescript" />
+          <p>
+            Run <code>pnpm --filter @dicehub/phi codegen:themes</code>. The generator emits the scoped <code>data-theme</code> declarations and the package check detects stale output.
+          </p>
+        </section>
+
+        <section id="semantic-tokens" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#semantic-tokens">Semantic Tokens</a></h2>
+          <p>
+            Semantic names describe intent, not hue. For example, <code>bg-phi-danger</code> means a destructive indicator. It does not promise a fixed red value.
+          </p>
+
+          {colorTableSections.map((section) => (
+            <>
+              <h3 id={section.id}><a class="docs-section-anchor" href={`#${section.id}`}>{section.title}</a></h3>
+              {section.description ? <p>{section.description}</p> : null}
+              <div class="docs-api-table">
+                <table>
+                  <thead>
+                    <tr><th>Utility</th><th>Purpose</th></tr>
+                  </thead>
+                  <tbody>
+                    {section.rows.map((row) => (
+                      <tr>
+                        <td><code>{row.token}</code></td>
+                        <td>{row.purpose}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {section.id === "surface-hierarchy" ? <ColorsDocsDemo client:visible variant="surface" /> : null}
+              {section.id === "semantic-status-colors" ? (
+                <>
+                  <p class="docs-colors-role-note">
+                    Solid color tokens support <code>bg-*</code>, <code>border-*</code>, <code>ring-*</code>, <code>fill-*</code>, and <code>stroke-*</code>. Text tokens use a separate contrast-safe namespace.
+                  </p>
+                  <ColorsDocsDemo client:visible variant="status" />
+                </>
+              ) : null}
+            </>
+          ))}
+        </section>
+
+        <section id="token-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#token-reference">Token Reference</a></h2>
+          <p>
+            This reference comes directly from the generator config. Toggle the page mode to inspect the live result; each card also shows both source values.
+          </p>
+          <p class="docs-colors-token-count">Displaying {colorTokenCount} generated tokens</p>
+
+          {colorTokenGroups.map((group) => (
+            <section id={group.id} class="docs-colors-token-group" aria-labelledby={`${group.id}-heading`}>
+              <h3 id={`${group.id}-heading`}>{group.title} <span>{group.tokens.length}</span></h3>
+              <div class="docs-colors-token-grid">
+                {group.tokens.map((token) => (
+                  <div class="docs-colors-token-card" data-color-token={token.name} style={`--docs-colors-light: ${token.light}; --docs-colors-dark: ${token.dark};`}>
+                    <div class="docs-colors-token-card__header">
+                      <span class="docs-colors-token-card__namespace">{token.namespace}</span>
+                      <span class="docs-colors-token-card__description">{token.description}</span>
+                    </div>
+                    <code class="docs-colors-token-card__name">{token.name}</code>
+                    <div class="docs-colors-swatch-list">
+                      <div class="docs-colors-swatch docs-colors-swatch--light">
+                        <span class="docs-colors-swatch__chip" aria-hidden="true"></span>
+                        <span class="docs-colors-swatch__meta">
+                          <span class="docs-colors-swatch__label">Light</span>
+                          <span class="docs-colors-swatch__value">{token.light}</span>
+                        </span>
+                      </div>
+                      <div class="docs-colors-swatch docs-colors-swatch--dark">
+                        <span class="docs-colors-swatch__chip" aria-hidden="true"></span>
+                        <span class="docs-colors-swatch__meta">
+                          <span class="docs-colors-swatch__label">Dark</span>
+                          <span class="docs-colors-swatch__value">{token.dark}</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            {toc.map((item) => (
+              <li>
+                <a href={`#${item.id}`}>{item.label}</a>
+                {item.children?.length ? (
+                  <ul>{item.children.map((child) => <li><a href={`#${child.id}`}>{child.label}</a></li>)}</ul>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

@@ -1,0 +1,180 @@
+---
+import ChartCustomDocsDemo from "../../../components/ChartCustomDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import {
+  chartInstallCode,
+  chartProps,
+  customChartUsageCode,
+} from "../../../data/chart-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const chartBarrelCode = `import { Chart, type PhiChartOption } from "@dicehub/phi";`;
+const chartGranularCode = `import { Chart, type PhiChartOption } from "@dicehub/phi/components/chart";`;
+const customPreviewCode = `<Chart :echarts="echarts" :options="options" :height="400" />`;
+const customTooltipCode = `<script setup lang="ts">
+import { Chart, type PhiChartOption } from "@dicehub/phi/components/chart";
+import * as echarts from "echarts/core";
+import { PieChart } from "echarts/charts";
+import { TooltipComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+
+echarts.use([CanvasRenderer, PieChart, TooltipComponent]);
+
+const options: PhiChartOption = {
+  tooltip: {
+    trigger: "item",
+    dangerousHtmlFormatter(params) {
+      const item = params as { name?: unknown; value?: unknown; percent?: unknown };
+      const rawPercent = Number(item.percent ?? 0);
+      const percent = Number.isFinite(rawPercent) ? Math.round(rawPercent) : 0;
+      const safeName = echarts.format.encodeHTML(String(item.name ?? ""));
+      const safeValue = echarts.format.encodeHTML(String(item.value ?? ""));
+      const safePercent = echarts.format.encodeHTML(String(percent));
+
+      return \`
+        <div style="padding: 8px;">
+          <div style="font-weight: 600; margin-bottom: 4px;">\${safeName}</div>
+          <div>Value: <strong>\${safeValue}</strong></div>
+          <div style="font-size: 12px; opacity: 0.7; margin-top: 4px;">
+            \${safePercent}% of total
+          </div>
+        </div>
+      \`;
+    },
+  },
+  series: [
+    {
+      type: "pie",
+      data: [
+        { value: 101, name: "Series A" },
+        { value: 202, name: "Series B" },
+        { value: 150, name: "<img src=x onerror=alert('XSS')>" },
+        { value: 303, name: "Series C" },
+        { value: 404, name: "Series D" },
+      ],
+    },
+  ],
+};
+</script>
+
+<template>
+  <Chart :echarts="echarts" :options="options" :height="400" />
+</template>`;
+---
+
+<DocsLayout title="Custom Chart" description="Example charts using the Chart component.">
+  <div class="docs-page docs-page--component docs-page--charts">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Custom Chart</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">Example charts using the Chart component.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="custom-chart" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#custom-chart">Custom Chart</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--chart">
+              <ChartCustomDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={customPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <p>Chart requires ECharts with the renderer and chart modules registered by the consumer.</p>
+          <CodeBlock code={chartInstallCode} lang="bash" />
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={chartBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={chartGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={customChartUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+          <h3 id="custom-tooltip-with-html"><a class="docs-section-anchor" href="#custom-tooltip-with-html">Custom Tooltip with HTML</a></h3>
+          <p>
+            Use <code>dangerousHtmlFormatter</code> when a tooltip needs trusted HTML content.
+            Escape dynamic values before returning markup.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--chart">
+              <ChartCustomDocsDemo client:only="vue" variant="custom-tooltip" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={customTooltipCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {chartProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#custom-chart">Custom Chart</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#custom-tooltip-with-html">Custom Tooltip with HTML</a></li>
+              </ul>
+            </li>
+            <li><a href="#api-reference">API Reference</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

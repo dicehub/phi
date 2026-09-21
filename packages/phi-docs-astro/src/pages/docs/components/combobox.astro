@@ -1,0 +1,239 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import ComboboxDocsDemo from "../../../components/ComboboxDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import { apiGroups, subComponents } from "../../../data/combobox-api-docs";
+import {
+  barrelCode,
+  customTriggerCode,
+  disabledCode,
+  disabledItemsCode,
+  errorCode,
+  fieldCode,
+  granularCode,
+  groupedCode,
+  heightCode,
+  multipleCode,
+  placeholderCode,
+  previewCode,
+  searchableInsideCode,
+  sizesCode,
+  sizesSearchableCode,
+  usageCode,
+} from "../../../data/combobox-docs";
+import "../../../styles/component-docs.css";
+
+const examples = [
+  { id: "trigger-input-sizes", title: "Trigger Input", variant: "sizes", code: sizesCode },
+  { id: "trigger-value-sizes", title: "Trigger Value", variant: "sizes-searchable", code: sizesSearchableCode },
+  { id: "searchable-item-inside", title: "Searchable Item Inside", variant: "searchable-inside", code: searchableInsideCode },
+  { id: "searchable-select-placeholder", title: "Searchable Select with Placeholder", variant: "placeholder", code: placeholderCode },
+  { id: "custom-trigger", title: "Custom Trigger", variant: "custom-trigger", code: customTriggerCode },
+  { id: "grouped", title: "Grouped", variant: "grouped", code: groupedCode },
+  { id: "multiple", title: "Multiple", variant: "multiple", code: multipleCode },
+  { id: "with-field", title: "With Field", variant: "field", code: fieldCode },
+  { id: "disabled", title: "Disabled", variant: "disabled", code: disabledCode },
+  { id: "disabled-items", title: "Disabled Items", variant: "disabled-items", code: disabledItemsCode },
+  { id: "error-state", title: "Error State", variant: "error", code: errorCode },
+] as const;
+---
+
+<DocsLayout title="Combobox" description="A searchable select component for filtering and choosing options.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Combobox</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A searchable select component for filtering and choosing options.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--combobox docs-component-preview--open-space">
+              <ComboboxDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={barrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={granularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>
+            Standard <code>Combobox.TriggerInput</code>, <code>Combobox.TriggerValue</code>, and
+            <code>Combobox.TriggerMultipleWithInput</code> triggers show the same up/down double chevron as
+            Select. Replace it with your own control through <code>as-child</code>, or through the
+            <code>trigger</code> slot on <code>Combobox.TriggerInput</code>, when you need a custom indicator.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--combobox docs-component-preview--open-space">
+              <ComboboxDocsDemo client:only="vue" variant="usage" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={usageCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="sizes"><a class="docs-section-anchor" href="#sizes">Sizes</a></h3>
+          {examples.slice(0, 2).map((example) => (
+            <>
+              <h4 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h4>
+              <div class="docs-component-example">
+                <div class="docs-component-preview docs-component-preview--combobox">
+                  <ComboboxDocsDemo client:only="vue" variant={example.variant} />
+                </div>
+                <div class="docs-component-example__code"><CodeBlock code={example.code} lang="vue" /></div>
+              </div>
+            </>
+          ))}
+
+          {examples.slice(2).map((example) => (
+            <>
+              <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+              <div class="docs-component-example">
+                <div class="docs-component-preview docs-component-preview--combobox docs-component-preview--open-space">
+                  <ComboboxDocsDemo client:only="vue" variant={example.variant} />
+                </div>
+                <div class="docs-component-example__code"><CodeBlock code={example.code} lang="vue" /></div>
+              </div>
+            </>
+          ))}
+        </section>
+
+        <section id="customizing-dropdown-height" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#customizing-dropdown-height">Positioning and Dropdown Size</a></h2>
+          <p>
+            Pass Ark positioning options directly to <code>Combobox.Content</code>. Content values override matching
+            <code>Combobox.Root</code> positioning values. Use <code>class</code> or <code>style</code> for dimensions.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--combobox docs-component-preview--open-space">
+              <ComboboxDocsDemo client:only="vue" variant="height" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={heightCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="sub-components" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#sub-components">Sub-components</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Component</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {subComponents.map((item) => (
+                  <tr><td><code>{item.component}</code></td><td>{item.description}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          {apiGroups.map((group) => (
+            <div class="docs-api-group">
+              <h3 id={group.id}><a class="docs-section-anchor" href={`#${group.id}`}>{group.title}</a></h3>
+              <div class="docs-api-table">
+                <table>
+                  <thead>
+                    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                  </thead>
+                  <tbody>
+                    {group.props.map((prop) => (
+                      <tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#sizes">Sizes</a></li>
+                <li><a href="#searchable-item-inside">Searchable Item Inside</a></li>
+                <li><a href="#searchable-select-placeholder">Searchable Select with Placeholder</a></li>
+                <li><a href="#custom-trigger">Custom Trigger</a></li>
+                <li><a href="#grouped">Grouped</a></li>
+                <li><a href="#multiple">Multiple</a></li>
+                <li><a href="#with-field">With Field</a></li>
+                <li><a href="#disabled">Disabled</a></li>
+                <li><a href="#disabled-items">Disabled Items</a></li>
+                <li><a href="#error-state">Error State</a></li>
+              </ul>
+            </li>
+            <li><a href="#customizing-dropdown-height">Positioning and Dropdown Size</a></li>
+            <li><a href="#sub-components">Sub-components</a></li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#combobox-root-api">Combobox.Root</a></li>
+                <li><a href="#combobox-item-api">Combobox.Item</a></li>
+                <li><a href="#combobox-trigger-input-api">Combobox.TriggerInput</a></li>
+                <li><a href="#combobox-trigger-value-api">Combobox.TriggerValue</a></li>
+                <li><a href="#combobox-content-api">Combobox.Content</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

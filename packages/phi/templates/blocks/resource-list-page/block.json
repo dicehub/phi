@@ -1,0 +1,6 @@
+{
+  "name": "ResourceListPage",
+  "description": "Layout block for resource list pages with an optional sticky sidebar.",
+  "entryFile": "ResourceListPage.vue",
+  "dependencies": []
+}

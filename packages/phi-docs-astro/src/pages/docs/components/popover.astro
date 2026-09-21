@@ -1,0 +1,188 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import PopoverDocsDemo from "../../../components/PopoverDocsDemo.vue";
+import {
+  popoverApiSections,
+  popoverBarrelCode,
+  popoverComparisonRows,
+  popoverExamples,
+  popoverGranularCode,
+  popoverPreviewCode,
+  popoverUsageCode,
+} from "../../../data/popover-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+---
+
+<DocsLayout title="Popover" description="An accessible popup anchored to a trigger element, used for displaying rich content like menus, forms, or additional information.">
+  <div class="docs-page docs-page--component docs-page--popover">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Popover</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            An accessible popup anchored to a trigger element, used for displaying rich content like menus, forms, or additional information.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--popover">
+              <PopoverDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={popoverPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={popoverBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={popoverGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={popoverUsageCode} lang="vue" />
+        </section>
+
+        <section id="popover-vs-tooltip" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#popover-vs-tooltip">Popover vs Tooltip</a></h2>
+          <p>
+            While popovers can be triggered on hover (using <code>openOnHover</code>), they serve a
+            different purpose than tooltips. Understanding when to use each is important
+            for accessibility and user experience.
+          </p>
+          <div class="docs-api-table docs-api-table--comparison">
+            <table>
+              <thead>
+                <tr><th></th><th>Tooltip</th><th>Popover</th></tr>
+              </thead>
+              <tbody>
+                {popoverComparisonRows.map((row) => (
+                  <tr>
+                    <td><strong>{row[0]}</strong></td>
+                    <td>{row[0] === "ARIA Role" ? <code>{row[1]}</code> : row[1]}</td>
+                    <td>{row[0] === "ARIA Role" ? <code>{row[2]}</code> : row[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            <strong>Use a Tooltip</strong> when you need to label an icon button or
+            provide a brief explanation. <strong>Use a Popover</strong> when users need
+            to interact with the content inside, such as clicking links, filling out
+            forms, or dismissing with a button.
+          </p>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {
+            popoverExamples.map((example) => (
+              <>
+                <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+                <p>{example.description}</p>
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--popover">
+                    <PopoverDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+
+          {
+            popoverApiSections.map((section) => (
+              <>
+                <h3 id={section.id}><a class="docs-section-anchor" href={`#${section.id}`}>{section.title}</a></h3>
+                <p>{section.description}</p>
+                <div class="docs-api-table">
+                  <table>
+                    <thead>
+                      <tr><th>Prop / Event</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                      {section.rows.map((prop) => (
+                        <tr>
+                          <td><code>{prop.name}</code></td>
+                          <td><code>{prop.type}</code></td>
+                          <td><code>{prop.defaultValue}</code></td>
+                          <td>{prop.description}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ))
+          }
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#popover-vs-tooltip">Popover vs Tooltip</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {popoverExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                {popoverApiSections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

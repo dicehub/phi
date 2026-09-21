@@ -1,0 +1,163 @@
+---
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import GridDocsDemo from "../../../components/GridDocsDemo.vue";
+import {
+  gridApiGroups,
+  gridBarrelCode,
+  gridExamples,
+  gridGranularCode,
+  gridPreviewCode,
+  gridVariantRows,
+} from "../../../data/grid-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+---
+
+<DocsLayout title="Grid" description="A responsive grid layout component for organizing content into columns.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Grid</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A responsive grid layout component for organizing content into columns.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--grid">
+              <GridDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={gridPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={gridBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={gridGranularCode} lang="typescript" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          {
+            gridExamples.map((example) => (
+              <>
+                <h2 id={example.id}>
+                  <a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a>
+                </h2>
+                <p>{example.description}</p>
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--grid">
+                    <GridDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </section>
+
+        <section id="all-variants" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#all-variants">All Variants</a></h2>
+          <p>Reference for all available grid variants:</p>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Variant</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {gridVariantRows.map((row) => (
+                  <tr>
+                    <td><code>{row.variant}</code></td>
+                    <td>{row.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+
+          {
+            gridApiGroups.map((group) => (
+              <section id={group.id} class="docs-api-group">
+                <h3><a class="docs-section-anchor" href={`#${group.id}`}>{group.title}</a></h3>
+                <p>{group.description}</p>
+                <div class="docs-api-table">
+                  <table>
+                    <thead>
+                      <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                      {group.props.map((prop) => (
+                        <tr>
+                          <td><code>{prop.name}</code></td>
+                          <td><code>{prop.type}</code></td>
+                          <td><code>{prop.defaultValue}</code></td>
+                          <td>{prop.description}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            ))
+          }
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            {gridExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+            <li><a href="#all-variants">All Variants</a></li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                {gridApiGroups.map((group) => <li><a href={`#${group.id}`}>{group.title}</a></li>)}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

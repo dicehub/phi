@@ -1,0 +1,237 @@
+.phi-input-field {
+  --phi-input-danger: #dc2626;
+  --phi-input-danger-focus: rgba(220, 38, 38, 0.5);
+
+  display: grid;
+  width: max-content;
+  max-width: 100%;
+  gap: 0.5rem;
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-input-label {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  user-select: none;
+}
+
+.phi-input-label__content {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.phi-input-label__optional {
+  color: var(--phi-subtle, #6c7480);
+  font-weight: 400;
+}
+
+.phi-input-label__tooltip {
+  --phi-input-tooltip-bg: var(--phi-base, #ffffff);
+  --phi-input-tooltip-border: var(--phi-line, #e3e6eb);
+  --phi-input-tooltip-color: var(--phi-default, #17191f);
+  --phi-input-tooltip-shadow: 0 10px 15px -3px rgba(16, 24, 40, 0.12), 0 4px 6px -4px rgba(16, 24, 40, 0.1);
+
+  position: relative;
+  display: inline-flex;
+  width: 0.875rem;
+  height: 0.875rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.125rem;
+  color: var(--phi-subtle, #6c7480);
+  cursor: pointer;
+}
+
+.phi-input-label__tooltip svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.phi-input-label__tooltip::before {
+  position: absolute;
+  bottom: calc(100% + 0.3125rem);
+  left: 50%;
+  z-index: 21;
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--phi-input-tooltip-bg);
+  box-shadow: 1px 1px 0 0 var(--phi-input-tooltip-border);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) rotate(45deg) scale(0.9);
+  transform-origin: center;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    visibility 150ms ease;
+  transition-delay: 0ms;
+  visibility: hidden;
+}
+
+.phi-input-label__tooltip::after {
+  position: absolute;
+  bottom: calc(100% + 0.625rem);
+  left: 50%;
+  z-index: 20;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(16rem, calc(100vw - 2rem));
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  background: var(--phi-input-tooltip-bg);
+  box-shadow:
+    0 0 0 1px var(--phi-input-tooltip-border),
+    var(--phi-input-tooltip-shadow);
+  color: var(--phi-input-tooltip-color);
+  content: attr(data-tooltip);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.2;
+  opacity: 0;
+  overflow-wrap: break-word;
+  pointer-events: none;
+  text-align: left;
+  transform: translateX(-50%) scale(0.9);
+  transform-origin: center bottom;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    visibility 150ms ease;
+  transition-delay: 0ms;
+  visibility: hidden;
+  white-space: normal;
+}
+
+.phi-input-label__tooltip:hover::before,
+.phi-input-label__tooltip:focus-visible::before,
+.phi-input-label__tooltip:hover::after,
+.phi-input-label__tooltip:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  transition-delay: 600ms;
+  visibility: visible;
+}
+
+.phi-input-label__tooltip:hover::before,
+.phi-input-label__tooltip:focus-visible::before {
+  transform: translateX(-50%) rotate(45deg) scale(1);
+}
+
+.phi-input-label__tooltip:hover,
+.phi-input-label__tooltip:focus-visible {
+  background: var(--phi-tint, #f4f6f9);
+  color: var(--phi-default, #17191f);
+  outline: none;
+}
+
+.phi-input {
+  --phi-input-danger: #dc2626;
+  --phi-input-danger-focus: rgba(220, 38, 38, 0.5);
+
+  box-sizing: border-box;
+  min-width: 0;
+  border: 0;
+  background: var(--phi-control, #ffffff);
+  box-shadow: 0 0 0 1px var(--phi-line, rgba(20, 20, 20, 0.1));
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  outline: none;
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease;
+}
+
+.phi-input::placeholder {
+  color: var(--phi-muted, #9aa2ae);
+}
+
+.phi-input--xs {
+  height: 1.25rem;
+  padding: 0 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-input--sm {
+  height: 1.625rem;
+  padding: 0 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-input--base {
+  height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.phi-input--lg {
+  height: 2.5rem;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.phi-input:focus {
+  box-shadow: 0 0 0 1.5px var(--phi-focus-soft, rgba(76, 99, 255, 0.5));
+}
+
+.phi-input--error,
+.phi-input-field[data-invalid] .phi-input {
+  box-shadow: 0 0 0 1px var(--phi-input-danger);
+}
+
+.phi-input--error:focus,
+.phi-input-field[data-invalid] .phi-input:focus {
+  box-shadow: 0 0 0 1.5px var(--phi-input-danger-focus);
+}
+
+.phi-input:disabled {
+  color: var(--phi-muted, #9aa2ae);
+  cursor: not-allowed;
+}
+
+.phi-input:disabled::placeholder {
+  color: var(--phi-muted, #9aa2ae);
+}
+
+.phi-input:read-only:not(:disabled) {
+  cursor: default;
+}
+
+.phi-input-field > .phi-input-error,
+.phi-input-field > .phi-input-description {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.375;
+}
+
+.phi-input-field > .phi-input-error {
+  color: var(--phi-input-danger);
+}
+
+.phi-input-field > .phi-input-description {
+  color: var(--phi-subtle, #6c7480);
+}

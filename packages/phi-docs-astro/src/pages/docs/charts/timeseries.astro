@@ -1,0 +1,330 @@
+---
+import ChartTimeseriesDocsDemo from "../../../components/ChartTimeseriesDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import { timeseriesProps } from "../../../data/chart-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const examples = [
+  {
+    id: "basic-line-chart",
+    title: "Basic Line Chart",
+    description: "A simple line chart displaying multiple data series over time.",
+    variant: "basic",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Count"
+/>`,
+  },
+  {
+    id: "reference-markers",
+    title: "Reference Markers",
+    description: "Use markers to render vertical reference lines at specific timestamps. Marker details close when the pointer leaves the chart, including after a browser context-menu interaction.",
+    variant: "reference-markers",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :markers="markers"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Count"
+/>`,
+  },
+  {
+    id: "thresholds",
+    title: "Thresholds",
+    description: "Use thresholds to render horizontal reference lines on the value axis, such as limits or quota boundaries.",
+    variant: "thresholds",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :thresholds="thresholds"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Memory (MB)"
+/>`,
+  },
+  {
+    id: "custom-timestamp-and-value-formats",
+    title: "Custom Timestamp and Value Formats",
+    description:
+      "Use xAxisTickFormat for axis labels and tooltipTimestampFormat for tooltip timestamps. Both receive the raw timestamp in milliseconds, so one time zone applies across the chart. Without a formatter, tooltips use the browser locale and time zone.",
+    variant: "custom-axis",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :x-axis-tick-format="formatTime"
+  :y-axis-tick-format="formatCompact"
+  :tooltip-value-format="formatRequests"
+  :tooltip-timestamp-format="formatTooltipTimestamp"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Requests"
+/>`,
+  },
+  {
+    id: "y-axis-min-interval",
+    title: "Discrete Y-Axis Ticks",
+    description:
+      "Set yAxisMinInterval to 1 for count data so the value axis stops drawing fractional tick marks.",
+    variant: "y-axis-min-interval",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :y-axis-min-interval="1"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Active jobs"
+/>`,
+  },
+  {
+    id: "gradient-fill",
+    title: "Gradient Fill",
+    description: "Set gradient to render a vertical fill beneath each line series.",
+    variant: "gradient",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  gradient
+  x-axis-name="Time (UTC)"
+  y-axis-name="Count"
+/>`,
+  },
+  {
+    id: "incomplete-data",
+    title: "Incomplete Data",
+    description: "Use incomplete before or after timestamps to draw dashed edge ranges.",
+    variant: "incomplete",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :incomplete="{ after: incompleteTimestamp }"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Mbps"
+/>`,
+  },
+  {
+    id: "time-range-selection",
+    title: "Time Range Selection",
+    description: "Provide onTimeRangeChange to let users drag across the chart and select a time range.",
+    variant: "time-range",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :on-time-range-change="handleTimeRangeChange"
+  x-axis-name="Time (UTC)"
+  y-axis-name="%"
+/>`,
+  },
+  {
+    id: "tooltip-cursor-tracking",
+    title: "Tooltip Cursor Tracking",
+    description: "Use tooltipFollowCursor to choose free cursor tracking or an x-axis locked tooltip.",
+    variant: "tooltip-cursor",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :tooltip-follow-cursor="followCursor"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Latency (ms)"
+/>`,
+  },
+  {
+    id: "tooltip-boundary",
+    title: "Tooltip Boundary",
+    description: "Pass a boundary element to keep the tooltip inside a constrained chart panel.",
+    variant: "tooltip-boundary",
+    code: `<div ref="boundaryElement">
+  <TimeseriesChart
+    :echarts="echarts"
+    :data="data"
+    :tooltip-boundary="boundaryElement ?? undefined"
+  />
+</div>`,
+  },
+  {
+    id: "tooltip-footer",
+    title: "Tooltip Footer",
+    description:
+      "tooltipFooter adds brief supporting text below the values in standard series tooltips and marker tooltips. An empty string adds no space.",
+    variant: "tooltip-footer",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :markers="markers"
+  tooltip-footer='Percentiles use a "five-minute" rolling window.'
+  x-axis-name="Time (UTC)"
+  y-axis-name="Count"
+/>`,
+  },
+  {
+    id: "tooltip-footer-empty",
+    title: "Empty Tooltip Footer",
+    description: "An empty tooltipFooter adds no space, so both tooltip kinds keep their default layout.",
+    variant: "tooltip-footer-empty",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  :markers="markers"
+  tooltip-footer=""
+  x-axis-name="Time (UTC)"
+  y-axis-name="Count"
+/>`,
+  },
+  {
+    id: "bar-chart",
+    title: "Bar Chart",
+    description: "Set type to bar to render stacked time-series bars.",
+    variant: "bar",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="data"
+  type="bar"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Count"
+/>`,
+  },
+  {
+    id: "legend-highlight",
+    title: "Legend Highlight",
+    description: "Hovering a legend item highlights the matching series and fades the remaining legend items.",
+    variant: "legend-highlight",
+    code: `<ChartLegend.LargeItem
+  name="P99"
+  :color="color"
+  value="124"
+  unit="ms"
+  @pointerenter="chart?.dispatchAction({ type: 'highlight', seriesName: 'P99' })"
+  @pointerleave="chart?.dispatchAction({ type: 'downplay', seriesName: 'P99' })"
+/>`,
+  },
+  {
+    id: "legend-click",
+    title: "Legend Click",
+    description: "Clicking a legend item isolates that series. Clicking the isolated series restores all series.",
+    variant: "legend-click",
+    code: `<ChartLegend.LargeItem
+  name="P99"
+  :color="color"
+  value="124"
+  unit="ms"
+  @click="toggleSeries('P99')"
+/>
+
+<TimeseriesChart
+  ref="chart"
+  :echarts="echarts"
+  :data="data"
+  enable-legend-selection
+/>`,
+  },
+  {
+    id: "loading-line",
+    title: "Loading State · Line",
+    description: "Set loading to show a calm area-shaped skeleton while line data resolves.",
+    variant: "loading-line",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="[]"
+  loading
+  x-axis-name="Time (UTC)"
+  y-axis-name="Count"
+/>`,
+  },
+  {
+    id: "loading-bar",
+    title: "Loading State · Bar",
+    description: "The skeleton follows type=\"bar\" with the same harmonic silhouette and subtle shimmer.",
+    variant: "loading-bar",
+    code: `<TimeseriesChart
+  :echarts="echarts"
+  :data="[]"
+  loading
+  type="bar"
+  x-axis-name="Time (UTC)"
+  y-axis-name="Count"
+/>`,
+  },
+] as const;
+---
+
+<DocsLayout title="Timeseries Chart" description="A specialized chart for displaying time-based data.">
+  <div class="docs-page docs-page--component docs-page--charts">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Timeseries Chart</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">A specialized chart for displaying time-based data.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="overview" class="docs-section">
+          <p>Each data point is a tuple of <code>[timestamp_in_ms, value]</code>.</p>
+          <p>Axis names, tick labels, and horizontal gridlines automatically use muted, mode-aware chart colors.</p>
+        </section>
+
+        {examples.map((example) => (
+          <section id={example.id} class="docs-section docs-section--component-examples">
+            <h2><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h2>
+            <p>{example.description}</p>
+            <div class="docs-component-example">
+              <div class="docs-component-preview docs-component-preview--chart">
+                <ChartTimeseriesDocsDemo client:only="vue" variant={example.variant} />
+              </div>
+              <div class="docs-component-example__code">
+                <CodeBlock code={example.code} lang="vue" />
+              </div>
+            </div>
+          </section>
+        ))}
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {timeseriesProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            {examples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+            <li><a href="#api-reference">API Reference</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

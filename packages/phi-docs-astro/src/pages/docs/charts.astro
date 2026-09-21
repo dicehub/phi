@@ -1,0 +1,151 @@
+---
+import ChartDocsDemo from "../../components/ChartDocsDemo.vue";
+import CodeBlock from "../../components/CodeBlock.astro";
+import CopyPageControls from "../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
+import {
+  chartBarrelCode,
+  chartGranularCode,
+  chartInstallCode,
+  chartProps,
+  chartRegisterCode,
+} from "../../data/chart-docs";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+import "../../styles/component-docs.css";
+---
+
+<DocsLayout title="Charts" description="Chart components and utilities built on Apache ECharts.">
+  <div class="docs-page docs-page--component docs-page--charts">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Charts</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">Chart components and utilities built on Apache ECharts.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <p>Charts require ECharts. Consumers register only the ECharts modules they use.</p>
+          <CodeBlock code={chartInstallCode} lang="bash" />
+          <CodeBlock code={chartRegisterCode} lang="typescript" />
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={chartBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={chartGranularCode} lang="typescript" />
+        </section>
+
+        <section id="available-charts" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#available-charts">Available Charts</a></h2>
+          <div class="docs-chart-card-grid">
+            <a class="docs-chart-card" href="/docs/charts/timeseries">
+              <div class="docs-chart-card__content">
+                <strong>Timeseries Chart</strong>
+                <span>A specialized chart for displaying time-based data.</span>
+              </div>
+              <div class="docs-chart-card__preview">
+                <ChartDocsDemo client:only="vue" variant="overview-timeseries" />
+              </div>
+            </a>
+            <a class="docs-chart-card" href="/docs/charts/custom">
+              <div class="docs-chart-card__content">
+                <strong>Custom Chart</strong>
+                <span>Low-level access for custom ECharts options.</span>
+              </div>
+              <div class="docs-chart-card__preview">
+                <ChartDocsDemo client:only="vue" variant="overview-pie" />
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section id="color-system" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#color-system">Color System</a></h2>
+          <p>Use semantic colors for stateful data, categorical colors for series, and sequential colors for density.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--chart">
+              <ChartDocsDemo client:only="vue" variant="colors" />
+            </div>
+          </div>
+        </section>
+
+        <section id="legend" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#legend">Legend</a></h2>
+          <p>Use chart legend items to display series names, values, units, inactive states, and loading placeholders.</p>
+
+          <h3 id="largeitem"><a class="docs-section-anchor" href="#largeitem">LargeItem</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--chart">
+              <ChartDocsDemo client:only="vue" variant="legend-large" />
+            </div>
+          </div>
+
+          <h3 id="smallitem"><a class="docs-section-anchor" href="#smallitem">SmallItem</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--chart">
+              <ChartDocsDemo client:only="vue" variant="legend-small" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {chartProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#available-charts">Available Charts</a></li>
+            <li><a href="#color-system">Color System</a></li>
+            <li>
+              <a href="#legend">Legend</a>
+              <ul>
+                <li><a href="#largeitem">LargeItem</a></li>
+                <li><a href="#smallitem">SmallItem</a></li>
+              </ul>
+            </li>
+            <li><a href="#api-reference">API Reference</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

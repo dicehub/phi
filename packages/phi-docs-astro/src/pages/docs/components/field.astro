@@ -1,0 +1,172 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import FieldDocsDemo from "../../../components/FieldDocsDemo.vue";
+import {
+  fieldBarrelCode,
+  fieldErrorTypes,
+  fieldExamples,
+  fieldGranularCode,
+  fieldPreviewCode,
+  fieldProps,
+  fieldSlots,
+} from "../../../data/field-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+---
+
+<DocsLayout title="Field" description="A form field wrapper that composes a label, control, helper text, and error text.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Field</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A form field wrapper that composes a label, control, helper text, and error text.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--input">
+              <FieldDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={fieldPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={fieldBarrelCode} lang="typescript" />
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={fieldGranularCode} lang="typescript" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+          {
+            fieldExamples.map((example) => (
+              <>
+                <h3 id={example.id}>
+                  <a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a>
+                </h3>
+                <p>{example.description}</p>
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--input">
+                    <FieldDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+
+          <h3 id="props"><a class="docs-section-anchor" href="#props">Props</a></h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {fieldProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="slots"><a class="docs-section-anchor" href="#slots">Slots</a></h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Slot</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {fieldSlots.map((slot) => (
+                  <tr>
+                    <td><code>{slot.name}</code></td>
+                    <td>{slot.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="validation-error-types">
+            <a class="docs-section-anchor" href="#validation-error-types">Validation Error Types</a>
+          </h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Match</th></tr>
+              </thead>
+              <tbody>
+                {fieldErrorTypes.map((type) => (
+                  <tr><td><code>{type}</code></td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {fieldExamples.map((example) => (
+                  <li><a href={`#${example.id}`}>{example.title}</a></li>
+                ))}
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#props">Props</a></li>
+                <li><a href="#slots">Slots</a></li>
+                <li><a href="#validation-error-types">Validation Error Types</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

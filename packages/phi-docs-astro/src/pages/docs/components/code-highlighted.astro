@@ -1,0 +1,428 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CodeHighlightedDocsDemo from "../../../components/CodeHighlightedDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const installationCode = `import { ShikiProvider, CodeHighlighted } from "@dicehub/phi/code";`;
+
+const basicUsageCode = `<script setup>
+import { ShikiProvider, CodeHighlighted } from "@dicehub/phi/code";
+</script>
+
+<template>
+  <ShikiProvider engine="javascript" :languages="['typescript', 'bash', 'json']">
+    <CodeHighlighted code="const x = 1;" lang="typescript" />
+  </ShikiProvider>
+</template>`;
+
+const previewCode = `<script setup>
+import { ShikiProvider, CodeHighlighted } from "@dicehub/phi/code";
+</script>
+
+<template>
+  <ShikiProvider engine="javascript" :languages="['typescript']">
+    <CodeHighlighted
+      code="const greeting = 'Hello, World!';\\nconsole.log(greeting);"
+      lang="typescript"
+    />
+  </ShikiProvider>
+</template>`;
+
+const typescriptCode = `<CodeHighlighted
+  :code="source"
+  lang="typescript"
+/>`;
+
+const vueCode = `<CodeHighlighted
+  :code="source"
+  lang="html"
+/>`;
+
+const bashCode = `<CodeHighlighted code="pnpm add @dicehub/phi" lang="bash" />`;
+
+const jsonCode = `<CodeHighlighted :code="packageJson" lang="json" />`;
+
+const cssCode = `<CodeHighlighted :code="css" lang="css" />`;
+
+const highlightLinesCode = `<CodeHighlighted
+  :code="source"
+  lang="typescript"
+  :highlight-lines="[5, 6]"
+/>`;
+
+const lineNumbersCode = `<CodeHighlighted
+  :code="source"
+  lang="typescript"
+  show-line-numbers
+/>`;
+
+const copyButtonCode = `<CodeHighlighted
+  code="pnpm add @dicehub/phi"
+  lang="bash"
+  show-copy-button
+/>`;
+
+const fullFeaturedCode = `<CodeHighlighted
+  :code="source"
+  lang="html"
+  show-copy-button
+  :highlight-lines="[5, 6, 7, 8, 9]"
+/>`;
+
+const plainCode = `<CodeHighlighted
+  :code="source"
+  lang="html"
+  show-copy-button
+  :highlight-lines="[5, 6, 7, 8, 9]"
+  variant="plain"
+/>`;
+
+const sharedProviderCode = `<ShikiProvider engine="javascript" :languages="['typescript', 'bash', 'json']">
+  <CodeHighlighted code="const config = { theme: 'dark' };" lang="typescript" />
+  <CodeHighlighted code="pnpm run build" lang="bash" />
+  <CodeHighlighted code='{ "success": true }' lang="json" />
+</ShikiProvider>`;
+
+const serverCode = `import { highlightCode } from "@dicehub/phi/code/server";
+
+const html = await highlightCode("const x = 1;", "typescript");`;
+
+const reusableServerCode = `import { createServerHighlighter } from "@dicehub/phi/code/server";
+
+const highlighter = await createServerHighlighter({
+  languages: ["typescript", "bash", "json"],
+});
+
+const first = highlighter.highlight(source, "typescript");
+const second = highlighter.highlight(command, "bash");
+
+highlighter.dispose();`;
+
+const composableCode = `<script setup>
+import { useShikiHighlighter } from "@dicehub/phi/code";
+
+const { highlight, isLoading, isReady, error } = useShikiHighlighter();
+</script>`;
+
+const i18nCode = `<script setup>
+import { ShikiProvider, CodeHighlighted } from "@dicehub/phi/code";
+</script>
+
+<template>
+  <ShikiProvider
+    engine="javascript"
+    :languages="['typescript', 'bash']"
+    :labels="{ copy: 'Copier', copied: 'Copié !' }"
+  >
+    <CodeHighlighted
+      code="const status = 'ready';"
+      lang="typescript"
+      show-copy-button
+    />
+    <CodeHighlighted
+      code="pnpm add @dicehub/phi"
+      lang="bash"
+      show-copy-button
+      :labels="{ copy: 'Befehl kopieren', copied: 'Befehl kopiert' }"
+    />
+  </ShikiProvider>
+</template>`;
+
+const frameworkCode = `<script setup>
+import { ShikiProvider } from "@dicehub/phi/code";
+</script>
+
+<template>
+  <ShikiProvider engine="javascript" :languages="['typescript', 'bash', 'json']">
+    <RouterView />
+  </ShikiProvider>
+</template>`;
+
+const astroStaticCode = `---
+import { highlightCode } from "@dicehub/phi/code/server";
+
+const html = await highlightCode(Astro.props.code, Astro.props.lang);
+---
+
+<div class="code-block" set:html={html} />`;
+
+const plainCodeMigrationCode = `<script setup>
+import { CodeBlock } from "@dicehub/phi/components/code";
+import { ShikiProvider, CodeHighlighted } from "@dicehub/phi/code";
+</script>
+
+<template>
+  <!-- Plain monospace code, no syntax highlighting -->
+  <CodeBlock code="const x = 1;" lang="ts" />
+
+  <!-- Highlighted code -->
+  <ShikiProvider engine="javascript" :languages="['typescript']">
+    <CodeHighlighted code="const x = 1;" lang="typescript" />
+  </ShikiProvider>
+</template>`;
+
+const providerProps = [
+  { name: "engine", type: '"javascript" | "wasm"', required: "No", description: "Highlighting engine. Defaults to javascript." },
+  { name: "languages", type: "string[]", required: "Yes", description: "Languages to load. Aliases such as ts, js, sh, and py are normalized." },
+  { name: "labels", type: "{ copy?: string; copied?: string }", required: "No", description: "Localized labels for copy controls." },
+];
+
+const componentProps = [
+  { name: "code", type: "string", required: "Yes", description: "Source code to display." },
+  { name: "lang", type: "string", required: "Yes", description: "Language identifier. It must be present in the provider languages list." },
+  { name: "showLineNumbers", type: "boolean", required: "No", description: "Displays a line-number gutter." },
+  { name: "highlightLines", type: "number[]", required: "No", description: "One-indexed lines to emphasize." },
+  { name: "showCopyButton", type: "boolean", required: "No", description: "Adds a copy-to-clipboard button." },
+  { name: "labels", type: "{ copy?: string; copied?: string }", required: "No", description: "Overrides provider labels for this instance." },
+  { name: "variant", type: '"default" | "plain"', required: "No", description: "Plain removes the frame, background, radius, and code padding, and keeps highlighted lines inside the content width." },
+];
+
+const composableReturns = [
+  { name: "highlight", type: "(code, lang) => string | null", description: "Returns highlighted HTML, or null when unavailable." },
+  { name: "isLoading", type: "Ref<boolean>", description: "True while Shiki is loading." },
+  { name: "isReady", type: "ComputedRef<boolean>", description: "True when highlight() is safe to call." },
+  { name: "error", type: "ShallowRef<Error | null>", description: "Error if Shiki initialization failed." },
+  { name: "labels", type: "ComputedRef<Required<CodeHighlightedLabels>>", description: "Resolved copy button labels." },
+];
+---
+
+<DocsLayout title="CodeHighlighted" description="Shiki-powered syntax highlighting with VS Code-quality highlighting, theming, and lazy loading.">
+  <div class="docs-page docs-page--component docs-page--code-highlighted">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>CodeHighlighted</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            Shiki-powered syntax highlighting with VS Code-quality highlighting, theming, and lazy loading.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--code-highlighted">
+              <CodeHighlightedDocsDemo client:load />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="overview" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#overview">Overview</a></h2>
+          <p>
+            CodeHighlighted uses Shiki for TextMate grammar highlighting. It lives in
+            <code>@dicehub/phi/code</code> so apps that do not render code blocks avoid the Shiki bundle.
+          </p>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <p>Import CodeHighlighted from the code entrypoint, not from the main package.</p>
+          <CodeBlock code={installationCode} lang="typescript" />
+          <div class="docs-code-highlighted-callout docs-code-highlighted-callout--warning">
+            <p>
+              <strong>Important:</strong> Do not import CodeHighlighted from the main
+              <code>@dicehub/phi</code> entrypoint. Use <code>@dicehub/phi/code</code>
+              so apps without code blocks do not download Shiki.
+            </p>
+          </div>
+        </section>
+
+        <section id="basic-usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#basic-usage">Basic Usage</a></h2>
+          <p>
+            Wrap your app with ShikiProvider once. Nested CodeHighlighted instances share the same Shiki instance,
+            and equivalent language arrays reuse it across parent rerenders.
+          </p>
+          <CodeBlock code={basicUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="languages"><a class="docs-section-anchor" href="#languages">Languages</a></h3>
+          <h4 id="typescript"><a class="docs-section-anchor" href="#typescript">TypeScript</a></h4>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="typescript" /></div><div class="docs-component-example__code"><CodeBlock code={typescriptCode} lang="vue" /></div></div>
+
+          <h4 id="vue"><a class="docs-section-anchor" href="#vue">Vue</a></h4>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="vue" /></div><div class="docs-component-example__code"><CodeBlock code={vueCode} lang="vue" /></div></div>
+
+          <h4 id="bash"><a class="docs-section-anchor" href="#bash">Bash / Shell</a></h4>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="bash" /></div><div class="docs-component-example__code"><CodeBlock code={bashCode} lang="vue" /></div></div>
+
+          <h4 id="json"><a class="docs-section-anchor" href="#json">JSON</a></h4>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="json" /></div><div class="docs-component-example__code"><CodeBlock code={jsonCode} lang="vue" /></div></div>
+
+          <h4 id="css"><a class="docs-section-anchor" href="#css">CSS</a></h4>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="css" /></div><div class="docs-component-example__code"><CodeBlock code={cssCode} lang="vue" /></div></div>
+
+          <h3 id="highlight-lines"><a class="docs-section-anchor" href="#highlight-lines">Highlight Lines</a></h3>
+          <p>Emphasize specific lines with <code>highlightLines</code>.</p>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="highlight-lines" /></div><div class="docs-component-example__code"><CodeBlock code={highlightLinesCode} lang="vue" /></div></div>
+
+          <h3 id="custom-highlight-color"><a class="docs-section-anchor" href="#custom-highlight-color">Custom Highlight Color</a></h3>
+          <p>Override <code>--phi-code-highlight-bg</code> when a local highlight color is needed.</p>
+          <CodeHighlightedDocsDemo client:visible variant="custom-highlight" />
+
+          <h3 id="line-numbers"><a class="docs-section-anchor" href="#line-numbers">Line Numbers</a></h3>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="line-numbers" /></div><div class="docs-component-example__code"><CodeBlock code={lineNumbersCode} lang="vue" /></div></div>
+
+          <h3 id="copy-button"><a class="docs-section-anchor" href="#copy-button">Copy Button</a></h3>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="copy-button" /></div><div class="docs-component-example__code"><CodeBlock code={copyButtonCode} lang="vue" /></div></div>
+
+          <h3 id="full-featured"><a class="docs-section-anchor" href="#full-featured">Full Featured</a></h3>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="full-featured" /></div><div class="docs-component-example__code"><CodeBlock code={fullFeaturedCode} lang="vue" /></div></div>
+
+          <h3 id="plain"><a class="docs-section-anchor" href="#plain">Plain</a></h3>
+          <p>Use <code>variant="plain"</code> when the code sits inside another surface and must not draw its own frame.</p>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="plain" /></div><div class="docs-component-example__code"><CodeBlock code={plainCode} lang="vue" /></div></div>
+
+          <h3 id="shared-provider"><a class="docs-section-anchor" href="#shared-provider">Shared Provider</a></h3>
+          <p>Multiple code blocks can share the same provider and highlighter instance.</p>
+          <div class="docs-component-example"><div class="docs-component-preview docs-component-preview--code-highlighted"><CodeHighlightedDocsDemo client:visible variant="shared-provider" /></div><div class="docs-component-example__code"><CodeBlock code={sharedProviderCode} lang="vue" /></div></div>
+        </section>
+
+        <section id="themes" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#themes">Themes</a></h2>
+          <p>CodeHighlighted uses hardcoded themes for consistent styling across Phi applications.</p>
+          <ul>
+            <li><strong>Light mode:</strong> <code>github-light</code></li>
+            <li><strong>Dark mode:</strong> <code>vesper</code></li>
+          </ul>
+          <p>Theme customization is intentionally not part of the public API.</p>
+        </section>
+
+        <section id="server-side-usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#server-side-usage">Server-Side Usage</a></h2>
+          <p>Use the server utilities in SSR or static rendering when you want highlighted HTML without client-side Shiki.</p>
+          <h3 id="one-off-highlighting"><a class="docs-section-anchor" href="#one-off-highlighting">One-off Highlighting</a></h3>
+          <CodeBlock code={serverCode} lang="typescript" />
+          <h3 id="reusable-highlighter"><a class="docs-section-anchor" href="#reusable-highlighter">Reusable Highlighter</a></h3>
+          <CodeBlock code={reusableServerCode} lang="typescript" />
+        </section>
+
+        <section id="custom-composable" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#custom-composable">Custom Composable</a></h2>
+          <p>Use <code>useShikiHighlighter</code> for custom renderers inside a provider.</p>
+          <CodeBlock code={composableCode} lang="vue" />
+        </section>
+
+        <section id="internationalization" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#internationalization">Internationalization</a></h2>
+          <p>
+            CodeHighlighted only owns the copy button text. Set translated labels on ShikiProvider,
+            or override them on one CodeHighlighted instance for another locale.
+          </p>
+          <CodeBlock code={i18nCode} lang="vue" />
+        </section>
+
+        <section id="framework-integration" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#framework-integration">Framework Integration</a></h2>
+          <h3 id="vue-router"><a class="docs-section-anchor" href="#vue-router">Vue Router</a></h3>
+          <CodeBlock code={frameworkCode} lang="vue" />
+          <h3 id="astro-static"><a class="docs-section-anchor" href="#astro-static">Astro Static</a></h3>
+          <p>For static sites, server-side highlighting avoids client JavaScript for code blocks.</p>
+          <CodeBlock code={astroStaticCode} lang="astro" />
+        </section>
+
+        <section id="plain-code" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#plain-code">Plain Code</a></h2>
+          <p>
+            <code>Code</code> and <code>CodeBlock</code> render lightweight monospace snippets from
+            <code>@dicehub/phi/components/code</code>. Use CodeHighlighted when you need syntax highlighting.
+          </p>
+          <CodeBlock code={plainCodeMigrationCode} lang="vue" />
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-group">
+            <h3 id="shiki-provider-api"><a class="docs-section-anchor" href="#shiki-provider-api">ShikiProvider</a></h3>
+            <div class="docs-api-table"><table><thead><tr><th>Prop</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody>{providerProps.map((prop) => (<tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td>{prop.required}</td><td>{prop.description}</td></tr>))}</tbody></table></div>
+          </div>
+          <div class="docs-api-group">
+            <h3 id="code-highlighted-api"><a class="docs-section-anchor" href="#code-highlighted-api">CodeHighlighted</a></h3>
+            <div class="docs-api-table"><table><thead><tr><th>Prop</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody>{componentProps.map((prop) => (<tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td>{prop.required}</td><td>{prop.description}</td></tr>))}</tbody></table></div>
+          </div>
+          <div class="docs-api-group">
+            <h3 id="use-shiki-highlighter-api"><a class="docs-section-anchor" href="#use-shiki-highlighter-api">useShikiHighlighter</a></h3>
+            <div class="docs-api-table"><table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody>{composableReturns.map((item) => (<tr><td><code>{item.name}</code></td><td><code>{item.type}</code></td><td>{item.description}</td></tr>))}</tbody></table></div>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#basic-usage">Basic Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#languages">Languages</a></li>
+                <li><a href="#highlight-lines">Highlight Lines</a></li>
+                <li><a href="#custom-highlight-color">Custom Highlight Color</a></li>
+                <li><a href="#line-numbers">Line Numbers</a></li>
+                <li><a href="#copy-button">Copy Button</a></li>
+                <li><a href="#full-featured">Full Featured</a></li>
+                <li><a href="#plain">Plain</a></li>
+                <li><a href="#shared-provider">Shared Provider</a></li>
+              </ul>
+            </li>
+            <li><a href="#themes">Themes</a></li>
+            <li>
+              <a href="#server-side-usage">Server-Side Usage</a>
+              <ul>
+                <li><a href="#one-off-highlighting">One-off Highlighting</a></li>
+                <li><a href="#reusable-highlighter">Reusable Highlighter</a></li>
+              </ul>
+            </li>
+            <li><a href="#custom-composable">Custom Composable</a></li>
+            <li><a href="#internationalization">Internationalization</a></li>
+            <li>
+              <a href="#framework-integration">Framework Integration</a>
+              <ul>
+                <li><a href="#vue-router">Vue Router</a></li>
+                <li><a href="#astro-static">Astro Static</a></li>
+              </ul>
+            </li>
+            <li><a href="#plain-code">Plain Code</a></li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#shiki-provider-api">ShikiProvider</a></li>
+                <li><a href="#code-highlighted-api">CodeHighlighted</a></li>
+                <li><a href="#use-shiki-highlighter-api">useShikiHighlighter</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

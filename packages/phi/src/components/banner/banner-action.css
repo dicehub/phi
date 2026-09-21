@@ -1,0 +1,28 @@
+.phi-banner-action {
+  --phi-banner-action-accent: var(--phi-banner-accent, var(--phi-info, #175cd3));
+}
+
+.phi-button.phi-banner-action--primary {
+  --phi-accent-contrast: var(--phi-banner-action-contrast, #ffffff);
+  --phi-button-emphasis-ring: color-mix(in oklch, var(--phi-banner-action-accent), black 10%);
+  --phi-button-emphasis-bg: color-mix(in oklch, var(--phi-banner-action-accent), white 30%);
+  --phi-button-emphasis-gradient-start: color-mix(in oklch, var(--phi-banner-action-accent), white 15%);
+  --phi-button-emphasis-gradient-end: var(--phi-banner-action-accent);
+}
+
+.phi-button.phi-banner-action--secondary {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--phi-banner-action-accent) 50%, transparent);
+  color: inherit;
+}
+
+.phi-button.phi-banner-action--secondary:hover:not(:disabled),
+.phi-button.phi-banner-action--ghost:hover:not(:disabled) {
+  background: color-mix(in oklch, var(--phi-banner-action-accent) 10%, transparent);
+  color: inherit;
+}
+
+.phi-button.phi-banner-action--ghost {
+  background: transparent;
+  color: inherit;
+}

@@ -1,0 +1,224 @@
+---
+import ChartSankeyDocsDemo from "../../../components/ChartSankeyDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import {
+  chartInstallCode,
+  sankeyProps,
+  sankeyUsageCode,
+} from "../../../data/chart-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const examples = [
+  {
+    id: "basic-sankey",
+    title: "Basic Sankey",
+    description: "A simple Sankey diagram showing flow between source and target nodes.",
+    variant: "basic",
+    code: `<SankeyChart :echarts="echarts" :nodes="nodes" :links="links" :height="350" />`,
+  },
+  {
+    id: "multi-level-flow",
+    title: "Multi-Level Flow",
+    description: "Sankey diagrams can show multiple levels of flow through intermediate nodes.",
+    variant: "multi-level",
+    code: `<SankeyChart
+  :echarts="echarts"
+  :nodes="nodes"
+  :links="links"
+  :height="350"
+  :node-width="20"
+  :node-padding="15"
+/>`,
+  },
+  {
+    id: "full-width-layout",
+    title: "Full-Width Layout",
+    description: "Use left and right to control horizontal padding inside the chart.",
+    variant: "full-width",
+    code: `<SankeyChart
+  :echarts="echarts"
+  :nodes="nodes"
+  :links="links"
+  :height="350"
+  :left="0"
+  :right="0"
+/>`,
+  },
+  {
+    id: "rich-tooltips",
+    title: "Rich Tooltips",
+    description: "Use tooltipFormatter for full control over tooltip content.",
+    variant: "rich-tooltip",
+    code: `<SankeyChart
+  :echarts="echarts"
+  :nodes="nodes"
+  :links="links"
+  :tooltip-formatter="formatTooltip"
+/>`,
+  },
+  {
+    id: "interactive",
+    title: "Interactive",
+    description: "Use node and link click handlers to drive selection.",
+    variant: "interactive",
+    code: `<SankeyChart
+  :echarts="echarts"
+  :nodes="nodes"
+  :links="links"
+  @node-click="handleNodeClick"
+  @link-click="handleLinkClick"
+/>`,
+  },
+  {
+    id: "drill-down-filtering",
+    title: "Drill-Down Filtering",
+    description: "Click a node or link to filter the chart and expose a focused flow view.",
+    variant: "drill-down",
+    code: `<SankeyChart
+  :echarts="echarts"
+  :nodes="filteredNodes"
+  :links="filteredLinks"
+  @node-click="handleNodeClick"
+  @link-click="handleLinkClick"
+/>`,
+  },
+  {
+    id: "inline-label-layout",
+    title: "Inline Label Layout",
+    description: "Use inline labels when stacked labels would overlap.",
+    variant: "inline-label",
+    code: `<SankeyChart
+  :echarts="echarts"
+  :nodes="nodes"
+  :links="links"
+  node-label-layout="inline"
+/>`,
+  },
+] as const;
+
+const sankeyBarrelCode = `import { SankeyChart, ChartPalette, type SankeyTooltipParams } from "@dicehub/phi";`;
+const sankeyGranularCode = `import { SankeyChart, ChartPalette, type SankeyTooltipParams } from "@dicehub/phi/components/chart";`;
+const sankeyPreviewCode = `<SankeyChart
+  :echarts="echarts"
+  :nodes="nodes"
+  :links="links"
+  :height="350"
+/>`;
+---
+
+<DocsLayout title="Sankey Chart" description="A Sankey diagram component for visualizing flow data between nodes.">
+  <div class="docs-page docs-page--component docs-page--charts">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Sankey Chart</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">A Sankey diagram component for visualizing flow data between nodes.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <p>A simple Sankey diagram showing flow between source and target nodes.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--chart">
+              <ChartSankeyDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={sankeyPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <p>SankeyChart requires ECharts with the Sankey chart module registered.</p>
+          <CodeBlock code={chartInstallCode} lang="bash" />
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={sankeyBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={sankeyGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={sankeyUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+          {examples.map((example) => (
+            <>
+              <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+              <p>{example.description}</p>
+              <div class="docs-component-example">
+                <div class="docs-component-preview docs-component-preview--chart">
+                  <ChartSankeyDocsDemo client:only="vue" variant={example.variant} />
+                </div>
+                <div class="docs-component-example__code">
+                  <CodeBlock code={example.code} lang="vue" />
+                </div>
+              </div>
+            </>
+          ))}
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {sankeyProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {examples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+              </ul>
+            </li>
+            <li><a href="#api-reference">API Reference</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

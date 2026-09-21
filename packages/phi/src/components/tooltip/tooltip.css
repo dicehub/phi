@@ -1,0 +1,104 @@
+.phi-tooltip-trigger {
+  display: inline-flex;
+  width: max-content;
+  height: auto;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.phi-tooltip-trigger:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-tooltip-positioner {
+  z-index: 1000 !important;
+  max-width: var(--available-width, calc(100vw - 2rem));
+}
+
+.phi-tooltip-content {
+  display: flex;
+  max-width: min(24rem, calc(100vw - 2rem));
+  flex-direction: column;
+  opacity: 1;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  background: var(--phi-base, #ffffff);
+  box-shadow:
+    0 4px 6px -1px var(--color-phi-shadow-drop, rgba(16, 24, 40, 0.1)),
+    0 2px 4px -2px var(--color-phi-shadow-drop, rgba(16, 24, 40, 0.1));
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.8125rem;
+  line-height: 0.95625rem;
+  outline: 1px solid var(--phi-line, #e3e6eb);
+  overflow-wrap: anywhere;
+  scale: 1;
+  transform-origin: var(--transform-origin);
+  transition:
+    transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    scale 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@starting-style {
+  .phi-tooltip-content[data-state="open"] {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+.phi-tooltip-content[data-state="closed"] {
+  opacity: 0;
+  scale: 0.9;
+}
+
+.phi-tooltip-arrow {
+  --arrow-size: 1.25rem;
+
+  display: flex;
+  color: var(--phi-base, #ffffff);
+}
+
+.phi-tooltip-arrow__svg {
+  display: block;
+}
+
+.phi-tooltip-arrow[style*="bottom:"] .phi-tooltip-arrow__svg {
+  transform: translateY(2px);
+}
+
+.phi-tooltip-arrow[style*="top: calc"] .phi-tooltip-arrow__svg {
+  transform: rotate(180deg) translateY(-8px);
+}
+
+.phi-tooltip-arrow[style*="right: calc"] .phi-tooltip-arrow__svg {
+  transform: rotate(-90deg) translateY(-3px);
+}
+
+.phi-tooltip-arrow[style*="left: calc"] .phi-tooltip-arrow__svg {
+  transform: rotate(90deg) translateY(-3px);
+}
+
+.phi-tooltip-arrow__fill {
+  fill: var(--phi-base, #ffffff);
+}
+
+.phi-tooltip-arrow__edge {
+  fill: var(--phi-arrow-edge, rgba(16, 24, 40, 0.1));
+}
+
+.phi-tooltip-arrow__stroke {
+  fill: var(--phi-arrow-stroke, var(--phi-line, #e3e6eb));
+}

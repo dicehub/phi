@@ -1,0 +1,16 @@
+.phi-sidebar.phi-sidebar--mobile.phi-sidebar--mobile-full-screen {
+  width: 100%;
+  border-inline: 0;
+}
+
+.phi-sidebar-close {
+  flex: 0 0 auto;
+}
+
+.phi-sidebar-close .phi-button__label svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.5;
+}

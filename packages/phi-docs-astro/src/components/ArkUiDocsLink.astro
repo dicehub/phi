@@ -1,0 +1,51 @@
+---
+const ARK_UI_COMPONENTS_BY_PATH: Record<string, string> = {
+  "/docs/components/autocomplete": "combobox",
+  "/docs/components/checkbox": "checkbox",
+  "/docs/components/collapsible": "collapsible",
+  "/docs/components/combobox": "combobox",
+  "/docs/components/command-palette": "combobox",
+  "/docs/components/date-picker": "date-picker",
+  "/docs/components/dialog": "dialog",
+  "/docs/components/dropdown": "menu",
+  "/docs/components/input": "field",
+  "/docs/components/input-area": "field",
+  "/docs/components/input-group": "field",
+  "/docs/components/label": "field",
+  "/docs/components/menu-bar": "menu",
+  "/docs/components/popover": "popover",
+  "/docs/components/radio": "radio-group",
+  "/docs/components/select": "select",
+  "/docs/components/sensitive-input": "field",
+  "/docs/components/switch": "switch",
+  "/docs/components/tabs": "tabs",
+};
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, "");
+const arkUiComponent = ARK_UI_COMPONENTS_BY_PATH[currentPath];
+const arkUiUrl = arkUiComponent ? `https://ark-ui.com/docs/components/${arkUiComponent}` : null;
+const className = Astro.props.className ?? "docs-page-header__primitive-link";
+const size = Astro.props.size ?? 28;
+---
+
+{
+  arkUiUrl && (
+    <a
+      href={arkUiUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class={className}
+      title="View Ark UI documentation"
+      aria-label="View Ark UI documentation"
+    >
+      <svg width={size} height={size} viewBox="0 0 28 28" fill="none" aria-label="Ark UI">
+        <path
+          fill="currentColor"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M14 2.25 25 8.42v12.16L14 26.75 3 20.58V8.42l11-6.17Zm0 3.12L5.75 10v9l8.25 4.63L22.25 19v-9L14 5.37Zm-2.1 11.55h4.2l.78 2.23h2.42L15.18 7.9h-2.36L8.7 19.15h2.42l.78-2.23Zm.68-1.98L14 10.68l1.42 4.26h-2.84Z"
+        />
+      </svg>
+    </a>
+  )
+}

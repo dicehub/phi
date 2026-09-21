@@ -1,0 +1,201 @@
+---
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import FlowDocsDemo from "../../../components/FlowDocsDemo.vue";
+import {
+  flowApiGroups,
+  flowBarrelCode,
+  flowExamples,
+  flowGranularCode,
+  flowOtherExamples,
+  flowPreviewCode,
+  flowUsageCode,
+} from "../../../data/flow-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+---
+
+<DocsLayout title="Flow" description="A group of components for building directed flow diagrams with nodes and connectors.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Flow</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A group of components for building directed flow diagrams with nodes and connectors.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--flow">
+              <FlowDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={flowPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={flowBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={flowGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>
+            The Flow components work together to create directed diagrams. Use <code>Flow</code> as the container,
+            <code>Flow.Node</code> for individual steps, and <code>Flow.Parallel</code> to create branching paths.
+          </p>
+          <CodeBlock code={flowUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {
+            flowExamples.map((example) => (
+              <>
+                <h3 id={example.id}>
+                  <a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a>
+                </h3>
+                {"description" in example && example.description && <p>{example.description}</p>}
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--flow">
+                    <FlowDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+                {"secondaryVariant" in example && example.secondaryVariant && (
+                  <>
+                    {"secondaryDescription" in example && example.secondaryDescription && <p>{example.secondaryDescription}</p>}
+                    <div class="docs-component-example">
+                      <div class="docs-component-preview docs-component-preview--flow">
+                        <FlowDocsDemo client:only="vue" variant={example.secondaryVariant} />
+                      </div>
+                      <div class="docs-component-example__code">
+                        <CodeBlock code={example.secondaryCode} lang="vue" />
+                      </div>
+                    </div>
+                  </>
+                )}
+              </>
+            ))
+          }
+        </section>
+
+        <section id="other-examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#other-examples">Other Examples</a></h2>
+
+          {
+            flowOtherExamples.map((example) => (
+              <>
+                <h3 id={example.id}>
+                  <a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a>
+                </h3>
+                {"description" in example && example.description && <p>{example.description}</p>}
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--flow">
+                    <FlowDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </section>
+
+        <section id="components" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#components">Components</a></h2>
+
+          {
+            flowApiGroups.map((group) => (
+              <section id={group.id} class="docs-api-group">
+                <h3><a class="docs-section-anchor" href={`#${group.id}`}>{group.title}</a></h3>
+                <p>{group.description}</p>
+                <div class="docs-api-table">
+                  <table>
+                    <thead>
+                      <tr><th>Prop</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                      {group.props.map((prop) => (
+                        <tr>
+                          <td><code>{prop.name}</code></td>
+                          <td><code>{prop.type}</code></td>
+                          <td>{prop.description}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            ))
+          }
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {flowExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+              </ul>
+            </li>
+            <li>
+              <a href="#other-examples">Other Examples</a>
+              <ul>
+                {flowOtherExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+              </ul>
+            </li>
+            <li>
+              <a href="#components">Components</a>
+              <ul>
+                {flowApiGroups.map((group) => <li><a href={`#${group.id}`}>{group.title}</a></li>)}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

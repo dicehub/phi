@@ -1,0 +1,199 @@
+.phi-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--phi-dialog-backdrop-z-index, 1200);
+  background: color-mix(in srgb, var(--phi-tint, #f4f6f9) 82%, transparent);
+  backdrop-filter: blur(1px);
+  pointer-events: auto;
+}
+
+.phi-dialog-positioner {
+  --phi-dialog-viewport-spacing: 3rem;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--phi-dialog-z-index, 1201);
+  box-sizing: border-box;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  padding: 2rem 1rem 1rem;
+  overflow-y: auto;
+  pointer-events: none;
+}
+
+.phi-dialog-content {
+  --phi-dialog-duration: 150ms;
+  --phi-dialog-easing: var(--phi-transition-easing, cubic-bezier(0.4, 0, 0.2, 1));
+  --phi-dialog-width: 24rem;
+
+  width: calc(100vw - 2rem);
+  min-width: 0;
+  max-width: min(var(--phi-dialog-max-width, calc(100vw - 2rem)), calc(100vw - 2rem));
+  max-height: calc(100vh - var(--phi-dialog-viewport-spacing, 3rem));
+  max-height: calc(100dvh - var(--phi-dialog-viewport-spacing, 3rem));
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: var(--phi-control, #ffffff);
+  color: var(--phi-default, #17191f);
+  pointer-events: auto;
+  box-shadow:
+    0 0 0 1px var(--phi-line, rgba(0, 0, 0, 0.06)),
+    var(--phi-dialog-shadow, 0 20px 25px -5px rgba(16, 24, 40, 0.06), 0 8px 10px -6px rgba(16, 24, 40, 0.05));
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  outline: none;
+}
+
+.phi-dialog-content--sm {
+  --phi-dialog-width: 18rem;
+}
+
+.phi-dialog-content--base {
+  --phi-dialog-width: 24rem;
+}
+
+.phi-dialog-content--lg {
+  --phi-dialog-width: 32rem;
+}
+
+.phi-dialog-content--xl {
+  --phi-dialog-width: 48rem;
+}
+
+.phi-dialog-title {
+  margin: 0;
+  color: var(--phi-strong, #111318);
+  font-size: 1.25rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  line-height: 1.2;
+}
+
+.phi-dialog-description {
+  margin: 0;
+  color: var(--phi-subtle, #6c7480);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.phi-dialog-close,
+.phi-dialog-close-trigger {
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-dialog-close {
+  display: inline-flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--phi-control, #ffffff);
+  box-shadow:
+    inset 0 0 0 1px var(--phi-line, #e3e6eb),
+    var(--phi-shadow, 0 1px 2px rgba(16, 24, 40, 0.05));
+  color: var(--phi-subtle, #6c7480);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.phi-dialog-close:hover {
+  background: var(--phi-tint, #f4f6f9);
+  color: var(--phi-default, #17191f);
+}
+
+.phi-dialog-close:focus-visible,
+.phi-dialog-close-trigger:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-dialog-close__icon {
+  position: relative;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.phi-dialog-close__icon::before,
+.phi-dialog-close__icon::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.6875rem;
+  height: 1.25px;
+  border-radius: 999px;
+  background: currentColor;
+  content: "";
+}
+
+.phi-dialog-close__icon::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.phi-dialog-close__icon::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+@media (min-width: 640px) {
+  .phi-dialog-positioner {
+    --phi-dialog-viewport-spacing: 5rem;
+
+    padding-top: 4rem;
+  }
+
+  .phi-dialog-content {
+    width: min(var(--phi-dialog-width), calc(100vw - 2rem));
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .phi-dialog-backdrop[data-state="open"] {
+    animation: phi-dialog-backdrop-in var(--phi-dialog-duration, 150ms) var(--phi-dialog-easing, ease);
+  }
+
+  .phi-dialog-backdrop[data-state="closed"] {
+    animation: phi-dialog-backdrop-out var(--phi-dialog-duration, 150ms) var(--phi-dialog-easing, ease);
+  }
+
+  .phi-dialog-content[data-state="open"] {
+    animation: phi-dialog-content-in var(--phi-dialog-duration, 150ms) var(--phi-dialog-easing, ease);
+  }
+
+  .phi-dialog-content[data-state="closed"] {
+    animation: phi-dialog-content-out var(--phi-dialog-duration, 150ms) var(--phi-dialog-easing, ease);
+  }
+}
+
+@keyframes phi-dialog-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes phi-dialog-backdrop-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes phi-dialog-content-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes phi-dialog-content-out {
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}

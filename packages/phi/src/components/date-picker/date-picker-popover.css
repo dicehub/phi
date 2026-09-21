@@ -1,0 +1,99 @@
+.phi-date-picker-positioner {
+  --z-index: 1000;
+  z-index: 1000;
+}
+
+.phi-date-picker-content {
+  position: relative;
+  width: max-content;
+  max-width: min(100vw - 2rem, 42rem);
+  padding: 0.75rem;
+  border: 1px solid var(--phi-line, #e3e6eb);
+  border-radius: 0.625rem;
+  background: var(--phi-control, #ffffff);
+  box-shadow: var(
+    --phi-popover-shadow,
+    0 10px 15px -3px rgba(16, 24, 40, 0.08),
+    0 4px 6px -4px rgba(16, 24, 40, 0.08)
+  );
+  color: var(--phi-default, #17191f);
+  outline: none;
+}
+
+.phi-date-picker-content[hidden] {
+  display: none !important;
+}
+
+.phi-date-picker-content::before {
+  position: absolute;
+  top: -0.3125rem;
+  left: 50%;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 1px solid var(--phi-line, #e3e6eb);
+  border-left: 1px solid var(--phi-line, #e3e6eb);
+  background: inherit;
+  content: "";
+  pointer-events: none;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.phi-date-picker-content[data-placement^="top"]::before {
+  top: auto;
+  bottom: -0.3125rem;
+  border-top: 0;
+  border-right: 1px solid var(--phi-line, #e3e6eb);
+  border-bottom: 1px solid var(--phi-line, #e3e6eb);
+  border-left: 0;
+}
+
+.phi-date-picker-content[data-placement^="left"]::before {
+  top: 50%;
+  right: -0.3125rem;
+  left: auto;
+  border-top: 1px solid var(--phi-line, #e3e6eb);
+  border-right: 1px solid var(--phi-line, #e3e6eb);
+  border-left: 0;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.phi-date-picker-content[data-placement^="right"]::before {
+  top: 50%;
+  left: -0.3125rem;
+  border-top: 0;
+  border-bottom: 1px solid var(--phi-line, #e3e6eb);
+  border-left: 1px solid var(--phi-line, #e3e6eb);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.phi-date-picker-content[data-state="open"] {
+  animation: phi-date-picker-in 120ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phi-date-picker-content[data-state="closed"] {
+  animation: phi-date-picker-out 90ms ease-in;
+}
+
+@keyframes phi-date-picker-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes phi-date-picker-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-0.2rem) scale(0.98);
+  }
+}

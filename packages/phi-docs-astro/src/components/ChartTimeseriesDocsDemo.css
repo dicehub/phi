@@ -1,0 +1,89 @@
+.chart-timeseries-demo {
+  width: 100%;
+  min-width: 0;
+}
+
+.chart-timeseries-demo__stack,
+.chart-timeseries-demo__panel {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+}
+
+.chart-timeseries-demo__segmented {
+  display: inline-flex;
+  width: fit-content;
+  overflow: hidden;
+  border: 1px solid var(--docs-border);
+  border-radius: 0.5rem;
+  background: var(--docs-surface);
+}
+
+.chart-timeseries-demo__segmented button {
+  min-width: 7rem;
+  border: 0;
+  border-right: 1px solid var(--docs-border);
+  background: transparent;
+  color: var(--docs-subtle);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.625rem 0.875rem;
+}
+
+.chart-timeseries-demo__segmented button:last-child {
+  border-right: 0;
+}
+
+.chart-timeseries-demo__segmented button[data-active="true"] {
+  background: var(--docs-text);
+  color: var(--docs-bg);
+}
+
+.chart-timeseries-demo__selection {
+  margin: 0;
+  color: var(--docs-subtle);
+  font-size: 0.8125rem;
+}
+
+.chart-timeseries-demo__boundary {
+  height: 300px;
+  overflow: auto;
+  border: 1px solid var(--docs-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.chart-timeseries-demo__legend-row {
+  display: flex;
+  flex-wrap: wrap;
+  padding-inline: 0.5rem;
+}
+
+.chart-timeseries-demo__legend-cell {
+  min-width: min(10.5rem, 50%);
+  padding-inline: 1rem;
+}
+
+.chart-timeseries-demo__legend-cell + .chart-timeseries-demo__legend-cell {
+  border-left: 1px solid var(--docs-border);
+}
+
+@media (max-width: 640px) {
+  .chart-timeseries-demo__segmented,
+  .chart-timeseries-demo__segmented button {
+    width: 100%;
+  }
+
+  .chart-timeseries-demo__legend-cell {
+    min-width: 100%;
+    padding-inline: 0;
+  }
+
+  .chart-timeseries-demo__legend-cell + .chart-timeseries-demo__legend-cell {
+    border-left: 0;
+    border-top: 1px solid var(--docs-border);
+  }
+}

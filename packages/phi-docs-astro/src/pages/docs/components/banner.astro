@@ -1,0 +1,550 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import BannerDocsDemo from "../../../components/BannerDocsDemo.vue";
+import Callout from "../../../components/Callout.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+const importCode = `import { Banner } from "@dicehub/phi";
+// or use the component entrypoint:
+// import { Banner } from "@dicehub/phi/components/banner";`;
+
+const previewCode = `<script setup>
+import { PhInfo, PhWarning, PhWarningCircle } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <div class="w-full space-y-3">
+    <Banner
+      :icon="PhInfo"
+      :icon-props="{ weight: 'fill' }"
+      title="Update available"
+      description="A new version is ready to install."
+    />
+    <Banner
+      :icon="PhWarning"
+      :icon-props="{ weight: 'fill' }"
+      variant="alert"
+      title="Session expiring"
+      description="Your session will expire in 5 minutes."
+    />
+    <Banner
+      :icon="PhWarningCircle"
+      :icon-props="{ weight: 'fill' }"
+      variant="error"
+      title="Save failed"
+      description="We couldn't save your changes. Please try again."
+    />
+    <Banner
+      :icon="PhInfo"
+      :icon-props="{ weight: 'fill' }"
+      variant="secondary"
+      title="Maintenance scheduled"
+      description="This service will be unavailable for 10 minutes."
+    />
+  </div>
+</template>`;
+
+const usageCode = `<script setup>
+import { PhInfo } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    :icon="PhInfo"
+    :icon-props="{ weight: 'fill' }"
+    title="Update available"
+    description="A new version is ready to install."
+  />
+</template>`;
+
+const defaultCode = `<script setup>
+import { PhInfo } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    :icon="PhInfo"
+    :icon-props="{ weight: 'fill' }"
+    title="Update available"
+    description="A new version is ready to install."
+  />
+</template>`;
+
+const alertCode = `<script setup>
+import { PhWarning } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    :icon="PhWarning"
+    :icon-props="{ weight: 'fill' }"
+    variant="alert"
+    title="Session expiring"
+    description="Your session will expire in 5 minutes."
+  />
+</template>`;
+
+const errorCode = `<script setup>
+import { PhWarningCircle } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    :icon="PhWarningCircle"
+    :icon-props="{ weight: 'fill' }"
+    variant="error"
+    title="Save failed"
+    description="We couldn't save your changes. Please try again."
+  />
+</template>`;
+
+const secondaryCode = `<script setup>
+import { PhInfo } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    :icon="PhInfo"
+    :icon-props="{ weight: 'fill' }"
+    variant="secondary"
+    title="Maintenance scheduled"
+    description="This service will be unavailable for 10 minutes."
+  />
+</template>`;
+
+const iconCode = `<script setup>
+import { PhWarning } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    :icon="PhWarning"
+    :icon-props="{ weight: 'fill' }"
+    variant="alert"
+    title="Review required"
+    description="Please review your billing information before proceeding."
+  />
+</template>`;
+
+const actionCode = `<script setup>
+import { PhInfo, PhWarningCircle, PhX } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <div class="w-full space-y-3">
+    <Banner
+      :icon="PhInfo"
+      :icon-props="{ weight: 'fill' }"
+      title="Update available"
+      description="A new version is ready to install."
+    >
+      <template #action>
+        <Banner.Action>Update now</Banner.Action>
+        <Banner.Action variant="ghost" :icon="PhX" aria-label="Dismiss update" />
+      </template>
+    </Banner>
+    <Banner
+      :icon="PhWarningCircle"
+      :icon-props="{ weight: 'fill' }"
+      variant="error"
+      title="Save failed"
+      description="We couldn't save your changes. Please try again."
+    >
+      <template #action>
+        <Banner.Action>Retry</Banner.Action>
+        <Banner.Action variant="ghost" :icon="PhX" aria-label="Dismiss error" />
+      </template>
+    </Banner>
+    <Banner
+      :icon="PhInfo"
+      :icon-props="{ weight: 'fill' }"
+      variant="secondary"
+      title="Maintenance scheduled"
+      description="This service will be unavailable for 10 minutes."
+    >
+      <template #action>
+        <Banner.Action>Got it</Banner.Action>
+        <Banner.Action variant="ghost" :icon="PhX" aria-label="Dismiss notice" />
+      </template>
+    </Banner>
+  </div>
+</template>`;
+
+const multipleActionsCode = `<script setup>
+import { PhWarning } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    :icon="PhWarning"
+    :icon-props="{ weight: 'fill' }"
+    variant="alert"
+    title="Session expiring"
+    description="Your session will expire in 5 minutes."
+  >
+    <template #action>
+      <Banner.Action variant="secondary">Dismiss</Banner.Action>
+      <Banner.Action>Extend session</Banner.Action>
+    </template>
+  </Banner>
+</template>`;
+
+const compactInlineLinkCode = `<script setup>
+import { Banner } from "@dicehub/phi/components/banner";
+import { Link } from "@dicehub/phi/components/link";
+</script>
+
+<template>
+  <Banner
+    size="sm"
+    description="A DNS record for puppies.example.com already exists in this zone."
+  >
+    <template #action>
+      <Link href="/dns/records">Manage DNS for puppies.example.com</Link>
+    </template>
+  </Banner>
+</template>`;
+
+const compactCtaCode = `<script setup>
+import { PhX } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    size="sm"
+    description="A DNS record for puppies.example.com already exists in this zone."
+  >
+    <template #action>
+      <Banner.Action>Manage DNS</Banner.Action>
+      <Banner.Action variant="ghost" :icon="PhX" aria-label="Dismiss compact banner" />
+    </template>
+  </Banner>
+</template>`;
+
+const compactWithoutActionCode = `<script setup>
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    size="sm"
+    description="A DNS record for puppies.example.com already exists in this zone."
+  />
+</template>`;
+
+const customContentCode = `<script setup>
+import { PhInfo } from "@phosphor-icons/vue";
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner
+    :icon="PhInfo"
+    :icon-props="{ weight: 'fill' }"
+    title="Custom content supported"
+  >
+    <template #description>
+      This banner supports <strong>custom content</strong> in the description slot.
+    </template>
+  </Banner>
+</template>`;
+
+const props = [
+  { name: "variant", type: '"default" | "alert" | "error" | "secondary"', defaultValue: '"default"', description: "Sets the visual style and action accent of the banner." },
+  { name: "size", type: '"base" | "sm"', defaultValue: '"base"', description: "Sets banner density. Compact banners render a single Link action inline and Banner.Action at the xs button size." },
+  { name: "icon", type: "Component", defaultValue: "-", description: "Vue component rendered before the banner content." },
+  { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the icon component." },
+  { name: "title", type: "string", defaultValue: "-", description: "Primary heading text for structured banners." },
+  { name: "description", type: "string", defaultValue: "-", description: "Secondary description text below the title." },
+  { name: "text", type: "string", defaultValue: "-", description: "Simple fallback text when no structured title or description is passed." },
+];
+
+const slots = [
+  { name: "default", description: "Simple banner content used when title and description are omitted." },
+  { name: "icon", description: "Custom leading icon markup. Prefer the icon prop for standard icon components." },
+  { name: "description", description: "Custom description content for structured banners." },
+  { name: "action", description: "Action slot. A single Link renders inline in compact banners; Banner.Action remains trailing." },
+];
+
+const actionProps = [
+  { name: "variant", type: '"primary" | "secondary" | "ghost"', defaultValue: '"primary"', description: "Sets the CTA treatment while retaining the parent banner accent." },
+  { name: "icon", type: "Component", defaultValue: "-", description: "Optional icon component. Icon-only actions should include an aria-label." },
+  { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the icon component." },
+  { name: "disabled", type: "boolean", defaultValue: "false", description: "Disables the underlying button." },
+  { name: "loading", type: "boolean", defaultValue: "false", description: "Shows the button loading state and disables interaction." },
+  { name: "type", type: '"button" | "submit" | "reset"', defaultValue: '"button"', description: "Native button type." },
+];
+---
+
+<DocsLayout title="Banner" description="Displays contextual inline messages with optional accent-aware actions.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Banner</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            Displays contextual inline messages with optional accent-aware actions.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#preview">Preview</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="import" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#import">Import</a></h2>
+          <p>Use the root package while prototyping, or the component entrypoint for granular imports.</p>
+          <CodeBlock code={importCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={usageCode} lang="vue" />
+          <Callout>
+            <p>Use <code>title</code> and <code>description</code> for structured, translatable copy. Place <code>Banner.Action</code> inside the action slot so CTAs inherit the banner accent and density.</p>
+          </Callout>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3>Variants</h3>
+          <h4>Default</h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="default" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={defaultCode} lang="vue" />
+            </div>
+          </div>
+
+          <h4>Alert</h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="alert" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={alertCode} lang="vue" />
+            </div>
+          </div>
+
+          <h4>Error</h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="error" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={errorCode} lang="vue" />
+            </div>
+          </div>
+
+          <h4>Secondary</h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="secondary" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={secondaryCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3>With Icon</h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="icon" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={iconCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3>With Action</h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="action" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={actionCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3>With Multiple Actions</h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="actions" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={multipleActionsCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3>Compact Size</h3>
+          <p>Use <code>size="sm"</code> in dialogs and other constrained layouts. Prefer a Phi <code>Link</code> for supporting actions; a single link renders inline with the description. Use <code>Banner.Action</code> when the action needs more emphasis.</p>
+
+          <h4>With Inline Link</h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="compact" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={compactInlineLinkCode} lang="vue" />
+            </div>
+          </div>
+
+          <h4>With CTA</h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="compact-cta" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={compactCtaCode} lang="vue" />
+            </div>
+          </div>
+
+          <h4>Without Action</h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="compact-none" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={compactWithoutActionCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3>Custom Content</h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="custom" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={customContentCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api">API</a></h2>
+          <h3>Banner</h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Banner.Action</h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {actionProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <h3>Slots</h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Slot</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {slots.map((slot) => (
+                  <tr>
+                    <td><code>{slot.name}</code></td>
+                    <td>{slot.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#preview">Preview</a></li>
+            <li><a href="#import">Import</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#api">API</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

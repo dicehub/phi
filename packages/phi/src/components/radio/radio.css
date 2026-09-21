@@ -1,0 +1,249 @@
+.phi-radio-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-radio-group__legend {
+  padding: 0;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.phi-radio-group__items {
+  display: flex;
+  min-width: 0;
+  margin-top: 1rem;
+}
+
+.phi-radio-group--vertical .phi-radio-group__items {
+  flex-direction: column;
+}
+
+.phi-radio-group--horizontal .phi-radio-group__items {
+  flex-flow: row wrap;
+}
+
+.phi-radio-group--default.phi-radio-group--vertical .phi-radio-group__items {
+  gap: 0.5rem;
+}
+
+.phi-radio-group--default.phi-radio-group--horizontal .phi-radio-group__items {
+  gap: 0.5rem;
+}
+
+.phi-radio-group--card.phi-radio-group--vertical .phi-radio-group__items {
+  gap: 0.75rem;
+}
+
+.phi-radio-group--card.phi-radio-group--horizontal .phi-radio-group__items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.phi-radio-group > .phi-radio-group__description,
+.phi-radio-group > .phi-radio-group__error {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.176;
+}
+
+.phi-radio-group > .phi-radio-group__description {
+  color: var(--phi-subtle, #6c7480);
+}
+
+.phi-radio-group > .phi-radio-group__error {
+  color: var(--phi-danger, #b42318);
+}
+
+.phi-radio-group--disabled {
+  opacity: 1;
+}
+
+.phi-radio {
+  position: relative;
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: var(--phi-default, #17191f);
+  cursor: pointer;
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  user-select: none;
+}
+
+.phi-radio--control-end {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.phi-radio--appearance-card {
+  width: 100%;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--phi-hairline, rgba(16, 24, 40, 0.08));
+  border-radius: 0.5rem;
+  background: var(--phi-base, #ffffff);
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    opacity 120ms ease;
+}
+
+.phi-radio--appearance-card:hover:not(.phi-radio--disabled):not(.phi-radio--error) {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-radio--appearance-card.phi-radio--checked:not(.phi-radio--error) {
+  border-color: var(--phi-inactive, #d4d4d4);
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-radio--appearance-card.phi-radio--error {
+  border-color: var(--phi-danger, #b42318);
+}
+
+.phi-radio--appearance-card.phi-radio--error.phi-radio--checked {
+  background: var(--phi-base, #ffffff);
+}
+
+.phi-radio__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.phi-radio__control {
+  position: relative;
+  display: inline-flex;
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.125rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--phi-base, #ffffff);
+  box-shadow: inset 0 0 0 1px var(--phi-line, #e3e6eb);
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    opacity 120ms ease;
+}
+
+.phi-radio--appearance-card .phi-radio__control {
+  box-shadow: inset 0 0 0 2px var(--phi-line, #e3e6eb);
+}
+
+.phi-radio:hover:not(.phi-radio--disabled):not(.phi-radio--error) .phi-radio__control {
+  box-shadow: inset 0 0 0 1px var(--phi-subtle, #6c7480);
+}
+
+.phi-radio--appearance-card:hover:not(.phi-radio--disabled):not(.phi-radio--error) .phi-radio__control {
+  box-shadow: inset 0 0 0 2px var(--phi-subtle, #6c7480);
+}
+
+.phi-radio:has(.phi-radio__input:focus-visible) .phi-radio__control {
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-radio__control[data-state="checked"] {
+  background: var(--phi-strong, #101217);
+  box-shadow: inset 0 0 0 1px var(--phi-strong, #101217);
+}
+
+.phi-radio__dot {
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--phi-base, #ffffff);
+  opacity: 0;
+  transform: scale(0.65);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+
+.phi-radio__control[data-state="checked"] .phi-radio__dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.phi-radio--error .phi-radio__control,
+.phi-radio--appearance-card.phi-radio--error .phi-radio__control {
+  box-shadow: inset 0 0 0 1px var(--phi-danger, #b42318);
+}
+
+.phi-radio--error .phi-radio__control[data-state="checked"] {
+  background: var(--phi-strong, #101217);
+  box-shadow: inset 0 0 0 1px var(--phi-danger, #b42318);
+}
+
+.phi-radio--disabled,
+.phi-radio[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.phi-radio__content {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.phi-radio__label {
+  color: var(--phi-default, #17191f);
+}
+
+.phi-radio--appearance-card .phi-radio__label {
+  font-weight: 500;
+}
+
+.phi-radio__description {
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.8125rem;
+  line-height: 1.176;
+}
+
+.phi-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .phi-radio-group--card.phi-radio-group--horizontal .phi-radio-group__items {
+    grid-template-columns: 1fr;
+  }
+}

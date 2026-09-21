@@ -1,0 +1,210 @@
+---
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import TableDocsDemo from "../../../components/TableDocsDemo.vue";
+import { tableAccessibilityRows, tableApiSections } from "../../../data/table-api-docs";
+import {
+  tableBarrelCode,
+  tableExamples,
+  tableGranularCode,
+  tablePreviewCode,
+  tableTanStackCode,
+  tableUsageCode,
+} from "../../../data/table-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const getDescriptionParts = (description: string) =>
+  description.split(/(`[^`]+`)/g).map((part) => ({
+    kind: part.startsWith("`") && part.endsWith("`") ? "code" : "text",
+    value: part.startsWith("`") && part.endsWith("`") ? part.slice(1, -1) : part,
+  }));
+---
+
+<DocsLayout title="Table" description="A table component with borderless alternating rows, selection, row variants, and column sizing.">
+  <div class="docs-page docs-page--component docs-page--table">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Table</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A table component with borderless alternating rows, selection, row variants, and column sizing.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--table">
+              <TableDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={tablePreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={tableBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={tableGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={tableUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {
+            tableExamples.map((example) => (
+              <>
+                <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+                <p>
+                  {
+                    getDescriptionParts(example.description).map((part) =>
+                      part.kind === "code" ? <code>{part.value}</code> : part.value,
+                    )
+                  }
+                </p>
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--table">
+                    <TableDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+
+          {
+            tableApiSections.map((section) => (
+              <>
+                <h3 id={section.id}><a class="docs-section-anchor" href={`#${section.id}`}>{section.title}</a></h3>
+                <p>
+                  {
+                    getDescriptionParts(section.description).map((part) =>
+                      part.kind === "code" ? <code>{part.value}</code> : part.value,
+                    )
+                  }
+                </p>
+                <div class="docs-api-table">
+                  <table>
+                    <thead>
+                      <tr><th>Prop / Event</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                      {section.rows.map((prop) => (
+                        <tr>
+                          <td><code>{prop.name}</code></td>
+                          <td><code>{prop.type}</code></td>
+                          <td><code>{prop.defaultValue}</code></td>
+                          <td>
+                            {
+                              getDescriptionParts(prop.description).map((part) =>
+                                part.kind === "code" ? <code>{part.value}</code> : part.value,
+                              )
+                            }
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ))
+          }
+        </section>
+
+        <section id="tanstack-table-integration" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#tanstack-table-integration">TanStack Table Integration</a></h2>
+          <p>
+            For advanced features like sorting, filtering, and resizable columns, integrate with
+            <a href="https://tanstack.com/table" target="_blank" rel="noopener noreferrer">TanStack Table</a>.
+            The Table component is designed to work with TanStack's headless API.
+          </p>
+          <CodeBlock code={tableTanStackCode} lang="vue" />
+        </section>
+
+        <section id="accessibility" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#accessibility">Accessibility</a></h2>
+          <div class="docs-accessibility-list">
+            {
+              tableAccessibilityRows.map((row) => (
+                <div class="docs-accessibility-list__item">
+                  <h3>{row.title}</h3>
+                  <p>
+                    {
+                      getDescriptionParts(row.description).map((part) =>
+                        part.kind === "code" ? <code>{part.value}</code> : part.value,
+                      )
+                    }
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {tableExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                {tableApiSections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}
+              </ul>
+            </li>
+            <li><a href="#tanstack-table-integration">TanStack Table Integration</a></li>
+            <li><a href="#accessibility">Accessibility</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

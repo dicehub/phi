@@ -1,0 +1,75 @@
+/**
+ * AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY
+ *
+ * Edit scripts/theme-generator/config.ts and run:
+ * pnpm --filter @dicehub/phi codegen:themes
+ */
+
+@import "./theme-phi.css";
+
+@layer theme {
+  @theme {
+    --text-color-phi-default: light-dark(oklch(0.205 0 0), oklch(0.97 0 0));
+    --text-color-phi-inverse: light-dark(oklch(0.97 0 0), oklch(0.205 0 0));
+    --text-color-phi-strong: light-dark(oklch(0.145 0 0), oklch(0.985 0 0));
+    --text-color-phi-subtle: light-dark(oklch(0.556 0 0), oklch(0.708 0 0));
+    --text-color-phi-inactive: light-dark(oklch(0.87 0 0), oklch(0.439 0 0));
+    --text-color-phi-placeholder: light-dark(oklch(0.708 0 0), oklch(0.556 0 0));
+    --text-color-phi-accent: light-dark(oklch(0.488 0.243 264.376), oklch(0.707 0.165 254.624));
+    --text-color-phi-accent-contrast: light-dark(rgb(255, 255, 255), rgb(255, 255, 255));
+    --text-color-phi-link: light-dark(oklch(0.424 0.199 265.638), oklch(0.707 0.165 254.624));
+    --text-color-phi-info: light-dark(oklch(0.424 0.199 265.638), oklch(0.707 0.165 254.624));
+    --text-color-phi-success: light-dark(oklch(0.432 0.095 166.913), oklch(0.905 0.093 164.15));
+    --text-color-phi-warning: light-dark(oklch(0.597 0.144 57.5), oklch(0.75 0.183 55.934));
+    --text-color-phi-danger: light-dark(oklch(0.505 0.213 27.518), oklch(0.704 0.191 22.216));
+    --text-color-phi-badge-orange-subtle: light-dark(oklch(0.47 0.157 37.304), oklch(0.901 0.076 70.697));
+    --text-color-phi-badge-teal-subtle: light-dark(oklch(0.437 0.078 188.216), oklch(0.91 0.096 180.426));
+    --text-color-phi-badge-neutral-subtle: light-dark(oklch(0.269 0 0), oklch(0.922 0 0));
+    --text-color-phi-badge-inverted: light-dark(rgb(255, 255, 255), rgb(0, 0, 0));
+  }
+
+  @theme {
+    --color-phi-canvas: light-dark(oklch(0.9875 0 0), oklch(0.1 0 0));
+    --color-phi-elevated: light-dark(oklch(0.98 0 0), oklch(0.12 0 0));
+    --color-phi-recessed: light-dark(oklch(0.96 0 0), oklch(0.15 0 0));
+    --color-phi-base: light-dark(rgb(255, 255, 255), oklch(0.17 0 0));
+    --color-phi-tint: light-dark(oklch(0.97 0 0), oklch(0.269 0 0));
+    --color-phi-contrast: light-dark(oklch(0.085 0 0), oklch(0.985 0 0));
+    --color-phi-overlay: light-dark(oklch(0.975 0 0), oklch(0.269 0 0));
+    --color-phi-control: light-dark(rgb(255, 255, 255), oklch(0.205 0 0));
+    --color-phi-interact: light-dark(oklch(0.87 0 0), oklch(0.371 0 0));
+    --color-phi-fill: light-dark(oklch(0.922 0 0), oklch(0.269 0 0));
+    --color-phi-fill-hover: light-dark(oklch(0.965 0 0), oklch(0.371 0 0));
+    --color-phi-accent: light-dark(oklch(0.5772 0.2324 260), oklch(0.51948 0.2324 260));
+    --color-phi-accent-hover: light-dark(oklch(0.488 0.243 264.376), oklch(0.488 0.243 264.376));
+    --color-phi-line: light-dark(oklch(0.145 0 0 / 0.1), oklch(0.32 0 0));
+    --color-phi-hairline: light-dark(oklch(0.935 0 0), oklch(0.269 0 0));
+    --color-phi-focus: light-dark(oklch(0.15 0 0), oklch(0.935 0 0));
+    --color-phi-focus-soft: light-dark(oklch(0.15 0 0 / 0.16), oklch(0.935 0 0 / 0.2));
+    --color-phi-shadow-edge: light-dark(oklch(0 0 0 / 0.12), oklch(1 0 0 / 0.1));
+    --color-phi-shadow-drop: light-dark(oklch(0 0 0 / 0.08), oklch(0 0 0 / 0.3));
+    --color-phi-arrow-edge: light-dark(oklch(0.145 0 0 / 0.1), transparent);
+    --color-phi-arrow-stroke: light-dark(transparent, oklch(0.32 0 0));
+    --color-phi-info-tint: light-dark(oklch(0.932 0.032 255.6 / 0.45), oklch(0.38 0.145 265.5 / 0.22));
+    --color-phi-info: light-dark(oklch(0.685 0.169 237.323), oklch(0.685 0.169 237.323));
+    --color-phi-success-tint: light-dark(oklch(0.962 0.043 156.7 / 0.57), oklch(0.393 0.096 152.3 / 0.2));
+    --color-phi-success: light-dark(oklch(0.596 0.145 163.225), oklch(0.765 0.177 163.223));
+    --color-phi-warning-tint: light-dark(oklch(0.931 0.107 94.6 / 0.2), oklch(0.353 0.079 65 / 0.37));
+    --color-phi-warning: light-dark(oklch(0.739 0.177 58.2), oklch(0.645 0.168 50));
+    --color-phi-danger-tint: light-dark(oklch(0.936 0.032 17.7 / 0.42), oklch(0.429 0.176 28.7 / 0.17));
+    --color-phi-danger: light-dark(oklch(0.637 0.237 25.331), oklch(0.577 0.245 27.325));
+    --color-phi-danger-hover: light-dark(oklch(0.577 0.245 27.325), oklch(0.505 0.213 27.518));
+    --color-phi-badge-inverted: light-dark(oklch(0.145 0 0), rgb(255, 255, 255));
+    --color-phi-badge-red: light-dark(oklch(0.577 0.245 27.325), oklch(0.505 0.213 27.518));
+    --color-phi-badge-orange: light-dark(oklch(0.815 0.197 76), oklch(0.815 0.197 76));
+    --color-phi-badge-green: light-dark(oklch(0.596 0.145 163.225), oklch(0.508 0.118 165.612));
+    --color-phi-badge-teal: light-dark(oklch(0.549 0.096 184.565), oklch(0.511 0.096 186.391));
+    --color-phi-badge-teal-subtle: light-dark(oklch(0.95 0.052 180.801), oklch(0.378 0.077 180.426));
+    --color-phi-badge-blue: light-dark(oklch(0.546 0.245 262.881), oklch(0.488 0.243 264.376));
+    --color-phi-badge-purple: light-dark(oklch(0.558 0.288 302.321), oklch(0.496 0.265 301.924));
+    --color-phi-badge-neutral: light-dark(oklch(0.556 0 0), oklch(0.439 0 0));
+    --color-phi-banner-info: light-dark(oklch(0.932 0.032 255.585 / 0.7), oklch(0.379 0.146 265.522 / 0.5));
+    --color-phi-banner-warning: light-dark(oklch(0.973 0.071 103.193), oklch(0.554 0.135 66.442 / 0.5));
+    --color-phi-banner-danger: light-dark(oklch(0.936 0.032 17.7 / 0.42), oklch(0.429 0.176 28.7 / 0.17));
+  }
+}

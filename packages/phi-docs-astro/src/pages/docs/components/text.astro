@@ -1,0 +1,165 @@
+---
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import TextDocsDemo from "../../../components/TextDocsDemo.vue";
+import {
+  textBarrelCode,
+  textGranularCode,
+  textPreviewCode,
+  textProps,
+  textRestrictionsCode,
+  textSemanticCode,
+  textTruncateCode,
+  textUsageCode,
+} from "../../../data/text-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const getDescriptionParts = (description: string) =>
+  description.split(/(`[^`]+`)/g).map((part) => ({
+    kind: part.startsWith("`") && part.endsWith("`") ? "code" : "text",
+    value: part.startsWith("`") && part.endsWith("`") ? part.slice(1, -1) : part,
+  }));
+---
+
+<DocsLayout title="Text" description="A typography component for various heading and copy styles.">
+  <div class="docs-page docs-page--component docs-page--text">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Text</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A typography component for various heading and copy styles.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--text">
+              <TextDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={textPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={textBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={textGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={textUsageCode} lang="vue" />
+
+          <h3>Semantic HTML</h3>
+          <p>
+            The <code>variant</code> prop controls visual styling only; it does not determine the HTML element rendered.
+            The <code>heading</code> variant defaults to a <code>&lt;span&gt;</code>; pass <code>as</code> when the text
+            belongs in the document outline. Deprecated numbered heading variants still require <code>as</code> in the
+            exported <code>TextProps</code> type.
+          </p>
+          <CodeBlock code={textSemanticCode} lang="vue" />
+          <p>
+            The <code>as</code> prop accepts heading elements, <code>p</code>, <code>span</code>, form-related text
+            elements, list or definition elements, and common inline semantic elements. Body variants default to
+            <code>&lt;p&gt;</code>, while monospace and heading variants default to <code>&lt;span&gt;</code> at runtime.
+          </p>
+
+          <h3>Restrictions</h3>
+          <p>
+            The <code>bold</code> prop applies only to body-style variants. The <code>heading</code> variant accepts
+            only <code>size="lg"</code>; body-style variants accept all copy sizes. Non-heading variants inherit
+            their parent line height so they fit surrounding controls and layout.
+          </p>
+          <CodeBlock code={textRestrictionsCode} lang="vue" />
+        </section>
+
+        <section id="truncate" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#truncate">Truncate</a></h2>
+          <p>
+            Use the <code>truncate</code> prop to clip overflowing text with an ellipsis. This is useful when
+            <code>Text</code> is inside a flex or grid container.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--text docs-component-preview--text-truncate">
+              <TextDocsDemo client:only="vue" variant="truncate" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={textTruncateCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop / Slot</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {textProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>
+                      {
+                        getDescriptionParts(prop.description).map((part) =>
+                          part.kind === "code" ? <code>{part.value}</code> : part.value,
+                        )
+                      }
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#truncate">Truncate</a></li>
+            <li><a href="#api-reference">API Reference</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

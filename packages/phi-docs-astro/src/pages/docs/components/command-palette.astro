@@ -1,0 +1,189 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CommandPaletteDocsDemo from "../../../components/CommandPaletteDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import {
+  autocompleteCode,
+  barrelCode,
+  componentParts,
+  granularCode,
+  keyboardShortcuts,
+  loadingCode,
+  previewCode,
+  resultItemCode,
+  resultItemApiCode,
+  rootApiCode,
+  simpleCode,
+  usageCode,
+} from "../../../data/command-palette-docs";
+import "../../../styles/component-docs.css";
+
+const examples = [
+  { id: "with-grouped-items", title: "With Grouped Items", description: "Group related commands together with labels.", variant: "grouped", code: previewCode },
+  { id: "simple-flat-list", title: "Simple Flat List", description: "For simpler use cases, use a flat array of items without grouping.", variant: "simple", code: simpleCode },
+  { id: "loading-state", title: "Loading State", description: "Show a loading spinner while fetching results.", variant: "loading", code: loadingCode },
+  { id: "disabling-browser-autocomplete", title: "Disabling Browser Autocomplete", description: "Pass standard HTML input attributes to suppress browser and password manager autocomplete overlays.", variant: "autocomplete-off", code: autocompleteCode },
+  { id: "result-item-with-breadcrumbs", title: "ResultItem with Breadcrumbs", description: "Use ResultItem for rich items with breadcrumbs, icons, and optional text highlighting.", variant: "result-item", code: resultItemCode },
+] as const;
+---
+
+<DocsLayout title="CommandPalette" description="A composable command palette component for search and command dialogs.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>CommandPalette</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A composable command palette component for search and command dialogs.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--command-palette">
+              <CommandPaletteDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={barrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={granularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>
+            CommandPalette is a compound component built on Ark UI's Combobox and Dialog primitives.
+            It provides accessible keyboard navigation and customizable styling for command palette interfaces.
+          </p>
+          <CodeBlock code={usageCode} lang="vue" />
+        </section>
+
+        <section id="keyboard-navigation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#keyboard-navigation">Keyboard Navigation</a></h2>
+          <p>Built-in keyboard navigation is provided automatically:</p>
+          <div class="docs-keyboard-shortcuts">
+            {keyboardShortcuts.map((shortcut) => (
+              <div class="docs-keyboard-shortcut">
+                <span class="docs-keyboard-shortcut__keys">
+                  {shortcut.keys.map((key) => <kbd>{key}</kbd>)}
+                </span>
+                <span>{shortcut.description}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {examples.map((example) => (
+            <>
+              <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+              <p>{example.description}</p>
+              <div class="docs-component-example">
+                <div class="docs-component-preview docs-component-preview--command-palette">
+                  <CommandPaletteDocsDemo client:only="vue" variant={example.variant} />
+                </div>
+                <div class="docs-component-example__code">
+                  <CodeBlock code={example.code} lang="vue" />
+                </div>
+              </div>
+            </>
+          ))}
+        </section>
+
+        <section id="component-parts" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#component-parts">Component Parts</a></h2>
+          {componentParts.map((part) => (
+            <>
+              <h3 id={part.id}><a class="docs-section-anchor" href={`#${part.id}`}>{part.component}</a></h3>
+              <p>{part.description}</p>
+            </>
+          ))}
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <h3 id="command-palette-root-props"><a class="docs-section-anchor" href="#command-palette-root-props">CommandPalette.Root Props</a></h3>
+          <CodeBlock code={rootApiCode} lang="typescript" />
+
+          <h3 id="command-palette-result-item-props"><a class="docs-section-anchor" href="#command-palette-result-item-props">CommandPalette.ResultItem Props</a></h3>
+          <CodeBlock code={resultItemApiCode} lang="typescript" />
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#keyboard-navigation">Keyboard Navigation</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#with-grouped-items">With Grouped Items</a></li>
+                <li><a href="#simple-flat-list">Simple Flat List</a></li>
+                <li><a href="#loading-state">Loading State</a></li>
+                <li><a href="#disabling-browser-autocomplete">Disabling Browser Autocomplete</a></li>
+                <li><a href="#result-item-with-breadcrumbs">ResultItem with Breadcrumbs</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#component-parts">Component Parts</a>
+              <ul>
+                {componentParts.map((part) => (
+                  <li><a href={`#${part.id}`}>{part.component}</a></li>
+                ))}
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#command-palette-root-props">CommandPalette.Root Props</a></li>
+                <li><a href="#command-palette-result-item-props">CommandPalette.ResultItem Props</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

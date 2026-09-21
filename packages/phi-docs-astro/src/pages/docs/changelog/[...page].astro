@@ -1,0 +1,384 @@
+---
+// @ts-nocheck
+import ChangelogPagination from "../../../components/ChangelogPagination.vue";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import {
+  getChangelogStaticPaths,
+  getCommitUrl,
+  getReleaseUrl,
+} from "../../../lib/changelog.js";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+
+export function getStaticPaths() {
+  return getChangelogStaticPaths();
+}
+
+const { isAllVersionsPage, page, perPage, totalPages, totalVersions, versions } = Astro.props;
+
+const badgeConfig = {
+  major: "Major",
+  minor: "Minor",
+  patch: "Patch",
+};
+---
+
+<DocsLayout title="Changelog" description="Latest updates and features. See what changed in each release.">
+  <div class="docs-page docs-page--changelog">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Changelog</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">Latest updates and features. See what changed in each release.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body docs-page-body--changelog">
+      <article class="docs-article docs-article--changelog">
+        {
+          versions.length === 0 ? (
+            <p class="changelog-empty">No changelog entries yet.</p>
+          ) : (
+            <div class="changelog-list">
+              {versions.map((version, index) => (
+                <article id={version.id} class="changelog-version">
+                  <div class="changelog-version__header">
+                    <a class="changelog-version__anchor" href={`#${version.id}`}>
+                      <span class="changelog-version__anchor-icon" aria-hidden="true">
+                        <svg viewBox="0 0 256 256" fill="currentColor">
+                          <path d="M165.66,90.34a8,8,0,0,1,0,11.32l-64,64a8,8,0,0,1-11.32-11.32l64-64A8,8,0,0,1,165.66,90.34ZM214.63,41.37a32,32,0,0,0-45.26,0L131.31,79.43a8,8,0,0,0,11.32,11.31l38.05-38.05a16,16,0,0,1,22.63,22.63l-38.05,38a8,8,0,0,0,11.31,11.32l38.06-38.06A32,32,0,0,0,214.63,41.37ZM113.37,165.26,75.32,203.31a16,16,0,0,1-22.63-22.63l38.05-38.05a8,8,0,0,0-11.31-11.32L41.37,169.37a32,32,0,0,0,45.26,45.26l38.06-38.06a8,8,0,0,0-11.32-11.31Z" />
+                        </svg>
+                      </span>
+                      <span class="changelog-version__number">{version.version}</span>
+                    </a>
+                    <span class:list={["changelog-badge", `changelog-badge--${version.bump}`]}>
+                      {badgeConfig[version.bump]}
+                    </span>
+                    <a
+                      class="changelog-version__release"
+                      href={getReleaseUrl(version.version)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={`View ${version.version} release`}
+                      aria-label={`View ${version.version} release`}
+                    >
+                      <svg viewBox="0 0 256 236" fill="currentColor" aria-hidden="true">
+                        <path d="M128 236.1 174.9 91.8H81.1L128 236.1Z" />
+                        <path d="M128 236.1 81.1 91.8H15.3L128 236.1Z" />
+                        <path d="M15.3 91.8.9 136.1c-1.3 4 .1 8.3 3.5 10.8L128 236.1 15.3 91.8Z" />
+                        <path d="M15.3 91.8h65.8L52.8 4.9c-1.5-4.6-8-4.6-9.5 0L15.3 91.8Z" />
+                        <path d="M128 236.1 174.9 91.8h65.8L128 236.1Z" />
+                        <path d="m240.7 91.8 14.4 44.3c1.3 4-.1 8.3-3.5 10.8L128 236.1 240.7 91.8Z" />
+                        <path d="M240.7 91.8h-65.8l28.3-86.9c1.5-4.6 8-4.6 9.5 0l28 86.9Z" />
+                      </svg>
+                    </a>
+                  </div>
+
+                  <div class="changelog-version__sections">
+                    {version.sections.map((section) => (
+                      <section class="changelog-section">
+                        <h3>{section.label}</h3>
+                        <ul class="changelog-entries">
+                          {section.entries.map((entry) => (
+                            <li class="changelog-entry">
+                              <a
+                                class="changelog-entry__hash"
+                                href={getCommitUrl(entry.hash)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {entry.displayHash}
+                              </a>
+                              <div class="changelog-entry__content" set:html={entry.html} />
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    ))}
+                  </div>
+
+                  {index < versions.length - 1 && <div class="changelog-version__separator" />}
+                </article>
+              ))}
+            </div>
+          )
+        }
+
+        {!isAllVersionsPage && totalPages > 1 && (
+          <div class="changelog-pagination">
+            <ChangelogPagination page={page} perPage={perPage} totalCount={totalVersions} client:load />
+          </div>
+        )}
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc docs-page-toc--changelog" aria-label="On this page"></aside>
+    </div>
+  </div>
+</DocsLayout>
+
+<style>
+  .docs-page--changelog .docs-page-header__content {
+    max-width: 80rem;
+  }
+
+  .changelog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .changelog-version {
+    scroll-margin-top: 5rem;
+  }
+
+  .changelog-version__header {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .changelog-version__anchor {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    color: var(--docs-default);
+    text-decoration: none;
+  }
+
+  .changelog-version__anchor:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .changelog-version__anchor-icon {
+    position: absolute;
+    left: -1.5rem;
+    top: 50%;
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    color: var(--docs-subtle);
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 140ms ease;
+  }
+
+  .changelog-version__anchor-icon svg,
+  .changelog-version__release svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .changelog-version__header:hover .changelog-version__anchor-icon {
+    opacity: 1;
+  }
+
+  .changelog-version__number {
+    color: var(--docs-default);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 2rem;
+  }
+
+  .changelog-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 1.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    color: var(--docs-default);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1rem;
+    white-space: nowrap;
+  }
+
+  .changelog-badge--major {
+    background: var(--phi-primary, #056dff);
+    color: var(--phi-primary-contrast, #ffffff);
+  }
+
+  .changelog-badge--minor {
+    background: var(--docs-tint);
+    color: var(--docs-default);
+  }
+
+  .changelog-badge--patch {
+    box-shadow: inset 0 0 0 1px var(--docs-border);
+    color: var(--docs-subtle);
+  }
+
+  .changelog-version__release {
+    display: inline-flex;
+    width: 1.125rem;
+    height: 1.125rem;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    color: var(--docs-subtle);
+    transition: color 120ms ease;
+  }
+
+  .changelog-version__release:hover {
+    color: var(--docs-default);
+  }
+
+  .changelog-version__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .changelog-section h3 {
+    margin: 0 0 1rem;
+    color: var(--docs-default);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.25rem;
+  }
+
+  .changelog-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4375rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .changelog-entry {
+    display: flex;
+    align-items: baseline;
+    gap: 0.875rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .changelog-entry__hash {
+    width: 3.4375rem;
+    flex: none;
+    color: var(--docs-subtle);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    transition: color 120ms ease;
+  }
+
+  .changelog-entry__hash:hover {
+    color: var(--docs-default);
+  }
+
+  .changelog-entry__content {
+    min-width: 0;
+    flex: 1 1 auto;
+    color: var(--docs-strong);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .changelog-entry__content :global(p) {
+    margin: 0;
+  }
+
+  .changelog-entry__content :global(p + p),
+  .changelog-entry__content :global(pre),
+  .changelog-entry__content :global(ul) {
+    margin-top: 0.75rem;
+  }
+
+  .changelog-entry__content :global(ul) {
+    padding-left: 1.15rem;
+  }
+
+  .changelog-entry__content :global(li) {
+    margin-top: 0.25rem;
+  }
+
+  .changelog-entry__content :global(code:not(pre code)) {
+    padding: 0.1rem 0.3rem;
+    border: 1px solid var(--docs-border);
+    border-radius: 0.25rem;
+    background: var(--docs-base);
+    color: var(--docs-default);
+    font-size: 0.85em;
+  }
+
+  .changelog-entry__content :global(pre) {
+    max-width: 100%;
+    margin-bottom: 0;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--docs-border);
+    border-radius: 0.5rem;
+    background: var(--docs-base);
+    overflow-x: auto;
+    box-shadow: var(--docs-shadow);
+  }
+
+  .changelog-entry__content :global(a) {
+    color: var(--docs-brand);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, var(--docs-brand) 35%, transparent);
+    text-underline-offset: 2px;
+  }
+
+  .changelog-entry__content :global(a:hover) {
+    text-decoration-color: var(--docs-brand);
+  }
+
+  .changelog-version__separator {
+    margin-top: 1.5rem;
+    border-bottom: 1px solid var(--docs-border);
+  }
+
+  .changelog-pagination {
+    margin-top: 2rem;
+  }
+
+  .changelog-empty {
+    margin: 0;
+    color: var(--docs-subtle);
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 760px) {
+    .changelog-version__anchor-icon {
+      display: inline-flex;
+    }
+
+    .changelog-entries {
+      padding-left: 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .changelog-entry {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .changelog-version__release {
+      margin-left: 0;
+    }
+  }
+</style>

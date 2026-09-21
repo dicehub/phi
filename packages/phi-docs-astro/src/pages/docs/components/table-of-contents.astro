@@ -1,0 +1,200 @@
+---
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import TableOfContentsDocsDemo from "../../../components/TableOfContentsDocsDemo.vue";
+import {
+  tableOfContentsApiSections,
+  tableOfContentsBarrelCode,
+  tableOfContentsCustomElementSnippets,
+  tableOfContentsExamples,
+  tableOfContentsGranularCode,
+  tableOfContentsPreviewCode,
+  tableOfContentsUsageCode,
+} from "../../../data/table-of-contents-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const getDescriptionParts = (description: string) =>
+  description.split(/(`[^`]+`)/g).map((part) => ({
+    kind: part.startsWith("`") && part.endsWith("`") ? "code" : "text",
+    value: part.startsWith("`") && part.endsWith("`") ? part.slice(1, -1) : part,
+  }));
+---
+
+<DocsLayout
+  title="Table of Contents"
+  description="Compound section navigation with an active indicator and reusable scroll tracking."
+>
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Table of Contents</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            Compound section navigation with an active indicator and reusable scroll tracking.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--table-of-contents">
+              <TableOfContentsDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={tableOfContentsPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={tableOfContentsBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={tableOfContentsGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={tableOfContentsUsageCode} lang="vue" />
+          <p>
+            The component remains presentational: control each item's <code>active</code> prop directly,
+            or pair it with <code>useTableOfContentsActiveId</code> for scroll tracking, hash selection,
+            and custom scroll containers.
+          </p>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {
+            tableOfContentsExamples.map((example) => (
+              <>
+                <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+                <p>
+                  {
+                    getDescriptionParts(example.description).map((part) =>
+                      part.kind === "code" ? <code>{part.value}</code> : part.value,
+                    )
+                  }
+                </p>
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--table-of-contents">
+                    <TableOfContentsDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+
+                {
+                  example.id === "custom-element" && (
+                    <div class="docs-table-of-contents-snippets">
+                      {tableOfContentsCustomElementSnippets.map((snippet) => (
+                        <>
+                          <h4 id={snippet.id}><a class="docs-section-anchor" href={`#${snippet.id}`}>{snippet.title}</a></h4>
+                          <CodeBlock code={snippet.code} lang="vue" />
+                        </>
+                      ))}
+                    </div>
+                  )
+                }
+              </>
+            ))
+          }
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+
+          {
+            tableOfContentsApiSections.map((section) => (
+              <>
+                <h3 id={section.id}><a class="docs-section-anchor" href={`#${section.id}`}>{section.title}</a></h3>
+                <p>
+                  {
+                    getDescriptionParts(section.description).map((part) =>
+                      part.kind === "code" ? <code>{part.value}</code> : part.value,
+                    )
+                  }
+                </p>
+                <div class="docs-api-table">
+                  <table>
+                    <thead>
+                      <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                      {section.rows.map((prop) => (
+                        <tr>
+                          <td><code>{prop.name}</code></td>
+                          <td><code>{prop.type}</code></td>
+                          <td><code>{prop.defaultValue}</code></td>
+                          <td>
+                            {
+                              getDescriptionParts(prop.description).map((part) =>
+                                part.kind === "code" ? <code>{part.value}</code> : part.value,
+                              )
+                            }
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ))
+          }
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {tableOfContentsExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+                {tableOfContentsCustomElementSnippets.map((snippet) => <li><a href={`#${snippet.id}`}>{snippet.title}</a></li>)}
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                {tableOfContentsApiSections.map((section) => <li><a href={`#${section.id}`}>{section.title}</a></li>)}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

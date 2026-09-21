@@ -1,0 +1,171 @@
+---
+import { componentRegistry } from "@dicehub/phi/registry";
+import Callout from "../../components/Callout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import CopyPageControls from "../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const entries = Object.values(componentRegistry.components);
+const componentCount = entries.filter((entry) => entry.type === "component").length;
+const blockCount = entries.filter((entry) => entry.type === "block").length;
+const groupCount = Object.keys(componentRegistry.search.byGroup).length;
+
+const toc = [
+  { id: "overview", label: "Overview" },
+  { id: "runtime-api", label: "Runtime API" },
+  { id: "json-export", label: "JSON Export" },
+  { id: "contract", label: "Registry Contract" },
+  { id: "block-templates", label: "Block Templates" },
+  { id: "generation", label: "Generation" },
+];
+---
+
+<DocsLayout title="Registry" description="Generated metadata for every public Phi component and block.">
+  <div class="docs-page docs-page--registry">
+    <header id="page-header" class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Registry</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+
+          <p class="docs-page-header__lede">
+            Generated metadata for every public Phi component and block.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--registry">
+        <section id="overview" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#overview">Overview</a></h2>
+          <p>
+            Phi discovers public exports from each component and block barrel. The current registry contains
+            <strong>{componentCount} components</strong> and <strong>{blockCount} block</strong> across
+            <strong>{groupCount} source groups</strong>.
+          </p>
+          <p>
+            Entries include their granular import path, source file, component type, source group, and compound
+            component parts. Search indexes provide deterministic lookup by name, group, and type.
+          </p>
+        </section>
+
+        <section id="runtime-api" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#runtime-api">Runtime API</a></h2>
+          <p>Import typed metadata from the published registry entrypoint.</p>
+          <CodeBlock
+            code={`import {
+  componentRegistry,
+  getRegistryComponent,
+  registryComponentNames,
+  type RegistryComponentName,
+} from "@dicehub/phi/registry";
+
+const button = getRegistryComponent("Button");
+const chart: RegistryComponentName = "TimeseriesChart";`}
+            lang="typescript"
+          />
+        </section>
+
+        <section id="json-export" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#json-export">JSON Export</a></h2>
+          <p>The same generated data is published as JSON for build tools, agents, and non-TypeScript consumers.</p>
+          <CodeBlock
+            code={`import registry from "@dicehub/phi/registry/component-registry.json" with { type: "json" };`}
+            lang="typescript"
+          />
+          <Callout type="info">
+            <p><code>@dicehub/phi/ai/component-registry.json</code> resolves to the same file.</p>
+          </Callout>
+        </section>
+
+        <section id="contract" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#contract">Registry Contract</a></h2>
+          <CodeBlock
+            code={`interface RegistryComponent {
+  name: string;
+  type: "component" | "block";
+  group: string;
+  importPath: string;
+  sourceFile: string;
+  description: string;
+  parts?: readonly string[];
+}`}
+            lang="typescript"
+          />
+          <p>
+            <code>schemaVersion</code> versions the registry format independently from the package version.
+            Consumers should reject unsupported schema versions before processing entries.
+          </p>
+        </section>
+
+        <section id="block-templates" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#block-templates">Block Templates</a></h2>
+          <p>
+            Blocks come in two forms. <strong>Compiled blocks</strong> such as DeleteResource are regular package
+            exports listed in <code>components</code> with type <code>"block"</code>. <strong>Block templates</strong>
+            such as Page Header and Resource List are installable source: the Phi CLI copies their files into the
+            consumer codebase from manifests under <code>templates/blocks/</code>.
+          </p>
+          <p>
+            Installable templates live in the optional top-level <code>blockTemplates</code> record. A registry
+            without <code>blockTemplates</code> — or with an empty record — has no installable blocks. The record
+            is independent from <code>components</code> and its search indexes, which keep describing package
+            exports only.
+          </p>
+          <CodeBlock
+            code={`interface RegistryBlockTemplate {
+  name: string;
+  type: "block";
+  delivery: "copy";
+  group: string;
+  description: string;
+  entryFile: string;
+  files: readonly { source: string; target: string }[];
+  dependencies: readonly string[];
+}`}
+            lang="typescript"
+          />
+          <p>
+            <code>getRegistryBlockTemplate</code> and <code>registryBlockTemplateNames</code> mirror the component
+            lookup helpers.
+          </p>
+        </section>
+
+        <section id="generation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#generation">Generation</a></h2>
+          <p>Regenerate metadata whenever a public component barrel changes.</p>
+          <CodeBlock code="pnpm --filter @dicehub/phi codegen:registry" lang="bash" />
+          <p>
+            Package builds regenerate the registry. Typechecking runs a drift check, and package validation verifies
+            the runtime and JSON exports against representative components, charts, compound parts, and blocks.
+          </p>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            {toc.map((section) => (
+              <li><a href={`#${section.id}`} data-toc-link={section.id}>{section.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

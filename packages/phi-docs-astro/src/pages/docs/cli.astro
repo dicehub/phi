@@ -1,0 +1,105 @@
+---
+import Callout from "../../components/Callout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import CopyPageControls from "../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const toc = [
+  { id: "commands", label: "Commands" },
+  { id: "configuration", label: "Configuration" },
+  { id: "behavior", label: "Behavior" },
+];
+---
+
+<DocsLayout title="CLI" description="Use the Phi command-line interface to install blocks into your application.">
+  <div class="docs-page docs-page--cli">
+    <header id="page-header" class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>CLI</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+
+          <p class="docs-page-header__lede">
+            The Phi CLI installs source blocks into your application so you own and can customize the code.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--cli">
+        <section id="commands" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#commands">Commands</a></h2>
+          <p>Run the CLI through your package manager. All commands are non-interactive.</p>
+
+          <p class="docs-label"><strong>Help</strong></p>
+          <CodeBlock code="pnpm dlx @dicehub/phi help" lang="bash" />
+
+          <p class="docs-label"><strong>Initialize the config once per project</strong></p>
+          <CodeBlock code="pnpm dlx @dicehub/phi init" lang="bash" />
+
+          <p class="docs-label"><strong>List installable blocks</strong></p>
+          <CodeBlock code="pnpm dlx @dicehub/phi blocks" lang="bash" />
+
+          <p class="docs-label"><strong>Install a block</strong></p>
+          <CodeBlock code="pnpm dlx @dicehub/phi add PageHeader" lang="bash" />
+        </section>
+
+        <section id="configuration" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#configuration">Configuration</a></h2>
+          <p>
+            <code>phi init</code> writes a <code>phi.json</code> in the project root. The
+            <code>blocksDir</code> sets where <code>phi add</code> copies block source, relative to the project root.
+          </p>
+          <CodeBlock code={`{\n  "schemaVersion": 1,\n  "blocksDir": "src/components/phi"\n}`} lang="json" />
+          <p>
+            Choose a different directory with <code>--blocks-dir</code>, and overwrite an existing config with
+            <code>--force</code>:
+          </p>
+          <CodeBlock code="pnpm dlx @dicehub/phi init --blocks-dir app/ui --force" lang="bash" />
+        </section>
+
+        <section id="behavior" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#behavior">Behavior</a></h2>
+          <ul>
+            <li><code>phi add</code> requires a valid <code>phi.json</code>; <code>phi blocks</code> works without one.</li>
+            <li>Block names are exact and case-sensitive.</li>
+            <li>Existing files abort the install. <code>--force</code> replaces only the files declared by that block.</li>
+            <li>The CLI never deletes files, runs package managers, executes shell commands, or downloads content.</li>
+            <li>Copied templates keep their final <code>@dicehub/phi</code> imports; no import rewriting happens.</li>
+          </ul>
+          <Callout type="info">
+            <p>
+              Installed blocks are your source code. They stay pinned to the Phi components they import, but you
+              can edit the copied files freely.
+            </p>
+          </Callout>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            {toc.map((section) => (
+              <li><a href={`#${section.id}`} data-toc-link={section.id}>{section.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

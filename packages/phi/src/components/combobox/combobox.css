@@ -1,0 +1,463 @@
+.phi-combobox {
+  display: grid;
+  width: 100%;
+  gap: 0.5rem;
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-combobox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.phi-combobox-required {
+  color: var(--phi-danger, #b42318);
+}
+
+.phi-combobox .phi-combobox-description,
+.phi-combobox .phi-combobox-error {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.375;
+}
+
+.phi-combobox .phi-combobox-description {
+  color: var(--phi-subtle, #6c7480);
+}
+
+.phi-combobox .phi-combobox-error {
+  color: var(--phi-danger, #b42318) !important;
+}
+
+.phi-combobox-control,
+.phi-combobox-value-trigger,
+.phi-combobox-multi-control {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  border: 1px solid var(--phi-line, #e3e6eb);
+  border-radius: 0.5rem;
+  background: var(--phi-control, #ffffff);
+  box-shadow: var(--phi-shadow, 0 1px 2px rgba(16, 24, 40, 0.05));
+  color: var(--phi-default, #17191f);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    background-color 120ms ease;
+}
+
+.phi-combobox-value-trigger {
+  justify-content: space-between;
+  border-style: solid;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.phi-combobox-control:focus-within,
+.phi-combobox-value-trigger:focus-visible,
+.phi-combobox-multi-control:focus-within {
+  border-color: var(--phi-focus, rgba(76, 99, 255, 0.75));
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+  outline: none;
+}
+
+.phi-combobox-control[data-invalid],
+.phi-combobox-value-trigger[data-invalid],
+.phi-combobox-multi-control[data-invalid] {
+  border-color: var(--phi-danger, #b42318);
+}
+
+.phi-combobox-control[data-disabled],
+.phi-combobox-value-trigger[data-disabled],
+.phi-combobox-multi-control[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.phi-combobox-control[data-disabled] .phi-combobox-input,
+.phi-combobox-value-trigger[data-disabled],
+.phi-combobox-multi-control[data-disabled] .phi-combobox-multi-input {
+  cursor: not-allowed;
+}
+
+.phi-combobox-control--xs,
+.phi-combobox-value-trigger--xs,
+.phi-combobox-multi-control--xs {
+  min-height: 1.5rem;
+  padding: 0 0.375rem;
+  font-size: 0.75rem;
+}
+
+.phi-combobox-control--sm,
+.phi-combobox-value-trigger--sm,
+.phi-combobox-multi-control--sm {
+  min-height: 1.75rem;
+  padding: 0 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.phi-combobox-control--base,
+.phi-combobox-value-trigger--base,
+.phi-combobox-multi-control--base {
+  min-height: 2.25rem;
+  padding: 0 0.625rem;
+  font-size: 0.875rem;
+}
+
+.phi-combobox-control--lg,
+.phi-combobox-value-trigger--lg,
+.phi-combobox-multi-control--lg {
+  min-height: 2.5rem;
+  padding: 0 0.75rem;
+  font-size: 0.9375rem;
+}
+
+.phi-combobox-input,
+.phi-combobox-search-input,
+.phi-combobox-multi-input {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1.4;
+  outline: none;
+}
+
+.phi-combobox-input::placeholder,
+.phi-combobox-search-input::placeholder,
+.phi-combobox-multi-input::placeholder,
+.phi-combobox-value-trigger__label[data-placeholder],
+.phi-combobox-value[data-placeholder] {
+  color: var(--phi-muted, #9aa2ae);
+}
+
+.phi-combobox-search-input {
+  width: calc(100% + 0.75rem);
+  flex: none;
+  min-height: 1.75rem;
+  margin: -0.375rem -0.375rem 0.5rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--phi-line, #e3e6eb);
+  border-radius: 0.375rem 0.375rem 0 0;
+  background: var(--phi-control, #ffffff);
+  box-sizing: border-box;
+  font-size: 0.8125rem;
+}
+
+.phi-combobox-search-input:focus {
+  border-color: var(--phi-focus, rgba(76, 99, 255, 0.75));
+}
+
+.phi-combobox-value-trigger__label,
+.phi-combobox-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phi-combobox-trigger,
+.phi-combobox-icon-button {
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  margin-right: -0.375rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--phi-subtle, #6c7480);
+  cursor: pointer;
+}
+
+.phi-combobox-trigger:hover,
+.phi-combobox-icon-button:hover {
+  background: var(--phi-tint, #f4f6f9);
+  color: var(--phi-default, #17191f);
+}
+
+.phi-combobox-icon-button[hidden] {
+  display: none;
+}
+
+/*
+ * Double up/down chevron shared with Select. Keep both rules in sync so the
+ * closed Select trigger and every standard Combobox trigger read as one control.
+ */
+.phi-combobox-caret-icon {
+  position: relative;
+  width: 0.72em;
+  height: 0.72em;
+}
+
+.phi-combobox-caret-icon::before,
+.phi-combobox-caret-icon::after {
+  position: absolute;
+  left: 50%;
+  width: 0.38em;
+  height: 0.38em;
+  border: solid currentColor;
+  border-width: 1.4px 1.4px 0 0;
+  content: "";
+}
+
+.phi-combobox-caret-icon::before {
+  top: 0.02em;
+  transform: translateX(-50%) rotate(-45deg);
+}
+
+.phi-combobox-caret-icon::after {
+  bottom: 0.02em;
+  transform: translateX(-50%) rotate(135deg);
+}
+
+.phi-combobox-clear-icon {
+  position: relative;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.phi-combobox-clear-icon::before,
+.phi-combobox-clear-icon::after {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  border-radius: 999px;
+  background: currentColor;
+  content: "";
+}
+
+.phi-combobox-clear-icon::before {
+  transform: rotate(45deg);
+}
+
+.phi-combobox-clear-icon::after {
+  transform: rotate(-45deg);
+}
+
+.phi-combobox-positioner {
+  --z-index: 1000;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.phi-combobox-content {
+  z-index: 1000;
+  display: flex;
+  box-sizing: border-box;
+  width: var(--reference-width, 100%);
+  min-width: min(var(--available-width, 100%), var(--reference-width, 100%));
+  max-width: var(--available-width, calc(100vw - 1rem));
+  max-height: min(calc(var(--available-height, 100vh) - 0.5rem), 24rem);
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0.375rem;
+  border-radius: 0.5rem;
+  background: var(--phi-control, #ffffff);
+  color: var(--phi-default, #17191f);
+  pointer-events: auto;
+  box-shadow:
+    0 0 0 1px var(--phi-line, rgba(0, 0, 0, 0.06)),
+    var(--phi-popover-shadow, 0 8px 24px -6px rgba(16, 24, 40, 0.12), 0 2px 4px -2px rgba(16, 24, 40, 0.06));
+  outline: none;
+}
+
+.phi-combobox-content[data-state="open"] {
+  animation: phi-combobox-in 120ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phi-combobox-content[data-state="closed"] {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.98) translateY(-3px);
+  visibility: hidden;
+  animation: phi-combobox-out 80ms ease-out;
+}
+
+.phi-combobox-list {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-padding-block: 0.375rem;
+}
+
+.phi-combobox-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.375rem;
+  color: var(--phi-default, #17191f);
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  outline: none;
+  user-select: none;
+}
+
+.phi-combobox-item[data-highlighted] {
+  background: var(--phi-overlay, rgba(16, 24, 40, 0.06));
+}
+
+.phi-combobox-item[data-disabled] {
+  color: var(--phi-muted, #9aa2ae);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.phi-combobox-item[data-disabled][data-highlighted] {
+  background: transparent;
+}
+
+.phi-combobox-item-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phi-combobox-item-indicator {
+  display: inline-flex;
+  width: 1rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--phi-default, #17191f);
+}
+
+.phi-combobox-item-indicator[hidden] {
+  visibility: hidden;
+}
+
+.phi-combobox-check-icon {
+  width: 0.35rem;
+  height: 0.6rem;
+  border: solid currentColor;
+  border-width: 0 1.75px 1.75px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.phi-combobox-group {
+  padding-top: 0.375rem;
+  border-top: 1px solid var(--phi-hairline, rgba(16, 24, 40, 0.08));
+}
+
+.phi-combobox-group:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.phi-combobox-group-label {
+  padding: 0.35rem 0.5rem;
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.phi-combobox-empty {
+  padding: 0.625rem 0.5rem;
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.8125rem;
+}
+
+.phi-combobox-multi-control {
+  gap: 0.35rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.phi-combobox-chip-list {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.phi-combobox-multi-control--input-top .phi-combobox-chip-list {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.phi-combobox-chip {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 1.5rem;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0 0.1875rem 0 0.5rem;
+  border-radius: 0.125rem;
+  background: var(--phi-overlay, rgba(16, 24, 40, 0.06));
+  box-shadow: inset 0 0 0 1px var(--phi-hairline, rgba(16, 24, 40, 0.08));
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  line-height: 1.1;
+}
+
+.phi-combobox-chip__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phi-combobox-chip__remove {
+  display: inline-flex;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--phi-subtle, #6c7480);
+  cursor: pointer;
+}
+
+.phi-combobox-chip__remove:hover {
+  background: var(--phi-overlay, rgba(16, 24, 40, 0.06));
+  color: var(--phi-default, #17191f);
+}
+
+@keyframes phi-combobox-in {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(-3px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes phi-combobox-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.98) translateY(-3px);
+  }
+}

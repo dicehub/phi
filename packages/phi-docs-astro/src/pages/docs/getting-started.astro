@@ -1,0 +1,19 @@
+---
+import DocsLayout from "../../layouts/DocsLayout.astro";
+---
+
+<DocsLayout title="Installation" description="Install Phi and run the build commands.">
+  <div class="docs-prose">
+    <h1>Installation</h1>
+    <p>Install dependencies and run the library or docs build.</p>
+
+    <h2>Install</h2>
+    <pre><code>pnpm install</code></pre>
+
+    <h2>Library</h2>
+    <pre><code>pnpm --filter @dicehub/phi build</code></pre>
+
+    <h2>Docs</h2>
+    <pre><code>pnpm --filter @dicehub/phi-docs-astro dev</code></pre>
+  </div>
+</DocsLayout>

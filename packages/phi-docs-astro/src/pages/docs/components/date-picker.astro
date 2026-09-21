@@ -1,0 +1,194 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import DatePickerDocsDemo from "../../../components/DatePickerDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import {
+  apiGroups,
+  barrelCode,
+  disabledDatesCode,
+  fullPopupCode,
+  granularCode,
+  multipleCode,
+  popupCode,
+  popupRangeCode,
+  presetsCode,
+  previewCode,
+  rangeCode,
+  rangeConstraintsCode,
+  singleCode,
+  subComponents,
+  usageCode,
+  usageLimitsCode,
+} from "../../../data/date-picker-docs";
+import "../../../styles/component-docs.css";
+
+const examples = [
+  { id: "single-date", title: "Single Date", variant: "single", code: singleCode },
+  { id: "multiple-dates", title: "Multiple Dates", variant: "multiple", code: multipleCode },
+  { id: "date-range", title: "Date Range", variant: "range", code: rangeCode },
+  { id: "range-constraints", title: "Range Constraints", variant: "range-constraints", code: rangeConstraintsCode },
+  { id: "popup", title: "Popup", variant: "popup", code: popupCode },
+  { id: "popup-range", title: "Popup Range", variant: "popup-range", code: popupRangeCode },
+  { id: "range-presets", title: "Range Presets", variant: "presets", code: presetsCode },
+  { id: "disabled-dates", title: "Disabled Dates with Usage Limits", variant: "disabled-dates", code: disabledDatesCode },
+  { id: "usage-limits", title: "Usage Limits", variant: "usage-limits", code: usageLimitsCode },
+  { id: "full-popup-example", title: "Full Popup Example", variant: "full-popup", code: fullPopupCode },
+] as const;
+---
+
+<DocsLayout title="DatePicker" description="A date and range selection component built on Ark UI DatePicker primitives.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>DatePicker</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A composable date picker for single dates, multiple dates, date ranges, and popup calendars.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--date-picker">
+              <DatePickerDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={barrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={granularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--date-picker docs-component-preview--open-space">
+              <DatePickerDocsDemo client:only="vue" variant="usage" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={usageCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {examples.map((example) => (
+            <>
+              <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+              <div class="docs-component-example">
+                <div class:list={["docs-component-preview", "docs-component-preview--date-picker", { "docs-component-preview--open-space": example.id.includes("popup") || example.id.includes("presets") }]}>
+                  <DatePickerDocsDemo client:only="vue" variant={example.variant} />
+                </div>
+                <div class="docs-component-example__code">
+                  <CodeBlock code={example.code} lang="vue" />
+                </div>
+              </div>
+            </>
+          ))}
+        </section>
+
+        <section id="sub-components" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#sub-components">Sub-components</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Component</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {subComponents.map((item) => (
+                  <tr><td><code>{item.component}</code></td><td>{item.description}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          {apiGroups.map((group) => (
+            <div class="docs-api-group">
+              <h3 id={group.id}><a class="docs-section-anchor" href={`#${group.id}`}>{group.title}</a></h3>
+              <div class="docs-api-table">
+                <table>
+                  <thead>
+                    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                  </thead>
+                  <tbody>
+                    {group.props.map((prop) => (
+                      <tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {examples.map((example) => (
+                  <li><a href={`#${example.id}`}>{example.title}</a></li>
+                ))}
+              </ul>
+            </li>
+            <li><a href="#sub-components">Sub-components</a></li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                {apiGroups.map((group) => (
+                  <li><a href={`#${group.id}`}>{group.title}</a></li>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

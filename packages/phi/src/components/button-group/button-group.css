@@ -1,0 +1,57 @@
+.phi-button-group {
+  position: relative;
+  display: inline-flex;
+  isolation: isolate;
+}
+
+/* Every child is a stacking context, so a keyboard-focused control can lift above the shared seam. */
+.phi-button-group > * {
+  position: relative;
+}
+
+/* Overlap the joining rings by one pixel so two controls share a single seam.
+   The seam side follows the group's own direction, not the child's: Ark-based children such as
+   dropdown triggers resolve `direction: ltr` on their own element, while the group still lays out
+   right to left. Physical corners keep the seam correct either way. */
+.phi-button-group:dir(ltr) > :not(:first-child) {
+  margin-left: -1px;
+}
+
+.phi-button-group:dir(rtl) > :not(:first-child) {
+  margin-right: -1px;
+}
+
+/* Flatten the corners that face a neighbouring control, including one-level wrappers such as
+   a disabled-button tooltip trigger. Wrappers keep their own position in the group. */
+.phi-button-group:dir(ltr) > :is(button, a, .phi-button):not(:first-child),
+.phi-button-group:dir(ltr) > :not(:first-child) > :is(button, a, .phi-button) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.phi-button-group:dir(rtl) > :is(button, a, .phi-button):not(:first-child),
+.phi-button-group:dir(rtl) > :not(:first-child) > :is(button, a, .phi-button) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.phi-button-group:dir(ltr) > :is(button, a, .phi-button):has(~ :is(button, a, .phi-button)),
+.phi-button-group:dir(ltr) > :is(button, a, .phi-button):has(~ * > :is(button, a, .phi-button)),
+.phi-button-group:dir(ltr) > :has(~ :is(button, a, .phi-button)) > :is(button, a, .phi-button),
+.phi-button-group:dir(ltr) > :has(~ * > :is(button, a, .phi-button)) > :is(button, a, .phi-button) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.phi-button-group:dir(rtl) > :is(button, a, .phi-button):has(~ :is(button, a, .phi-button)),
+.phi-button-group:dir(rtl) > :is(button, a, .phi-button):has(~ * > :is(button, a, .phi-button)),
+.phi-button-group:dir(rtl) > :has(~ :is(button, a, .phi-button)) > :is(button, a, .phi-button),
+.phi-button-group:dir(rtl) > :has(~ * > :is(button, a, .phi-button)) > :is(button, a, .phi-button) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.phi-button-group > :is(button, a, .phi-button):focus-visible,
+.phi-button-group > :has(:focus-visible) {
+  z-index: 1;
+}

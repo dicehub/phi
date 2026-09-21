@@ -1,0 +1,6 @@
+{
+  "name": "PageHeader",
+  "description": "Page header combining breadcrumbs, an optional title and description, tabs, and actions.",
+  "entryFile": "PageHeader.vue",
+  "dependencies": ["Tabs"]
+}

@@ -1,0 +1,190 @@
+---
+import BlockResourceListDocsDemo from "../../../components/BlockResourceListDocsDemo.vue";
+import Callout from "../../../components/Callout.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import {
+  resourceListProps,
+  resourceListUsageCode,
+} from "../../../data/block-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const completeCode = `<ResourceListPage
+  title="KV Namespaces"
+  description="Store key-value data globally with low-latency access"
+>
+  <template #icon>
+    <DatabaseIcon />
+  </template>
+  <template #usage>...</template>
+  <template #additionalContent>...</template>
+
+  <ResourceList />
+</ResourceListPage>`;
+const basicCode = `<ResourceListPage
+  title="Databases"
+  description="Manage your database instances and configurations"
+>
+  <template #icon>
+    <DatabaseIcon />
+  </template>
+
+  <ResourceList />
+</ResourceListPage>`;
+const minimalCode = `<ResourceListPage>
+  <ResourceList />
+</ResourceListPage>`;
+const usageCode = `<ResourceListPage
+  title="API Keys"
+  description="Create and manage API keys for your applications"
+>
+  <template #usage>
+    <QuickStartCard />
+  </template>
+
+  <ResourceList />
+</ResourceListPage>`;
+---
+
+<DocsLayout title="Resource List" description="A layout block for resource list pages with optional sidebar content.">
+  <div class="docs-page docs-page--component docs-page--blocks">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Resource List</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">A layout block for resource list pages with optional sidebar content.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--block docs-component-preview--resource-list">
+              <BlockResourceListDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={completeCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <p>ResourceListPage is a source block: the Phi CLI copies its source into your app so you own and can customize the code.</p>
+          <CodeBlock code="pnpm dlx @dicehub/phi add ResourceListPage" lang="bash" />
+          <p>
+            The command writes the block into the <code>blocksDir</code> from your <code>phi.json</code>, for example
+            <code>src/components/phi/resource-list-page/ResourceListPage.vue</code>. Import it from there:
+          </p>
+          <CodeBlock
+            code={`import ResourceListPage from "./components/phi/resource-list-page/ResourceListPage.vue";`}
+            lang="typescript"
+          />
+          <Callout type="info">
+            <p>Run <code>pnpm dlx @dicehub/phi init</code> once before the first block. See the <a href="/docs/cli">CLI reference</a> for every command.</p>
+          </Callout>
+
+          <Callout type="info">
+            <p><strong>Why blocks?</strong> Blocks give you full ownership of the code, allowing you to customize layouts to fit page-specific needs.</p>
+          </Callout>
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={resourceListUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="basic"><a class="docs-section-anchor" href="#basic">Basic</a></h3>
+          <p>A minimal resource list page with title, description, and icon.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--block docs-component-preview--resource-list">
+              <BlockResourceListDocsDemo client:only="vue" variant="basic" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={basicCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="minimal"><a class="docs-section-anchor" href="#minimal">Minimal</a></h3>
+          <p>Without a title, description, or icon the heading block is omitted and the page renders the list alone.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--block docs-component-preview--resource-list">
+              <BlockResourceListDocsDemo client:only="vue" variant="minimal" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={minimalCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="with-usage-sidebar"><a class="docs-section-anchor" href="#with-usage-sidebar">With Usage Sidebar</a></h3>
+          <p>Include a sidebar with usage examples or quick start guides.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--block docs-component-preview--resource-list">
+              <BlockResourceListDocsDemo client:only="vue" variant="usage" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={usageCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {resourceListProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#basic">Basic</a></li>
+                <li><a href="#with-usage-sidebar">With Usage Sidebar</a></li>
+              </ul>
+            </li>
+            <li><a href="#api-reference">API Reference</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

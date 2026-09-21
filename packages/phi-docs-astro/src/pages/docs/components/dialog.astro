@@ -1,0 +1,221 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import DialogDocsDemo from "../../../components/DialogDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import {
+  actionsCode,
+  alertCode,
+  apiGroups,
+  barrelCode,
+  basicCode,
+  comboboxCode,
+  confirmationCode,
+  dropdownCode,
+  granularCode,
+  maxWidthCode,
+  previewCode,
+  selectCode,
+  subComponents,
+  usageCode,
+} from "../../../data/dialog-docs";
+import "../../../styles/component-docs.css";
+
+const examples = [
+  { id: "basic-dialog", title: "Basic Dialog", variant: "basic", code: basicCode },
+  { id: "alert-dialog", title: 'Alert Dialog (role="alertdialog")', variant: "alert", code: alertCode },
+  { id: "confirmation-dialog", title: "Confirmation Dialog (with disablePointerDismissal)", variant: "confirmation", code: confirmationCode },
+  { id: "with-actions", title: "With Actions", variant: "actions", code: actionsCode },
+  { id: "max-width-override", title: "Max Width Override", variant: "max-width", code: maxWidthCode },
+  { id: "with-select", title: "With Select", variant: "select", code: selectCode },
+  { id: "with-combobox", title: "With Combobox", variant: "combobox", code: comboboxCode },
+  { id: "with-dropdown", title: "With Dropdown", variant: "dropdown", code: dropdownCode },
+] as const;
+---
+
+<DocsLayout title="Dialog" description="A modal dialog component built on Ark UI primitives and styled by Phi.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Dialog</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A window overlaid on the current page, rendering the content underneath inert.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--dialog">
+              <DialogDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={barrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={granularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>
+            Dialogs open near the viewport top: 32px on small screens and 64px from 640px upward. This keeps long
+            content visible and gives modal workflows a stable starting point.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--dialog">
+              <DialogDocsDemo client:only="vue" variant="usage" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={usageCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="dialog-vs-alert-dialog" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#dialog-vs-alert-dialog">Dialog vs Alert Dialog</a></h2>
+          <p>
+            Use <code>role="dialog"</code> for ordinary modal content and <code>role="alertdialog"</code> for destructive or confirmation flows.
+          </p>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Role</th><th>Use Case</th><th>Behavior</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>dialog</code></td>
+                  <td>Forms, content display, short workflows</td>
+                  <td>Dismissible by default</td>
+                </tr>
+                <tr>
+                  <td><code>alertdialog</code></td>
+                  <td>Destructive actions, critical confirmations</td>
+                  <td>Outside pointer dismissal is disabled by default</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {examples.map((example) => (
+            <>
+              <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+              <div class="docs-component-example">
+                <div class="docs-component-preview docs-component-preview--dialog">
+                  <DialogDocsDemo client:only="vue" variant={example.variant} />
+                </div>
+                <div class="docs-component-example__code">
+                  <CodeBlock code={example.code} lang="vue" />
+                </div>
+              </div>
+            </>
+          ))}
+        </section>
+
+        <section id="sub-components" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#sub-components">Sub-components</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Component</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {subComponents.map((item) => (
+                  <tr><td><code>{item.component}</code></td><td>{item.description}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          {apiGroups.map((group) => (
+            <div class="docs-api-group">
+              <h3 id={group.id}><a class="docs-section-anchor" href={`#${group.id}`}>{group.title}</a></h3>
+              <div class="docs-api-table">
+                <table>
+                  <thead>
+                    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                  </thead>
+                  <tbody>
+                    {group.props.map((prop) => (
+                      <tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#dialog-vs-alert-dialog">Dialog vs Alert Dialog</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {examples.map((example) => (
+                  <li><a href={`#${example.id}`}>{example.title}</a></li>
+                ))}
+              </ul>
+            </li>
+            <li><a href="#sub-components">Sub-components</a></li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                {apiGroups.map((group) => (
+                  <li><a href={`#${group.id}`}>{group.title}</a></li>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

@@ -1,0 +1,150 @@
+.phi-menubar {
+  isolation: isolate;
+  display: inline-flex;
+  padding-left: 1px;
+  border-radius: 0.5rem;
+  background: var(--phi-tint, #f4f6f9);
+  box-shadow:
+    0 0 0 1px var(--phi-line, #e3e6eb),
+    var(--phi-shadow, 0 1px 2px rgba(16, 24, 40, 0.05));
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.phi-menubar__option {
+  --phi-menubar-tooltip-bg: var(--phi-base, #ffffff);
+  --phi-menubar-tooltip-border: var(--phi-line, #e3e6eb);
+  --phi-menubar-tooltip-color: var(--phi-default, #17191f);
+  --phi-menubar-tooltip-shadow: 0 10px 15px -3px rgba(16, 24, 40, 0.12), 0 4px 6px -4px rgba(16, 24, 40, 0.1);
+
+  position: relative;
+  display: inline-flex;
+  width: 2.75rem;
+  height: 1.125rem;
+  align-items: center;
+  justify-content: center;
+  margin-left: -1px;
+  padding: 0;
+  border: 0;
+  border-radius: 0.375rem;
+  background: var(--phi-tint, #f4f6f9);
+  color: var(--phi-default, #17191f);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease;
+}
+
+.phi-menubar__option:first-child {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.phi-menubar__option:last-child {
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.phi-menubar__option--active {
+  z-index: 2;
+  background: var(--phi-base, #ffffff);
+  box-shadow: var(--phi-shadow, 0 1px 2px rgba(16, 24, 40, 0.05));
+}
+
+.phi-menubar__option:focus-visible {
+  z-index: 3;
+  box-shadow:
+    0 0 0 2px var(--phi-accent, #4c63ff),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-menubar__option--disabled,
+.phi-menubar__option:disabled {
+  color: var(--phi-muted, #9aa2ae);
+  cursor: not-allowed;
+}
+
+.phi-menubar__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: none;
+}
+
+.phi-menubar__option::before {
+  position: absolute;
+  bottom: calc(100% + 0.3125rem);
+  left: 50%;
+  z-index: 31;
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--phi-menubar-tooltip-bg);
+  box-shadow: 1px 1px 0 0 var(--phi-menubar-tooltip-border);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) rotate(45deg) scale(0.9);
+  transform-origin: center;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    visibility 150ms ease;
+  transition-delay: 0ms;
+  visibility: hidden;
+}
+
+.phi-menubar__option::after {
+  position: absolute;
+  bottom: calc(100% + 0.625rem);
+  left: 50%;
+  z-index: 30;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(16rem, calc(100vw - 2rem));
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  background: var(--phi-menubar-tooltip-bg);
+  box-shadow:
+    0 0 0 1px var(--phi-menubar-tooltip-border),
+    var(--phi-menubar-tooltip-shadow);
+  color: var(--phi-menubar-tooltip-color);
+  content: attr(data-tooltip);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  text-align: left;
+  transform: translateX(-50%) scale(0.9);
+  transform-origin: center bottom;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    visibility 150ms ease;
+  transition-delay: 0ms;
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.phi-menubar__option:hover::before,
+.phi-menubar__option:focus-visible::before,
+.phi-menubar__option:hover::after,
+.phi-menubar__option:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  transition-delay: 600ms;
+  visibility: visible;
+}
+
+.phi-menubar__option:hover::before,
+.phi-menubar__option:focus-visible::before {
+  transform: translateX(-50%) rotate(45deg) scale(1);
+}
+
+:where([data-phi-theme="dark"], html.phi-docs-root[data-mode="dark"]) .phi-menubar__option {
+  --phi-menubar-tooltip-shadow: var(--phi-popover-shadow, 0 14px 34px -10px rgba(0, 0, 0, 0.5));
+}

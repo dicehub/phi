@@ -1,0 +1,270 @@
+---
+import { componentRegistry } from "@dicehub/phi/registry";
+import ArkUiDocsLink from "../../components/ArkUiDocsLink.astro";
+import Callout from "../../components/Callout.astro";
+import CodeBlock from "../../components/CodeBlock.astro";
+import CopyPageControls from "../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
+import { colorsSetupCode } from "../../data/colors-docs";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+type TocItem = {
+  id: string;
+  label: string;
+  children?: TocItem[];
+};
+
+const toc: TocItem[] = [
+  {
+    id: "install-package",
+    label: "Install Package",
+    children: [{ id: "peer-dependencies", label: "Peer Dependencies" }],
+  },
+  { id: "import-components", label: "Import Components" },
+  { id: "ark-ui-primitives", label: "Ark UI Primitives" },
+  {
+    id: "import-styles",
+    label: "Import Styles",
+    children: [
+      { id: "tailwind-users", label: "Tailwind CSS (Recommended)" },
+      { id: "standalone-users", label: "Standalone CSS" },
+    ],
+  },
+  { id: "portal-stacking", label: "Portal Stacking" },
+  { id: "usage-example", label: "Usage Example" },
+  {
+    id: "blocks-vs-components",
+    label: "Blocks vs Components",
+    children: [
+      { id: "components-npm-exports", label: "Components (NPM Exports)" },
+      { id: "blocks", label: "Blocks" },
+    ],
+  },
+  { id: "utilities", label: "Utilities" },
+];
+---
+
+<DocsLayout title="Installation" description="Get started with Phi by installing the package and importing components.">
+  <div class="docs-page docs-page--installation">
+    <header id="page-header" class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Installation</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+
+          <p class="docs-page-header__lede">
+            Get started with Phi by installing the package and importing components.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--installation">
+      <!-- Install Package -->
+      <section id="install-package" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#install-package">Install Package</a></h2>
+        <p>
+          Install Phi using your preferred package manager. The current package version is{" "}
+          <code>v{componentRegistry.package.version}</code>.
+        </p>
+
+        <p class="docs-label"><strong>npm</strong></p>
+        <CodeBlock code="npm install @dicehub/phi" lang="bash" />
+
+        <p class="docs-label"><strong>pnpm</strong></p>
+        <CodeBlock code="pnpm add @dicehub/phi" lang="bash" />
+
+        <p class="docs-label"><strong>yarn</strong></p>
+        <CodeBlock code="yarn add @dicehub/phi" lang="bash" />
+
+        <h4 id="peer-dependencies"><a class="docs-section-anchor" href="#peer-dependencies">Peer Dependencies</a></h4>
+        <p>Phi expects Vue to already exist in your application.</p>
+        <CodeBlock code="pnpm add vue" lang="bash" />
+      </section>
+
+      <!-- Import Components -->
+      <section id="import-components" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#import-components">Import Components</a></h2>
+        <p>Import components from the main package or use granular imports for better tree-shaking.</p>
+
+        <p class="docs-label"><strong>Main Package Import</strong></p>
+        <CodeBlock code={`import { Button } from "@dicehub/phi";`} lang="typescript" />
+
+        <p class="docs-label"><strong>Granular Import (Recommended)</strong></p>
+        <CodeBlock code={`import { Button } from "@dicehub/phi/components/button";`} lang="typescript" />
+      </section>
+
+      <!-- Ark UI Primitives -->
+      <section id="ark-ui-primitives" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#ark-ui-primitives">Ark UI Primitives</a></h2>
+        <p>
+          Phi is built on top of <a href="https://ark-ui.com" target="_blank" rel="noopener noreferrer" class="docs-link">Ark UI</a>.
+          For advanced use cases where you need access to the underlying
+          primitives, Phi re-exports primitives with both barrel and granular imports.
+        </p>
+
+        <p class="docs-label"><strong>Barrel Import</strong></p>
+        <CodeBlock code={`import { Select, Dialog, Tabs } from "@dicehub/phi/primitives";`} lang="typescript" />
+
+        <p class="docs-label"><strong>Granular Imports (Recommended)</strong></p>
+        <CodeBlock code={`import { Select } from "@dicehub/phi/primitives/select";\nimport { Dialog } from "@dicehub/phi/primitives/dialog";`} lang="typescript" />
+
+        <Callout type="info">
+          <p>Prefer styled Phi components when available. Primitives are for custom composition and lower-level control.</p>
+        </Callout>
+      </section>
+
+      <!-- Import Styles -->
+      <section id="import-styles" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#import-styles">Import Styles</a></h2>
+        <p>Phi provides two CSS distribution options depending on your setup.</p>
+
+        <h3 id="tailwind-users"><a class="docs-section-anchor" href="#tailwind-users">For Tailwind CSS Users (Recommended)</a></h3>
+        <p>
+          If your application uses Tailwind CSS, add Phi source files to your content configuration and import
+          the styles. <strong>Import order matters</strong> — Phi styles must come before <code>@import "tailwindcss"</code> so that
+          Phi's theme tokens are registered first.
+        </p>
+
+        <Callout type="warning">
+          <p><strong>Important:</strong> Tailwind CSS v4 does not scan <code>node_modules/</code> by default. You must add a <code>@source</code> directive so Tailwind can discover the utility classes used by Phi components.</p>
+        </Callout>
+
+        <CodeBlock code={colorsSetupCode} lang="css" />
+
+        <Callout type="info">
+          <p>The <code>@source</code> path is relative to your CSS file. Adjust it based on your project structure.</p>
+        </Callout>
+
+        <h3 id="standalone-users"><a class="docs-section-anchor" href="#standalone-users">For Standalone CSS</a></h3>
+        <p>If your application does not use Tailwind CSS, use the standalone build with compiled styles.</p>
+        <CodeBlock code={`import "@dicehub/phi/styles/standalone";`} lang="typescript" />
+      </section>
+
+      <!-- Portal Stacking -->
+      <section id="portal-stacking" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#portal-stacking">Portal Stacking</a></h2>
+        <p>
+          Phi renders overlays through body-level teleports: Dialog, Select, Combobox, Dropdown, Popover, Tooltip,
+          Toasty, and CommandPalette. Phi applies its own overlay z-index values, so isolate your application root
+          to stop the application's internal stacking contexts from painting above them. A sticky header with a
+          large z-index is the usual culprit.
+        </p>
+        <CodeBlock code={`#app {\n  isolation: isolate;\n}`} lang="css" />
+        <p class="docs-label"><strong>Tailwind CSS</strong></p>
+        <CodeBlock code={`<div id="app" class="isolate">\n  <!-- application -->\n</div>`} lang="html" />
+
+        <Callout type="warning">
+          <p>Apply isolation to the application root element, never to <code>body</code>. Isolating <code>body</code> would trap the teleported overlays themselves.</p>
+        </Callout>
+
+        <Callout type="info">
+          <p>
+            Do not raise z-index values on Phi overlays and do not target the primitive library's internal data
+            attributes to fix stacking. Both break on the next library update. Fix the application root instead.
+          </p>
+        </Callout>
+
+        <p>
+          If you render overlays into a custom teleport container, that container owns its own stacking context
+          and needs the same treatment.
+        </p>
+      </section>
+
+      <!-- Usage Example -->
+      <section id="usage-example" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#usage-example">Usage Example</a></h2>
+        <p>Here is a complete minimal example using Phi components with Tailwind CSS.</p>
+
+        <p class="docs-label"><strong>CSS File (app.css)</strong></p>
+        <CodeBlock code={colorsSetupCode} lang="css" />
+
+        <p class="docs-label"><strong>Component File (App.vue)</strong></p>
+        <CodeBlock code={`<script setup lang="ts">\nimport { Button } from "@dicehub/phi";\nimport "./app.css";\n</script>\n\n<template>\n  <Button>Save</Button>\n</template>`} lang="vue" />
+      </section>
+
+      <!-- Blocks vs Components -->
+      <section id="blocks-vs-components" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#blocks-vs-components">Blocks vs Components</a></h2>
+        <p>Phi separates package exports from higher-level blocks that live inside your application codebase.</p>
+
+        <h3 id="components-npm-exports"><a class="docs-section-anchor" href="#components-npm-exports">Components (NPM Exports)</a></h3>
+        <p>
+          Components are published as NPM exports and can be imported directly from the package. These are the
+          core UI pieces like <code>Button</code>, <code>Select</code>, and <code>Dialog</code>.
+        </p>
+        <CodeBlock code={`import { Button, Dialog, Select } from "@dicehub/phi";`} lang="typescript" />
+        <p>Use components when you need consistent, pre-styled UI primitives that integrate seamlessly with your application. Components are versioned, tree-shakeable, and receive automatic updates.</p>
+
+        <h3 id="blocks"><a class="docs-section-anchor" href="#blocks">Blocks</a></h3>
+        <p>
+          Blocks are higher-level compositions for product flows. Phi ships two kinds:
+        </p>
+        <ul>
+          <li>
+            <strong>Package blocks</strong> are compiled package exports. <code>DeleteResource</code> is available today
+            and imports like any other component.
+          </li>
+          <li>
+            <strong>Source blocks</strong> such as Page Header and Resource List are copied into your application by
+            the Phi CLI. You own and can customize the installed source.
+          </li>
+        </ul>
+        <CodeBlock code={`import { DeleteResource } from "@dicehub/phi/blocks/delete-resource";`} lang="typescript" />
+        <CodeBlock code={`pnpm dlx @dicehub/phi init
+pnpm dlx @dicehub/phi add PageHeader`} lang="bash" />
+
+        <Callout type="info">
+          <p><strong>When to use source blocks:</strong></p>
+          <ul>
+            <li>You need to customise the component beyond props</li>
+            <li>You want full ownership of the implementation</li>
+            <li>You are building application-specific layouts</li>
+          </ul>
+        </Callout>
+      </section>
+
+      <!-- Utilities -->
+      <section id="utilities" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#utilities">Utilities</a></h2>
+        <p>Phi also exports utility functions for common tasks.</p>
+        <CodeBlock code={`import { cn } from "@dicehub/phi/utils";\n\n// Merge class names with Tailwind\nconst className = cn("base-class", condition && "conditional-class");`} lang="typescript" />
+      </section>
+      <DocsPageNavigation currentPath={Astro.url.pathname} />
+    </article>
+
+    <aside class="docs-page-toc" aria-label="On this page">
+      <div class="docs-page-toc__inner">
+        <span class="docs-page-toc__title">On this page</span>
+        <ul>
+          {toc.map((section) => (
+            <li>
+              <a href={`#${section.id}`} data-toc-link={section.id}>{section.label}</a>
+              {section.children?.length ? (
+                <ul>
+                  {section.children.map((child) => (
+                    <li><a href={`#${child.id}`} data-toc-link={child.id}>{child.label}</a></li>
+                  ))}
+                </ul>
+              ) : null}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+    </div>
+  </div>
+</DocsLayout>

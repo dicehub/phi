@@ -1,0 +1,433 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import ButtonDocsDemo from "../../../components/ButtonDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const barrelCode = `import { Button } from "@dicehub/phi";`;
+
+const granularCode = `import { Button } from "@dicehub/phi/components/button";`;
+
+const previewCode = `<script setup>
+import { PhPlus } from "@phosphor-icons/vue";
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <div class="flex flex-wrap items-center gap-2">
+    <Button variant="secondary">Button</Button>
+    <Button variant="secondary" shape="square" :icon="PhPlus" aria-label="Add" />
+  </div>
+</template>`;
+
+const usageCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="secondary">Click me</Button>
+</template>`;
+
+const primaryCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="primary">Primary</Button>
+</template>`;
+
+const secondaryCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="secondary">Secondary</Button>
+</template>`;
+
+const ghostCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="ghost">Ghost</Button>
+</template>`;
+
+const destructiveCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="destructive">Destructive</Button>
+</template>`;
+
+const outlineCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="outline">Outline</Button>
+</template>`;
+
+const secondaryDestructiveCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="secondary-destructive">Secondary Destructive</Button>
+</template>`;
+
+const sizesCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <div class="flex flex-wrap items-center gap-3">
+    <Button size="xs" variant="secondary">Extra Small</Button>
+    <Button size="sm" variant="secondary">Small</Button>
+    <Button size="base" variant="secondary">Base</Button>
+    <Button size="lg" variant="secondary">Large</Button>
+  </div>
+</template>`;
+
+const withIconCode = `<script setup>
+import { PhPlus } from "@phosphor-icons/vue";
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="secondary" :icon="PhPlus">Create Worker</Button>
+</template>`;
+
+const iconOnlyCode = `<script setup>
+import { PhPlus } from "@phosphor-icons/vue";
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <div class="flex flex-wrap items-center gap-3">
+    <Button variant="secondary" shape="square" :icon="PhPlus" aria-label="Add item" />
+    <Button variant="secondary" shape="circle" :icon="PhPlus" aria-label="Add item" />
+  </div>
+</template>`;
+
+const loadingCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="primary" loading>Loading...</Button>
+</template>`;
+
+const disabledCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <Button variant="secondary" disabled>Disabled</Button>
+</template>`;
+
+const titleCode = `<script setup>
+import { PhPlus } from "@phosphor-icons/vue";
+import { Button } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <div class="flex flex-wrap items-center gap-3">
+    <Button variant="secondary" title="Create a new Worker">Create Worker</Button>
+    <Button
+      variant="secondary"
+      shape="square"
+      :icon="PhPlus"
+      title="Add item"
+    />
+    <Button
+      variant="secondary"
+      shape="square"
+      :icon="PhPlus"
+      aria-label="Create item"
+      title="Add item"
+    />
+    <Button
+      variant="secondary"
+      title="You need edit access to create a Worker"
+      disabled
+    >
+      Restricted action
+    </Button>
+    <Button variant="primary" title="Worker creation is in progress" loading>
+      Creating...
+    </Button>
+  </div>
+</template>`;
+
+const linkAsButtonCode = `<script setup>
+import { PhArrowSquareOut } from "@phosphor-icons/vue";
+import { LinkButton } from "@dicehub/phi/components/button";
+</script>
+
+<template>
+  <div class="flex flex-wrap items-center gap-3">
+    <LinkButton
+      href="/docs/components/link"
+      variant="secondary"
+      title="Read the Link component documentation"
+    >
+      Read Link docs
+    </LinkButton>
+    <LinkButton href="https://example.com/docs" variant="ghost" :icon="PhArrowSquareOut" external>
+      External Docs
+    </LinkButton>
+    <LinkButton
+      href="/docs/components/link"
+      variant="secondary"
+      title="You need access to open this destination"
+      external
+      download
+      disabled
+    >
+      Restricted link
+    </LinkButton>
+  </div>
+</template>`;
+
+const props = [
+  { name: "variant", type: '"primary" | "secondary" | "ghost" | "destructive" | "secondary-destructive" | "outline"', defaultValue: '"secondary"', description: "Sets the visual style of the button." },
+  { name: "size", type: '"xs" | "sm" | "base" | "lg"', defaultValue: '"base"', description: "Sets the button height, padding, gap, and text size." },
+  { name: "shape", type: '"base" | "square" | "circle"', defaultValue: '"base"', description: "Sets the button shape. Use square or circle for icon-only actions." },
+  { name: "icon", type: "Component", defaultValue: "-", description: "Vue component rendered before the button label." },
+  { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the icon component." },
+  { name: "loading", type: "boolean", defaultValue: "false", description: "Shows a loading spinner and disables interaction." },
+  { name: "disabled", type: "boolean", defaultValue: "false", description: "Disables pointer and keyboard activation." },
+  { name: "title", type: "string | number", defaultValue: "-", description: "Shows supporting context in a tooltip and labels a Button without text when no explicit accessible name is present." },
+  { name: "type", type: '"button" | "submit" | "reset"', defaultValue: '"button"', description: "Passes the native button type." },
+  { name: "tone", type: '"accent" | "neutral" | "ghost"', defaultValue: "-", description: "Compatibility alias for older Phi buttons. Prefer variant." },
+  { name: "href", type: "string", defaultValue: "-", description: "Required LinkButton target URL. It is not rendered when the LinkButton is disabled." },
+  { name: "external", type: "boolean", defaultValue: "false", description: "LinkButton opens in a new tab with safe external link attributes." },
+];
+---
+
+<DocsLayout title="Button" description="Displays a button or a component that looks like a button.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Button</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            Displays a button or a component that looks like a button.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button">
+              <ButtonDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={barrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={granularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button">
+              <ButtonDocsDemo client:only="vue" variant="usage" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={usageCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="variants"><a class="docs-section-anchor" href="#variants">Variants</a></h3>
+
+          <h4 id="primary"><a class="docs-section-anchor" href="#primary">Primary</a></h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="primary" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={primaryCode} lang="vue" /></div>
+          </div>
+
+          <h4 id="secondary"><a class="docs-section-anchor" href="#secondary">Secondary</a></h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="secondary" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={secondaryCode} lang="vue" /></div>
+          </div>
+
+          <h4 id="ghost"><a class="docs-section-anchor" href="#ghost">Ghost</a></h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="ghost" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={ghostCode} lang="vue" /></div>
+          </div>
+
+          <h4 id="destructive"><a class="docs-section-anchor" href="#destructive">Destructive</a></h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="destructive" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={destructiveCode} lang="vue" /></div>
+          </div>
+
+          <h4 id="outline"><a class="docs-section-anchor" href="#outline">Outline</a></h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="outline" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={outlineCode} lang="vue" /></div>
+          </div>
+
+          <h4 id="secondary-destructive"><a class="docs-section-anchor" href="#secondary-destructive">Secondary Destructive</a></h4>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="secondary-destructive" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={secondaryDestructiveCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="sizes"><a class="docs-section-anchor" href="#sizes">Sizes</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="sizes" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={sizesCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="with-icon"><a class="docs-section-anchor" href="#with-icon">With Icon</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="with-icon" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={withIconCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="icon-only"><a class="docs-section-anchor" href="#icon-only">Icon Only</a></h3>
+          <p>
+            For icon-only buttons, use <code>shape="square"</code> or <code>shape="circle"</code> with
+            the <code>icon</code> prop. Provide an accessible name with <code>aria-label</code>,
+            <code>aria-labelledby</code>, or a string or numeric <code>title</code>.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="icon-only" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={iconOnlyCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="loading-state"><a class="docs-section-anchor" href="#loading-state">Loading State</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="loading" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={loadingCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="disabled-state"><a class="docs-section-anchor" href="#disabled-state">Disabled State</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="disabled" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={disabledCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="title"><a class="docs-section-anchor" href="#title">Title</a></h3>
+          <p>
+            Use the <code>title</code> prop to show a tooltip for icon-only, disabled, or loading
+            buttons, or whenever extra context helps explain the action. For a Button without text,
+            the title also becomes its accessible label unless <code>aria-label</code> or
+            <code>aria-labelledby</code> is present.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="title" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={titleCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="link-as-button"><a class="docs-section-anchor" href="#link-as-button">Link as Button</a></h3>
+          <p>
+            Use <code>LinkButton</code> when the interaction should navigate somewhere but still look
+            like a button. A disabled LinkButton renders a native disabled <code>button</code> without
+            navigation attributes. The <code>title</code> prop uses the same accessible tooltip behavior
+            as Button. LinkButton text remains selectable and copyable, including when disabled.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="link-as-button" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={linkAsButtonCode} lang="vue" /></div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#variants">Variants</a></li>
+                <li><a href="#sizes">Sizes</a></li>
+                <li><a href="#with-icon">With Icon</a></li>
+                <li><a href="#icon-only">Icon Only</a></li>
+                <li><a href="#loading-state">Loading State</a></li>
+                <li><a href="#disabled-state">Disabled State</a></li>
+                <li><a href="#title">Title</a></li>
+                <li><a href="#link-as-button">Link as Button</a></li>
+              </ul>
+            </li>
+            <li><a href="#api-reference">API Reference</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

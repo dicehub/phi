@@ -1,0 +1,4 @@
+@import "../tailwind.css";
+@import "tailwindcss" source(none);
+
+@source inline("bg-phi-base border-phi-hairline fill-phi-danger ring-phi-line text-phi-danger text-phi-default");

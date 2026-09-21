@@ -1,0 +1,5 @@
+@import "@dicehub/phi/styles/tailwind";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@source inline("bg-phi-base bg-phi-canvas bg-phi-contrast bg-phi-danger-tint bg-phi-elevated bg-phi-info-tint bg-phi-recessed bg-phi-success-tint bg-phi-warning-tint border-phi-danger border-phi-hairline border-phi-info border-phi-line border-phi-success border-phi-warning fill-phi-danger fill-phi-info fill-phi-success fill-phi-warning text-phi-danger text-phi-default text-phi-info text-phi-inverse text-phi-strong text-phi-subtle text-phi-success text-phi-warning");

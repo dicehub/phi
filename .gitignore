@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+coverage/
+.astro/
+*.tsbuildinfo
+/docs/
+playwright-report/
+test-results/
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+pnpm-debug.log*
+
+# local workspace noise
+.agents/
+.codex
+.directory
+.DS_Store

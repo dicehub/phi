@@ -1,0 +1,188 @@
+---
+import BlockDeleteResourceDocsDemo from "../../../components/BlockDeleteResourceDocsDemo.vue";
+import Callout from "../../../components/Callout.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import {
+  deleteResourceImportCode,
+  deleteResourceEvents,
+  deleteResourceInstallCode,
+  deleteResourceProps,
+  deleteResourceUsageCode,
+} from "../../../data/block-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const basicCode = `<Button variant="destructive" @click="open = true">
+  Delete Zone
+</Button>
+
+<DeleteResource
+  v-model:open="open"
+  resource-type="Zone"
+  resource-name="example.com"
+  @delete="handleDelete"
+/>`;
+const workerCode = `<DeleteResource
+  v-model:open="open"
+  resource-type="Worker"
+  resource-name="api-gateway-worker"
+  @delete="handleDelete"
+/>`;
+const errorCode = `<DeleteResource
+  v-model:open="open"
+  resource-type="Zone"
+  resource-name="example.com"
+  error-message="Something went wrong"
+  @delete="handleDelete"
+/>`;
+---
+
+<DocsLayout title="Delete Resource" description="A confirmation dialog for safely deleting resources by typing the resource name.">
+  <div class="docs-page docs-page--component docs-page--blocks">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Delete Resource</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">A confirmation dialog for safely deleting resources by typing the resource name.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--block docs-component-preview--delete-resource">
+              <BlockDeleteResourceDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={basicCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <p>DeleteResource is a package block for critical delete confirmation flows.</p>
+          <p class="docs-label"><strong>1. Install the package</strong></p>
+          <CodeBlock code={deleteResourceInstallCode} lang="bash" />
+          <p class="docs-label"><strong>2. Import the block</strong></p>
+          <CodeBlock code={deleteResourceImportCode} lang="typescript" />
+
+          <Callout type="info">
+            <p><strong>Why blocks?</strong> Blocks are composed experiences for product flows that need predictable behavior, copy, and recovery states.</p>
+          </Callout>
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={deleteResourceUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="worker-deletion"><a class="docs-section-anchor" href="#worker-deletion">Worker Deletion</a></h3>
+          <p>Works with any resource type by changing the resource type and resource name props.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--block docs-component-preview--delete-resource">
+              <BlockDeleteResourceDocsDemo client:only="vue" variant="worker" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={workerCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="error-state"><a class="docs-section-anchor" href="#error-state">Error State</a></h3>
+          <p>Use the errorMessage prop to show an error message.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--block docs-component-preview--delete-resource">
+              <BlockDeleteResourceDocsDemo client:only="vue" variant="error" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={errorCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <h3 id="props"><a class="docs-section-anchor" href="#props">Props</a></h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {deleteResourceProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="events"><a class="docs-section-anchor" href="#events">Events</a></h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Event</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {deleteResourceEvents.map((event) => (
+                  <tr>
+                    <td><code>{event.name}</code></td>
+                    <td><code>{event.type}</code></td>
+                    <td>{event.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#worker-deletion">Worker Deletion</a></li>
+                <li><a href="#error-state">Error State</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#props">Props</a></li>
+                <li><a href="#events">Events</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

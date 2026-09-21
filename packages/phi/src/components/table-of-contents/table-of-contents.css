@@ -1,0 +1,103 @@
+.phi-table-of-contents {
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-table-of-contents .phi-table-of-contents-title {
+  margin: 0 0 0.75rem;
+  color: var(--phi-subtle, #5f6673);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+.phi-table-of-contents-list,
+.phi-table-of-contents-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0;
+  border-left: 2px solid var(--phi-hairline, rgba(16, 24, 40, 0.08));
+  margin: 0;
+  list-style: none;
+}
+
+.phi-table-of-contents-item-wrapper,
+.phi-table-of-contents-group {
+  margin: 0 0 0 -2px;
+  padding: 0;
+  list-style: none;
+}
+
+.phi-table-of-contents-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.phi-table-of-contents-item {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0.125rem 0 0.125rem 1rem;
+  border: 0;
+  border-left: 2px solid transparent;
+  background: transparent;
+  color: var(--phi-subtle, #5f6673);
+  cursor: inherit;
+  font: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  text-align: left;
+  text-decoration: none;
+}
+
+button.phi-table-of-contents-item {
+  cursor: pointer;
+}
+
+.phi-table-of-contents-item__content {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  line-height: 1.25rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phi-table-of-contents-item--default:hover {
+  border-left-color: var(--phi-line, #e3e6eb);
+  color: var(--phi-default, #17191f);
+  font-weight: 500;
+}
+
+.phi-table-of-contents-item--active {
+  border-left-color: var(--phi-brand, #4c63ff);
+  color: var(--phi-default, #17191f);
+  font-weight: 500;
+}
+
+.phi-table-of-contents-item:focus-visible {
+  outline: 2px solid var(--phi-focus, rgba(76, 99, 255, 0.75));
+  outline-offset: 2px;
+}
+
+.phi-table-of-contents .phi-table-of-contents-group-label {
+  margin: 0;
+  padding: 0.125rem 0 0.125rem 1rem;
+  color: var(--phi-subtle, #5f6673);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.phi-table-of-contents-group-list .phi-table-of-contents-item {
+  padding-left: 1.75rem;
+}
+
+:where([data-phi-theme="dark"], html.phi-docs-root[data-mode="dark"]) .phi-table-of-contents {
+  --phi-hairline: rgba(235, 238, 245, 0.12);
+}

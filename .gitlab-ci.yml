@@ -1,0 +1,87 @@
+image: node:24-bookworm-slim
+
+stages:
+  - verify
+  - deploy
+
+variables:
+  NPM_CONFIG_USERCONFIG: "$CI_PROJECT_DIR/.npmrc.ci"
+  PNPM_STORE_DIR: "$CI_PROJECT_DIR/.pnpm-store"
+
+cache:
+  key:
+    files:
+      - pnpm-lock.yaml
+  paths:
+    - .pnpm-store/
+
+default:
+  tags:
+    - dicehub-com-docker
+  before_script:
+    - corepack enable
+    - corepack prepare pnpm@10.26.0 --activate
+    - pnpm config set store-dir "$PNPM_STORE_DIR"
+    - pnpm install --frozen-lockfile
+
+verify-package:
+  stage: verify
+  script:
+    - pnpm test:deployment
+    - pnpm --filter @dicehub/phi typecheck
+    - pnpm --filter @dicehub/phi test
+    - pnpm --filter @dicehub/phi validate:package
+    - pnpm --filter @dicehub/phi-docs-astro typecheck
+    - pnpm --filter @dicehub/phi-docs-astro build
+    - pnpm --filter @dicehub/phi-docs-astro test:markdown
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - packages/phi/dist/
+      - packages/phi-docs-astro/dist/
+
+verify-package-node22:
+  stage: verify
+  image: node:22.12.0-bookworm-slim
+  before_script:
+    - npm install -g pnpm@10.26.0
+    - pnpm config set store-dir "$PNPM_STORE_DIR"
+    - pnpm install --frozen-lockfile
+  script:
+    - pnpm --filter @dicehub/phi typecheck
+    - NODE_OPTIONS=--experimental-strip-types pnpm --filter @dicehub/phi test
+    - pnpm --filter @dicehub/phi validate:package
+
+verify-browser:
+  stage: verify
+  image: mcr.microsoft.com/playwright:v1.60.0-noble
+  script:
+    - pnpm --filter @dicehub/phi build
+    - pnpm --filter @dicehub/phi-docs-astro exec playwright test
+  artifacts:
+    when: on_failure
+    expire_in: 1 week
+    paths:
+      - packages/phi-docs-astro/playwright-report/
+      - packages/phi-docs-astro/test-results/
+
+deploy-docs:
+  stage: deploy
+  needs:
+    - job: verify-package
+      artifacts: true
+    - job: verify-package-node22
+  resource_group: docs-production
+  script:
+    - node scripts/cloudflare-pages.mjs ensure
+    - npx --yes wrangler@4.114.0 pages deploy packages/phi-docs-astro/dist --project-name="$CLOUDFLARE_PAGES_PROJECT" --branch="$CLOUDFLARE_PAGES_BRANCH" --force
+    - node scripts/cloudflare-pages.mjs verify
+    - node scripts/cloudflare-pages.mjs domain
+    - node scripts/cloudflare-pages.mjs dns
+    - node scripts/cloudflare-pages.mjs wait-domain
+    - node scripts/cloudflare-access.mjs ensure
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+  environment:
+    name: docs-production
+    url: https://$CLOUDFLARE_PAGES_DOMAIN

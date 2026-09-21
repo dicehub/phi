@@ -1,0 +1,26 @@
+export {
+  Tooltip as PrimitiveTooltip,
+  TooltipArrow as PrimitiveTooltipArrow,
+  TooltipArrowTip as PrimitiveTooltipArrowTip,
+  TooltipContent as PrimitiveTooltipContent,
+  TooltipContext as PrimitiveTooltipContext,
+  TooltipPositioner as PrimitiveTooltipPositioner,
+  TooltipRoot as PrimitiveTooltipRoot,
+  TooltipRootProvider as PrimitiveTooltipRootProvider,
+  TooltipTrigger as PrimitiveTooltipTrigger,
+  tooltipAnatomy as primitiveTooltipAnatomy,
+  useTooltip as usePrimitiveTooltip,
+  useTooltipContext as usePrimitiveTooltipContext,
+} from "@ark-ui/vue/tooltip";
+export type {
+  TooltipArrowProps as PrimitiveTooltipArrowProps,
+  TooltipArrowTipProps as PrimitiveTooltipArrowTipProps,
+  TooltipContentProps as PrimitiveTooltipContentProps,
+  TooltipOpenChangeDetails as PrimitiveTooltipOpenChangeDetails,
+  TooltipPositionerProps as PrimitiveTooltipPositionerProps,
+  TooltipRootProps as PrimitiveTooltipRootProps,
+  TooltipTriggerProps as PrimitiveTooltipTriggerProps,
+  TooltipTriggerValueChangeDetails as PrimitiveTooltipTriggerValueChangeDetails,
+  UseTooltipProps as PrimitiveUseTooltipProps,
+  UseTooltipReturn as PrimitiveUseTooltipReturn,
+} from "@ark-ui/vue/tooltip";

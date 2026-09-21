@@ -1,0 +1,103 @@
+.phi-inline-copy-text {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.25rem;
+  margin: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: start;
+}
+
+.phi-inline-copy-text:hover .phi-inline-copy-text__value,
+.phi-inline-copy-text:focus-visible .phi-inline-copy-text__value {
+  color: var(--phi-default, #17191f);
+}
+
+.phi-inline-copy-text:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75));
+}
+
+.phi-inline-copy-text__value {
+  min-width: 0;
+}
+
+.phi-inline-copy-text__icon {
+  display: inline-flex;
+  width: 0.875rem;
+  height: 0.875rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.phi-inline-copy-text__icon svg {
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+  fill: currentColor;
+}
+
+/* The copy icon stays hidden until the control is hovered or focused. The check icon replaces it
+   after a successful copy and stays visible until the feedback resets. */
+.phi-inline-copy-text__icon[data-icon="copy"] {
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.phi-inline-copy-text:hover .phi-inline-copy-text__icon[data-icon="copy"],
+.phi-inline-copy-text:focus-visible .phi-inline-copy-text__icon[data-icon="copy"] {
+  opacity: 1;
+}
+
+.phi-inline-copy-text__icon[data-icon="check"] {
+  display: none;
+  color: var(--phi-success, #16a34a);
+}
+
+.phi-inline-copy-text[data-copied="true"] .phi-inline-copy-text__icon[data-icon="copy"] {
+  display: none;
+}
+
+.phi-inline-copy-text[data-copied="true"] .phi-inline-copy-text__icon[data-icon="check"] {
+  display: inline-flex;
+}
+
+/* Touch devices have no hover, so the affordance is always visible. */
+@media (hover: none) {
+  .phi-inline-copy-text__icon[data-icon="copy"] {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phi-inline-copy-text__icon[data-icon="copy"] {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .phi-inline-copy-text:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+  }
+}
+
+.phi-inline-copy-text__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+  white-space: nowrap;
+}

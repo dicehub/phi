@@ -1,0 +1,271 @@
+.phi-button {
+  --phi-button-size: 2.25rem;
+  --phi-button-icon-size: 1rem;
+
+  display: inline-flex;
+  width: max-content;
+  height: var(--phi-button-size);
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0 0.75rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--phi-control, #ffffff);
+  box-shadow:
+    inset 0 0 0 1px var(--phi-line, #e3e6eb),
+    var(--phi-shadow, 0 1px 2px rgba(16, 24, 40, 0.05));
+  color: var(--phi-default, #17191f);
+  cursor: pointer;
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  white-space: nowrap;
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease,
+    opacity 120ms ease;
+}
+
+.phi-button__label {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.phi-button__icon,
+.phi-button__label svg {
+  width: var(--phi-button-icon-size);
+  height: var(--phi-button-icon-size);
+  flex: none;
+  fill: currentColor;
+}
+
+.phi-button__spinner {
+  width: var(--phi-button-icon-size);
+  height: var(--phi-button-icon-size);
+  flex: none;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 999px;
+  opacity: 0.86;
+  animation: phi-button-spin 700ms linear infinite;
+}
+
+.phi-button--xs {
+  --phi-button-size: 1.25rem;
+  --phi-button-icon-size: 0.75rem;
+
+  gap: 0.25rem;
+  padding: 0 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-button--sm {
+  --phi-button-size: 1.625rem;
+  --phi-button-icon-size: 0.875rem;
+
+  gap: 0.25rem;
+  padding: 0 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-button--lg {
+  --phi-button-size: 2.5rem;
+  --phi-button-icon-size: 1rem;
+
+  gap: 0.5rem;
+  padding: 0 1rem;
+  border-radius: 0.5rem;
+}
+
+.phi-button--square,
+.phi-button--circle {
+  width: var(--phi-button-size);
+  min-width: var(--phi-button-size);
+  padding: 0;
+}
+
+.phi-button--circle {
+  border-radius: 999px;
+}
+
+.phi-button:hover:not(:disabled) {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-button:disabled {
+  cursor: not-allowed;
+}
+
+.phi-button-tooltip-trigger {
+  display: inline-flex;
+  width: max-content;
+  flex: none;
+  cursor: not-allowed;
+  vertical-align: middle;
+}
+
+.phi-button-tooltip-trigger > .phi-button {
+  pointer-events: none;
+}
+
+.phi-button-tooltip-trigger:focus-visible {
+  outline: none;
+}
+
+.phi-button-tooltip-trigger:focus-visible > .phi-button {
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-button--primary {
+  --phi-button-emphasis-ring: color-mix(in oklch, var(--phi-accent, #4c63ff), black 10%);
+  --phi-button-emphasis-bg: color-mix(in oklch, var(--phi-accent, #4c63ff), white 30%);
+  --phi-button-emphasis-gradient-start: color-mix(in oklch, var(--phi-accent, #4c63ff), white 15%);
+  --phi-button-emphasis-gradient-end: var(--phi-accent, #4c63ff);
+
+  background: var(--phi-accent, #4c63ff);
+}
+
+.phi-button--secondary {
+  background: var(--phi-control, #ffffff);
+  box-shadow:
+    inset 0 0 0 1px var(--phi-line, #e3e6eb),
+    var(--phi-shadow, 0 1px 2px rgba(16, 24, 40, 0.05));
+  color: var(--phi-default, #17191f);
+}
+
+.phi-button--secondary:hover:not(:disabled) {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-button--ghost {
+  background: inherit;
+  box-shadow: none;
+  color: var(--phi-default, #17191f);
+}
+
+.phi-button--ghost:hover:not(:disabled) {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-button--destructive {
+  --phi-button-emphasis-ring: color-mix(in oklch, var(--phi-danger, #dc2626), black 10%);
+  --phi-button-emphasis-bg: color-mix(in oklch, var(--phi-danger, #dc2626), white 30%);
+  --phi-button-emphasis-gradient-start: color-mix(in oklch, var(--phi-danger, #dc2626), white 15%);
+  --phi-button-emphasis-gradient-end: var(--phi-danger, #dc2626);
+
+  background: var(--phi-danger, #dc2626);
+}
+
+.phi-button--primary,
+.phi-button--destructive {
+  position: relative;
+  overflow: hidden;
+  background: var(--phi-button-emphasis-bg);
+  box-shadow: 0 0 0 1px var(--phi-button-emphasis-ring);
+  color: var(--phi-accent-contrast, #ffffff);
+}
+
+.phi-button--primary::before,
+.phi-button--destructive::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    to bottom,
+    var(--phi-button-emphasis-gradient-start),
+    var(--phi-button-emphasis-gradient-end)
+  );
+  box-shadow: inset 0 1px 0 0 var(--phi-button-emphasis-bg);
+  content: "";
+}
+
+.phi-button--primary > .phi-button__icon,
+.phi-button--primary > .phi-button__label,
+.phi-button--primary > .phi-button__spinner,
+.phi-button--destructive > .phi-button__icon,
+.phi-button--destructive > .phi-button__label,
+.phi-button--destructive > .phi-button__spinner {
+  position: relative;
+  z-index: 1;
+}
+
+.phi-button--primary:hover:not(:disabled),
+.phi-button--destructive:hover:not(:disabled) {
+  --phi-button-emphasis-gradient-start: var(--phi-button-emphasis-bg);
+
+  background: var(--phi-button-emphasis-bg);
+}
+
+.phi-button--primary:active:not(:disabled),
+.phi-button--destructive:active:not(:disabled) {
+  box-shadow: 0 0 0 1px var(--phi-button-emphasis-ring);
+}
+
+.phi-button--primary:focus-visible,
+.phi-button--destructive:focus-visible {
+  box-shadow: 0 0 0 2px var(--phi-button-emphasis-ring);
+}
+
+.phi-button--secondary-destructive {
+  background: var(--phi-control, #ffffff);
+  box-shadow:
+    inset 0 0 0 1px var(--phi-line, #e3e6eb),
+    var(--phi-shadow, 0 1px 2px rgba(16, 24, 40, 0.05));
+  color: var(--phi-danger, #dc2626);
+}
+
+.phi-button--secondary-destructive:hover:not(:disabled) {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-button--outline {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--phi-line, #d7dce5);
+  color: var(--phi-default, #17191f);
+}
+
+.phi-button--outline:hover:not(:disabled) {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-button--loading,
+.phi-button:disabled {
+  opacity: 0.62;
+}
+
+.phi-button--loading {
+  pointer-events: none;
+}
+
+.phi-link-button {
+  user-select: text;
+  vertical-align: middle;
+}
+
+@keyframes phi-button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

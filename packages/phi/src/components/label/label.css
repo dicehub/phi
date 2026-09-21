@@ -1,0 +1,139 @@
+.phi-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  color: var(--phi-default, #171717);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+}
+
+.phi-label--content {
+  display: inline-flex;
+  font: inherit;
+}
+
+.phi-label__content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.phi-label__optional {
+  color: var(--phi-subtle, #6b7280);
+  font-weight: 400;
+}
+
+.phi-label__tooltip {
+  --phi-label-tooltip-bg: var(--phi-base, #ffffff);
+  --phi-label-tooltip-border: var(--phi-line, #e3e6eb);
+  --phi-label-tooltip-color: var(--phi-default, #17191f);
+  --phi-label-tooltip-shadow: 0 10px 15px -3px rgba(16, 24, 40, 0.12), 0 4px 6px -4px rgba(16, 24, 40, 0.1);
+
+  position: relative;
+  display: inline-flex;
+  width: 0.875rem;
+  height: 0.875rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0.125rem;
+  background: transparent;
+  color: var(--phi-subtle, #6c7480);
+  cursor: pointer;
+  font: inherit;
+}
+
+.phi-label__tooltip:hover,
+.phi-label__tooltip:focus-visible {
+  color: var(--phi-default, #171717);
+}
+
+.phi-label__tooltip:focus-visible {
+  outline: 2px solid var(--phi-focus, #4c63ff);
+  outline-offset: 2px;
+}
+
+.phi-label__tooltip svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+
+.phi-label__tooltip::before {
+  position: absolute;
+  bottom: calc(100% + 0.3125rem);
+  left: 50%;
+  z-index: 21;
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--phi-label-tooltip-bg);
+  box-shadow: 1px 1px 0 0 var(--phi-label-tooltip-border);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) rotate(45deg) scale(0.9);
+  transform-origin: center;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    visibility 150ms ease;
+  transition-delay: 0ms;
+  visibility: hidden;
+}
+
+.phi-label__tooltip::after {
+  position: absolute;
+  bottom: calc(100% + 0.625rem);
+  left: 50%;
+  z-index: 20;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  background: var(--phi-label-tooltip-bg);
+  box-shadow:
+    0 0 0 1px var(--phi-label-tooltip-border),
+    var(--phi-label-tooltip-shadow);
+  color: var(--phi-label-tooltip-color);
+  content: attr(data-tooltip);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  opacity: 0;
+  overflow-wrap: normal;
+  pointer-events: none;
+  text-align: left;
+  transform: translateX(-50%) scale(0.9);
+  transform-origin: center bottom;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    visibility 150ms ease;
+  transition-delay: 0ms;
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.phi-label__tooltip:hover::before,
+.phi-label__tooltip:focus-visible::before,
+.phi-label__tooltip:hover::after,
+.phi-label__tooltip:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  transition-delay: 600ms;
+  visibility: visible;
+}
+
+.phi-label__tooltip:hover::before,
+.phi-label__tooltip:focus-visible::before {
+  transform: translateX(-50%) rotate(45deg) scale(1);
+}

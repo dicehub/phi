@@ -1,0 +1,256 @@
+---
+import ClipboardTextDocsDemo from "../../../components/ClipboardTextDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const barrelCode = `import { ClipboardText } from "@dicehub/phi";`;
+
+const granularCode = `import { ClipboardText } from "@dicehub/phi/components/clipboard-text";`;
+
+const previewCode = `<script setup>
+import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
+</script>
+
+<template>
+  <ClipboardText text="0c239dd2" />
+</template>`;
+
+const usageCode = `<script setup>
+import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
+</script>
+
+<template>
+  <ClipboardText text="Copy this text" />
+</template>`;
+
+const shortCode = `<script setup>
+import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
+</script>
+
+<template>
+  <ClipboardText text="abc123" />
+</template>`;
+
+const apiKeyCode = `<script setup>
+import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
+</script>
+
+<template>
+  <ClipboardText text="sk_live_51H8..." />
+</template>`;
+
+const alternateCode = `<script setup>
+import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
+</script>
+
+<template>
+  <ClipboardText
+    text="sk_live_***********"
+    text-to-copy="sk_live_51H8_abc123"
+  />
+</template>`;
+
+const longCode = `<script setup>
+import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
+</script>
+
+<template>
+  <ClipboardText text="https://example.com/very/long/url/path" />
+</template>`;
+
+const tooltipCode = `<script setup>
+import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
+</script>
+
+<template>
+  <ClipboardText
+    text="npm install @dicehub/phi"
+    :tooltip="{ text: 'Copy', copiedText: 'Copied!', side: 'top' }"
+  />
+</template>`;
+
+const props = [
+  { name: "text", type: "string", defaultValue: "-", description: "Text displayed in the read-only field and copied by default." },
+  { name: "textToCopy", type: "string", defaultValue: "-", description: "Alternate clipboard value. Use this when displayed text is masked or shortened." },
+  { name: "size", type: '"sm" | "base" | "lg"', defaultValue: '"lg"', description: "Controls field and copy button height." },
+  { name: "tooltip", type: '{ text?: string; copiedText?: string; side?: "top" | "bottom" | "left" | "right" }', defaultValue: "-", description: "Shows a hover tooltip and copied feedback near the copy button." },
+  { name: "labels", type: "{ copyAction?: string }", defaultValue: "-", description: "Accessible labels for the copy action." },
+  { name: "@copy", type: "(details: { text: string }) => void", defaultValue: "-", description: "Event emitted after a successful copy." },
+];
+---
+
+<DocsLayout title="Clipboard Text" description="A text component with a copy-to-clipboard button.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Clipboard Text</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A text component with a copy-to-clipboard button.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--clipboard-text">
+              <ClipboardTextDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={barrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={granularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--clipboard-text">
+              <ClipboardTextDocsDemo client:only="vue" variant="usage" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={usageCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="short-text"><a class="docs-section-anchor" href="#short-text">Short Text</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--clipboard-text">
+              <ClipboardTextDocsDemo client:only="vue" variant="short" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={shortCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="api-key"><a class="docs-section-anchor" href="#api-key">API Key</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--clipboard-text">
+              <ClipboardTextDocsDemo client:only="vue" variant="api-key" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={apiKeyCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="copy-alternate-text"><a class="docs-section-anchor" href="#copy-alternate-text">Copy Alternate Text</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--clipboard-text">
+              <ClipboardTextDocsDemo client:only="vue" variant="alternate" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={alternateCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="long-text"><a class="docs-section-anchor" href="#long-text">Long Text</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--clipboard-text">
+              <ClipboardTextDocsDemo client:only="vue" variant="long" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={longCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="with-tooltip"><a class="docs-section-anchor" href="#with-tooltip">With Tooltip</a></h3>
+          <p>Shows a "Copy" tooltip on hover and one anchored "Copied!" status on click. Repeat copies restart the feedback window and bump the existing status instead of stacking another.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--clipboard-text">
+              <ClipboardTextDocsDemo client:only="vue" variant="tooltip" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={tooltipCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#short-text">Short Text</a></li>
+                <li><a href="#api-key">API Key</a></li>
+                <li><a href="#copy-alternate-text">Copy Alternate Text</a></li>
+                <li><a href="#long-text">Long Text</a></li>
+                <li><a href="#with-tooltip">With Tooltip</a></li>
+              </ul>
+            </li>
+            <li><a href="#api-reference">API Reference</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

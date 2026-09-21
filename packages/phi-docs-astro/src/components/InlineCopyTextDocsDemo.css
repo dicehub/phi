@@ -1,0 +1,50 @@
+.inline-copy-text-demo {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.inline-copy-text-demo__status {
+  min-height: 1rem;
+  margin: 0;
+  color: var(--phi-subtle, #6c7480);
+  font-family: var(--phi-font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.inline-copy-text-demo__table {
+  width: 100%;
+  max-width: 22rem;
+  border-collapse: collapse;
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  table-layout: fixed;
+}
+
+.inline-copy-text-demo__table td {
+  padding: 0.5rem 0.75rem;
+  border-top: 1px solid var(--phi-line, #e3e6eb);
+  text-align: start;
+}
+
+/* The cell must be allowed to shrink so the inline value truncates instead of widening the table. */
+.inline-copy-text-demo__cell {
+  min-width: 0;
+  max-width: 12rem;
+  overflow: hidden;
+}
+
+.inline-copy-text-demo__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.inline-copy-text-demo__narrow {
+  width: 10rem;
+  min-width: 0;
+}

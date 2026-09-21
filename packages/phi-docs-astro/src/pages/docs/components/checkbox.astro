@@ -1,0 +1,493 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CheckboxDocsDemo from "../../../components/CheckboxDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const barrelCode = `import { Checkbox } from "@dicehub/phi";`;
+
+const granularCode = `import { Checkbox } from "@dicehub/phi/components/checkbox";`;
+
+const previewCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const checked = ref(false);
+</script>
+
+<template>
+  <Checkbox
+    v-model:checked="checked"
+    label="Accept terms and conditions"
+  />
+</template>`;
+
+const usageCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const checked = ref(false);
+</script>
+
+<template>
+  <Checkbox v-model:checked="checked" label="Accept terms" />
+</template>`;
+
+const defaultCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const checked = ref(false);
+</script>
+
+<template>
+  <Checkbox v-model:checked="checked" label="Enable notifications" />
+</template>`;
+
+const checkedCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const checked = ref(true);
+</script>
+
+<template>
+  <Checkbox v-model:checked="checked" label="I agree" />
+</template>`;
+
+const indeterminateCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const checked = ref("indeterminate");
+</script>
+
+<template>
+  <Checkbox v-model:checked="checked" label="Select all" />
+</template>`;
+
+const labelFirstCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const checked = ref(false);
+</script>
+
+<template>
+  <Checkbox
+    v-model:checked="checked"
+    label="Remember me"
+    :control-first="false"
+  />
+</template>`;
+
+const disabledCode = `<script setup>
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+</script>
+
+<template>
+  <Checkbox label="Disabled option" disabled />
+</template>`;
+
+const errorCode = `<script setup>
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+</script>
+
+<template>
+  <Checkbox label="Invalid option" variant="error" />
+</template>`;
+
+const groupCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const preferences = ref(["email"]);
+</script>
+
+<template>
+  <Checkbox.Group
+    v-model="preferences"
+    legend="Email preferences"
+    description="Choose how you'd like to receive updates"
+  >
+    <Checkbox.Item value="email" label="Email notifications" />
+    <Checkbox.Item value="sms" label="SMS notifications" />
+    <Checkbox.Item value="push" label="Push notifications" />
+  </Checkbox.Group>
+</template>`;
+
+const groupErrorCode = `<script setup>
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+</script>
+
+<template>
+  <Checkbox.Group
+    legend="Required preferences"
+    error="Please select at least one notification method"
+    :model-value="[]"
+  >
+    <Checkbox.Item value="email" label="Email" variant="error" />
+    <Checkbox.Item value="sms" label="SMS" variant="error" />
+  </Checkbox.Group>
+</template>`;
+
+const legendSrOnlyCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const preferences = ref(["email"]);
+</script>
+
+<template>
+  <Checkbox.Group v-model="preferences">
+    <Checkbox.Legend class="phi-sr-only">
+      Notification preferences
+    </Checkbox.Legend>
+    <Checkbox.Item value="email" label="Email notifications" />
+    <Checkbox.Item value="sms" label="SMS notifications" />
+    <Checkbox.Item value="push" label="Push notifications" />
+  </Checkbox.Group>
+</template>`;
+
+const legendCustomCode = `<script setup>
+import { ref } from "vue";
+import { Checkbox } from "@dicehub/phi/components/checkbox";
+
+const preferences = ref(["email"]);
+</script>
+
+<template>
+  <Checkbox.Group v-model="preferences">
+    <Checkbox.Legend style="font-size: 0.875rem; font-weight: 400; color: var(--phi-subtle);">
+      Notification preferences
+    </Checkbox.Legend>
+    <Checkbox.Item value="email" label="Email notifications" />
+    <Checkbox.Item value="sms" label="SMS notifications" />
+    <Checkbox.Item value="push" label="Push notifications" />
+  </Checkbox.Group>
+</template>`;
+
+const checkboxProps = [
+  { name: "variant", type: '"default" | "error"', defaultValue: '"default"', description: "Sets the visual variant. Use error for validation styling." },
+  { name: "label", type: "string", defaultValue: "-", description: "Visible label rendered next to the checkbox." },
+  { name: "controlFirst", type: "boolean", defaultValue: "true", description: "Places the checkbox before the label. Set false for label-first layout." },
+  { name: "checked", type: 'boolean | "indeterminate"', defaultValue: "-", description: "Controlled checked state. Use v-model:checked in Vue." },
+  { name: "defaultChecked", type: 'boolean | "indeterminate"', defaultValue: "-", description: "Initial checked state for uncontrolled usage." },
+  { name: "indeterminate", type: "boolean", defaultValue: "-", description: "Compatibility prop that renders the mixed state." },
+  { name: "disabled", type: "boolean", defaultValue: "-", description: "Disables pointer and keyboard interaction." },
+  { name: "name", type: "string", defaultValue: "-", description: "Native checkbox name for form submission." },
+  { name: "required", type: "boolean", defaultValue: "-", description: "Marks the checkbox as required." },
+];
+
+const groupProps = [
+  { name: "legend", type: "string", defaultValue: "-", description: "Visible legend for the checkbox group." },
+  { name: "description", type: "string", defaultValue: "-", description: "Helper text displayed below the group." },
+  { name: "error", type: "string", defaultValue: "-", description: "Validation message. Replaces description when present." },
+  { name: "modelValue", type: "string[]", defaultValue: "-", description: "Controlled selected values. Use v-model in Vue." },
+  { name: "defaultValue", type: "string[]", defaultValue: "[]", description: "Initial selected values for uncontrolled usage." },
+  { name: "disabled", type: "boolean", defaultValue: "-", description: "Disables every item in the group." },
+  { name: "controlFirst", type: "boolean", defaultValue: "true", description: "Sets the label/control order for child items." },
+  { name: "name", type: "string", defaultValue: "-", description: "Native checkbox name passed to group items." },
+];
+
+const legendProps = [
+  { name: "default slot", type: "unknown", defaultValue: "-", description: "Legend content. Pass class or style for custom presentation." },
+];
+
+const itemProps = [
+  { name: "value", type: "string", defaultValue: "-", description: "Item value used by Checkbox.Group." },
+  { name: "label", type: "string", defaultValue: "-", description: "Visible label rendered next to the checkbox item." },
+  { name: "variant", type: '"default" | "error"', defaultValue: '"default"', description: "Sets the visual variant for the item." },
+  { name: "checked", type: 'boolean | "indeterminate"', defaultValue: "-", description: "Controlled checked state when used outside a group." },
+  { name: "disabled", type: "boolean", defaultValue: "-", description: "Disables this checkbox item." },
+];
+---
+
+<DocsLayout title="Checkbox" description="A control that allows the user to toggle between checked and not checked.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Checkbox</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A control that allows the user to toggle between checked and not checked.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox">
+              <CheckboxDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={barrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={granularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox">
+              <CheckboxDocsDemo client:only="vue" variant="usage" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={usageCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="default"><a class="docs-section-anchor" href="#default">Default</a></h3>
+          <p>
+            Checkbox with built-in label. The label automatically displays in a horizontal layout.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="default" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={defaultCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="checked"><a class="docs-section-anchor" href="#checked">Checked</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="checked" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={checkedCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="indeterminate"><a class="docs-section-anchor" href="#indeterminate">Indeterminate</a></h3>
+          <p>Used for select all patterns when some but not all items are selected.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="indeterminate" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={indeterminateCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="label-first-layout"><a class="docs-section-anchor" href="#label-first-layout">Label First Layout</a></h3>
+          <p>Use <code>:control-first="false"</code> to place the label before the checkbox.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="label-first" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={labelFirstCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="disabled"><a class="docs-section-anchor" href="#disabled">Disabled</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="disabled" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={disabledCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="error"><a class="docs-section-anchor" href="#error">Error</a></h3>
+          <p>Error variant provides visual styling. For error messages, use Checkbox.Group.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="error" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={errorCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="checkbox-group"><a class="docs-section-anchor" href="#checkbox-group">Checkbox Group</a></h3>
+          <p>Group multiple checkboxes with a legend, description, and shared error messages.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="group" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={groupCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="checkbox-group-with-error"><a class="docs-section-anchor" href="#checkbox-group-with-error">Checkbox Group with Error</a></h3>
+          <p>Show validation errors at the group level. Error replaces description when present.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="group-error" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={groupErrorCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="visually-hidden-legend"><a class="docs-section-anchor" href="#visually-hidden-legend">Visually Hidden Legend</a></h3>
+          <p>
+            Use <code>Checkbox.Legend</code> with <code>class="phi-sr-only"</code> to keep the legend accessible
+            to screen readers while hiding it visually.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="legend-sr-only" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={legendSrOnlyCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="custom-legend-styling"><a class="docs-section-anchor" href="#custom-legend-styling">Custom Legend Styling</a></h3>
+          <p>
+            <code>Checkbox.Legend</code> accepts normal Vue attributes for custom legend presentation.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="legend-custom" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={legendCustomCode} lang="vue" /></div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+
+          <div class="docs-api-group">
+            <h3 id="checkbox-api"><a class="docs-section-anchor" href="#checkbox-api">Checkbox</a></h3>
+            <p>Single checkbox component with built-in label and horizontal layout.</p>
+            <div class="docs-api-table">
+              <table>
+                <thead>
+                  <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  {checkboxProps.map((prop) => (
+                    <tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="docs-api-group">
+            <h3 id="checkbox-group-api"><a class="docs-section-anchor" href="#checkbox-group-api">Checkbox.Group</a></h3>
+            <p>Wrapper for multiple checkboxes with legend, description, and error support.</p>
+            <div class="docs-api-table">
+              <table>
+                <thead>
+                  <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  {groupProps.map((prop) => (
+                    <tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="docs-api-group">
+            <h3 id="checkbox-legend-api"><a class="docs-section-anchor" href="#checkbox-legend-api">Checkbox.Legend</a></h3>
+            <p>Composable legend sub-component for Checkbox.Group.</p>
+            <div class="docs-api-table">
+              <table>
+                <thead>
+                  <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  {legendProps.map((prop) => (
+                    <tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="docs-api-group">
+            <h3 id="checkbox-item-api"><a class="docs-section-anchor" href="#checkbox-item-api">Checkbox.Item</a></h3>
+            <p>Individual checkbox within Checkbox.Group.</p>
+            <div class="docs-api-table">
+              <table>
+                <thead>
+                  <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                </thead>
+                <tbody>
+                  {itemProps.map((prop) => (
+                    <tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section id="accessibility" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#accessibility">Accessibility</a></h2>
+
+          <h3 id="label-requirement"><a class="docs-section-anchor" href="#label-requirement">Label Requirement</a></h3>
+          <p>
+            Single checkboxes require a <code>label</code>, default slot, <code>aria-label</code>, or
+            <code>aria-labelledby</code> for an accessible name.
+          </p>
+
+          <h3 id="keyboard-navigation"><a class="docs-section-anchor" href="#keyboard-navigation">Keyboard Navigation</a></h3>
+          <p>
+            <kbd>Space</kbd> toggles the checkbox. <kbd>Tab</kbd> moves focus between checkboxes.
+          </p>
+
+          <h3 id="screen-readers"><a class="docs-section-anchor" href="#screen-readers">Screen Readers</a></h3>
+          <p>
+            Checkbox.Group renders a semantic <code>fieldset</code> and supports a visible or visually hidden
+            legend.
+          </p>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#default">Default</a></li>
+                <li><a href="#checked">Checked</a></li>
+                <li><a href="#indeterminate">Indeterminate</a></li>
+                <li><a href="#label-first-layout">Label First Layout</a></li>
+                <li><a href="#disabled">Disabled</a></li>
+                <li><a href="#error">Error</a></li>
+                <li><a href="#checkbox-group">Checkbox Group</a></li>
+                <li><a href="#checkbox-group-with-error">Checkbox Group with Error</a></li>
+                <li><a href="#visually-hidden-legend">Visually Hidden Legend</a></li>
+                <li><a href="#custom-legend-styling">Custom Legend Styling</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#checkbox-api">Checkbox</a></li>
+                <li><a href="#checkbox-group-api">Checkbox.Group</a></li>
+                <li><a href="#checkbox-legend-api">Checkbox.Legend</a></li>
+                <li><a href="#checkbox-item-api">Checkbox.Item</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#accessibility">Accessibility</a>
+              <ul>
+                <li><a href="#label-requirement">Label Requirement</a></li>
+                <li><a href="#keyboard-navigation">Keyboard Navigation</a></li>
+                <li><a href="#screen-readers">Screen Readers</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

@@ -1,0 +1,202 @@
+---
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import ToolbarDocsDemo from "../../../components/ToolbarDocsDemo.vue";
+import {
+  toolbarBarrelCode,
+  toolbarComboboxCompositionCode,
+  toolbarExamples,
+  toolbarGranularCode,
+  toolbarPreviewCode,
+  toolbarProps,
+  toolbarSelectCompositionCode,
+  toolbarUsageCode,
+} from "../../../data/toolbar-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const getDescriptionParts = (description: string) =>
+  description.split(/(`[^`]+`)/g).map((part) => ({
+    kind: part.startsWith("`") && part.endsWith("`") ? "code" : "text",
+    value: part.startsWith("`") && part.endsWith("`") ? part.slice(1, -1) : part,
+  }));
+---
+
+<DocsLayout title="Toolbar" description="Compose explicit toolbar controls into one clean grouped card.">
+  <div class="docs-page docs-page--component docs-page--toolbar">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Toolbar</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            Compose explicit toolbar controls into one clean grouped card.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--toolbar">
+              <ToolbarDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={toolbarPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={toolbarBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={toolbarGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>
+            Use <code>Toolbar</code> when multiple controls should read as one compact toolbar or filter card. Use
+            <code>Toolbar.Button</code>, <code>Toolbar.Link</code>, <code>Toolbar.Input</code>, and <code>Toolbar.InputGroup</code> to opt
+            controls into toolbar sizing and grouped presentation. Compose Select and Combobox triggers with those
+            controls instead of rebuilding their popup behavior.
+          </p>
+          <CodeBlock code={toolbarUsageCode} lang="vue" />
+        </section>
+
+        <section id="behavior" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#behavior">Behavior</a></h2>
+          <p>Toolbar item components intentionally own grouped control presentation:</p>
+          <ul>
+            <li><code>Toolbar.Button</code>, <code>Toolbar.Link</code>, <code>Toolbar.Input</code>, and <code>Toolbar.InputGroup</code> inherit the toolbar <code>size</code>.</li>
+            <li><code>Toolbar.Button</code> always renders with quiet toolbar button styling.</li>
+            <li><code>Toolbar.Link</code> renders a <code>LinkButton</code> with quiet styling and participates in arrow-key navigation.</li>
+            <li><code>Toolbar.InputGroup</code> passes props directly to <code>InputGroup</code> with the toolbar <code>size</code>.</li>
+            <li>The Select <code>trigger</code> slot forwards Ark UI trigger behavior to its single child.</li>
+            <li><code>Combobox.TriggerInput</code> and <code>Combobox.TriggerValue</code> forward behavior when <code>as-child</code> is set.</li>
+            <li>Composed popup controls keep selection, filtering, form state, and popup positioning.</li>
+            <li>Use <code>aria-label</code> or <code>aria-labelledby</code> for a composed popup control. Keep field labels and helper text outside the compact toolbar.</li>
+            <li>Adjacent toolbar items share borders and only the outer corners are rounded.</li>
+            <li>Arrow keys move between items. In an editable input, left and right arrows first move the text cursor until it reaches an edge.</li>
+          </ul>
+        </section>
+
+        <section id="examples" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {toolbarExamples.map((example) => (
+            <Fragment>
+              <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+              <p>
+                {
+                  getDescriptionParts(example.description).map((part) =>
+                    part.kind === "code" ? <code>{part.value}</code> : part.value,
+                  )
+                }
+              </p>
+              <div class="docs-component-example">
+                <div class="docs-component-preview docs-component-preview--toolbar">
+                  <ToolbarDocsDemo client:only="vue" variant={example.variant} />
+                </div>
+                <div class="docs-component-example__code">
+                  <CodeBlock code={example.code} lang="vue" />
+                </div>
+              </div>
+            </Fragment>
+          ))}
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop / Slot</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {toolbarProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="select-composition"><a class="docs-section-anchor" href="#select-composition">Select composition</a></h3>
+          <p>
+            Put one <code>Toolbar.Button</code> in the named Select <code>trigger</code> slot. The slot provides
+            <code>label</code>, <code>value</code>, <code>items</code>, <code>empty</code>, and <code>open</code> state.
+          </p>
+          <CodeBlock code={toolbarSelectCompositionCode} lang="vue" />
+
+          <h3 id="combobox-composition"><a class="docs-section-anchor" href="#combobox-composition">Combobox composition</a></h3>
+          <p>
+            Set <code>as-child</code> on an editable or value trigger. Give it exactly one toolbar control so Ark UI
+            can merge the Combobox attributes and event handlers into that control.
+          </p>
+          <CodeBlock code={toolbarComboboxCompositionCode} lang="vue" />
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#behavior">Behavior</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#select">Select</a></li>
+                <li><a href="#combobox">Combobox</a></li>
+                <li><a href="#input-shorthand">Input Shorthand</a></li>
+                <li><a href="#input-group">Input Group</a></li>
+                <li><a href="#sizes">Sizes</a></li>
+                <li><a href="#button-actions">Button Actions</a></li>
+                <li><a href="#links">Links</a></li>
+                <li><a href="#accessible-labels">Accessible Labels</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#select-composition">Select composition</a></li>
+                <li><a href="#combobox-composition">Combobox composition</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

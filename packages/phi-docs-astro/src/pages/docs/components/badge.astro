@@ -1,0 +1,277 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import BadgeDocsDemo from "../../../components/BadgeDocsDemo.vue";
+import Callout from "../../../components/Callout.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const importCode = `import { Badge } from "@dicehub/phi";
+// or use the component entrypoint:
+// import { Badge } from "@dicehub/phi/components/badge";`;
+
+const previewCode = `<script setup>
+import { Badge } from "@dicehub/phi/components/badge";
+</script>
+
+<template>
+  <div class="flex flex-wrap items-center gap-2">
+    <Badge variant="primary">Primary</Badge>
+    <Badge variant="secondary">Secondary</Badge>
+    <Badge variant="error">Error</Badge>
+    <Badge variant="success">Success</Badge>
+    <Badge variant="warning">Warning</Badge>
+    <Badge variant="info">Info</Badge>
+    <Badge variant="outline">Outline</Badge>
+    <Badge variant="beta">Beta</Badge>
+  </div>
+</template>`;
+
+const usageCode = `<script setup>
+import { Badge } from "@dicehub/phi/components/badge";
+</script>
+
+<template>
+  <Badge variant="secondary">New</Badge>
+  <Badge variant="success">Active</Badge>
+  <Badge variant="beta">Beta</Badge>
+</template>`;
+
+const semanticCode = previewCode;
+
+const colorsCode = `<script setup>
+import { Badge } from "@dicehub/phi/components/badge";
+</script>
+
+<template>
+  <div class="flex flex-wrap items-center gap-2">
+    <Badge variant="neutral">Neutral</Badge>
+    <Badge variant="red">Red</Badge>
+    <Badge variant="orange">Orange</Badge>
+    <Badge variant="green">Green</Badge>
+    <Badge variant="teal">Teal</Badge>
+    <Badge variant="blue">Blue</Badge>
+    <Badge variant="purple">Purple</Badge>
+    <Badge variant="teal-subtle">Teal subtle</Badge>
+  </div>
+</template>`;
+
+const sentenceCode = `<script setup>
+import { Badge } from "@dicehub/phi/components/badge";
+</script>
+
+<template>
+  <p>
+    Workers <Badge variant="secondary">New</Badge>
+  </p>
+</template>`;
+
+const iconCode = `<script setup>
+import { PhCheckCircle } from "@phosphor-icons/vue";
+import { Badge } from "@dicehub/phi/components/badge";
+</script>
+
+<template>
+  <Badge :icon="PhCheckCircle" :icon-props="{ weight: 'fill' }" variant="success">
+    Verified
+  </Badge>
+</template>`;
+
+const linkedCode = `<script setup>
+import { Badge } from "@dicehub/phi/components/badge";
+import { Link } from "@dicehub/phi/components/link";
+</script>
+
+<template>
+  <Link href="/docs/components/badge#api" variant="plain">
+    <Badge variant="outline">View API</Badge>
+  </Link>
+</template>`;
+
+const props = [
+  {
+    name: "icon",
+    type: "Component",
+    defaultValue: "-",
+    description: "Renders this icon component before the badge label.",
+  },
+  {
+    name: "iconProps",
+    type: "Record<string, unknown>",
+    defaultValue: "{}",
+    description: "Passes attributes to the icon component.",
+  },
+  {
+    name: "variant",
+    type: '"primary" | "secondary" | "error" | "warning" | "success" | "info" | "outline" | "beta" | "red" | "orange" | "green" | "teal" | "teal-subtle" | "blue" | "purple" | "neutral" | "destructive"',
+    defaultValue: '"primary"',
+    description: "Sets the badge color and semantic intent.",
+  },
+];
+---
+
+<DocsLayout title="Badge" description="Displays a small label for status, categorization, or metadata.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Badge</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A compact status label for metadata, categories, and state markers.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#preview">Preview</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BadgeDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="import" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#import">Import</a></h2>
+          <p>Use the root package while prototyping, or the component entrypoint for granular imports.</p>
+          <CodeBlock code={importCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={usageCode} lang="vue" />
+          <Callout>
+            <p>
+              Badge renders a native <code>span</code>. Use it for short labels, not as an interactive control.
+              Wrap it in <code>Link</code> when it navigates.
+            </p>
+          </Callout>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="semantic"><a class="docs-section-anchor" href="#semantic">Semantic Variants</a></h3>
+          <p>Use semantic variants when the label communicates status or intent.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BadgeDocsDemo client:only="vue" variant="semantic" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={semanticCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="colors"><a class="docs-section-anchor" href="#colors">Color Variants</a></h3>
+          <p>Use color variants when the label is categorical and the meaning comes from nearby content.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BadgeDocsDemo client:only="vue" variant="colors" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={colorsCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="sentence"><a class="docs-section-anchor" href="#sentence">In A Sentence</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BadgeDocsDemo client:only="vue" variant="sentence" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={sentenceCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="icon"><a class="docs-section-anchor" href="#icon">With An Icon</a></h3>
+          <p>Pass a Vue icon component through <code>icon</code> to render it before the label.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BadgeDocsDemo client:only="vue" variant="icon" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={iconCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="linked"><a class="docs-section-anchor" href="#linked">Linked Badge</a></h3>
+          <p>Wrap a Badge in <code>Link</code> to make it navigable. The badge gains a ring when its link is hovered.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BadgeDocsDemo client:only="vue" variant="linked" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={linkedCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api">API</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {props.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#preview">Preview</a></li>
+            <li><a href="#import">Import</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#semantic">Semantic variants</a></li>
+            <li><a href="#colors">Color variants</a></li>
+            <li><a href="#sentence">In a sentence</a></li>
+            <li><a href="#icon">With an icon</a></li>
+            <li><a href="#linked">Linked badge</a></li>
+            <li><a href="#api">API</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

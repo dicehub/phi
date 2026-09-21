@@ -1,0 +1,335 @@
+.phi-tabs {
+  --phi-tabs-overflow-surface: var(--phi-base, #ffffff);
+  position: relative;
+  min-width: 0;
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-weight: 500;
+  isolation: isolate;
+}
+
+.phi-tabs--segmented {
+  --phi-tabs-overflow-surface: var(--phi-tint, #f4f6f9);
+  width: max-content;
+  max-width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 1px var(--phi-hairline, rgba(16, 24, 40, 0.08));
+}
+
+.phi-tabs__background {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  z-index: 0;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  background: var(--phi-tint, #f4f6f9);
+  transform: translateY(-50%);
+}
+
+.phi-tabs--sm .phi-tabs__background {
+  height: 1.625rem;
+  border-radius: 0.375rem;
+}
+
+.phi-tabs__list {
+  --scroll-end-fade-width: 0px;
+  --scroll-fade-width: 3rem;
+  --scroll-start-fade-width: 0px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  flex-shrink: 1;
+  align-items: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: var(--scroll-fade-width);
+  scrollbar-width: none;
+}
+
+.phi-tabs__list--segmented {
+  border-radius: 0.5rem;
+  background: var(--phi-tint, #f4f6f9);
+  padding-inline: 0.125rem;
+}
+
+.phi-tabs__list::-webkit-scrollbar {
+  display: none;
+}
+
+.phi-tabs__list--underline {
+  gap: 1rem;
+  border-bottom: 1px solid var(--phi-hairline, rgba(16, 24, 40, 0.08));
+  padding-bottom: 0.5rem;
+}
+
+.phi-tabs__list--base.phi-tabs__list--segmented {
+  height: 2.25rem;
+}
+
+.phi-tabs__list--sm.phi-tabs__list--segmented {
+  height: 1.625rem;
+  border-radius: 0.375rem;
+}
+
+.phi-tabs__list--base.phi-tabs__list--underline {
+  height: 1.875rem;
+}
+
+.phi-tabs__list--sm.phi-tabs__list--underline {
+  height: 1.625rem;
+}
+
+.phi-tabs__tab {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--phi-subtle, #6c7480);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: 0;
+  outline: none;
+  text-decoration: none;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    box-shadow 120ms ease;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.phi-tabs__tab--base {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.phi-tabs__tab--sm {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-tabs__tab--segmented {
+  margin-block: 0.125rem;
+}
+
+.phi-tabs__tab--segmented.phi-tabs__tab--base {
+  border-radius: 0.375rem;
+  padding-inline: 0.625rem;
+}
+
+.phi-tabs__tab--segmented.phi-tabs__tab--sm {
+  border-radius: 0.25rem;
+  padding-inline: 0.5rem;
+}
+
+.phi-tabs__tab--underline.phi-tabs__tab--base {
+  border-radius: 0.375rem;
+  padding: 0.75rem 0.5rem;
+}
+
+.phi-tabs__tab--underline.phi-tabs__tab--sm {
+  border-radius: 0.25rem;
+  padding: 0.625rem 0.375rem;
+}
+
+.phi-tabs__tab:hover {
+  color: var(--phi-default, #17191f);
+}
+
+.phi-tabs__tab--underline:hover {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-tabs__tab[aria-selected="true"],
+.phi-tabs__tab[data-selected] {
+  color: var(--phi-default, #17191f);
+}
+
+.phi-tabs__tab--underline[aria-selected="true"],
+.phi-tabs__tab--underline[data-selected] {
+  font-weight: 500;
+}
+
+.phi-tabs__tab:focus-visible {
+  box-shadow: 0 0 0 2px var(--phi-focus, rgba(76, 99, 255, 0.75));
+}
+
+.phi-tabs__tab--segmented:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--phi-focus, rgba(76, 99, 255, 0.75));
+}
+
+.phi-tabs__tab[data-disabled],
+.phi-tabs__tab:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.phi-tabs__list[data-overflowing] {
+  cursor: grab;
+}
+
+.phi-tabs__list[data-dragging],
+.phi-tabs__list[data-dragging] .phi-tabs__tab {
+  cursor: grabbing;
+}
+
+.phi-tabs__list--segmented[data-scroll-start] {
+  --scroll-start-fade-width: var(--scroll-fade-width, 3rem);
+}
+
+.phi-tabs__list--segmented[data-scroll-end] {
+  --scroll-end-fade-width: var(--scroll-fade-width, 3rem);
+}
+
+.phi-tabs__overflow-control {
+  position: absolute;
+  inset-block: 0;
+  z-index: 3;
+  display: flex;
+  width: 2rem;
+  align-items: center;
+  border: 0;
+  margin: 0;
+  color: var(--phi-subtle, #6c7480);
+  cursor: pointer;
+  opacity: 0;
+  padding: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.phi-tabs__overflow-control--start {
+  inset-inline-start: 0;
+  justify-content: flex-start;
+  padding-inline-start: 0.25rem;
+  background: linear-gradient(
+    to right,
+    var(--phi-tabs-overflow-surface) 18%,
+    color-mix(in srgb, var(--phi-tabs-overflow-surface) 92%, transparent) 58%,
+    transparent 100%
+  );
+}
+
+.phi-tabs__overflow-control--end {
+  inset-inline-end: 0;
+  justify-content: flex-end;
+  padding-inline-end: 0.25rem;
+  background: linear-gradient(
+    to left,
+    var(--phi-tabs-overflow-surface) 18%,
+    color-mix(in srgb, var(--phi-tabs-overflow-surface) 92%, transparent) 58%,
+    transparent 100%
+  );
+}
+
+.phi-tabs--segmented.phi-tabs--base .phi-tabs__overflow-control {
+  width: 2.5rem;
+}
+
+.phi-tabs__overflow-control[data-visible] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.phi-tabs__overflow-control-icon {
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  background: transparent;
+  box-shadow: none;
+  transition:
+    box-shadow 120ms ease,
+    color 120ms ease;
+}
+
+.phi-tabs--sm .phi-tabs__overflow-control-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 0.25rem;
+}
+
+.phi-tabs__overflow-control-icon svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.phi-tabs__overflow-control:hover .phi-tabs__overflow-control-icon {
+  color: var(--phi-default, #17191f);
+}
+
+.phi-tabs__overflow-control:focus-visible {
+  outline: none;
+}
+
+.phi-tabs__overflow-control:focus-visible .phi-tabs__overflow-control-icon {
+  color: var(--phi-default, #17191f);
+  box-shadow:
+    0 0 0 1px var(--phi-base, #ffffff),
+    0 0 0 3px var(--phi-focus, rgba(76, 99, 255, 0.75));
+}
+
+.phi-tabs__indicator {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  transition:
+    left 200ms ease,
+    opacity 160ms ease,
+    top 200ms ease,
+    width 200ms ease;
+}
+
+.phi-tabs__indicator[data-rendered="false"] {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.phi-tabs__indicator--segmented {
+  top: var(--top, 0.125rem);
+  width: var(--width, 0);
+  height: var(--height, calc(100% - 0.25rem));
+  border-radius: 0.375rem;
+  background: var(--phi-base, #ffffff);
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.08),
+    0 0 0 1px var(--phi-line, #e3e6eb);
+}
+
+.phi-tabs__indicator--segmented.phi-tabs__indicator--sm {
+  border-radius: 0.25rem;
+}
+
+.phi-tabs__indicator--underline {
+  bottom: 0;
+  width: var(--width, 0);
+  height: 0.125rem;
+  border-radius: 999px;
+  background: var(--phi-accent, #4c63ff);
+}
+
+.phi-tabs__list--segmented[data-overflowing] {
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent 0,
+      black var(--scroll-start-fade-width, 0px),
+      black calc(100% - var(--scroll-end-fade-width, 0px)),
+      transparent 100%
+    );
+}
+
+[data-phi-theme="dark"] .phi-tabs__indicator--segmented {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.24),
+    0 0 0 1px var(--phi-line, #303746);
+}

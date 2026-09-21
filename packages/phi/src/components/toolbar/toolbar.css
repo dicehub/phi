@@ -1,0 +1,135 @@
+.phi-toolbar {
+  --phi-toolbar-radius: 0.5rem;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: stretch;
+  overflow: visible;
+  border-radius: var(--phi-toolbar-radius);
+  background: var(--phi-control, #ffffff);
+  box-shadow:
+    0 0 0 1px var(--phi-line, #e3e6eb),
+    var(--phi-shadow, 0 1px 2px rgba(16, 24, 40, 0.05));
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-toolbar--xs {
+  --phi-toolbar-radius: 0.25rem;
+
+  font-size: 0.75rem;
+}
+
+.phi-toolbar--sm {
+  --phi-toolbar-radius: 0.375rem;
+
+  font-size: 0.75rem;
+}
+
+.phi-toolbar--base,
+.phi-toolbar--lg {
+  font-size: 0.875rem;
+}
+
+.phi-toolbar > :not(.phi-toolbar__item):has(.phi-toolbar__item),
+.phi-toolbar > :not(.phi-toolbar__item):has(.phi-toolbar__item) :has(> .phi-toolbar__item) {
+  display: contents;
+}
+
+.phi-toolbar > .phi-toolbar__item,
+.phi-toolbar > :not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__item {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  flex: none;
+  border-radius: 0;
+}
+
+.phi-toolbar > .phi-toolbar__item:first-child,
+.phi-toolbar > :first-child:not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__item {
+  border-top-left-radius: var(--phi-toolbar-radius);
+  border-bottom-left-radius: var(--phi-toolbar-radius);
+}
+
+.phi-toolbar > .phi-toolbar__item:last-child,
+.phi-toolbar > :last-child:not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__item {
+  border-top-right-radius: var(--phi-toolbar-radius);
+  border-bottom-right-radius: var(--phi-toolbar-radius);
+}
+
+.phi-toolbar > .phi-toolbar__item:only-child {
+  border-radius: var(--phi-toolbar-radius);
+}
+
+.phi-toolbar > .phi-toolbar__item:not(:first-child),
+.phi-toolbar > :not(:first-child):not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__item {
+  border-left: 1px solid var(--phi-line, #e3e6eb);
+}
+
+.phi-toolbar > .phi-toolbar__button.phi-button,
+.phi-toolbar > .phi-toolbar__input.phi-input,
+.phi-toolbar > .phi-toolbar__input-group.phi-input-group,
+.phi-toolbar > :not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__button.phi-button,
+.phi-toolbar > :not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__input.phi-input,
+.phi-toolbar > :not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__input-group.phi-input-group {
+  background: transparent;
+  box-shadow: none;
+}
+
+.phi-toolbar > .phi-toolbar__button.phi-button,
+.phi-toolbar > :not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__button.phi-button {
+  color: var(--phi-default, #17191f);
+}
+
+.phi-toolbar > .phi-toolbar__button.phi-button:hover:not(:disabled):not([aria-disabled="true"]),
+.phi-toolbar
+  > :not(.phi-toolbar__item):has(.phi-toolbar__item)
+  .phi-toolbar__button.phi-button:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-toolbar > .phi-toolbar__button.phi-button[aria-disabled="true"],
+.phi-toolbar
+  > :not(.phi-toolbar__item):has(.phi-toolbar__item)
+  .phi-toolbar__button.phi-button[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.phi-toolbar > .phi-toolbar__button.phi-button:focus-visible,
+.phi-toolbar > .phi-toolbar__input.phi-input:focus,
+.phi-toolbar > .phi-toolbar__input-group.phi-input-group:focus-within,
+.phi-toolbar
+  > :not(.phi-toolbar__item):has(.phi-toolbar__item)
+  .phi-toolbar__button.phi-button:focus-visible,
+.phi-toolbar > :not(.phi-toolbar__item):has(.phi-toolbar__item) .phi-toolbar__input.phi-input:focus,
+.phi-toolbar
+  > :not(.phi-toolbar__item):has(.phi-toolbar__item)
+  .phi-toolbar__input-group.phi-input-group:focus-within {
+  z-index: 2;
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+  outline: none;
+}
+
+.phi-toolbar > :where(.phi-toolbar__input.phi-input) {
+  width: auto;
+  flex: 0 1 12rem;
+}
+
+.phi-toolbar > :where(.phi-toolbar__input-group.phi-input-group) {
+  width: auto;
+  flex: 0 1 auto;
+  overflow: hidden;
+}
+
+.phi-toolbar > :where(.phi-toolbar__input-group.phi-input-group:focus-within) {
+  overflow: visible;
+}
+
+.phi-toolbar > :where(.phi-toolbar__input-group.phi-input-group) .phi-input-group-input {
+  min-width: 0;
+}

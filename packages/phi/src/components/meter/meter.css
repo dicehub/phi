@@ -1,0 +1,68 @@
+.phi-meter {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-meter__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.phi-meter__label {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phi-meter__value {
+  flex: none;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25rem;
+}
+
+.phi-meter__track {
+  position: relative;
+  height: 0.5rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--phi-tint, #f4f6f9);
+  box-shadow: inset 0 0 0 1px var(--phi-hairline, rgba(16, 24, 40, 0.08));
+}
+
+.phi-meter__indicator {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--phi-accent, #4c63ff),
+    color-mix(in srgb, var(--phi-accent, #4c63ff) 84%, var(--phi-success, #027a48))
+  );
+  transition: width 0.3s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phi-meter__indicator {
+    transition: none;
+  }
+}

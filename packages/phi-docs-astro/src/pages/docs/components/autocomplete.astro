@@ -1,0 +1,305 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import AutocompleteDocsDemo from "../../../components/AutocompleteDocsDemo.vue";
+import Callout from "../../../components/Callout.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const importCode = `import { Autocomplete } from "@dicehub/phi/components/autocomplete";`;
+
+const previewCode = `<script setup>
+import { Autocomplete } from "@dicehub/phi/components/autocomplete";
+
+const fruits = [
+  { label: "Apple", value: "apple" },
+  { label: "Banana", value: "banana" },
+  { label: "Cherry", value: "cherry" },
+];
+</script>
+
+<template>
+  <Autocomplete :items="fruits">
+    <Autocomplete.InputGroup placeholder="Search fruits..." />
+    <Autocomplete.Content>
+      <Autocomplete.Empty>No fruit suggestions.</Autocomplete.Empty>
+      <Autocomplete.List>
+        <template #default="{ item }">
+          <Autocomplete.Item :item="item">
+            {{ item.label }}
+          </Autocomplete.Item>
+        </template>
+      </Autocomplete.List>
+    </Autocomplete.Content>
+  </Autocomplete>
+</template>`;
+
+const usageCode = previewCode;
+
+const shortcutCode = `<Autocomplete
+  :items="fruits"
+  placeholder="Search fruits..."
+  aria-label="Search fruits"
+/>`;
+
+const controlledCode = `<Autocomplete
+  v-model:input-value="inputValue"
+  :items="fruits"
+  clearable
+  placeholder="Type a fruit..."
+/>`;
+
+const filteringCode = `<Autocomplete
+  :items="fruits"
+  :filter="(item, inputValue) => item.label.startsWith(inputValue)"
+  placeholder="Search fruits..."
+/>`;
+
+const rootProps = [
+  { name: "items", type: "unknown[]", defaultValue: "[]", description: "Items used by the default autocomplete UI." },
+  { name: "itemToString", type: "(item) => string", defaultValue: "item.label ?? String(item)", description: "Maps an item to visible text and default filtering text." },
+  { name: "itemToValue", type: "(item) => string", defaultValue: "item.value ?? itemToString(item)", description: "Maps an item to the Ark option value." },
+  { name: "filter", type: "false | function", defaultValue: "contains label", description: "Custom item filter. Pass false to show all items for the current query." },
+  { name: "showOnEmpty", type: "boolean", defaultValue: "false", description: "Shows suggestions before the user enters a query." },
+  { name: "placeholder", type: "string", defaultValue: "-", description: "Placeholder for the default input." },
+  { name: "label", type: "string", defaultValue: "-", description: "Optional label rendered above the default input." },
+  { name: "clearable", type: "boolean", defaultValue: "false", description: "Renders a clear trigger in the default input." },
+  { name: "size", type: "\"xs\" | \"sm\" | \"base\" | \"lg\"", defaultValue: "\"base\"", description: "Default input height and text size." },
+  { name: "collection", type: "AutocompleteListCollection<T>", defaultValue: "-", description: "Advanced Ark list collection used when composing custom content." },
+  { name: "allowCustomValue", type: "boolean", defaultValue: "true", description: "Allows free-form input values that are not constrained to suggestions." },
+  { name: "closeOnSelect", type: "boolean", defaultValue: "true", description: "Closes the popup after a suggestion is selected." },
+  { name: "inputValue", type: "string", defaultValue: "-", description: "Controlled text input value." },
+  { name: "open", type: "boolean", defaultValue: "-", description: "Controlled popup state." },
+  { name: "openOnChange", type: "boolean | function", defaultValue: "Ark default", description: "Controls whether input changes open the popup." },
+  { name: "positioning", type: "object", defaultValue: "{ placement: \"bottom-start\", gutter: 4 }", description: "Ark positioning options for the popup." },
+  { name: "invalid", type: "boolean", defaultValue: "false", description: "Marks the control invalid for styling and Ark state." },
+];
+
+const inputGroupProps = [
+  { name: "size", type: "\"xs\" | \"sm\" | \"base\" | \"lg\"", defaultValue: "\"base\"", description: "Input height and text size." },
+  { name: "placeholder", type: "string", defaultValue: "-", description: "Placeholder passed to the internal input." },
+  { name: "clearable", type: "boolean", defaultValue: "false", description: "Renders an Ark clear trigger inside the control." },
+  { name: "showTrigger", type: "boolean", defaultValue: "false", description: "Shows or hides the optional popup trigger button." },
+];
+
+const exportsList = [
+  { name: "Autocomplete", description: "Simple items-driven autocomplete, with advanced compound slots when custom content is needed." },
+  { name: "Autocomplete.InputGroup", description: "Styled input with optional clear and popup triggers." },
+  { name: "Autocomplete.Content", description: "Positioned suggestion popup surface." },
+  { name: "Autocomplete.List", description: "Scrollable suggestion list with scoped-slot item rendering." },
+  { name: "Autocomplete.Item", description: "Styled selectable suggestion." },
+  { name: "Autocomplete.Label", description: "Ark label wrapper for accessible field labeling." },
+  { name: "Autocomplete.Group / Autocomplete.GroupLabel", description: "Grouped suggestion sections." },
+  { name: "Autocomplete.Empty", description: "Empty state shown when the collection has no matches." },
+  { name: "createAutocompleteCollection", description: "Advanced Phi alias for Ark createListCollection." },
+  { name: "useAutocompleteCollection", description: "Advanced Phi alias for Ark useListCollection." },
+];
+---
+
+<DocsLayout title="Autocomplete" description="Autocomplete component API, imports, and live examples.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Autocomplete</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A free-form text input with an optional filtered suggestion list.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#preview">Preview</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--open-space">
+              <AutocompleteDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="import" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#import">Import</a></h2>
+          <CodeBlock code={importCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={usageCode} lang="vue" />
+          <Callout>
+            <p>The compound API uses a scoped Vue slot for item rendering.</p>
+          </Callout>
+          <p>For the shortest default UI, pass <code>items</code> directly.</p>
+          <CodeBlock code={shortcutCode} lang="vue" />
+        </section>
+
+        <section id="when-to-use" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#when-to-use">When To Use</a></h2>
+          <p>Use Autocomplete when suggestions are hints and the final input can be custom text. Use a stricter Select or Combobox when the value must come from a known option list.</p>
+        </section>
+
+        <section id="controlled" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#controlled">Controlled</a></h2>
+          <p>Control the typed value with <code>v-model:input-value</code>. Suggestions stay optional and do not create a separate selected-value state.</p>
+          <div class="docs-component-preview">
+            <AutocompleteDocsDemo variant="controlled" client:only="vue" />
+          </div>
+          <CodeBlock code={controlledCode} lang="vue" />
+        </section>
+
+        <section id="with-field" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#with-field">With Field</a></h2>
+          <p>Pass <code>label</code> and helper text when the control is part of a form.</p>
+          <div class="docs-component-preview">
+            <AutocompleteDocsDemo variant="field" client:only="vue" />
+          </div>
+        </section>
+
+        <section id="error-state" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#error-state">Error State</a></h2>
+          <p>Pass <code>invalid</code> to the root and pair the input with visible validation text.</p>
+          <div class="docs-component-preview">
+            <AutocompleteDocsDemo variant="error" client:only="vue" />
+          </div>
+        </section>
+
+        <section id="grouped" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#grouped">Grouped</a></h2>
+          <p>Use <code>groupBy</code> on the collection and render <code>AutocompleteGroup</code> sections from <code>collection.group()</code>.</p>
+          <div class="docs-component-preview docs-component-preview--open-space">
+            <AutocompleteDocsDemo variant="grouped" client:only="vue" />
+          </div>
+        </section>
+
+        <section id="sizes" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#sizes">Sizes</a></h2>
+          <p><code>Autocomplete</code> and <code>AutocompleteInputGroup</code> support <code>xs</code>, <code>sm</code>, <code>base</code>, and <code>lg</code>.</p>
+          <div class="docs-component-preview">
+            <AutocompleteDocsDemo variant="sizes" client:only="vue" />
+          </div>
+        </section>
+
+        <section id="custom-filtering" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#custom-filtering">Custom Filtering</a></h2>
+          <p>Use <code>filter</code> for local matching rules. For async or server-backed suggestions, pass a custom <code>collection</code> and compose the advanced parts.</p>
+          <CodeBlock code={filteringCode} lang="vue" />
+        </section>
+
+        <section id="api" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api">API</a></h2>
+
+          <h3>Autocomplete</h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rootProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3>AutocompleteInputGroup</h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Prop</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {inputGroupProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="exports" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#exports">Exports</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Export</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {exportsList.map((item) => (
+                  <tr>
+                    <td><code>{item.name}</code></td>
+                    <td>{item.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#preview">Preview</a></li>
+            <li><a href="#import">Import</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#when-to-use">When To Use</a></li>
+            <li><a href="#controlled">Controlled</a></li>
+            <li><a href="#with-field">With Field</a></li>
+            <li><a href="#error-state">Error State</a></li>
+            <li><a href="#grouped">Grouped</a></li>
+            <li><a href="#sizes">Sizes</a></li>
+            <li><a href="#custom-filtering">Custom Filtering</a></li>
+            <li><a href="#api">API</a></li>
+            <li><a href="#exports">Exports</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

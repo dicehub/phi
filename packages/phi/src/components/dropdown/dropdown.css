@@ -1,0 +1,213 @@
+.phi-dropdown-positioner {
+  --z-index: 1000;
+  z-index: 1000 !important;
+}
+
+.phi-dropdown-content {
+  min-width: 9rem;
+  max-height: var(--available-height);
+  padding: 0.375rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+  background: var(--phi-control, #ffffff);
+  color: var(--phi-default, #17191f);
+  box-shadow:
+    0 0 0 1px var(--phi-line, rgba(0, 0, 0, 0.06)),
+    var(--phi-popover-shadow, 0 8px 24px -6px rgba(16, 24, 40, 0.12), 0 2px 4px -2px rgba(16, 24, 40, 0.06));
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  outline: none;
+}
+
+.phi-dropdown-content--sub {
+  min-width: 12rem;
+}
+
+.phi-dropdown-content[data-state="open"] {
+  animation: phi-dropdown-in 120ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.phi-dropdown-content[data-state="closed"] {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96) translateY(-4px);
+  visibility: hidden;
+  animation: phi-dropdown-out 80ms ease-out;
+}
+
+@keyframes phi-dropdown-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes phi-dropdown-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+}
+
+.phi-dropdown-item {
+  position: relative;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.375rem 0.5rem;
+  border-radius: 0.375rem;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-decoration: none;
+  user-select: none;
+  outline: none;
+  transition:
+    background-color 80ms ease,
+    color 80ms ease;
+}
+
+.phi-dropdown-item[data-highlighted],
+.phi-dropdown-item[data-state="open"] {
+  background: var(--phi-overlay, rgba(16, 24, 40, 0.06));
+}
+
+.phi-dropdown-item:focus-visible {
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 3px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-dropdown-item[data-disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.phi-dropdown-item--danger {
+  color: var(--phi-danger, #b42318);
+}
+
+.phi-dropdown-item--danger[data-highlighted],
+.phi-dropdown-item--danger[data-state="open"] {
+  background: var(--phi-danger-soft, rgba(180, 35, 24, 0.06));
+  color: var(--phi-danger, #b42318);
+}
+
+.phi-dropdown-item--inset {
+  padding-left: 2rem;
+}
+
+.phi-dropdown-item__icon {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: currentColor;
+}
+
+.phi-dropdown-link-item {
+  color: inherit;
+}
+
+.phi-dropdown-link-item:hover {
+  text-decoration: none;
+}
+
+.phi-dropdown-group {
+  display: block;
+}
+
+.phi-dropdown-label {
+  padding: 0.375rem 0.5rem;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.phi-dropdown-label--inset {
+  padding-left: 2rem;
+}
+
+.phi-dropdown-option-item {
+  padding-left: 2rem;
+}
+
+.phi-dropdown-item-indicator {
+  position: absolute;
+  left: 0.5rem;
+  display: inline-flex;
+  width: 0.875rem;
+  height: 0.875rem;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+}
+
+.phi-dropdown-item-indicator svg,
+.phi-dropdown-radio-indicator svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.phi-dropdown-radio-group {
+  display: block;
+}
+
+.phi-dropdown-radio-indicator {
+  display: inline-flex;
+  width: 1rem;
+  height: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  color: currentColor;
+}
+
+.phi-dropdown-item-indicator[hidden],
+.phi-dropdown-radio-indicator[hidden] {
+  display: none;
+}
+
+.phi-dropdown-sub-trigger__caret {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  margin-left: auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+}
+
+.phi-dropdown-shortcut {
+  margin-left: auto;
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.75rem;
+  letter-spacing: 0;
+  line-height: 1rem;
+}
+
+.phi-dropdown-separator {
+  height: 1px;
+  margin: 0.25rem -0.25rem;
+  border: none;
+  background: var(--phi-hairline, rgba(0, 0, 0, 0.06));
+}

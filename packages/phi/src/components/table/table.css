@@ -1,0 +1,188 @@
+.phi-table {
+  --phi-table-bg: var(--phi-base, #ffffff);
+  --phi-table-border: var(--phi-line, #e3e6eb);
+  --phi-table-compact-bg: color-mix(in srgb, var(--phi-base, #ffffff) 96%, var(--phi-default, #17191f) 4%);
+  --phi-table-sticky-fade: var(--phi-base, #ffffff);
+
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--phi-table-bg);
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.875rem;
+  isolation: isolate;
+  line-height: 1.25rem;
+  table-layout: auto;
+  text-align: left;
+}
+
+.phi-table--fixed {
+  table-layout: fixed;
+}
+
+.phi-table-head,
+.phi-table-cell {
+  position: relative;
+  padding: 0.75rem;
+  text-align: inherit;
+  vertical-align: middle;
+}
+
+.phi-table-head {
+  border-bottom: 1px solid var(--phi-table-border);
+  background: var(--phi-table-bg);
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.phi-table-row--default {
+  --phi-table-row-bg: var(--phi-table-bg);
+}
+
+.phi-table-body .phi-table-row--default:nth-child(even) {
+  --phi-table-row-bg: var(--phi-elevated, #fafafa);
+}
+
+.phi-table-row--selected {
+  --phi-table-row-bg: var(--phi-tint, #f4f6f9);
+}
+
+.phi-table-cell {
+  background: var(--phi-table-row-bg, var(--phi-table-bg));
+}
+
+.phi-table-header--compact .phi-table-head {
+  --phi-table-sticky-fade: var(--phi-table-compact-bg);
+
+  padding-block: 0.5rem;
+  background: var(--phi-table-compact-bg);
+  color: var(--phi-strong, #101217);
+}
+
+.phi-table-header--sticky .phi-table-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.phi-table-head--sticky-left,
+.phi-table-head--sticky-right,
+.phi-table-cell--sticky-left,
+.phi-table-cell--sticky-right {
+  position: sticky;
+  background: var(--phi-table-sticky-fade, var(--phi-table-bg));
+}
+
+.phi-table-cell--sticky-left,
+.phi-table-cell--sticky-right {
+  --phi-table-sticky-fade: var(--phi-table-row-bg, var(--phi-table-bg));
+
+  z-index: 1;
+}
+
+.phi-table-head--sticky-left,
+.phi-table-head--sticky-right {
+  z-index: 2;
+}
+
+.phi-table-head--sticky-left,
+.phi-table-cell--sticky-left {
+  left: 0;
+}
+
+.phi-table-head--sticky-right,
+.phi-table-cell--sticky-right {
+  right: 0;
+}
+
+.phi-table-head--sticky-left::before,
+.phi-table-cell--sticky-left::before,
+.phi-table-head--sticky-right::before,
+.phi-table-cell--sticky-right::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1.5rem;
+  pointer-events: none;
+  content: "";
+}
+
+.phi-table-head--sticky-left::before,
+.phi-table-cell--sticky-left::before {
+  right: -1.5rem;
+  background: linear-gradient(to left, transparent, var(--phi-table-sticky-fade, var(--phi-table-bg)));
+}
+
+.phi-table-head--sticky-right::before,
+.phi-table-cell--sticky-right::before {
+  left: -1.5rem;
+  background: linear-gradient(to right, transparent, var(--phi-table-sticky-fade, var(--phi-table-bg)));
+}
+
+.phi-table-check-head,
+.phi-table-check-cell {
+  width: 2.5rem;
+  line-height: 1;
+}
+
+.phi-table__checkbox {
+  position: relative;
+}
+
+.phi-table__checkbox::before {
+  position: absolute;
+  inset: -0.75rem;
+  content: "";
+}
+
+.phi-table-resize-handle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 0.625rem;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: var(--phi-table-bg);
+  color: inherit;
+  cursor: col-resize;
+  opacity: 0;
+  touch-action: none;
+  transition: opacity 120ms ease;
+  user-select: none;
+}
+
+.phi-table-head:hover .phi-table-resize-handle,
+.phi-table-resize-handle:focus-visible {
+  opacity: 1;
+}
+
+.phi-table-resize-handle:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-table-resize-handle__bar {
+  width: 0.125rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  background: var(--phi-hairline, rgba(16, 24, 40, 0.08));
+}
+
+:where([data-phi-theme="dark"], html.phi-docs-root[data-mode="dark"]) .phi-table {
+  --phi-table-compact-bg: color-mix(in srgb, var(--phi-base, #151821) 88%, var(--phi-default, #f2f4f8) 12%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phi-table-resize-handle {
+    transition: none;
+  }
+}

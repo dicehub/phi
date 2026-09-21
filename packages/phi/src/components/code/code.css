@@ -1,0 +1,45 @@
+.phi-code {
+  display: block;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--phi-subtle, #6c7480);
+  font-family: var(--phi-font-mono, ui-monospace, "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", monospace);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  white-space: pre;
+}
+
+.phi-code code {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.phi-code__highlight {
+  margin: 0 -0.0625rem;
+  padding: 0 0.0625rem;
+  border-radius: 0.1875rem;
+  background: var(--phi-info-subtle, rgba(23, 92, 211, 0.12));
+  color: var(--phi-default, #17191f);
+  font: inherit;
+}
+
+.phi-code-block {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--phi-fill, #d7dce2);
+  border-radius: 0.375rem;
+  background: var(--phi-base, #ffffff);
+}
+
+.phi-code-block > .phi-code {
+  padding: 0.625rem;
+}

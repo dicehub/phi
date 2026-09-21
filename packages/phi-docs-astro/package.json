@@ -1,0 +1,35 @@
+{
+  "name": "@dicehub/phi-docs-astro",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "typecheck": "astro check",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test:markdown": "node --test \"src/lib/*.test.mjs\"",
+    "test": "pnpm test:e2e",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@ark-ui/vue": "^5.36.1",
+    "@astrojs/mdx": "^7.0.3",
+    "@astrojs/vue": "^7.0.1",
+    "@dicehub/phi": "workspace:*",
+    "@phosphor-icons/vue": "^2.2.1",
+    "astro": "7.2.8",
+    "echarts": "^6.0.0",
+    "turndown": "7.2.4",
+    "turndown-plugin-gfm": "1.0.2",
+    "vue": "^3.5.17"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@playwright/test": "^1.60.0",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/turndown": "5.0.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5.9.3"
+  }
+}

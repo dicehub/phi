@@ -1,0 +1,343 @@
+.phi-input-group {
+  --phi-input-group-danger: #dc2626;
+  --phi-input-group-focus: rgba(76, 99, 255, 0.5);
+  --phi-input-group-height: 2.25rem;
+  --phi-input-group-radius: 0.5rem;
+  --phi-input-group-font-size: 0.875rem;
+  --phi-input-group-line-height: 1.25rem;
+  --phi-input-group-icon-size: 1.125rem;
+  --phi-input-group-input-px: 0.75rem;
+  --phi-input-group-input-seam: 0.5rem;
+  --phi-input-group-addon-edge: 0.5rem;
+  --phi-input-group-addon-button-edge: 0.25rem;
+  --phi-input-group-suffix-pad: 0.75rem;
+
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  height: var(--phi-input-group-height);
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--phi-input-group-radius);
+  background: var(--phi-control, #ffffff);
+  box-shadow: 0 0 0 1px var(--phi-line, rgba(20, 20, 20, 0.1));
+  color: var(--phi-default, #17191f);
+  cursor: text;
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: var(--phi-input-group-font-size);
+  line-height: var(--phi-input-group-line-height);
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease,
+    opacity 120ms ease;
+}
+
+.phi-input-group--xs {
+  --phi-input-group-height: 1.5rem;
+  --phi-input-group-radius: 0.25rem;
+  --phi-input-group-font-size: 0.75rem;
+  --phi-input-group-line-height: 1rem;
+  --phi-input-group-icon-size: 0.625rem;
+  --phi-input-group-input-px: 0.375rem;
+  --phi-input-group-input-seam: 0.25rem;
+  --phi-input-group-addon-edge: 0.375rem;
+  --phi-input-group-addon-button-edge: 0.25rem;
+  --phi-input-group-suffix-pad: 0.375rem;
+}
+
+.phi-input-group--sm {
+  --phi-input-group-height: 1.75rem;
+  --phi-input-group-radius: 0.375rem;
+  --phi-input-group-font-size: 0.75rem;
+  --phi-input-group-line-height: 1rem;
+  --phi-input-group-icon-size: 0.8125rem;
+  --phi-input-group-input-px: 0.5rem;
+  --phi-input-group-input-seam: 0.375rem;
+  --phi-input-group-addon-edge: 0.375rem;
+  --phi-input-group-addon-button-edge: 0.25rem;
+  --phi-input-group-suffix-pad: 0.5rem;
+}
+
+.phi-input-group--lg {
+  --phi-input-group-height: 2.75rem;
+  --phi-input-group-radius: 0.5rem;
+  --phi-input-group-font-size: 0.875rem;
+  --phi-input-group-line-height: 1.25rem;
+  --phi-input-group-icon-size: 1.25rem;
+  --phi-input-group-input-px: 1rem;
+  --phi-input-group-input-seam: 0.625rem;
+  --phi-input-group-addon-edge: 0.625rem;
+  --phi-input-group-addon-button-edge: 0.375rem;
+  --phi-input-group-suffix-pad: 1rem;
+}
+
+.phi-input-group:focus-within {
+  box-shadow: 0 0 0 1.5px var(--phi-input-group-focus);
+}
+
+.phi-input-group[data-invalid] {
+  box-shadow: 0 0 0 1px var(--phi-input-group-danger);
+}
+
+.phi-input-group[data-invalid]:focus-within {
+  box-shadow: 0 0 0 1.5px rgba(220, 38, 38, 0.5);
+}
+
+.phi-input-group[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.phi-input-field:has(> .phi-input-group) {
+  width: 100%;
+}
+
+.phi-input-group:has(.phi-input-group-button[data-tooltip]:hover),
+.phi-input-group:has(.phi-input-group-button[data-tooltip]:focus-visible) {
+  overflow: visible;
+}
+
+.phi-input-group-input {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  padding: 0 var(--phi-input-group-input-px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  outline: none;
+  text-overflow: ellipsis;
+}
+
+.phi-input-group-input::placeholder {
+  color: var(--phi-muted, #9aa2ae);
+}
+
+.phi-input-group-input:disabled {
+  color: var(--phi-muted, #9aa2ae);
+  cursor: not-allowed;
+}
+
+.phi-input-group:has(.phi-input-group-addon--start) .phi-input-group-input {
+  padding-left: var(--phi-input-group-input-seam);
+}
+
+.phi-input-group:has(.phi-input-group-addon--end) .phi-input-group-input {
+  padding-right: var(--phi-input-group-input-seam);
+}
+
+.phi-input-group:has(.phi-input-group-suffix) .phi-input-group-input {
+  width: auto;
+  min-width: 2ch;
+  flex: 0 1 auto;
+  padding-right: 0;
+  field-sizing: content;
+}
+
+.phi-input-group-addon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  height: 100%;
+  flex: none;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--phi-subtle, #6c7480);
+  font: inherit;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.phi-input-group-addon > * {
+  pointer-events: auto;
+}
+
+.phi-input-group-addon svg {
+  width: var(--phi-input-group-icon-size);
+  height: var(--phi-input-group-icon-size);
+  flex: none;
+}
+
+.phi-input-group-addon--start {
+  order: -1;
+  padding-right: 0;
+  padding-left: var(--phi-input-group-addon-edge);
+}
+
+.phi-input-group-addon--end {
+  order: 1;
+  padding-right: var(--phi-input-group-addon-edge);
+  padding-left: 0;
+}
+
+.phi-input-group-addon--start:has(.phi-input-group-button) {
+  padding-left: var(--phi-input-group-addon-button-edge);
+}
+
+.phi-input-group-addon--end:has(.phi-input-group-button) {
+  padding-right: var(--phi-input-group-addon-button-edge);
+}
+
+.phi-input-group--lg .phi-input-group-addon--end:has(.phi-input-group-button) {
+  padding-right: 0.125rem;
+}
+
+.phi-input-group-suffix {
+  display: inline-flex;
+  min-width: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  align-items: center;
+  padding-right: var(--phi-input-group-suffix-pad);
+  color: var(--phi-subtle, #6c7480);
+  font: inherit;
+  pointer-events: none;
+  user-select: none;
+}
+
+.phi-input-group-suffix__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phi-input-group-button.phi-button {
+  --phi-input-group-tooltip-bg: var(--phi-base, #ffffff);
+  --phi-input-group-tooltip-border: var(--phi-line, #e3e6eb);
+  --phi-input-group-tooltip-color: var(--phi-default, #17191f);
+  --phi-input-group-tooltip-shadow: 0 10px 15px -3px rgba(16, 24, 40, 0.12), 0 4px 6px -4px rgba(16, 24, 40, 0.1);
+
+  position: relative;
+  box-shadow: none;
+  color: var(--phi-subtle, #6c7480);
+}
+
+.phi-input-group-button.phi-button:hover:not(:disabled),
+.phi-input-group-button.phi-button:focus-visible {
+  color: var(--phi-default, #17191f);
+}
+
+.phi-input-group > .phi-input-group-button.phi-button {
+  order: 2;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: inset 1px 0 0 var(--phi-line, rgba(20, 20, 20, 0.1));
+}
+
+.phi-input-group > .phi-input-group-button.phi-button:last-child {
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+.phi-input-group-button[data-tooltip]::before {
+  position: absolute;
+  top: calc(100% + 0.3125rem);
+  left: 50%;
+  z-index: 41;
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--phi-input-group-tooltip-bg);
+  box-shadow: -1px -1px 0 0 var(--phi-input-group-tooltip-border);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) rotate(45deg) scale(0.9);
+  transform-origin: center;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    visibility 150ms ease;
+  transition-delay: 0ms;
+  visibility: hidden;
+}
+
+.phi-input-group-button[data-tooltip]::after {
+  position: absolute;
+  top: calc(100% + 0.625rem);
+  left: 50%;
+  z-index: 40;
+  width: max-content;
+  max-width: min(16rem, calc(100vw - 2rem));
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  background: var(--phi-input-group-tooltip-bg);
+  box-shadow:
+    0 0 0 1px var(--phi-input-group-tooltip-border),
+    var(--phi-input-group-tooltip-shadow);
+  color: var(--phi-input-group-tooltip-color);
+  content: attr(data-tooltip);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.2;
+  opacity: 0;
+  overflow-wrap: break-word;
+  pointer-events: none;
+  text-align: left;
+  transform: translateX(-50%) scale(0.9);
+  transform-origin: center top;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    visibility 150ms ease;
+  transition-delay: 0ms;
+  visibility: hidden;
+  white-space: normal;
+}
+
+.phi-input-group-button[data-tooltip]:hover::before,
+.phi-input-group-button[data-tooltip]:focus-visible::before,
+.phi-input-group-button[data-tooltip]:hover::after,
+.phi-input-group-button[data-tooltip]:focus-visible::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  transition-delay: 600ms;
+  visibility: visible;
+}
+
+.phi-input-group-button[data-tooltip]:hover::before,
+.phi-input-group-button[data-tooltip]:focus-visible::before {
+  transform: translateX(-50%) rotate(45deg) scale(1);
+}
+
+.phi-input-group-kbd {
+  display: inline-flex;
+  min-width: 1.45rem;
+  height: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--phi-subtle, #6c7480);
+  font: inherit;
+  font-size: 0.75rem;
+}
+
+.phi-input-group-spinner {
+  width: var(--phi-input-group-icon-size);
+  height: var(--phi-input-group-icon-size);
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 999px;
+  animation: phi-input-group-spin 700ms linear infinite;
+}
+
+@keyframes phi-input-group-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

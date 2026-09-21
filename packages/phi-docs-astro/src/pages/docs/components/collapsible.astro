@@ -1,0 +1,447 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CollapsibleDocsDemo from "../../../components/CollapsibleDocsDemo.vue";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const barrelCode = `import { Collapsible } from "@dicehub/phi";`;
+
+const granularCode = `import { Collapsible } from "@dicehub/phi/components/collapsible";`;
+
+const previewCode = `<script setup>
+import { ref } from "vue";
+import { Collapsible } from "@dicehub/phi/components/collapsible";
+
+const open = ref(true);
+</script>
+
+<template>
+  <Collapsible v-model:open="open">
+    <Collapsible.DefaultTrigger>What is Phi?</Collapsible.DefaultTrigger>
+    <Collapsible.DefaultPanel>
+      Phi is a Vue component library.
+    </Collapsible.DefaultPanel>
+  </Collapsible>
+</template>`;
+
+const defaultStylingCode = `<script setup>
+import { ref } from "vue";
+import { Collapsible } from "@dicehub/phi/components/collapsible";
+
+const open = ref(false);
+</script>
+
+<template>
+  <Collapsible v-model:open="open">
+    <Collapsible.DefaultTrigger>Show details</Collapsible.DefaultTrigger>
+    <Collapsible.DefaultPanel>
+      Content with border-left accent styling.
+    </Collapsible.DefaultPanel>
+  </Collapsible>
+</template>`;
+
+const customTriggerUsageCode = `<script setup>
+import { ref } from "vue";
+import { Button } from "@dicehub/phi/components/button";
+import { Collapsible } from "@dicehub/phi/components/collapsible";
+
+const open = ref(false);
+</script>
+
+<template>
+  <Collapsible v-model:open="open">
+    <Collapsible.Trigger as-child>
+      <Button variant="secondary" size="sm">
+        {{ open ? "Hide details" : "Show details" }}
+      </Button>
+    </Collapsible.Trigger>
+    <Collapsible.Panel class="custom-panel">
+      Custom styled panel content.
+    </Collapsible.Panel>
+  </Collapsible>
+</template>`;
+
+const basicCode = `<script setup>
+import { ref } from "vue";
+import { Collapsible } from "@dicehub/phi/components/collapsible";
+
+const open = ref(false);
+</script>
+
+<template>
+  <Collapsible v-model:open="open">
+    <Collapsible.DefaultTrigger>What is Phi?</Collapsible.DefaultTrigger>
+    <Collapsible.DefaultPanel>
+      Phi is a Vue component library.
+    </Collapsible.DefaultPanel>
+  </Collapsible>
+</template>`;
+
+const multipleCode = `<script setup>
+import { ref } from "vue";
+import { Collapsible } from "@dicehub/phi/components/collapsible";
+
+const firstOpen = ref(false);
+const secondOpen = ref(false);
+const thirdOpen = ref(false);
+</script>
+
+<template>
+  <div class="space-y-2">
+    <Collapsible v-model:open="firstOpen">
+      <Collapsible.DefaultTrigger>What is Phi?</Collapsible.DefaultTrigger>
+      <Collapsible.DefaultPanel>
+        Phi is a Vue component library.
+      </Collapsible.DefaultPanel>
+    </Collapsible>
+    <Collapsible v-model:open="secondOpen">
+      <Collapsible.DefaultTrigger>How do I use it?</Collapsible.DefaultTrigger>
+      <Collapsible.DefaultPanel>
+        Install the components and import them into your project.
+      </Collapsible.DefaultPanel>
+    </Collapsible>
+    <Collapsible v-model:open="thirdOpen">
+      <Collapsible.DefaultTrigger>Is it open source?</Collapsible.DefaultTrigger>
+      <Collapsible.DefaultPanel>
+        Check the repository for license information.
+      </Collapsible.DefaultPanel>
+    </Collapsible>
+  </div>
+</template>`;
+
+const customTriggerCode = `<script setup>
+import { ref } from "vue";
+import { Button } from "@dicehub/phi/components/button";
+import { Collapsible } from "@dicehub/phi/components/collapsible";
+
+const open = ref(false);
+</script>
+
+<template>
+  <Collapsible v-model:open="open">
+    <Collapsible.Trigger as-child>
+      <Button variant="secondary" size="sm">
+        {{ open ? "Hide details" : "Show details" }}
+      </Button>
+    </Collapsible.Trigger>
+    <Collapsible.Panel class="custom-panel">
+      This panel uses custom styling instead of the default border-left accent.
+    </Collapsible.Panel>
+  </Collapsible>
+</template>`;
+
+const keepMountedCode = `<script setup>
+import { ref } from "vue";
+import { Collapsible } from "@dicehub/phi/components/collapsible";
+
+const open = ref(true);
+const name = ref("");
+</script>
+
+<template>
+  <Collapsible v-model:open="open">
+    <Collapsible.DefaultTrigger>Edit details</Collapsible.DefaultTrigger>
+    <Collapsible.DefaultPanel>
+      <p>
+        Type something below, then collapse and re-open. Your input is preserved
+        because panels stay mounted by default.
+      </p>
+      <label>
+        <span>Name</span>
+        <input v-model="name" placeholder="Type here..." />
+      </label>
+    </Collapsible.DefaultPanel>
+  </Collapsible>
+</template>`;
+
+const accordionCode = `<script setup>
+import { ref } from "vue";
+import { Collapsible } from "@dicehub/phi/components/collapsible";
+
+const activeIndex = ref(0);
+
+const items = [
+  {
+    title: "What is Phi?",
+    content: "Phi is a Vue component library built on accessible primitives.",
+  },
+  {
+    title: "How do I install it?",
+    content: "Install the package and import the components you need.",
+  },
+  {
+    title: "Is it accessible?",
+    content: "Yes. Phi components keep keyboard and screen reader behavior in the primitive layer.",
+  },
+];
+
+const setAccordionItem = (index, open) => {
+  activeIndex.value = open ? index : -1;
+};
+</script>
+
+<template>
+  <div class="space-y-2">
+    <Collapsible
+      v-for="(item, index) in items"
+      :key="item.title"
+      :open="activeIndex === index"
+      @open-change="(details) => setAccordionItem(index, details.open)"
+    >
+      <Collapsible.DefaultTrigger>{{ item.title }}</Collapsible.DefaultTrigger>
+      <Collapsible.DefaultPanel>
+        {{ item.content }}
+      </Collapsible.DefaultPanel>
+    </Collapsible>
+  </div>
+</template>`;
+
+const subComponents = [
+  { component: "Collapsible.Root", description: "Manages open state. Use open and update:open for controlled mode." },
+  { component: "Collapsible.Trigger", description: "Button that toggles visibility. Use as-child to render a custom trigger component." },
+  { component: "Collapsible.Panel", description: "Container for collapsible content." },
+  { component: "Collapsible.DefaultTrigger", description: "Pre-styled trigger with text label and animated caret icon." },
+  { component: "Collapsible.DefaultPanel", description: "Pre-styled panel with border-left accent and standard spacing." },
+];
+
+const apiGroups = [
+  {
+    title: "Collapsible.Root",
+    id: "collapsible-root-api",
+    props: [
+      { name: "open", type: "boolean", defaultValue: "-", description: "Controlled open state. Use v-model:open in Vue." },
+      { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial open state for uncontrolled usage." },
+      { name: "disabled", type: "boolean", defaultValue: "false", description: "Disables the trigger and prevents state changes." },
+      { name: "lazyMount", type: "boolean", defaultValue: "false", description: "Mounts the panel only when it first opens." },
+      { name: "unmountOnExit", type: "boolean", defaultValue: "false", description: "Unmounts the panel after it closes." },
+      { name: "collapsedHeight", type: "number | string", defaultValue: "-", description: "Visible content height while collapsed." },
+      { name: "collapsedWidth", type: "number | string", defaultValue: "-", description: "Visible content width while collapsed." },
+    ],
+  },
+  {
+    title: "Collapsible.Trigger",
+    id: "collapsible-trigger-api",
+    props: [
+      { name: "asChild", type: "boolean", defaultValue: "false", description: "Uses the provided child as the rendered trigger element." },
+      { name: "class", type: "string", defaultValue: "-", description: "Additional CSS classes." },
+    ],
+  },
+  {
+    title: "Collapsible.Panel",
+    id: "collapsible-panel-api",
+    props: [
+      { name: "class", type: "string", defaultValue: "-", description: "Additional CSS classes." },
+    ],
+  },
+  {
+    title: "Collapsible.DefaultTrigger",
+    id: "collapsible-default-trigger-api",
+    props: [
+      { name: "default slot", type: "unknown", defaultValue: "-", description: "Label content displayed in the trigger." },
+      { name: "class", type: "string", defaultValue: "-", description: "Additional CSS classes." },
+    ],
+  },
+  {
+    title: "Collapsible.DefaultPanel",
+    id: "collapsible-default-panel-api",
+    props: [
+      { name: "default slot", type: "unknown", defaultValue: "-", description: "Panel content." },
+      { name: "class", type: "string", defaultValue: "-", description: "Additional CSS classes." },
+    ],
+  },
+];
+---
+
+<DocsLayout title="Collapsible" description="A composable disclosure component for showing and hiding content.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Collapsible</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A composable disclosure component for showing and hiding content.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--collapsible">
+              <CollapsibleDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={barrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={granularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>Collapsible uses a compound component pattern for full composition control.</p>
+
+          <h3 id="with-default-styling"><a class="docs-section-anchor" href="#with-default-styling">With Default Styling</a></h3>
+          <p>
+            Use <code>DefaultTrigger</code> and <code>DefaultPanel</code> for Phi styling and smooth height animation.
+            DefaultPanel applies its border and spacing through an inner content wrapper; use <code>Panel</code> when
+            custom layout classes must control the panel element directly.
+          </p>
+          <CodeBlock code={defaultStylingCode} lang="vue" />
+
+          <h3 id="custom-trigger"><a class="docs-section-anchor" href="#custom-trigger">Custom Trigger</a></h3>
+          <p>Use <code>as-child</code> on <code>Trigger</code> for full control over the trigger element.</p>
+          <CodeBlock code={customTriggerUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="basic"><a class="docs-section-anchor" href="#basic">Basic</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--collapsible"><CollapsibleDocsDemo client:only="vue" variant="basic" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={basicCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="multiple-items"><a class="docs-section-anchor" href="#multiple-items">Multiple Items</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--collapsible"><CollapsibleDocsDemo client:only="vue" variant="multiple" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={multipleCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="custom-trigger-example"><a class="docs-section-anchor" href="#custom-trigger-example">Custom Trigger</a></h3>
+          <p>Use <code>Collapsible.Trigger</code> with <code>as-child</code> for full control.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--collapsible"><CollapsibleDocsDemo client:only="vue" variant="custom-trigger" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={customTriggerCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="keep-mounted"><a class="docs-section-anchor" href="#keep-mounted">Keep Mounted</a></h3>
+          <p>
+            Phi panels stay mounted by default. Avoid <code>unmountOnExit</code> when internal state,
+            such as form input, should be preserved while collapsed.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--collapsible"><CollapsibleDocsDemo client:only="vue" variant="keep-mounted" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={keepMountedCode} lang="vue" /></div>
+          </div>
+
+          <h3 id="accordion-pattern"><a class="docs-section-anchor" href="#accordion-pattern">Accordion Pattern</a></h3>
+          <p>Control which item is open to create an accordion where only one item can be expanded at a time.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--collapsible"><CollapsibleDocsDemo client:only="vue" variant="accordion" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={accordionCode} lang="vue" /></div>
+          </div>
+        </section>
+
+        <section id="sub-components" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#sub-components">Sub-components</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Component</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {subComponents.map((item) => (
+                  <tr><td><code>{item.component}</code></td><td>{item.description}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          {apiGroups.map((group) => (
+            <div class="docs-api-group">
+              <h3 id={group.id}><a class="docs-section-anchor" href={`#${group.id}`}>{group.title}</a></h3>
+              <div class="docs-api-table">
+                <table>
+                  <thead>
+                    <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                  </thead>
+                  <tbody>
+                    {group.props.map((prop) => (
+                      <tr><td><code>{prop.name}</code></td><td><code>{prop.type}</code></td><td><code>{prop.defaultValue}</code></td><td>{prop.description}</td></tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#usage">Usage</a>
+              <ul>
+                <li><a href="#with-default-styling">With Default Styling</a></li>
+                <li><a href="#custom-trigger">Custom Trigger</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#basic">Basic</a></li>
+                <li><a href="#multiple-items">Multiple Items</a></li>
+                <li><a href="#custom-trigger-example">Custom Trigger</a></li>
+                <li><a href="#keep-mounted">Keep Mounted</a></li>
+                <li><a href="#accordion-pattern">Accordion Pattern</a></li>
+              </ul>
+            </li>
+            <li><a href="#sub-components">Sub-components</a></li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#collapsible-root-api">Collapsible.Root</a></li>
+                <li><a href="#collapsible-trigger-api">Collapsible.Trigger</a></li>
+                <li><a href="#collapsible-panel-api">Collapsible.Panel</a></li>
+                <li><a href="#collapsible-default-trigger-api">Collapsible.DefaultTrigger</a></li>
+                <li><a href="#collapsible-default-panel-api">Collapsible.DefaultPanel</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

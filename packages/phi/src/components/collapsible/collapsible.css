@@ -1,0 +1,148 @@
+.phi-collapsible {
+  width: 100%;
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-collapsible-trigger {
+  cursor: pointer;
+}
+
+.phi-collapsible-default-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  box-shadow: none;
+  color: var(--phi-default, #17191f);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  text-align: left;
+  user-select: none;
+}
+
+.phi-collapsible-default-trigger:hover:not(:disabled) {
+  color: var(--phi-accent-hover, #4056ee);
+}
+
+.phi-collapsible-default-trigger:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 1px var(--phi-focus, rgba(76, 99, 255, 0.75)),
+    0 0 0 4px var(--phi-focus-soft, rgba(76, 99, 255, 0.16));
+}
+
+.phi-collapsible-default-trigger:disabled {
+  color: var(--phi-muted, #9aa2ae);
+  cursor: not-allowed;
+}
+
+.phi-collapsible-default-trigger__label {
+  min-width: 0;
+}
+
+.phi-collapsible-default-trigger__icon-frame {
+  display: inline-grid;
+  width: 1rem;
+  flex: none;
+  place-items: center;
+}
+
+.phi-collapsible-default-trigger__icon {
+  display: block;
+  width: 0.75rem;
+  height: 0.75rem;
+  fill: currentColor;
+  transform-origin: center;
+  transition: transform 100ms ease-out;
+}
+
+.phi-collapsible-default-trigger[data-state="open"] .phi-collapsible-default-trigger__icon {
+  transform: rotate(180deg);
+}
+
+.phi-collapsible-panel {
+  overflow: visible;
+}
+
+.phi-collapsible-panel[data-state="closed"] {
+  overflow: hidden;
+}
+
+.phi-collapsible-default-panel {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.phi-collapsible-default-panel[hidden] {
+  display: none;
+}
+
+.phi-collapsible[data-state="open"] > .phi-collapsible-default-panel {
+  animation: phi-collapsible-expand 100ms ease-out both;
+}
+
+.phi-collapsible[data-state="closed"] > .phi-collapsible-default-panel {
+  animation: phi-collapsible-collapse 100ms ease-out both;
+}
+
+.phi-collapsible-default-panel__content {
+  min-height: 0;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  border-left: 2px solid var(--phi-line, #e3e6eb);
+}
+
+.phi-collapsible-default-panel__content > :first-child {
+  margin-top: 0;
+}
+
+.phi-collapsible-default-panel__content > :last-child {
+  margin-bottom: 0;
+}
+
+@keyframes phi-collapsible-expand {
+  from {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+
+  to {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+@keyframes phi-collapsible-collapse {
+  from {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  to {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phi-collapsible-default-trigger__icon {
+    transition-duration: 0s;
+  }
+
+  .phi-collapsible > .phi-collapsible-default-panel {
+    animation-duration: 0s;
+  }
+}

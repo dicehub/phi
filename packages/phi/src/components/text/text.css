@@ -1,0 +1,97 @@
+.phi-text.phi-text {
+  margin: 0;
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.phi-text.phi-text--heading1 {
+  color: var(--phi-default, #17191f);
+  font-size: 1.875rem;
+  font-weight: 600;
+  line-height: 2.25rem;
+}
+
+.phi-text.phi-text--heading {
+  color: var(--phi-default, #17191f);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.phi-text.phi-text--heading.phi-text--size-lg {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.phi-text.phi-text--heading2 {
+  color: var(--phi-default, #17191f);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 2rem;
+}
+
+.phi-text.phi-text--heading3 {
+  color: var(--phi-default, #17191f);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.phi-text.phi-text--body {
+  color: var(--phi-default, #17191f);
+}
+
+.phi-text.phi-text--secondary {
+  color: var(--phi-subtle, #6c7480);
+}
+
+.phi-text.phi-text--success {
+  color: var(--phi-link, var(--phi-info, #175cd3));
+}
+
+.phi-text.phi-text--error {
+  color: var(--phi-danger, #b42318);
+}
+
+.phi-text.phi-text--mono,
+.phi-text.phi-text--mono-secondary {
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-mono, ui-monospace, "SFMono-Regular", "SF Mono", Consolas, "Liberation Mono", monospace);
+}
+
+.phi-text.phi-text--mono-secondary {
+  color: var(--phi-subtle, #6c7480);
+}
+
+.phi-text.phi-text--size-xs {
+  font-size: 0.75rem;
+  line-height: inherit;
+}
+
+.phi-text.phi-text--size-sm {
+  font-size: 0.8125rem;
+  line-height: inherit;
+}
+
+.phi-text.phi-text--size-base {
+  font-size: 0.875rem;
+  line-height: inherit;
+}
+
+.phi-text.phi-text--size-lg {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.phi-text.phi-text--bold {
+  font-weight: 500;
+}
+
+.phi-text.phi-text--truncate {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,193 @@
+.phi-tag-input-field {
+  --phi-tag-input-danger: var(--phi-danger, #dc2626);
+  --phi-tag-input-danger-focus: rgba(220, 38, 38, 0.5);
+
+  display: grid;
+  gap: 0.5rem;
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+}
+
+.phi-tag-input-label {
+  display: inline-flex;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  user-select: none;
+}
+
+.phi-tag-input {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  border: 0;
+  background: var(--phi-control, #ffffff);
+  box-shadow: 0 0 0 1px var(--phi-line, rgba(20, 20, 20, 0.1));
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  outline: none;
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease;
+}
+
+.phi-tag-input--xs {
+  min-height: 1.5rem;
+  padding: 0.1875rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-tag-input--sm {
+  min-height: 1.75rem;
+  padding: 0.1875rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-tag-input--base {
+  min-height: 2.25rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.phi-tag-input--lg {
+  min-height: 2.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+/* Keep the xs control at its declared height when tags are present. */
+.phi-tag-input--xs .phi-tag-input-chip {
+  min-height: 1.5em;
+}
+
+.phi-tag-input:focus-within {
+  box-shadow: 0 0 0 1.5px var(--phi-focus-soft, rgba(76, 99, 255, 0.5));
+}
+
+.phi-tag-input--error,
+.phi-tag-input-field[data-invalid] .phi-tag-input {
+  box-shadow: 0 0 0 1px var(--phi-tag-input-danger);
+}
+
+.phi-tag-input--error:focus-within,
+.phi-tag-input-field[data-invalid] .phi-tag-input:focus-within {
+  box-shadow: 0 0 0 1.5px var(--phi-tag-input-danger-focus);
+}
+
+.phi-tag-input-field[data-disabled] .phi-tag-input {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-tag-input__input {
+  min-width: 8rem;
+  flex: 1 1 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: 1.4;
+  outline: none;
+}
+
+.phi-tag-input__input::placeholder {
+  color: var(--phi-muted, #9aa2ae);
+}
+
+.phi-tag-input__input:disabled {
+  color: var(--phi-muted, #9aa2ae);
+  cursor: not-allowed;
+}
+
+.phi-tag-input-chip {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 1.7em;
+  flex: none;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0 0.2em 0 0.55em;
+  border-radius: 0.125rem;
+  background: var(--phi-overlay, rgba(16, 24, 40, 0.06));
+  box-shadow: inset 0 0 0 1px var(--phi-hairline, rgba(16, 24, 40, 0.08));
+  color: var(--phi-default, #17191f);
+  font-size: 1em;
+  line-height: 1.1;
+}
+
+.phi-tag-input-chip__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.phi-tag-input-chip__remove {
+  display: inline-flex;
+  width: 1.28em;
+  height: 1.28em;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--phi-subtle, #6c7480);
+  cursor: pointer;
+}
+
+.phi-tag-input-chip__remove svg {
+  width: 0.72em;
+  height: 0.72em;
+  fill: none;
+}
+
+.phi-tag-input-chip__remove:hover {
+  background: var(--phi-overlay, rgba(16, 24, 40, 0.06));
+  color: var(--phi-default, #17191f);
+}
+
+.phi-tag-input-chip__remove:focus-visible {
+  box-shadow: 0 0 0 1.5px var(--phi-focus-soft, rgba(76, 99, 255, 0.5));
+  color: var(--phi-default, #17191f);
+  outline: none;
+}
+
+.phi-tag-input-chip__remove:disabled {
+  background: transparent;
+  color: var(--phi-muted, #9aa2ae);
+  cursor: not-allowed;
+}
+
+.phi-tag-input-field > .phi-tag-input-error,
+.phi-tag-input-field > .phi-tag-input-description {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.375;
+}
+
+.phi-tag-input-field > .phi-tag-input-error {
+  color: var(--phi-tag-input-danger);
+}
+
+.phi-tag-input-field > .phi-tag-input-description {
+  color: var(--phi-subtle, #6c7480);
+}

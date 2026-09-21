@@ -1,0 +1,117 @@
+---
+import ChartColorDocsDemo from "../../../components/ChartColorDocsDemo.vue";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+---
+
+<DocsLayout title="Chart Colors" description="Semantic and categorical color tokens for dashboard charts.">
+  <div class="docs-page docs-page--component docs-page--charts">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Chart Colors</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">Semantic and categorical color tokens for dashboard charts.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <p>
+          Chart colors are split into three systems: semantic tokens for data with inherent
+          polarity, a categorical palette for nominal series, and a sequential scale for
+          density encoding. Using the right system for the data type is the most important
+          color decision in a chart.
+        </p>
+
+        <section id="color-systems" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#color-systems">Color Systems</a></h2>
+          <p>
+            Charts in dashboards serve different jobs, so color is not one-size-fits-all.
+            To avoid misreading data, use different color systems based on the data task.
+          </p>
+          <ChartColorDocsDemo client:only="vue" variant="systems" />
+        </section>
+
+        <section id="semantic-tokens" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#semantic-tokens">Semantic Tokens</a></h2>
+          <p>
+            Use semantic chart colors when data has inherent polarity, such as status,
+            severity, or health. The chart variants are tuned to be readable in dense
+            data visualizations without making every warning feel equally urgent.
+          </p>
+          <div class="docs-chart-color-stack">
+            <ChartColorDocsDemo client:only="vue" variant="semantic" />
+            <ChartColorDocsDemo client:only="vue" variant="categorical-bar" />
+          </div>
+        </section>
+
+        <section id="categorical-palette" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#categorical-palette">Categorical Palette</a></h2>
+          <p>
+            Use the categorical palette when data has no inherent polarity. The palette is
+            ordered for clear separation between adjacent slots and cycles predictably for
+            charts with more than six series.
+          </p>
+          <div class="docs-chart-color-stack">
+            <ChartColorDocsDemo client:only="vue" variant="categorical" />
+            <div class="docs-chart-color-note">
+              Categorical colors should cycle with modulo when more series are needed:
+              <code>color = colors[index % colors.length]</code>.
+            </div>
+            <p>
+              Categorical colors are checked with a color vision deficiency simulator.
+              This example shows how the palette appears with deuteranopia.
+            </p>
+            <ChartColorDocsDemo client:only="vue" variant="categorical-cvd" />
+            <ChartColorDocsDemo client:only="vue" variant="categorical-donut" />
+            <ChartColorDocsDemo client:only="vue" variant="categorical-line" />
+            <div class="docs-chart-color-note">
+              <strong>Color alone should not be used to convey information.</strong>
+              For line charts, pair color with patterns such as dashed or dotted strokes.
+            </div>
+          </div>
+        </section>
+
+        <section id="sequential-scale" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#sequential-scale">Sequential Scale</a></h2>
+          <p>
+            Use a single-hue sequential scale for density, where color intensity reinforces
+            magnitude. Darker steps encode higher values in light mode, while lighter steps
+            encode higher values in dark mode.
+          </p>
+          <div class="docs-chart-color-stack">
+            <ChartColorDocsDemo client:only="vue" variant="sequential" />
+            <ChartColorDocsDemo client:only="vue" variant="sequential-heatmap" />
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#color-systems">Color Systems</a></li>
+            <li><a href="#semantic-tokens">Semantic Tokens</a></li>
+            <li><a href="#categorical-palette">Categorical Palette</a></li>
+            <li><a href="#sequential-scale">Sequential Scale</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

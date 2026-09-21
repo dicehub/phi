@@ -1,0 +1,285 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import InputDocsDemo from "../../../components/InputDocsDemo.vue";
+import {
+  inputBarrelCode,
+  inputBareCode,
+  inputErrorTypes,
+  inputEvents,
+  inputExamples,
+  inputGranularCode,
+  inputPreviewCode,
+  inputProps,
+  inputSlots,
+  inputUsageFieldCode,
+} from "../../../data/input-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+---
+
+<DocsLayout title="Input" description="A text input field for user input with built-in label, description, and error support.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Input</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A text input field for user input with built-in label, description, and error support.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--input">
+              <InputDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={inputPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={inputBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={inputGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+
+          <h3 id="with-built-in-field-recommended">
+            <a class="docs-section-anchor" href="#with-built-in-field-recommended">With Built-in Field (Recommended)</a>
+          </h3>
+          <p>
+            Use <code>label</code>, <code>description</code>, or <code>error</code> to render the built-in
+            field wrapper and wire the control to accessible text.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--input">
+              <InputDocsDemo client:only="vue" variant="field" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={inputUsageFieldCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="bare-input-custom-layouts">
+            <a class="docs-section-anchor" href="#bare-input-custom-layouts">Bare Input (Custom Layouts)</a>
+          </h3>
+          <p>
+            Use a bare input when another layout owns the label. Always provide <code>aria-label</code>
+            or <code>aria-labelledby</code>.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--input">
+              <InputDocsDemo client:only="vue" variant="bare" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={inputBareCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {
+            inputExamples.map((example) => (
+              <>
+                <h3 id={example.id}>
+                  <a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a>
+                </h3>
+                {
+                  example.id === "input-types" ? (
+                    <p>
+                      Forward native input types such as <code>email</code>, <code>password</code>, <code>number</code>, and <code>tel</code>.
+                    </p>
+                  ) : example.id === "password-manager-overlays" ? (
+                    <p>
+                      Set <code>passwordManagerIgnore</code> to add common password manager suppression attributes.
+                    </p>
+                  ) : (
+                    <p>{example.description}</p>
+                  )
+                }
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--input">
+                    <InputDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <p>Input accepts native HTML input attributes plus the following:</p>
+
+          <h3 id="props"><a class="docs-section-anchor" href="#props">Props</a></h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {inputProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="slots"><a class="docs-section-anchor" href="#slots">Slots</a></h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Slot</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {inputSlots.map((slot) => (
+                  <tr>
+                    <td><code>{slot.name}</code></td>
+                    <td>{slot.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="events"><a class="docs-section-anchor" href="#events">Events</a></h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Event</th><th>Type</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {inputEvents.map((event) => (
+                  <tr>
+                    <td><code>{event.name}</code></td>
+                    <td><code>{event.type}</code></td>
+                    <td>{event.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="validation-error-types">
+            <a class="docs-section-anchor" href="#validation-error-types">Validation Error Types</a>
+          </h3>
+          <p>
+            Structured errors accept a browser validity match key. Phi displays the message directly and
+            keeps the shape suitable for native validity checks.
+          </p>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Match</th></tr>
+              </thead>
+              <tbody>
+                {inputErrorTypes.map((type) => (
+                  <tr><td><code>{type}</code></td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="accessibility" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#accessibility">Accessibility</a></h2>
+
+          <h3 id="label-requirement"><a class="docs-section-anchor" href="#label-requirement">Label Requirement</a></h3>
+          <p>
+            Prefer the <code>label</code> prop or label slot. If the visible label lives outside Input,
+            provide <code>aria-label</code> or <code>aria-labelledby</code>.
+          </p>
+
+          <h3 id="error-association"><a class="docs-section-anchor" href="#error-association">Error Association</a></h3>
+          <p>
+            When <code>error</code> is present, Input sets <code>aria-invalid</code> and associates the
+            message through <code>aria-describedby</code>.
+          </p>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li>
+              <a href="#installation">Installation</a>
+              <ul>
+                <li><a href="#barrel">Barrel</a></li>
+                <li><a href="#granular">Granular</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#usage">Usage</a>
+              <ul>
+                <li><a href="#with-built-in-field-recommended">With Built-in Field (Recommended)</a></li>
+                <li><a href="#bare-input-custom-layouts">Bare Input (Custom Layouts)</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {inputExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#props">Props</a></li>
+                <li><a href="#slots">Slots</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#validation-error-types">Validation Error Types</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#accessibility">Accessibility</a>
+              <ul>
+                <li><a href="#label-requirement">Label Requirement</a></li>
+                <li><a href="#error-association">Error Association</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

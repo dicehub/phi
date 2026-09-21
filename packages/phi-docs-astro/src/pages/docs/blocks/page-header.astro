@@ -1,0 +1,331 @@
+---
+import BlockPageHeaderDocsDemo from "../../../components/BlockPageHeaderDocsDemo.vue";
+import Callout from "../../../components/Callout.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import {
+  pageHeaderHeroCode,
+  pageHeaderProps,
+  pageHeaderUsageCode,
+  tabsItemProps,
+} from "../../../data/block-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const basicCode = `<script setup lang="ts">
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+import PageHeader from "./components/phi/page-header/PageHeader.vue";
+</script>
+
+<template>
+  <PageHeader>
+    <template #breadcrumbs>
+      <Breadcrumbs>
+        <Breadcrumbs.Link href="#">Home</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Current>Dashboard</Breadcrumbs.Current>
+      </Breadcrumbs>
+    </template>
+  </PageHeader>
+</template>`;
+
+const iconsCode = `<script setup lang="ts">
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+import { PhGear, PhHouse } from "@phosphor-icons/vue";
+import PageHeader from "./components/phi/page-header/PageHeader.vue";
+</script>
+
+<template>
+  <PageHeader>
+    <template #breadcrumbs>
+      <Breadcrumbs>
+        <Breadcrumbs.Link :icon="PhHouse" href="#">Home</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Current :icon="PhGear">Settings</Breadcrumbs.Current>
+      </Breadcrumbs>
+    </template>
+  </PageHeader>
+</template>`;
+
+const tabsCode = `<script setup lang="ts">
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+import PageHeader from "./components/phi/page-header/PageHeader.vue";
+
+const tabs = [
+  { label: "General", value: "general" },
+  { label: "Security", value: "security" },
+  { label: "Notifications", value: "notifications" },
+];
+</script>
+
+<template>
+  <PageHeader :tabs="tabs" default-tab="general">
+    <template #breadcrumbs>
+      <Breadcrumbs>
+        <Breadcrumbs.Link href="#">Home</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Current>Settings</Breadcrumbs.Current>
+      </Breadcrumbs>
+    </template>
+  </PageHeader>
+</template>`;
+
+const actionsCode = `<script setup lang="ts">
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+import { Button } from "@dicehub/phi/components/button";
+import PageHeader from "./components/phi/page-header/PageHeader.vue";
+
+const tabs = [
+  { label: "Overview", value: "overview" },
+  { label: "Settings", value: "settings" },
+];
+</script>
+
+<template>
+  <PageHeader :tabs="tabs" default-tab="overview">
+    <template #breadcrumbs>
+      <Breadcrumbs>
+        <Breadcrumbs.Link href="#">Home</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Link href="#">Projects</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Current>My Project</Breadcrumbs.Current>
+      </Breadcrumbs>
+    </template>
+
+    <Button variant="primary">Deploy</Button>
+  </PageHeader>
+</template>`;
+
+const titleCode = `<script setup lang="ts">
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+import PageHeader from "./components/phi/page-header/PageHeader.vue";
+</script>
+
+<template>
+  <PageHeader title="Page title">
+    <template #breadcrumbs>
+      <Breadcrumbs>
+        <Breadcrumbs.Link href="#">Home</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Link href="#">Products</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Current>Page title</Breadcrumbs.Current>
+      </Breadcrumbs>
+    </template>
+  </PageHeader>
+</template>`;
+
+const titleDescriptionCode = `<script setup lang="ts">
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+import PageHeader from "./components/phi/page-header/PageHeader.vue";
+</script>
+
+<template>
+  <PageHeader
+    title="Page title"
+    description="Action-led, value-oriented description of what this page does. Optional second sentence with use cases or prerequisites."
+  >
+    <template #breadcrumbs>
+      <Breadcrumbs>
+        <Breadcrumbs.Link href="#">Home</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Link href="#">Products</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Current>Page title</Breadcrumbs.Current>
+      </Breadcrumbs>
+    </template>
+  </PageHeader>
+</template>`;
+
+const completeCode = `<script setup lang="ts">
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+import { Button } from "@dicehub/phi/components/button";
+import { PhPlus } from "@phosphor-icons/vue";
+import PageHeader from "./components/phi/page-header/PageHeader.vue";
+
+const tabs = [
+  { label: "Overview", value: "overview" },
+  { label: "Analytics", value: "analytics" },
+  { label: "Settings", value: "settings" },
+];
+</script>
+
+<template>
+  <PageHeader
+    title="Page title"
+    description="Action-led, value-oriented description of what this page does."
+    :tabs="tabs"
+    default-tab="overview"
+  >
+    <template #breadcrumbs>
+      <Breadcrumbs>
+        <Breadcrumbs.Link href="#">Home</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Link href="#">Products</Breadcrumbs.Link>
+        <Breadcrumbs.Separator />
+        <Breadcrumbs.Current>Page title</Breadcrumbs.Current>
+      </Breadcrumbs>
+    </template>
+
+    <Button variant="outline">Export</Button>
+    <Button :icon="PhPlus" variant="primary">New Item</Button>
+  </PageHeader>
+</template>`;
+
+const examples = [
+  { id: "basic", title: "Basic", variant: "basic", code: basicCode },
+  { id: "with-icons", title: "With Icons", variant: "icons", code: iconsCode },
+  { id: "with-tabs", title: "With Tabs", variant: "tabs", code: tabsCode },
+  { id: "with-actions", title: "With Actions", variant: "actions", code: actionsCode },
+  { id: "with-title", title: "With Title", variant: "title", code: titleCode },
+  { id: "with-title-and-description", title: "With Title and Description", variant: "title-description", code: titleDescriptionCode },
+  { id: "complete-example", title: "Complete Example", variant: "complete", code: completeCode },
+] as const;
+---
+
+<DocsLayout
+  title="Page Header"
+  description="A composite component that combines breadcrumbs and tabs for page navigation."
+  headerSourceIcon
+>
+  <div class="docs-page docs-page--component docs-page--blocks">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Page Header</h1>
+            <span class="docs-page-header__source-icon" aria-hidden="true">
+              <svg viewBox="0 0 256 256" width="20" height="20" fill="currentColor">
+                <path d="M216,104v8a56.06,56.06,0,0,1-48.44,55.47A39.8,39.8,0,0,1,176,192v40a8,8,0,0,1-8,8H104a8,8,0,0,1-8-8V216H72a40,40,0,0,1-40-40A24,24,0,0,0,8,152a8,8,0,0,1,0-16,40,40,0,0,1,40,40,24,24,0,0,0,24,24H96v-8a39.8,39.8,0,0,1,8.44-24.53A56.06,56.06,0,0,1,56,112v-8a58.14,58.14,0,0,1,7.69-28.32A59.78,59.78,0,0,1,69.07,28,8,8,0,0,1,76,24a59.75,59.75,0,0,1,48,24h24a59.75,59.75,0,0,1,48-24,8,8,0,0,1,6.93,4,59.74,59.74,0,0,1,5.37,47.68A58,58,0,0,1,216,104Z" />
+              </svg>
+            </span>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">A composite component that combines breadcrumbs and tabs for page navigation.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--block">
+              <BlockPageHeaderDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={pageHeaderHeroCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <p>PageHeader is a source block: the Phi CLI copies its source into your app so you own and can customize the code.</p>
+          <CodeBlock code="pnpm dlx @dicehub/phi add PageHeader" lang="bash" />
+          <p>
+            The command writes the block into the <code>blocksDir</code> from your <code>phi.json</code>, for example
+            <code>src/components/phi/page-header/PageHeader.vue</code>. Import it from there:
+          </p>
+          <CodeBlock
+            code={`import PageHeader from "./components/phi/page-header/PageHeader.vue";`}
+            lang="typescript"
+          />
+          <Callout type="info">
+            <p>Run <code>pnpm dlx @dicehub/phi init</code> once before the first block. See the <a href="/docs/cli">CLI reference</a> for every command.</p>
+          </Callout>
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <CodeBlock code={pageHeaderUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+          {examples.map((example) => (
+            <>
+              <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+              {example.id === "complete-example" ? <p>Combining breadcrumbs, title, description, tabs, and actions.</p> : null}
+              <div class="docs-component-example">
+                <div class="docs-component-preview docs-component-preview--block">
+                  <BlockPageHeaderDocsDemo client:only="vue" variant={example.variant} />
+                </div>
+                <div class="docs-component-example__code">
+                  <CodeBlock code={example.code} lang="vue" />
+                </div>
+              </div>
+            </>
+          ))}
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {pageHeaderProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="tabsitem"><a class="docs-section-anchor" href="#tabsitem">TabsItem</a></h3>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Property</th><th>Type</th></tr>
+              </thead>
+              <tbody>
+                {tabsItemProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                {examples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
+              </ul>
+            </li>
+            <li><a href="#api-reference">API Reference</a></li>
+            <li><a href="#tabsitem">TabsItem</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

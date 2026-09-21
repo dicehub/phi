@@ -1,0 +1,102 @@
+.phi-input-area {
+  --phi-input-danger: #dc2626;
+  --phi-input-danger-focus: rgba(220, 38, 38, 0.5);
+
+  box-sizing: border-box;
+  min-width: 0;
+  border: 0;
+  background: var(--phi-control, #ffffff);
+  box-shadow: 0 0 0 1px var(--phi-line, rgba(20, 20, 20, 0.1));
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  outline: none;
+  resize: vertical;
+  transition:
+    background-color 120ms ease,
+    box-shadow 120ms ease,
+    color 120ms ease;
+}
+
+.phi-input-area::placeholder {
+  color: var(--phi-muted, #9aa2ae);
+}
+
+.phi-input-area--xs {
+  padding: 0.5rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-input-area--sm {
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.phi-input-area--base {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.phi-input-area--lg {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.phi-input-area:focus {
+  box-shadow: 0 0 0 1.5px var(--phi-focus-soft, rgba(76, 99, 255, 0.5));
+}
+
+.phi-input-area--error,
+.phi-input-field[data-invalid] .phi-input-area {
+  box-shadow: 0 0 0 1px var(--phi-input-danger);
+}
+
+.phi-input-area--error:focus,
+.phi-input-field[data-invalid] .phi-input-area:focus {
+  box-shadow: 0 0 0 1.5px var(--phi-input-danger-focus);
+}
+
+.phi-input-area:disabled {
+  color: var(--phi-muted, #9aa2ae);
+  cursor: not-allowed;
+}
+
+.phi-input-area:disabled::placeholder {
+  color: var(--phi-muted, #9aa2ae);
+}
+
+.phi-input-area:read-only:not(:disabled) {
+  cursor: default;
+}
+
+.phi-input-area--auto-resize {
+  width: 100%;
+  resize: none;
+  scrollbar-color: var(--phi-line, rgba(20, 20, 20, 0.1)) transparent;
+  scrollbar-width: thin;
+}
+
+.phi-input-area--auto-resize::-webkit-scrollbar {
+  width: 0.5rem;
+  background: transparent;
+}
+
+.phi-input-area--auto-resize::-webkit-scrollbar-track {
+  margin-block: 0.5rem;
+}
+
+.phi-input-area--auto-resize::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: var(--phi-line, rgba(20, 20, 20, 0.1));
+}
+
+.phi-input-area--auto-resize::-webkit-scrollbar-corner {
+  background: transparent;
+}

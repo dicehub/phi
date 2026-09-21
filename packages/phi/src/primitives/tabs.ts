@@ -1,0 +1,23 @@
+export {
+  TabContent as PrimitiveTabContent,
+  TabIndicator as PrimitiveTabIndicator,
+  TabList as PrimitiveTabList,
+  TabTrigger as PrimitiveTabTrigger,
+  TabsContext as PrimitiveTabsContext,
+  TabsRoot as PrimitiveTabsRoot,
+  TabsRootProvider as PrimitiveTabsRootProvider,
+  tabsAnatomy as primitiveTabsAnatomy,
+  useTabs as usePrimitiveTabs,
+  useTabsContext as usePrimitiveTabsContext,
+} from "@ark-ui/vue/tabs";
+export type {
+  TabContentProps as PrimitiveTabContentProps,
+  TabIndicatorProps as PrimitiveTabIndicatorProps,
+  TabListProps as PrimitiveTabListProps,
+  TabTriggerProps as PrimitiveTabTriggerProps,
+  TabsFocusChangeDetails as PrimitiveTabsFocusChangeDetails,
+  TabsRootProps as PrimitiveTabsRootProps,
+  TabsValueChangeDetails as PrimitiveTabsValueChangeDetails,
+  UseTabsProps as PrimitiveUseTabsProps,
+  UseTabsReturn as PrimitiveUseTabsReturn,
+} from "@ark-ui/vue/tabs";

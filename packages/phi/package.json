@@ -1,0 +1,345 @@
+{
+  "name": "@dicehub/phi",
+  "version": "0.4.1",
+  "private": false,
+  "type": "module",
+  "description": "Vue component library rebuilt on Ark UI.",
+  "author": "dicehub GmbH",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dicehub/phi.git",
+    "directory": "packages/phi"
+  },
+  "homepage": "https://github.com/dicehub/phi#readme",
+  "bugs": {
+    "url": "https://github.com/dicehub/phi/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "components",
+    "ui",
+    "design-system",
+    "ark-ui"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "phi": "./bin/phi.js"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "pnpm run codegen:themes && pnpm run codegen:registry && vite build && pnpm run codegen:licenses",
+    "check:licenses": "node scripts/generate-third-party-notices.mjs --check",
+    "check:registry": "node scripts/component-registry/index.mjs --check",
+    "check:semantic-colors": "node scripts/check-semantic-colors.mjs",
+    "check:themes": "node scripts/theme-generator/index.mjs --check",
+    "codegen:licenses": "node scripts/generate-third-party-notices.mjs",
+    "codegen:registry": "node scripts/component-registry/index.mjs",
+    "codegen:themes": "node scripts/theme-generator/index.mjs",
+    "lint": "pnpm run check:semantic-colors",
+    "test": "pnpm run test:unit && pnpm run test:tailwind",
+    "test:tailwind": "tailwindcss -i src/styles/__fixtures__/tailwind-input.css -o /tmp/phi-tailwind-integration.css && node scripts/test-tailwind-output.mjs",
+    "test:unit": "node --test \"src/**/*.test.mjs\" \"bin/*.test.mjs\"",
+    "typecheck": "pnpm run check:themes && pnpm run check:registry && pnpm run check:semantic-colors && vue-tsc --noEmit",
+    "validate:package": "pnpm run build && pnpm pack --dry-run --json | node scripts/validate-package.mjs && node scripts/validate-package-consumer.mjs"
+  },
+  "peerDependencies": {
+    "echarts": "^6.0.0",
+    "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "echarts": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.5",
+    "@tailwindcss/cli": "4.3.3",
+    "@types/node": "^24.12.4",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/language-core": "^3.3.3",
+    "echarts": "^6.0.0",
+    "publint": "0.3.22",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5.9.3",
+    "unplugin-dts": "^1.0.3",
+    "vite": "^7.3.2",
+    "vue": "^3.5.17",
+    "vue-tsc": "^3.3.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./components/autocomplete": {
+      "types": "./dist/components/autocomplete/index.d.ts",
+      "import": "./dist/components/autocomplete.js"
+    },
+    "./components/badge": {
+      "types": "./dist/components/badge/index.d.ts",
+      "import": "./dist/components/badge.js"
+    },
+    "./components/banner": {
+      "types": "./dist/components/banner/index.d.ts",
+      "import": "./dist/components/banner.js"
+    },
+    "./components/button": {
+      "types": "./dist/components/button/index.d.ts",
+      "import": "./dist/components/button.js"
+    },
+    "./components/button-group": {
+      "types": "./dist/components/button-group/index.d.ts",
+      "import": "./dist/components/button-group.js"
+    },
+    "./components/breadcrumbs": {
+      "types": "./dist/components/breadcrumbs/index.d.ts",
+      "import": "./dist/components/breadcrumbs.js"
+    },
+    "./components/chart": {
+      "types": "./dist/components/chart/index.d.ts",
+      "import": "./dist/components/chart.js"
+    },
+    "./components/checkbox": {
+      "types": "./dist/components/checkbox/index.d.ts",
+      "import": "./dist/components/checkbox.js"
+    },
+    "./components/clipboard-text": {
+      "types": "./dist/components/clipboard-text/index.d.ts",
+      "import": "./dist/components/clipboard-text.js"
+    },
+    "./components/code": {
+      "types": "./dist/components/code/index.d.ts",
+      "import": "./dist/components/code.js"
+    },
+    "./components/collapsible": {
+      "types": "./dist/components/collapsible/index.d.ts",
+      "import": "./dist/components/collapsible.js"
+    },
+    "./components/combobox": {
+      "types": "./dist/components/combobox/index.d.ts",
+      "import": "./dist/components/combobox.js"
+    },
+    "./components/command-palette": {
+      "types": "./dist/components/command-palette/index.d.ts",
+      "import": "./dist/components/command-palette.js"
+    },
+    "./components/date-picker": {
+      "types": "./dist/components/date-picker/index.d.ts",
+      "import": "./dist/components/date-picker.js"
+    },
+    "./components/dicehub-logo": {
+      "types": "./dist/components/dicehub-logo/index.d.ts",
+      "import": "./dist/components/dicehub-logo.js"
+    },
+    "./components/dialog": {
+      "types": "./dist/components/dialog/index.d.ts",
+      "import": "./dist/components/dialog.js"
+    },
+    "./components/dropdown": {
+      "types": "./dist/components/dropdown/index.d.ts",
+      "import": "./dist/components/dropdown.js"
+    },
+    "./components/empty": {
+      "types": "./dist/components/empty/index.d.ts",
+      "import": "./dist/components/empty.js"
+    },
+    "./components/field": {
+      "types": "./dist/components/field/index.d.ts",
+      "import": "./dist/components/field.js"
+    },
+    "./components/flow": {
+      "types": "./dist/components/flow/index.d.ts",
+      "import": "./dist/components/flow.js"
+    },
+    "./components/grid": {
+      "types": "./dist/components/grid/index.d.ts",
+      "import": "./dist/components/grid.js"
+    },
+    "./components/input": {
+      "types": "./dist/components/input/index.d.ts",
+      "import": "./dist/components/input.js"
+    },
+    "./components/inline-copy-text": {
+      "types": "./dist/components/inline-copy-text/index.d.ts",
+      "import": "./dist/components/inline-copy-text.js"
+    },
+    "./components/input-group": {
+      "types": "./dist/components/input-group/index.d.ts",
+      "import": "./dist/components/input-group.js"
+    },
+    "./components/label": {
+      "types": "./dist/components/label/index.d.ts",
+      "import": "./dist/components/label.js"
+    },
+    "./components/layer-card": {
+      "types": "./dist/components/layer-card/index.d.ts",
+      "import": "./dist/components/layer-card.js"
+    },
+    "./components/link": {
+      "types": "./dist/components/link/index.d.ts",
+      "import": "./dist/components/link.js"
+    },
+    "./components/loader": {
+      "types": "./dist/components/loader/index.d.ts",
+      "import": "./dist/components/loader.js"
+    },
+    "./components/menubar": {
+      "types": "./dist/components/menubar/index.d.ts",
+      "import": "./dist/components/menubar.js"
+    },
+    "./components/meter": {
+      "types": "./dist/components/meter/index.d.ts",
+      "import": "./dist/components/meter.js"
+    },
+    "./components/pagination": {
+      "types": "./dist/components/pagination/index.d.ts",
+      "import": "./dist/components/pagination.js"
+    },
+    "./components/popover": {
+      "types": "./dist/components/popover/index.d.ts",
+      "import": "./dist/components/popover.js"
+    },
+    "./components/radio": {
+      "types": "./dist/components/radio/index.d.ts",
+      "import": "./dist/components/radio.js"
+    },
+    "./components/select": {
+      "types": "./dist/components/select/index.d.ts",
+      "import": "./dist/components/select.js"
+    },
+    "./components/sensitive-input": {
+      "types": "./dist/components/sensitive-input/index.d.ts",
+      "import": "./dist/components/sensitive-input.js"
+    },
+    "./components/sidebar": {
+      "types": "./dist/components/sidebar/index.d.ts",
+      "import": "./dist/components/sidebar.js"
+    },
+    "./components/skeleton-line": {
+      "types": "./dist/components/skeleton-line/index.d.ts",
+      "import": "./dist/components/skeleton-line.js"
+    },
+    "./components/switch": {
+      "types": "./dist/components/switch/index.d.ts",
+      "import": "./dist/components/switch.js"
+    },
+    "./components/table": {
+      "types": "./dist/components/table/index.d.ts",
+      "import": "./dist/components/table.js"
+    },
+    "./components/table-of-contents": {
+      "types": "./dist/components/table-of-contents/index.d.ts",
+      "import": "./dist/components/table-of-contents.js"
+    },
+    "./components/tabs": {
+      "types": "./dist/components/tabs/index.d.ts",
+      "import": "./dist/components/tabs.js"
+    },
+    "./components/tag-input": {
+      "types": "./dist/components/tag-input/index.d.ts",
+      "import": "./dist/components/tag-input.js"
+    },
+    "./components/text": {
+      "types": "./dist/components/text/index.d.ts",
+      "import": "./dist/components/text.js"
+    },
+    "./components/tooltip": {
+      "types": "./dist/components/tooltip/index.d.ts",
+      "import": "./dist/components/tooltip.js"
+    },
+    "./components/toolbar": {
+      "types": "./dist/components/toolbar/index.d.ts",
+      "import": "./dist/components/toolbar.js"
+    },
+    "./components/toast": {
+      "types": "./dist/components/toast/index.d.ts",
+      "import": "./dist/components/toast.js"
+    },
+    "./blocks": {
+      "types": "./dist/blocks/index.d.ts",
+      "import": "./dist/blocks.js"
+    },
+    "./blocks/delete-resource": {
+      "types": "./dist/blocks/delete-resource/index.d.ts",
+      "import": "./dist/blocks/delete-resource.js"
+    },
+    "./primitives": {
+      "types": "./dist/primitives/index.d.ts",
+      "import": "./dist/primitives.js"
+    },
+    "./primitives/select": {
+      "types": "./dist/primitives/select.d.ts",
+      "import": "./dist/primitives/select.js"
+    },
+    "./primitives/dialog": {
+      "types": "./dist/primitives/dialog.d.ts",
+      "import": "./dist/primitives/dialog.js"
+    },
+    "./primitives/field": {
+      "types": "./dist/primitives/field.d.ts",
+      "import": "./dist/primitives/field.js"
+    },
+    "./primitives/tabs": {
+      "types": "./dist/primitives/tabs.d.ts",
+      "import": "./dist/primitives/tabs.js"
+    },
+    "./primitives/tooltip": {
+      "types": "./dist/primitives/tooltip.d.ts",
+      "import": "./dist/primitives/tooltip.js"
+    },
+    "./code": {
+      "types": "./dist/code/index.d.ts",
+      "import": "./dist/code.js"
+    },
+    "./code/server": {
+      "types": "./dist/code/server.d.ts",
+      "import": "./dist/code/server.js"
+    },
+    "./styles": "./dist/styles/index.css",
+    "./styles/theme": "./dist/styles/theme-phi.css",
+    "./styles/theme-phi": "./dist/styles/theme-phi.css",
+    "./styles/tailwind": "./dist/styles/tailwind.css",
+    "./styles/standalone": "./dist/styles/standalone.css",
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils.js"
+    },
+    "./registry": {
+      "types": "./dist/registry/index.d.ts",
+      "import": "./dist/registry.js"
+    },
+    "./registry/component-registry.json": "./dist/registry/component-registry.json",
+    "./ai/component-registry.json": "./dist/registry/component-registry.json"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "bin/phi.js",
+    "templates/blocks",
+    "README.md",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": [
+    "*.css",
+    "dist/**/*.css"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@ark-ui/vue": "^5.36.1",
+    "@internationalized/date": "^3.12.0",
+    "@shikijs/langs": "^4.0.2",
+    "@shikijs/themes": "^4.0.2",
+    "@zag-js/popper": "^1.40.0",
+    "shiki": "^4.0.2"
+  }
+}

@@ -1,0 +1,98 @@
+.phi-popover-positioner {
+  --z-index: 1000;
+  z-index: 1000 !important;
+}
+
+.phi-popover-content {
+  display: flex;
+  max-width: calc(100vw - 2rem);
+  flex-direction: column;
+  opacity: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--phi-base, #ffffff);
+  box-shadow:
+    0 4px 6px -1px var(--color-phi-shadow-drop, rgba(16, 24, 40, 0.1)),
+    0 2px 4px -2px var(--color-phi-shadow-drop, rgba(16, 24, 40, 0.1));
+  color: var(--phi-default, #17191f);
+  font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
+  font-size: 0.8125rem;
+  line-height: 0.95625rem;
+  outline: 1px solid var(--phi-line, #e3e6eb);
+  scale: 1;
+  transform-origin: var(--transform-origin);
+  transition:
+    transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    scale 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@starting-style {
+  .phi-popover-content[data-state="open"] {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+.phi-popover-content[data-state="closed"] {
+  opacity: 0;
+  scale: 0.9;
+}
+
+.phi-popover-title {
+  margin: 0;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+
+.phi-popover-description {
+  margin: 0;
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.phi-popover-close {
+  font: inherit;
+}
+
+.phi-popover-arrow {
+  --arrow-size: 1.25rem;
+
+  display: flex;
+  color: var(--phi-base, #ffffff);
+}
+
+.phi-popover-arrow__svg {
+  display: block;
+}
+
+.phi-popover-arrow[style*="bottom:"] .phi-popover-arrow__svg {
+  transform: translateY(2px);
+}
+
+.phi-popover-arrow[style*="top: calc"] .phi-popover-arrow__svg {
+  transform: rotate(180deg) translateY(-8px);
+}
+
+.phi-popover-arrow[style*="right: calc"] .phi-popover-arrow__svg {
+  transform: rotate(-90deg) translateY(-3px);
+}
+
+.phi-popover-arrow[style*="left: calc"] .phi-popover-arrow__svg {
+  transform: rotate(90deg) translateY(-3px);
+}
+
+.phi-popover-arrow__fill {
+  fill: var(--phi-base, #ffffff);
+}
+
+.phi-popover-arrow__edge {
+  fill: var(--phi-arrow-edge, rgba(16, 24, 40, 0.1));
+}
+
+.phi-popover-arrow__stroke {
+  fill: var(--phi-arrow-stroke, var(--phi-line, #e3e6eb));
+}

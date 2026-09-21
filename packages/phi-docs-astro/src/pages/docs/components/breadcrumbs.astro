@@ -1,0 +1,315 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import BreadcrumbsDocsDemo from "../../../components/BreadcrumbsDocsDemo.vue";
+import Callout from "../../../components/Callout.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+
+const importCode = `import { Breadcrumbs } from "@dicehub/phi";
+// or use the component entrypoint:
+// import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";`;
+
+const previewCode = `<script setup>
+import { PhHouse } from "@phosphor-icons/vue";
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+</script>
+
+<template>
+  <Breadcrumbs>
+    <Breadcrumbs.Link :icon="PhHouse" :icon-props="{ size: 16 }" href="#">
+      Home
+    </Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Link href="#">Projects</Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Current>Current Project</Breadcrumbs.Current>
+  </Breadcrumbs>
+</template>`;
+
+const usageCode = `<script setup>
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+</script>
+
+<template>
+  <Breadcrumbs>
+    <Breadcrumbs.Link href="/">Home</Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Link href="/docs">Docs</Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Current>Breadcrumbs</Breadcrumbs.Current>
+  </Breadcrumbs>
+</template>`;
+
+const basicCode = `<script setup>
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+</script>
+
+<template>
+  <Breadcrumbs>
+    <Breadcrumbs.Link href="#">Home</Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Link href="#">Docs</Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Current>Breadcrumbs</Breadcrumbs.Current>
+  </Breadcrumbs>
+</template>`;
+
+const loadingCode = `<script setup>
+import { PhHouse } from "@phosphor-icons/vue";
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+</script>
+
+<template>
+  <Breadcrumbs>
+    <Breadcrumbs.Link :icon="PhHouse" :icon-props="{ size: 16 }" href="#">
+      Home
+    </Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Link href="#">Docs</Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Current loading />
+  </Breadcrumbs>
+</template>`;
+
+const rootCode = `<script setup>
+import { PhHouse } from "@phosphor-icons/vue";
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+</script>
+
+<template>
+  <Breadcrumbs>
+    <Breadcrumbs.Current :icon="PhHouse" :icon-props="{ size: 16 }">
+      Worker Analytics
+    </Breadcrumbs.Current>
+  </Breadcrumbs>
+</template>`;
+
+const clipboardCode = `<script setup>
+import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
+</script>
+
+<template>
+  <Breadcrumbs>
+    <Breadcrumbs.Link href="#">Home</Breadcrumbs.Link>
+    <Breadcrumbs.Separator />
+    <Breadcrumbs.Current>Breadcrumbs</Breadcrumbs.Current>
+    <Breadcrumbs.Clipboard text="#" />
+  </Breadcrumbs>
+</template>`;
+
+const propGroups = [
+  {
+    id: "breadcrumbs",
+    component: "Breadcrumbs",
+    props: [
+      { name: "size", type: '"sm" | "base"', defaultValue: '"base"', description: "Sets the breadcrumb trail size." },
+    ],
+  },
+  {
+    id: "breadcrumbs-link",
+    component: "Breadcrumbs.Link",
+    props: [
+      { name: "href", type: "string", defaultValue: "-", description: "Target URL for a breadcrumb link." },
+      { name: "icon", type: "Component", defaultValue: "-", description: "Vue component rendered before the link label." },
+      { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the link icon component." },
+    ],
+  },
+  {
+    id: "breadcrumbs-current",
+    component: "Breadcrumbs.Current",
+    props: [
+      { name: "loading", type: "boolean", defaultValue: "false", description: "Shows a skeleton placeholder for the current page label." },
+      { name: "icon", type: "Component", defaultValue: "-", description: "Vue component rendered before the current label." },
+      { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the current icon component." },
+    ],
+  },
+  {
+    id: "breadcrumbs-separator",
+    component: "Breadcrumbs.Separator",
+    props: [],
+  },
+  {
+    id: "breadcrumbs-clipboard",
+    component: "Breadcrumbs.Clipboard",
+    props: [
+      { name: "text", type: "string", defaultValue: "-", description: "Text copied by the clipboard action." },
+    ],
+  },
+];
+---
+
+<DocsLayout title="Breadcrumbs" description="Shows the current page's location within a navigational hierarchy.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Breadcrumbs</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A navigation component that shows the current page's location within a hierarchy.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BreadcrumbsDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={previewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <p>Use the root package while prototyping, or the component entrypoint for granular imports.</p>
+          <CodeBlock code={importCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BreadcrumbsDocsDemo client:only="vue" variant="basic" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={usageCode} lang="vue" />
+            </div>
+          </div>
+          <Callout>
+            <p>Use <code>Breadcrumbs.Current</code> for the active page and keep it non-interactive.</p>
+          </Callout>
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          <h3 id="basic"><a class="docs-section-anchor" href="#basic">Basic</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BreadcrumbsDocsDemo client:only="vue" variant="basic" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={basicCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="loading"><a class="docs-section-anchor" href="#loading">Loading</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BreadcrumbsDocsDemo client:only="vue" variant="loading" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={loadingCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="root"><a class="docs-section-anchor" href="#root">Root</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BreadcrumbsDocsDemo client:only="vue" variant="root" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={rootCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3 id="clipboard"><a class="docs-section-anchor" href="#clipboard">Clipboard</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BreadcrumbsDocsDemo client:only="vue" variant="clipboard" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={clipboardCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          {propGroups.map((group) => (
+            <div class="docs-api-group">
+              <h3 id={group.id}><a class="docs-section-anchor" href={`#${group.id}`}>{group.component}</a></h3>
+              <div class="docs-api-table">
+                {group.props.length > 0 ? (
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Prop</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {group.props.map((prop) => (
+                        <tr>
+                          <td><code>{prop.name}</code></td>
+                          <td><code>{prop.type}</code></td>
+                          <td><code>{prop.defaultValue}</code></td>
+                          <td>{prop.description}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <p class="docs-api-empty">No component-specific props.</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li>
+              <a href="#examples">Examples</a>
+              <ul>
+                <li><a href="#basic">Basic</a></li>
+                <li><a href="#loading">Loading</a></li>
+                <li><a href="#root">Root</a></li>
+                <li><a href="#clipboard">Clipboard</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="#api-reference">API Reference</a>
+              <ul>
+                <li><a href="#breadcrumbs">Breadcrumbs</a></li>
+                <li><a href="#breadcrumbs-link">Breadcrumbs.Link</a></li>
+                <li><a href="#breadcrumbs-current">Breadcrumbs.Current</a></li>
+                <li><a href="#breadcrumbs-separator">Breadcrumbs.Separator</a></li>
+                <li><a href="#breadcrumbs-clipboard">Breadcrumbs.Clipboard</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

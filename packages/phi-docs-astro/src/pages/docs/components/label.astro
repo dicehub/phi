@@ -1,0 +1,217 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import LabelDocsDemo from "../../../components/LabelDocsDemo.vue";
+import {
+  formLabelProps,
+  labelBarrelCode,
+  labelExamples,
+  labelFormUsageCode,
+  labelGranularCode,
+  labelPreviewCode,
+  labelProps,
+  labelStandaloneUsageCode,
+} from "../../../data/label-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+---
+
+<DocsLayout title="Label" description="A label component for form fields with support for optional indicators and tooltips.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+
+          <div class="docs-page-header__title-row">
+            <h1>Label</h1>
+            <ArkUiDocsLink />
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">
+            A label component for form fields with optional indicators and tooltips.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--label">
+              <LabelDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={labelPreviewCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={labelBarrelCode} lang="typescript" />
+
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={labelGranularCode} lang="typescript" />
+        </section>
+
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+
+          <h3 id="with-form-components-recommended">
+            <a class="docs-section-anchor" href="#with-form-components-recommended">With Form Components (Recommended)</a>
+          </h3>
+          <p>
+            Label features are available through form components like <code>Input</code>, <code>InputArea</code>,
+            and <code>InputGroup</code> via the <code>required</code> and <code>labelTooltip</code> props.
+          </p>
+          <CodeBlock code={labelFormUsageCode} lang="vue" />
+
+          <h3 id="standalone-label-usage">
+            <a class="docs-section-anchor" href="#standalone-label-usage">Standalone Label</a>
+          </h3>
+          <p>For custom form layouts, use the Label component directly.</p>
+          <CodeBlock code={labelStandaloneUsageCode} lang="vue" />
+        </section>
+
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+
+          {
+            labelExamples.map((example) => (
+              <>
+                <h3 id={example.id}>
+                  <a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a>
+                </h3>
+                <p>{example.description}</p>
+                <div class="docs-component-example">
+                  <div class="docs-component-preview docs-component-preview--label">
+                    <LabelDocsDemo client:only="vue" variant={example.variant} />
+                  </div>
+                  <div class="docs-component-example__code">
+                    <CodeBlock code={example.code} lang="vue" />
+                  </div>
+                </div>
+              </>
+            ))
+          }
+        </section>
+
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+
+          <h3 id="label-props"><a class="docs-section-anchor" href="#label-props">Label Props</a></h3>
+          <p>Props for the standalone Label component.</p>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {labelProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="form-component-label-props">
+            <a class="docs-section-anchor" href="#form-component-label-props">Form Component Label Props</a>
+          </h3>
+          <p>These props are available on built-in Phi form components that own their field wrapper.</p>
+          <div class="docs-api-table">
+            <table>
+              <thead>
+                <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+              </thead>
+              <tbody>
+                {formLabelProps.map((prop) => (
+                  <tr>
+                    <td><code>{prop.name}</code></td>
+                    <td><code>{prop.type}</code></td>
+                    <td><code>{prop.defaultValue}</code></td>
+                    <td>{prop.description}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="design-guidelines" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#design-guidelines">Design Guidelines</a></h2>
+
+          <h3 id="when-to-use-optional-indicators">
+            <a class="docs-section-anchor" href="#when-to-use-optional-indicators">When to Use Optional Indicators</a>
+          </h3>
+          <ul>
+            <li>Use "(optional)" for optional fields when most fields are required.</li>
+            <li>Be consistent within a form.</li>
+            <li>Default fields with no indicator are assumed required by users.</li>
+          </ul>
+
+          <h3 id="when-to-use-tooltips">
+            <a class="docs-section-anchor" href="#when-to-use-tooltips">When to Use Tooltips</a>
+          </h3>
+          <ul>
+            <li>Provide additional context that does not fit in the label.</li>
+            <li>Explain format requirements or validation rules.</li>
+            <li>Keep tooltip content concise.</li>
+          </ul>
+
+          <h3 id="accessibility"><a class="docs-section-anchor" href="#accessibility">Accessibility</a></h3>
+          <ul>
+            <li>Optional indicators are visual. Use native validation props for validation.</li>
+            <li>Tooltip icons are keyboard focusable.</li>
+            <li>Use <code>htmlFor</code> or a wrapping label to associate custom labels with controls.</li>
+          </ul>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#barrel">Barrel</a></li>
+            <li><a href="#granular">Granular</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#with-form-components-recommended">With Form Components (Recommended)</a></li>
+            <li><a href="#standalone-label-usage">Standalone Label</a></li>
+            <li><a href="#examples">Examples</a></li>
+            <li><a href="#optional-field">Optional Field</a></li>
+            <li><a href="#with-tooltip">With Tooltip</a></li>
+            <li><a href="#rich-label-content">Rich Label Content</a></li>
+            <li><a href="#form-with-mixed-fields">Form with Mixed Fields</a></li>
+            <li><a href="#standalone-label">Standalone Label</a></li>
+            <li><a href="#api-reference">API Reference</a></li>
+            <li><a href="#label-props">Label Props</a></li>
+            <li><a href="#form-component-label-props">Form Component Label Props</a></li>
+            <li><a href="#design-guidelines">Design Guidelines</a></li>
+            <li><a href="#when-to-use-optional-indicators">When to Use Optional Indicators</a></li>
+            <li><a href="#when-to-use-tooltips">When to Use Tooltips</a></li>
+            <li><a href="#accessibility">Accessibility</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

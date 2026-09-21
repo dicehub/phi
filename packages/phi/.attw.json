@@ -1,0 +1,13 @@
+{
+  "profile": "esm-only",
+  "excludeEntrypoints": [
+    "./styles",
+    "./styles/theme",
+    "./styles/theme-phi",
+    "./styles/tailwind",
+    "./styles/standalone",
+    "./registry/component-registry.json",
+    "./ai/component-registry.json"
+  ],
+  "ignoreRules": ["internal-resolution-error"]
+}
