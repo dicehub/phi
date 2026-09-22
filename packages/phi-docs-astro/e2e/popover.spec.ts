@@ -66,6 +66,60 @@ test.describe("Popover", () => {
     await expect(comparison.locator(".docs-api-table--comparison td code").first()).toHaveCSS("border-top-style", "solid");
   });
 
+  test("keeps the arrow fixed while scrollable content opens and scrolls", async ({ page }) => {
+    await page.addStyleTag({
+      content: `
+        .phi-popover-content {
+          height: 6rem !important;
+          width: 14rem !important;
+          overflow: auto !important;
+          transition-duration: 10s !important;
+        }
+      `,
+    });
+
+    const basic = exampleById(page, "basic-popover");
+    await basic.getByRole("button", { name: "Open Popover" }).click();
+
+    const content = page.locator(".phi-popover-content").filter({ hasText: "Popover Title" });
+    await expect(content).toBeVisible();
+    await content.evaluate((element) => {
+      const filler = document.createElement("div");
+      filler.style.cssText = "height:24rem;flex:none";
+      element.append(filler);
+    });
+    await expect.poll(() => content.evaluate((element) => Number.parseFloat(getComputedStyle(element).opacity))).toBeGreaterThan(0);
+
+    const beforeScroll = await content.evaluate((element) => {
+      const arrow = element.querySelector<HTMLElement>(".phi-popover-arrow");
+      if (!arrow) throw new Error("Popover arrow was not rendered");
+      const style = getComputedStyle(element);
+
+      return {
+        arrowTop: arrow.getBoundingClientRect().top,
+        clientHeight: element.clientHeight,
+        scale: style.scale,
+        scrollHeight: element.scrollHeight,
+        transitionProperty: style.transitionProperty,
+      };
+    });
+
+    expect(beforeScroll.scrollHeight).toBeGreaterThan(beforeScroll.clientHeight);
+    expect(beforeScroll.scale).toBe("none");
+    expect(beforeScroll.transitionProperty).toBe("opacity");
+
+    const afterScrollTop = await content.evaluate(async (element) => {
+      element.scrollTop = 64;
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+      const arrow = element.querySelector<HTMLElement>(".phi-popover-arrow");
+      if (!arrow) throw new Error("Popover arrow was not rendered");
+      return arrow.getBoundingClientRect().top;
+    });
+
+    expect(Math.abs(afterScrollTop - beforeScroll.arrowTop)).toBeLessThan(1);
+  });
+
   test("renders examples, hover trigger, virtual anchor, and API reference", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/docs/components/popover");
@@ -94,7 +148,7 @@ test.describe("Popover", () => {
       };
     });
     expect(basicMotion.animationName).toBe("none");
-    expect(basicMotion.transitionProperty).toBe("transform, scale, opacity");
+    expect(basicMotion.transitionProperty).toBe("opacity");
     expect(basicMotion.transitionDuration).toContain("0.15s");
     expect(basicMotion.transitionTimingFunction).toContain("cubic-bezier(0.4, 0, 0.2, 1)");
     await page.keyboard.press("Escape");
@@ -125,7 +179,7 @@ test.describe("Popover", () => {
     await virtual.getByRole("button", { name: "Actions for api-gateway" }).click();
     const virtualContent = page.locator(".phi-popover-content").filter({ hasText: "Edit api-gateway" });
     await expect(virtualContent).toBeVisible();
-    await expect(virtualContent).toHaveCSS("scale", "1");
+    await expect(virtualContent).toHaveCSS("scale", "none");
     await expect(
       page.locator(".phi-popover-content").getByText("The popover anchors to the selected row, not the icon button."),
     ).toBeVisible();
