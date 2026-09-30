@@ -42,6 +42,6 @@ export const sensitiveInputAccessibilityRows = [
   },
   {
     title: "Clipboard Feedback",
-    description: "The copy action updates its label to Copied and announces copied state through a polite live region.",
+    description: "A successful copy updates the action label to Copied and announces the result through a polite live region. Feedback lasts two seconds after the latest successful copy.",
   },
 ] as const;

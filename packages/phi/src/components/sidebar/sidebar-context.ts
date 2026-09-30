@@ -48,10 +48,18 @@ export type SidebarCollapseContext = {
   contentId: string;
   isOpen: Ref<boolean>;
   autoScrollOnOpen: Ref<boolean>;
-  /** Reports the settled open state once this collapsible's content transition ends. */
+  /** Reports whether the content is shown once its transition ends. */
   completeOpenChange: () => void;
   toggle: () => void;
 };
+
+export const isCollapsibleContentShown = (
+  isOpen: boolean,
+  sidebar: Pick<SidebarContext, "collapsible" | "isMobile" | "openMobile" | "state">,
+) => isOpen && (
+  sidebar.collapsible.value === "none"
+  || (sidebar.isMobile.value ? sidebar.openMobile.value : sidebar.state.value !== "collapsed")
+);
 
 const sidebarCollapseContextKey: InjectionKey<SidebarCollapseContext> = Symbol("phi-sidebar-collapse");
 
