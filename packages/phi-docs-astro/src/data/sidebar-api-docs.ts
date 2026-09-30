@@ -124,7 +124,7 @@ export const sidebarApiSections = [
       { name: "open", type: "boolean", defaultValue: "-", description: "Controlled open state." },
       { name: "autoScrollOnOpen", type: "boolean", defaultValue: "false", description: "Scrolls expanded content into view after opening." },
       { name: "@open-change", type: "(open: boolean) => void", defaultValue: "-", description: "Emitted when the collapsible state changes." },
-      { name: "@open-change-complete", type: "(open: boolean) => void", defaultValue: "-", description: "Emitted once the content row transition settles. Never emitted during initial mount." },
+      { name: "@open-change-complete", type: "(open: boolean) => void", defaultValue: "-", description: "Emitted once the content finishes showing or hiding, including sidebar expand/collapse and mobile drawer changes. The value reports content visibility. Never emitted during initial mount." },
       { name: "@update:open", type: "(open: boolean) => void", defaultValue: "-", description: "Controlled open update event." },
     ],
   },

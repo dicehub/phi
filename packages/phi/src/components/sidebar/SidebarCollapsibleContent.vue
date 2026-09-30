@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from "vue";
-import { useSidebarCollapseContext, useSidebarContext } from "./sidebar-context";
+import { isCollapsibleContentShown, useSidebarCollapseContext, useSidebarContext } from "./sidebar-context";
 
 const collapse = useSidebarCollapseContext();
 const sidebar = useSidebarContext();
 const content = ref<HTMLElement>();
-const isVisible = computed(() => collapse.isOpen.value && sidebar.state.value !== "collapsed");
+const isVisible = computed(() => isCollapsibleContentShown(collapse.isOpen.value, sidebar));
 
 // Only this element's own row transition settles the collapse; nested or parent transitions do not.
 const handleTransitionEnd = (event: TransitionEvent) => {
@@ -15,10 +15,17 @@ const handleTransitionEnd = (event: TransitionEvent) => {
   collapse.completeOpenChange();
 };
 
-watch(isVisible, async (visible) => {
+watch(isVisible, async (visible, _previousVisible, onCleanup) => {
   if (!visible || !collapse.autoScrollOnOpen.value) return;
+  let cancelled = false;
+  let timer: number | undefined;
+  onCleanup(() => {
+    cancelled = true;
+    if (timer !== undefined) window.clearTimeout(timer);
+  });
   await nextTick();
-  window.setTimeout(() => {
+  if (cancelled) return;
+  timer = window.setTimeout(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     content.value?.scrollIntoView({
       block: "nearest",

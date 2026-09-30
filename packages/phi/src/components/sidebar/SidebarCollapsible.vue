@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, getCurrentInstance, onBeforeUnmount, ref, watch } from "vue";
 import { createSidebarId } from "./sidebar";
-import { provideSidebarCollapseContext, useSidebarContext } from "./sidebar-context";
+import { isCollapsibleContentShown, provideSidebarCollapseContext, useSidebarContext } from "./sidebar-context";
 import { createOpenChangeCompleteTracker } from "./open-change-complete";
 
 const props = withDefaults(
@@ -38,16 +38,21 @@ const isOpen = computed({
 });
 const contentId = createSidebarId();
 const sidebar = useSidebarContext();
+const isContentShown = computed(() => isCollapsibleContentShown(isOpen.value, sidebar));
 const completion = createOpenChangeCompleteTracker({
   duration: () => sidebar.animationDuration.value,
   onComplete: (nextOpen) => emit("openChangeComplete", nextOpen),
   prefersReducedMotion: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
 });
 
-watch(isOpen, (nextOpen, previousOpen) => {
-  if (nextOpen === previousOpen) return;
-  completion.start(nextOpen);
-});
+watch(
+  isContentShown,
+  (nextOpen, previousOpen) => {
+    if (nextOpen === previousOpen) return;
+    completion.start(nextOpen);
+  },
+  { flush: "post" },
+);
 
 onBeforeUnmount(() => {
   completion.cancel();

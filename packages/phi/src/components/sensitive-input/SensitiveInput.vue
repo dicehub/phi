@@ -136,15 +136,6 @@ watch(hasValue, (value) => {
   }
 });
 
-watch(copied, (value) => {
-  if (copiedTimer) window.clearTimeout(copiedTimer);
-  if (value) {
-    copiedTimer = window.setTimeout(() => {
-      copied.value = false;
-    }, 2000);
-  }
-});
-
 onBeforeUnmount(() => {
   if (copiedTimer) window.clearTimeout(copiedTimer);
 });
@@ -231,6 +222,11 @@ const copyValue = async (event: MouseEvent) => {
 
   if (!(await writeClipboardText(currentValue.value))) return;
   copied.value = true;
+  if (copiedTimer !== undefined) window.clearTimeout(copiedTimer);
+  copiedTimer = window.setTimeout(() => {
+    copied.value = false;
+    copiedTimer = undefined;
+  }, 2000);
   emit("copy");
 };
 </script>

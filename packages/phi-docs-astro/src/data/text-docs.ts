@@ -129,7 +129,7 @@ export const textProps = [
     type: '"heading" | "heading1" | "heading2" | "heading3" | "body" | "secondary" | "success" | "error" | "mono" | "mono-secondary"',
     defaultValue: '"body"',
     description:
-      'Text style variant. `"heading"` is 16px semibold by default or 20px with `size="lg"`; the numbered heading variants are deprecated. `"body"` is default text, `"secondary"` is muted text, `"success"` uses the link color, `"error"` uses the danger color, `"mono"` is monospace, and `"mono-secondary"` is muted monospace.',
+      'Text style variant. `"heading"` is 16px semibold by default or 20px with `size="lg"`; the numbered heading variants are deprecated but remain supported without a runtime warning. `"body"` is default text, `"secondary"` is muted text, `"success"` uses the link color, `"error"` uses the danger color, `"mono"` is monospace, and `"mono-secondary"` is muted monospace.',
   },
   {
     name: "size",

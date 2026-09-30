@@ -87,6 +87,32 @@ test.describe("Sensitive Input", () => {
     await expect(readOnlyField.locator(".phi-sensitive-input")).toHaveAttribute("type", "text");
   });
 
+  test("restarts feedback after each successful copy", async ({ page }) => {
+    const preview = page.locator("#preview");
+    const button = preview.locator(".phi-sensitive-input-copy");
+    await preview.locator(".phi-sensitive-input-control").hover();
+    await expect(button).toHaveAttribute("aria-label", "Copy to clipboard");
+    await page.evaluate(() => {
+      Object.defineProperty(navigator, "clipboard", {
+        configurable: true,
+        value: { writeText: async () => {} },
+      });
+    });
+    await page.clock.install();
+    await page.clock.pauseAt(new Date(Date.now() + 1000));
+
+    await button.click();
+    await expect(button).toHaveAttribute("aria-label", "Copied");
+    await page.clock.fastForward(1500);
+    await button.click();
+    await page.clock.fastForward(600);
+    await expect(button).toHaveAttribute("aria-label", "Copied");
+    await page.clock.fastForward(1399);
+    await expect(button).toHaveAttribute("aria-label", "Copied");
+    await page.clock.fastForward(1);
+    await expect(button).toHaveAttribute("aria-label", "Copy to clipboard");
+  });
+
   test("supports copy feedback and documents API", async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto("/docs/components/sensitive-input");

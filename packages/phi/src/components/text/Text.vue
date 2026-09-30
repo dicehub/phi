@@ -3,7 +3,6 @@ import { computed } from "vue";
 import {
   TEXT_DEFAULT_VARIANTS,
   isCopyTextVariant,
-  isDeprecatedHeadingTextVariant,
   isMonospaceTextVariant,
   resolveTextElement,
   resolveTextSize,
@@ -29,7 +28,6 @@ const resolvedVariant = computed(() => resolveTextVariant(props.variant));
 const resolvedSize = computed(() => resolveTextSize(props.size));
 const isCopyVariant = computed(() => isCopyTextVariant(resolvedVariant.value));
 const isMonospaceVariant = computed(() => isMonospaceTextVariant(resolvedVariant.value));
-const isDeprecatedHeadingVariant = computed(() => isDeprecatedHeadingTextVariant(resolvedVariant.value));
 const renderedSize = computed<TextSize | undefined>(() => {
   if (isCopyVariant.value) return resolvedSize.value;
   if (isMonospaceVariant.value) return resolvedSize.value === "lg" ? "base" : "sm";
@@ -45,11 +43,6 @@ const textClasses = computed(() => [
   props.truncate && "phi-text--truncate",
 ]);
 
-if ((import.meta as ImportMeta & { env?: { DEV?: boolean } }).env?.DEV && isDeprecatedHeadingVariant.value) {
-  console.warn(
-    `[Phi Text]: variant="${resolvedVariant.value}" is deprecated. Use variant="heading" and set size and as explicitly.`,
-  );
-}
 </script>
 
 <template>

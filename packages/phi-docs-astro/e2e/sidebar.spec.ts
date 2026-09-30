@@ -297,6 +297,8 @@ test.describe("Sidebar", () => {
   test("emits open-change-complete only after the provider transition settles", async ({ page }) => {
     const example = exampleById(page, "transition-completion");
     const status = example.locator("[data-provider-complete]");
+    const sectionStatus = example.locator("[data-collapsible-complete]");
+    const content = example.locator(".phi-sidebar-collapsible-content");
     const wrapper = example.locator("[data-sidebar-wrapper]");
     const toggle = example.locator(".sidebar-demo-button");
 
@@ -306,10 +308,31 @@ test.describe("Sidebar", () => {
     await expect(wrapper).toHaveAttribute("data-state", "collapsed");
     await expect(status).toHaveAttribute("data-provider-complete", "waiting");
     await expect(status).toHaveAttribute("data-provider-complete", "false");
+    await expect(sectionStatus).toHaveAttribute("data-collapsible-complete", "false");
+    await expect(content).toHaveAttribute("aria-hidden", "true");
 
     await toggle.click();
     await expect(wrapper).toHaveAttribute("data-state", "expanded");
     await expect(status).toHaveAttribute("data-provider-complete", "true");
+    await expect(sectionStatus).toHaveAttribute("data-collapsible-complete", "true");
+    await expect(content).toHaveAttribute("aria-hidden", "false");
+  });
+
+  test("completes section visibility changes when the mobile drawer opens and closes", async ({ page }) => {
+    await page.setViewportSize({ width: 700, height: 1080 });
+    await page.goto("/docs/components/sidebar#transition-completion");
+    const example = exampleById(page, "transition-completion");
+    const status = example.locator("[data-collapsible-complete]");
+    const content = example.locator(".phi-sidebar-collapsible-content");
+
+    await expect(content).toHaveAttribute("aria-hidden", "true");
+    await example.locator(".sidebar-demo-button").click();
+    await expect(content).toHaveAttribute("aria-hidden", "false");
+    await expect(status).toHaveAttribute("data-collapsible-complete", "true");
+
+    await page.keyboard.press("Escape");
+    await expect(content).toHaveAttribute("aria-hidden", "true");
+    await expect(status).toHaveAttribute("data-collapsible-complete", "false");
   });
 
   test("cancels a pending desktop completion when the mobile layout becomes active", async ({ page }) => {
