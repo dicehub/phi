@@ -102,12 +102,13 @@ test.describe("Radio", () => {
     const cardItems = exampleById(page, "radio-card").locator(".phi-radio--appearance-card");
     await expect.poll(async () => (await box(cardItems.first())).width).toBe((await box(cardGroup)).width);
     await expect(cardItems.first()).toHaveCSS("padding", "12px");
-    await expect(cardItems.first()).toHaveCSS("border-color", "oklch(0.87 0 0)");
+    await expect(cardItems.first()).toHaveCSS("border-top-width", "0px");
+    await expect(cardItems.first()).toHaveCSS("border-bottom-width", "1px");
 
     const horizontalCardGroup = exampleById(page, "radio-card-horizontal").locator("fieldset");
     const horizontalCardItems = exampleById(page, "radio-card-horizontal").locator(".phi-radio--appearance-card");
     await expect.poll(() => box(horizontalCardGroup)).toMatchObject({ width: 796 });
-    await expect.poll(() => box(horizontalCardItems.first())).toMatchObject({ width: 392 });
+    await expect.poll(() => box(horizontalCardItems.first())).toMatchObject({ width: 398 });
 
     const richLabel = exampleById(page, "rich-label-content");
     await expect(richLabel.locator(".phi-badge--neutral")).toHaveText("$0");

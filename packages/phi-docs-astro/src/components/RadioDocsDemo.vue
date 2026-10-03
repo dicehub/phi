@@ -276,20 +276,35 @@ const theme = ref<RadioValue>("system");
       </Radio.Group>
     </div>
 
-    <Radio.Group v-else-if="variant === 'legend-sr-only'" v-model="hiddenLegendValue">
+    <Radio.Group
+      v-else-if="variant === 'legend-sr-only'"
+      v-model="hiddenLegendValue"
+      appearance="card"
+      orientation="horizontal"
+    >
       <Radio.Legend class="phi-sr-only">Paths</Radio.Legend>
       <Radio.Item label="Allow all paths" value="all" />
       <Radio.Item label="Restrict to specific paths" value="specific" />
     </Radio.Group>
 
-    <Radio.Group v-else-if="variant === 'legend-custom'" v-model="customLegendValue">
-      <Radio.Legend style="font-size: 0.8125rem; font-weight: 400; color: var(--phi-subtle);">
-        Notification preference
-      </Radio.Legend>
-      <Radio.Item label="Email" value="email" />
-      <Radio.Item label="SMS" value="sms" />
-      <Radio.Item label="Push notification" value="push" />
-    </Radio.Group>
+    <div v-else-if="variant === 'legend-custom'" class="radio-demo__grid">
+      <Radio.Group v-model="customLegendValue">
+        <Radio.Legend style="font-size: 0.8125rem; font-weight: 400; color: var(--phi-subtle);">
+          Notification preference
+        </Radio.Legend>
+        <Radio.Item label="Email" value="email" />
+        <Radio.Item label="SMS" value="sms" />
+        <Radio.Item label="Push notification" value="push" />
+      </Radio.Group>
+      <Radio.Group v-model="customLegendValue" appearance="card" orientation="horizontal">
+        <Radio.Legend style="font-size: 0.8125rem; font-weight: 400; color: var(--phi-subtle);">
+          Notification preference
+        </Radio.Legend>
+        <Radio.Item label="Email" value="email" />
+        <Radio.Item label="SMS" value="sms" appearance="default" />
+        <Radio.Item label="Push notification" value="push" />
+      </Radio.Group>
+    </div>
 
     <div v-else class="radio-demo__grid">
       <Radio.Group v-model="pageSize" legend="Items per page">

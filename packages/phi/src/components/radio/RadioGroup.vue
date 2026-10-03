@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { provideRadioGroupContext } from "./radio-context";
+import { ChoiceGroupContent } from "../../utils/choice-group";
+import RadioLegend from "./RadioLegend.vue";
 import {
   RADIO_DEFAULT_VARIANTS,
   createRadioGroupName,
@@ -99,10 +101,9 @@ provideRadioGroupContext({
     :disabled="disabled"
     :aria-invalid="isInvalid ? 'true' : undefined"
   >
-    <legend v-if="legend" class="phi-radio-group__legend">{{ legend }}</legend>
-    <div class="phi-radio-group__items">
+    <ChoiceGroupContent :legend="legend" :legend-component="RadioLegend" class-prefix="phi-radio-group">
       <slot />
-    </div>
+    </ChoiceGroupContent>
     <p v-if="error" class="phi-radio-group__error">{{ error }}</p>
     <p v-if="description" class="phi-radio-group__description">{{ description }}</p>
   </fieldset>

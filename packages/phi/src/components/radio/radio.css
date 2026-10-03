@@ -40,14 +40,31 @@
   gap: 0.5rem;
 }
 
-.phi-radio-group--card.phi-radio-group--vertical .phi-radio-group__items {
-  gap: 0.75rem;
+.phi-radio-group--default > .phi-radio-group__legend--custom:not(.phi-sr-only) + .phi-radio-group__items {
+  margin-top: 0.5rem;
+}
+
+.phi-radio-group--card {
+  gap: 0.5rem;
+}
+
+.phi-radio-group--card > .phi-radio-group__items {
+  gap: 0;
+  margin-top: 0;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: var(--phi-base, #ffffff);
+  box-shadow: 0 0 0 1px var(--phi-line, #e3e6eb);
+}
+
+.phi-radio-group--card > .phi-radio-group__legend:not(.phi-sr-only) + .phi-radio-group__items {
+  margin-top: 0.5rem;
 }
 
 .phi-radio-group--card.phi-radio-group--horizontal .phi-radio-group__items {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 0;
 }
 
 .phi-radio-group > .phi-radio-group__description,
@@ -97,14 +114,10 @@
   border: 1px solid var(--phi-hairline, rgba(16, 24, 40, 0.08));
   border-radius: 0.5rem;
   background: var(--phi-base, #ffffff);
-  transition:
-    background-color 120ms ease,
-    border-color 120ms ease,
-    opacity 120ms ease;
 }
 
-.phi-radio--appearance-card:hover:not(.phi-radio--disabled):not(.phi-radio--error) {
-  background: var(--phi-tint, #f4f6f9);
+.phi-radio--appearance-card:hover:not(.phi-radio--disabled):not(.phi-radio--error):not(.phi-radio--checked) {
+  background: var(--phi-elevated, #f8f9fb);
 }
 
 .phi-radio--appearance-card.phi-radio--checked:not(.phi-radio--error) {
@@ -151,16 +164,8 @@
     opacity 120ms ease;
 }
 
-.phi-radio--appearance-card .phi-radio__control {
-  box-shadow: inset 0 0 0 2px var(--phi-line, #e3e6eb);
-}
-
 .phi-radio:hover:not(.phi-radio--disabled):not(.phi-radio--error) .phi-radio__control {
   box-shadow: inset 0 0 0 1px var(--phi-subtle, #6c7480);
-}
-
-.phi-radio--appearance-card:hover:not(.phi-radio--disabled):not(.phi-radio--error) .phi-radio__control {
-  box-shadow: inset 0 0 0 2px var(--phi-subtle, #6c7480);
 }
 
 .phi-radio:has(.phi-radio__input:focus-visible) .phi-radio__control {
@@ -228,6 +233,38 @@
   color: var(--phi-subtle, #6c7480);
   font-size: 0.8125rem;
   line-height: 1.176;
+}
+
+/* The group owns the outline. Items draw only the internal dividers. */
+.phi-radio.phi-radio--joined,
+.phi-radio-group--card > .phi-radio-group__items > .phi-radio--appearance-default {
+  border: 0;
+  border-bottom: 1px solid var(--phi-line, #e3e6eb);
+  border-radius: 0;
+  background-clip: padding-box;
+}
+
+.phi-radio-group--card > .phi-radio-group__items > .phi-radio--appearance-default {
+  width: 100%;
+  padding: 0.75rem;
+}
+
+.phi-radio-group--card > .phi-radio-group__items > .phi-radio-item:nth-last-child(1 of .phi-radio-item) {
+  border-bottom: 0;
+}
+
+.phi-radio--joined.phi-radio--appearance-card[data-state] {
+  border-color: var(--phi-line, #e3e6eb);
+}
+
+@media (min-width: 641px) {
+  .phi-radio-group--card.phi-radio-group--horizontal > .phi-radio-group__items > .phi-radio-item:nth-child(odd of .phi-radio-item):not(:nth-last-child(1 of .phi-radio-item)) {
+    border-inline-end: 1px solid var(--phi-line, #e3e6eb);
+  }
+
+  .phi-radio-group--card.phi-radio-group--horizontal > .phi-radio-group__items > .phi-radio-item:nth-last-child(2 of .phi-radio-item):nth-child(odd of .phi-radio-item) {
+    border-bottom: 0;
+  }
 }
 
 .phi-sr-only {

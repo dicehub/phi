@@ -42,6 +42,10 @@ test.describe("Checkbox", () => {
       "Checkbox Group with Error",
       "Visually Hidden Legend",
       "Custom Legend Styling",
+      "Checkbox Card",
+      "Checkbox Card (Horizontal)",
+      "Checkbox Card (Control First)",
+      "Standalone Checkbox Card",
       "API Reference",
       "Checkbox",
       "Checkbox.Group",
@@ -54,7 +58,7 @@ test.describe("Checkbox", () => {
     ]);
     await expect(toc.locator("a[href='#preview']")).toHaveCount(0);
     await expect(toc.locator("a[href='#installation'] + ul a")).toHaveCount(2);
-    await expect(toc.locator("a[href='#examples'] + ul a")).toHaveCount(10);
+    await expect(toc.locator("a[href='#examples'] + ul a")).toHaveCount(14);
     await expect(toc.locator("a[href='#api-reference'] + ul a")).toHaveCount(4);
     await expect(toc.locator("a[href='#accessibility'] + ul a")).toHaveCount(3);
   });
@@ -79,8 +83,8 @@ test.describe("Checkbox", () => {
     await expect(examples.getByRole("heading", { name: "Checkbox Group with Error" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "Visually Hidden Legend" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "Custom Legend Styling" })).toBeVisible();
-    await expect(examples.locator(".docs-component-example")).toHaveCount(10);
-    await expect(examples.locator(".docs-code-block")).toHaveCount(10);
+    await expect(examples.locator(".docs-component-example")).toHaveCount(14);
+    await expect(examples.locator(".docs-code-block")).toHaveCount(14);
     await expect(examples).not.toContainText("v-for");
   });
 

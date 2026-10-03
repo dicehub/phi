@@ -99,6 +99,8 @@ const customLegendPreferences = ref(["email"]);
     <Checkbox.Group
       v-else-if="variant === 'legend-sr-only'"
       v-model="hiddenLegendPreferences"
+      appearance="card"
+      orientation="horizontal"
     >
       <Checkbox.Legend class="phi-sr-only">Notification preferences</Checkbox.Legend>
       <Checkbox.Item value="email" label="Email notifications" />
@@ -106,14 +108,24 @@ const customLegendPreferences = ref(["email"]);
       <Checkbox.Item value="push" label="Push notifications" />
     </Checkbox.Group>
 
-    <Checkbox.Group v-else v-model="customLegendPreferences">
-      <Checkbox.Legend style="font-size: 0.875rem; font-weight: 400; color: var(--phi-subtle);">
-        Notification preferences
-      </Checkbox.Legend>
-      <Checkbox.Item value="email" label="Email notifications" />
-      <Checkbox.Item value="sms" label="SMS notifications" />
-      <Checkbox.Item value="push" label="Push notifications" />
-    </Checkbox.Group>
+    <div v-else class="checkbox-demo__legends">
+      <Checkbox.Group v-model="customLegendPreferences">
+        <Checkbox.Legend style="font-size: 0.875rem; font-weight: 400; color: var(--phi-subtle);">
+          Notification preferences
+        </Checkbox.Legend>
+        <Checkbox.Item value="email" label="Email notifications" />
+        <Checkbox.Item value="sms" label="SMS notifications" />
+        <Checkbox.Item value="push" label="Push notifications" />
+      </Checkbox.Group>
+      <Checkbox.Group v-model="customLegendPreferences" appearance="card" orientation="horizontal">
+        <Checkbox.Legend style="font-size: 0.875rem; font-weight: 400; color: var(--phi-subtle);">
+          Notification preferences
+        </Checkbox.Legend>
+        <Checkbox.Item value="email" label="Email notifications" />
+        <Checkbox.Item value="sms" label="SMS notifications" appearance="default" />
+        <Checkbox.Item value="push" label="Push notifications" />
+      </Checkbox.Group>
+    </div>
   </div>
 </template>
 
@@ -123,6 +135,11 @@ const customLegendPreferences = ref(["email"]);
   min-height: 4.5rem;
   align-items: center;
   justify-content: center;
+}
+
+.checkbox-demo__legends {
+  display: grid;
+  gap: 1.5rem;
 }
 
 .checkbox-demo--group {

@@ -324,7 +324,7 @@ const value = ref("all");
 </script>
 
 <template>
-  <Radio.Group v-model="value">
+  <Radio.Group v-model="value" appearance="card" orientation="horizontal">
     <Radio.Legend class="phi-sr-only">Paths</Radio.Legend>
     <Radio.Item label="Allow all paths" value="all" />
     <Radio.Item label="Restrict to specific paths" value="specific" />
@@ -345,6 +345,15 @@ const value = ref("email");
     </Radio.Legend>
     <Radio.Item label="Email" value="email" />
     <Radio.Item label="SMS" value="sms" />
+    <Radio.Item label="Push notification" value="push" />
+  </Radio.Group>
+
+  <Radio.Group v-model="value" appearance="card" orientation="horizontal">
+    <Radio.Legend style="font-size: 0.8125rem; font-weight: 400; color: var(--phi-subtle);">
+      Notification preference
+    </Radio.Legend>
+    <Radio.Item label="Email" value="email" />
+    <Radio.Item label="SMS" value="sms" appearance="default" />
     <Radio.Item label="Push notification" value="push" />
   </Radio.Group>
 </template>`;
@@ -405,7 +414,7 @@ export const radioExamples = [
   {
     id: "radio-card",
     title: "Radio Card",
-    description: 'Use `appearance="card"` on the group to display each option as a selectable card. Combine with the `description` prop on each item for richer content.',
+    description: 'Use `appearance="card"` to join options inside one card with dividers. Each item can include a `description`. Selected rows keep their tint when hovered.',
     variant: "card",
     code: radioCardCode,
   },
@@ -426,7 +435,7 @@ export const radioExamples = [
   {
     id: "radio-card-horizontal",
     title: "Radio Card (Horizontal)",
-    description: 'Combine `appearance="card"` with `orientation="horizontal"` for a side-by-side card layout.',
+    description: 'Combine `appearance="card"` with `orientation="horizontal"` for a joined two-column card with row and column dividers. Below 641px, the options form one column.',
     variant: "card-horizontal",
     code: radioCardHorizontalCode,
   },

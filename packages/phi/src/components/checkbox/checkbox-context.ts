@@ -1,7 +1,9 @@
 import { inject, provide, type ComputedRef, type InjectionKey, type Ref } from "vue";
+import type { CheckboxAppearance } from "./checkbox";
 
 type CheckboxGroupContext = {
-  controlFirst: Ref<boolean>;
+  appearance: ComputedRef<CheckboxAppearance>;
+  controlFirst: Ref<boolean | undefined>;
   disabled: ComputedRef<boolean | undefined>;
   invalid: ComputedRef<boolean | undefined>;
   isChecked: (value: string) => boolean;
