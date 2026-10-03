@@ -44,6 +44,7 @@ const resolvedVariant = computed(() =>
   isRadioVariant(props.variant) ? props.variant : RADIO_DEFAULT_VARIANTS.variant,
 );
 const isCard = computed(() => resolvedAppearance.value === "card");
+const isJoined = computed(() => isCard.value && groupContext?.appearance.value === "card");
 const effectiveControlPosition = computed(() =>
   groupContext?.controlPosition.value ?? (isCard.value ? "end" : "start"),
 );
@@ -74,6 +75,7 @@ const handleChange = (event: Event) => {
       {
         'phi-radio--disabled': isDisabled,
         'phi-radio--checked': isSelected,
+        'phi-radio--joined': isJoined,
       },
     ]"
     :data-appearance="resolvedAppearance"

@@ -154,6 +154,124 @@
   opacity: 0.62;
 }
 
+.phi-checkbox-group--horizontal > .phi-checkbox-group__items {
+  flex-flow: row wrap;
+}
+
+.phi-checkbox-group--default > .phi-checkbox-group__legend--custom:not(.phi-sr-only) + .phi-checkbox-group__items {
+  margin-top: 0.5rem;
+}
+
+.phi-checkbox--appearance-card {
+  width: 100%;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--phi-hairline, rgba(16, 24, 40, 0.08));
+  border-radius: 0.5rem;
+  background: var(--phi-base, #ffffff);
+}
+
+.phi-checkbox--appearance-card:hover:not(.phi-checkbox--disabled):not(.phi-checkbox--error):not([data-state="checked"]) {
+  background: var(--phi-elevated, #f8f9fb);
+}
+
+.phi-checkbox--appearance-card[data-state="checked"]:not(.phi-checkbox--error) {
+  border-color: var(--phi-inactive, #d4d4d4);
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-checkbox--appearance-card.phi-checkbox--error {
+  border-color: var(--phi-danger, #b42318);
+}
+
+.phi-checkbox--appearance-card .phi-checkbox__control {
+  margin-top: 0.125rem;
+}
+
+.phi-checkbox__content {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.phi-checkbox--appearance-card .phi-checkbox__label {
+  font-weight: 500;
+}
+
+.phi-checkbox__description {
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.8125rem;
+  line-height: 1.176;
+}
+
+.phi-checkbox-group--card {
+  gap: 0.5rem;
+}
+
+.phi-checkbox-group--card.phi-checkbox-group--disabled {
+  opacity: 1;
+}
+
+.phi-checkbox-group--card > .phi-checkbox-group__items {
+  gap: 0;
+  margin-top: 0;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: var(--phi-base, #ffffff);
+  box-shadow: 0 0 0 1px var(--phi-line, #e3e6eb);
+}
+
+.phi-checkbox-group--card > .phi-checkbox-group__legend:not(.phi-sr-only) + .phi-checkbox-group__items {
+  margin-top: 0.5rem;
+}
+
+.phi-checkbox-group--card.phi-checkbox-group--horizontal > .phi-checkbox-group__items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* The group owns the outline. Items draw only the internal dividers. */
+.phi-checkbox.phi-checkbox--joined,
+.phi-checkbox-group--card > .phi-checkbox-group__items > .phi-checkbox--appearance-default {
+  border: 0;
+  border-bottom: 1px solid var(--phi-line, #e3e6eb);
+  border-radius: 0;
+  background-clip: padding-box;
+}
+
+.phi-checkbox-group--card > .phi-checkbox-group__items > .phi-checkbox--appearance-default {
+  width: 100%;
+  padding: 0.75rem;
+}
+
+.phi-checkbox-group--card > .phi-checkbox-group__items > .phi-checkbox-item:nth-last-child(1 of .phi-checkbox-item) {
+  border-bottom: 0;
+}
+
+.phi-checkbox--joined.phi-checkbox--appearance-card[data-state] {
+  border-color: var(--phi-line, #e3e6eb);
+}
+
+@media (min-width: 641px) {
+  .phi-checkbox-group--card.phi-checkbox-group--horizontal > .phi-checkbox-group__items > .phi-checkbox-item:nth-child(odd of .phi-checkbox-item):not(:nth-last-child(1 of .phi-checkbox-item)) {
+    border-inline-end: 1px solid var(--phi-line, #e3e6eb);
+  }
+
+  .phi-checkbox-group--card.phi-checkbox-group--horizontal > .phi-checkbox-group__items > .phi-checkbox-item:nth-last-child(2 of .phi-checkbox-item):nth-child(odd of .phi-checkbox-item) {
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .phi-checkbox-group--card.phi-checkbox-group--horizontal > .phi-checkbox-group__items {
+    grid-template-columns: 1fr;
+  }
+}
+
 .phi-sr-only {
   position: absolute;
   width: 1px;

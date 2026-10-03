@@ -11,9 +11,15 @@ export const Checkbox = Object.assign(CheckboxRoot, {
 
 export { CheckboxGroup, CheckboxItem, CheckboxLegend, CheckboxRoot };
 export {
+  CHECKBOX_APPEARANCES,
   CHECKBOX_DEFAULT_VARIANT,
   CHECKBOX_VARIANTS,
+  CHECKBOX_ORIENTATIONS,
+  isCheckboxAppearance,
+  isCheckboxOrientation,
   isCheckboxVariant,
   type CheckboxCheckedState,
+  type CheckboxAppearance,
+  type CheckboxOrientation,
   type CheckboxVariant,
 } from "./checkbox";

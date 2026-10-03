@@ -24,6 +24,7 @@ if (!externalBaseURL && process.env.TEST_WORKER_INDEX === undefined) {
 // list (portal isolation guide, ButtonGroup focus).
 const smokeSpecs = [
   "button-group.spec.ts",
+  "choice-cards.spec.ts",
   "clipboard-text.spec.ts",
   "dialog.spec.ts",
   "inline-copy-text.spec.ts",

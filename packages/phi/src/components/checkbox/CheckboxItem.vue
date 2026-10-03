@@ -3,7 +3,9 @@ import { computed, ref, useSlots, watchEffect } from "vue";
 import { useCheckboxGroupContext } from "./checkbox-context";
 import {
   CHECKBOX_DEFAULT_VARIANT,
+  isCheckboxAppearance,
   isCheckboxVariant,
+  type CheckboxAppearance,
   type CheckboxCheckedState,
   type CheckboxVariant,
 } from "./checkbox";
@@ -12,10 +14,12 @@ defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{
+    appearance?: CheckboxAppearance;
     checked?: CheckboxCheckedState;
     controlFirst?: boolean;
     defaultChecked?: CheckboxCheckedState;
     defaultIndeterminate?: boolean;
+    description?: string;
     disabled?: boolean;
     indeterminate?: boolean;
     invalid?: boolean;
@@ -49,7 +53,12 @@ const internalChecked = ref<CheckboxCheckedState>(
   props.defaultIndeterminate ? "indeterminate" : props.defaultChecked ?? false,
 );
 const groupContext = useCheckboxGroupContext();
-const resolvedControlFirst = computed(() => props.controlFirst ?? groupContext?.controlFirst.value ?? true);
+const resolvedAppearance = computed(() =>
+  isCheckboxAppearance(props.appearance) ? props.appearance : groupContext?.appearance.value ?? "default",
+);
+const isCard = computed(() => resolvedAppearance.value === "card");
+const isJoined = computed(() => isCard.value && groupContext?.appearance.value === "card");
+const resolvedControlFirst = computed(() => props.controlFirst ?? groupContext?.controlFirst.value ?? !isCard.value);
 const resolvedVariant = computed(() =>
   isCheckboxVariant(props.variant) ? props.variant : CHECKBOX_DEFAULT_VARIANT,
 );
@@ -63,6 +72,7 @@ const isDisabled = computed(() => props.disabled ?? groupContext?.disabled.value
 const isInvalid = computed(() => (props.invalid ?? groupContext?.invalid.value) || resolvedVariant.value === "error");
 const resolvedName = computed(() => props.name ?? groupContext?.name.value);
 const hasLabel = computed(() => Boolean(props.label || slots.default || slots.label));
+const hasDescription = computed(() => Boolean(props.description || slots.description));
 const dataState = computed(() =>
   currentChecked.value === "indeterminate" ? "indeterminate" : currentChecked.value ? "checked" : "unchecked",
 );
@@ -108,11 +118,15 @@ watchEffect(() => {
     class="phi-checkbox phi-checkbox-item"
     :class="[
       `phi-checkbox--${resolvedVariant}`,
+      `phi-checkbox--appearance-${resolvedAppearance}`,
       {
         'phi-checkbox--label-first': !resolvedControlFirst,
         'phi-checkbox--disabled': isDisabled,
+        'phi-checkbox--joined': isJoined,
       },
     ]"
+    :data-appearance="resolvedAppearance"
+    :data-state="dataState"
   >
     <input
       ref="inputElement"
@@ -128,7 +142,17 @@ watchEffect(() => {
       @change="handleChange"
     />
     <span class="phi-checkbox__control" :data-state="dataState" aria-hidden="true" />
-    <span v-if="hasLabel" class="phi-checkbox__label">
+    <span v-if="isCard" class="phi-checkbox__content">
+      <span v-if="hasLabel" class="phi-checkbox__label">
+        <slot name="label">
+          <slot>{{ label }}</slot>
+        </slot>
+      </span>
+      <span v-if="hasDescription" class="phi-checkbox__description">
+        <slot name="description">{{ description }}</slot>
+      </span>
+    </span>
+    <span v-else-if="hasLabel" class="phi-checkbox__label">
       <slot name="label">
         <slot>{{ label }}</slot>
       </slot>

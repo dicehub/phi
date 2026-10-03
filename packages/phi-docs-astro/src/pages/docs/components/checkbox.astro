@@ -1,5 +1,8 @@
 ---
 import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CheckboxCardDocsDemo from "../../../components/CheckboxCardDocsDemo.vue";
+import { checkboxCardExamples } from "../../../data/checkbox-card-docs";
+import { checkboxProps, groupProps, legendProps, itemProps } from "../../../data/checkbox-api-docs";
 import CheckboxDocsDemo from "../../../components/CheckboxDocsDemo.vue";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
@@ -142,7 +145,7 @@ const preferences = ref(["email"]);
 </script>
 
 <template>
-  <Checkbox.Group v-model="preferences">
+  <Checkbox.Group v-model="preferences" appearance="card" orientation="horizontal">
     <Checkbox.Legend class="phi-sr-only">
       Notification preferences
     </Checkbox.Legend>
@@ -168,42 +171,17 @@ const preferences = ref(["email"]);
     <Checkbox.Item value="sms" label="SMS notifications" />
     <Checkbox.Item value="push" label="Push notifications" />
   </Checkbox.Group>
+
+  <Checkbox.Group v-model="preferences" appearance="card" orientation="horizontal">
+    <Checkbox.Legend style="font-size: 0.875rem; font-weight: 400; color: var(--phi-subtle);">
+      Notification preferences
+    </Checkbox.Legend>
+    <Checkbox.Item value="email" label="Email notifications" />
+    <Checkbox.Item value="sms" label="SMS notifications" appearance="default" />
+    <Checkbox.Item value="push" label="Push notifications" />
+  </Checkbox.Group>
 </template>`;
 
-const checkboxProps = [
-  { name: "variant", type: '"default" | "error"', defaultValue: '"default"', description: "Sets the visual variant. Use error for validation styling." },
-  { name: "label", type: "string", defaultValue: "-", description: "Visible label rendered next to the checkbox." },
-  { name: "controlFirst", type: "boolean", defaultValue: "true", description: "Places the checkbox before the label. Set false for label-first layout." },
-  { name: "checked", type: 'boolean | "indeterminate"', defaultValue: "-", description: "Controlled checked state. Use v-model:checked in Vue." },
-  { name: "defaultChecked", type: 'boolean | "indeterminate"', defaultValue: "-", description: "Initial checked state for uncontrolled usage." },
-  { name: "indeterminate", type: "boolean", defaultValue: "-", description: "Compatibility prop that renders the mixed state." },
-  { name: "disabled", type: "boolean", defaultValue: "-", description: "Disables pointer and keyboard interaction." },
-  { name: "name", type: "string", defaultValue: "-", description: "Native checkbox name for form submission." },
-  { name: "required", type: "boolean", defaultValue: "-", description: "Marks the checkbox as required." },
-];
-
-const groupProps = [
-  { name: "legend", type: "string", defaultValue: "-", description: "Visible legend for the checkbox group." },
-  { name: "description", type: "string", defaultValue: "-", description: "Helper text displayed below the group." },
-  { name: "error", type: "string", defaultValue: "-", description: "Validation message. Replaces description when present." },
-  { name: "modelValue", type: "string[]", defaultValue: "-", description: "Controlled selected values. Use v-model in Vue." },
-  { name: "defaultValue", type: "string[]", defaultValue: "[]", description: "Initial selected values for uncontrolled usage." },
-  { name: "disabled", type: "boolean", defaultValue: "-", description: "Disables every item in the group." },
-  { name: "controlFirst", type: "boolean", defaultValue: "true", description: "Sets the label/control order for child items." },
-  { name: "name", type: "string", defaultValue: "-", description: "Native checkbox name passed to group items." },
-];
-
-const legendProps = [
-  { name: "default slot", type: "unknown", defaultValue: "-", description: "Legend content. Pass class or style for custom presentation." },
-];
-
-const itemProps = [
-  { name: "value", type: "string", defaultValue: "-", description: "Item value used by Checkbox.Group." },
-  { name: "label", type: "string", defaultValue: "-", description: "Visible label rendered next to the checkbox item." },
-  { name: "variant", type: '"default" | "error"', defaultValue: '"default"', description: "Sets the visual variant for the item." },
-  { name: "checked", type: 'boolean | "indeterminate"', defaultValue: "-", description: "Controlled checked state when used outside a group." },
-  { name: "disabled", type: "boolean", defaultValue: "-", description: "Disables this checkbox item." },
-];
 ---
 
 <DocsLayout title="Checkbox" description="A control that allows the user to toggle between checked and not checked.">
@@ -344,6 +322,16 @@ const itemProps = [
             <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxDocsDemo client:only="vue" variant="legend-custom" /></div>
             <div class="docs-component-example__code"><CodeBlock code={legendCustomCode} lang="vue" /></div>
           </div>
+          {checkboxCardExamples.map((example) => (
+            <>
+              <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+              <p>{example.description}</p>
+              <div class="docs-component-example">
+                <div class="docs-component-preview docs-component-preview--checkbox"><CheckboxCardDocsDemo client:only="vue" variant={example.variant} /></div>
+                <div class="docs-component-example__code"><CodeBlock code={example.code} lang="vue" /></div>
+              </div>
+            </>
+          ))}
         </section>
 
         <section id="api-reference" class="docs-section">
@@ -466,6 +454,7 @@ const itemProps = [
                 <li><a href="#checkbox-group-with-error">Checkbox Group with Error</a></li>
                 <li><a href="#visually-hidden-legend">Visually Hidden Legend</a></li>
                 <li><a href="#custom-legend-styling">Custom Legend Styling</a></li>
+                {checkboxCardExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
               </ul>
             </li>
             <li>

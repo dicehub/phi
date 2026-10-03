@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { computed, ref, toRef } from "vue";
 import { provideCheckboxGroupContext } from "./checkbox-context";
+import { ChoiceGroupContent } from "../../utils/choice-group";
+import CheckboxLegend from "./CheckboxLegend.vue";
+import {
+  isCheckboxAppearance,
+  isCheckboxOrientation,
+  type CheckboxAppearance,
+  type CheckboxOrientation,
+} from "./checkbox";
 
 defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{
+    appearance?: CheckboxAppearance;
     controlFirst?: boolean;
     defaultValue?: string[];
     description?: string;
@@ -15,11 +24,14 @@ const props = withDefaults(
     maxSelectedValues?: number;
     modelValue?: string[];
     name?: string;
+    orientation?: CheckboxOrientation;
     readOnly?: boolean;
     legend?: string;
   }>(),
   {
-    controlFirst: true,
+    appearance: "default",
+    controlFirst: undefined,
+    orientation: "vertical",
     disabled: undefined,
     invalid: undefined,
     readOnly: undefined,
@@ -32,6 +44,8 @@ const emit = defineEmits<{
 }>();
 
 const isInvalid = computed(() => props.invalid || Boolean(props.error));
+const resolvedAppearance = computed(() => isCheckboxAppearance(props.appearance) ? props.appearance : "default");
+const resolvedOrientation = computed(() => isCheckboxOrientation(props.orientation) ? props.orientation : "vertical");
 const internalValue = ref(props.defaultValue ?? []);
 const selectedValues = computed(() => props.modelValue ?? internalValue.value);
 
@@ -73,6 +87,7 @@ const toggleValue = (value: string, checked: boolean) => {
 };
 
 provideCheckboxGroupContext({
+  appearance: resolvedAppearance,
   controlFirst: toRef(props, "controlFirst"),
   disabled: computed(() => props.disabled),
   invalid: computed(() => isInvalid.value),
@@ -86,17 +101,22 @@ provideCheckboxGroupContext({
   <fieldset
     v-bind="$attrs"
     class="phi-checkbox-group"
-    :class="{
-      'phi-checkbox-group--disabled': disabled,
-      'phi-checkbox-group--invalid': isInvalid,
-    }"
+    :class="[
+      `phi-checkbox-group--${resolvedAppearance}`,
+      `phi-checkbox-group--${resolvedOrientation}`,
+      {
+        'phi-checkbox-group--disabled': disabled,
+        'phi-checkbox-group--invalid': isInvalid,
+      },
+    ]"
+    :data-appearance="resolvedAppearance"
+    :data-orientation="resolvedOrientation"
     :disabled="disabled"
     :aria-invalid="isInvalid ? 'true' : undefined"
   >
-    <legend v-if="legend" class="phi-checkbox-group__legend">{{ legend }}</legend>
-    <div class="phi-checkbox-group__items">
+    <ChoiceGroupContent :legend="legend" :legend-component="CheckboxLegend" class-prefix="phi-checkbox-group">
       <slot />
-    </div>
+    </ChoiceGroupContent>
     <p v-if="error" class="phi-checkbox-group__error">{{ error }}</p>
     <p v-else-if="description" class="phi-checkbox-group__description">{{ description }}</p>
   </fieldset>
