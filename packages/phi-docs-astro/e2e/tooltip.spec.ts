@@ -10,11 +10,9 @@ async function expectTooltip(page: Page, trigger: Locator, text: string, delay =
   await expect(trigger).toBeVisible();
   await expect(trigger).toHaveCSS("cursor", "pointer");
 
-  const triggerBox = await trigger.boundingBox();
-  expect(triggerBox).not.toBeNull();
-
   await page.mouse.move(4, 4);
-  await page.mouse.move(triggerBox!.x + triggerBox!.width / 2, triggerBox!.y + triggerBox!.height / 2, { steps: 5 });
+  // Resolve the current position after any scroll into view.
+  await trigger.hover();
   await expect(trigger).toHaveAttribute("aria-describedby", /^tooltip:/, { timeout: Math.max(5000, delay + 2000) });
 
   const tooltipId = await trigger.getAttribute("aria-describedby");
@@ -22,6 +20,8 @@ async function expectTooltip(page: Page, trigger: Locator, text: string, delay =
   await expect(tooltip).toBeVisible();
   await expect(tooltip).toContainText(text);
 
+  const triggerBox = await trigger.boundingBox();
+  expect(triggerBox).not.toBeNull();
   const tooltipBox = await tooltip.boundingBox();
   expect(tooltipBox).not.toBeNull();
   expect(tooltipBox!.y).toBeGreaterThanOrEqual(0);
@@ -53,6 +53,8 @@ test.describe("Tooltip", () => {
 
     await expectTooltip(page, exampleById(page, "basic-tooltip").getByRole("button", { name: "Add" }), "Add");
 
+    // Test tooltip behavior after hash navigation without a scroll animation closing it.
+    await page.addStyleTag({ content: "html { scroll-behavior: auto !important; }" });
     await page.goto("/docs/components/tooltip#multiple-tooltips");
     await expect(page.locator("#multiple-tooltips")).toBeInViewport();
 
