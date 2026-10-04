@@ -1,27 +1,43 @@
+.home-index {
+  container-type: inline-size;
+}
+
+.home-index .docs-page-header__content {
+  padding-block: 1.5rem;
+}
+
+.home-index .docs-page-header__title-row {
+  margin-bottom: 0.5rem;
+}
+
+.home-index .docs-page-header__title-row h1 {
+  font-size: 1.75rem;
+}
+
 .docs-page-body.home-index__body {
   display: block;
+  padding-block: 1.5rem 2rem;
 }
 
 .home-index__section {
-  max-width: 48rem;
   scroll-margin-top: 5rem;
 }
 
 .home-index__section + .home-index__section {
-  margin-top: 2.5rem;
+  margin-top: 1.5rem;
 }
 
 .home-index__heading {
   display: flex;
   align-items: baseline;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .home-index__heading h2 {
   margin: 0;
   color: var(--docs-default);
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
@@ -32,6 +48,9 @@
 }
 
 .home-index__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -39,16 +58,38 @@
 }
 
 .home-index__list li {
+  min-width: 0;
   border-bottom: 1px solid var(--docs-border);
 }
 
 .home-index__list a {
-  display: block;
-  padding: 0.625rem 0.5rem;
+  display: flex;
+  height: 100%;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.375rem 0.25rem;
   color: var(--docs-default);
   font-size: 0.875rem;
-  line-height: 1.5;
+  font-weight: 500;
+  line-height: 1.25rem;
   overflow-wrap: anywhere;
+}
+
+.home-index__list a span {
+  min-width: 0;
+}
+
+.home-index__list svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex: none;
+  color: var(--docs-subtle);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
 }
 
 .home-index__list a:hover {
@@ -60,4 +101,26 @@
 .home-index__list a:focus-visible {
   outline: 2px solid var(--docs-brand);
   outline-offset: -2px;
+}
+
+@container (min-width: 40rem) {
+  .home-index__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .home-index__list a {
+    min-height: 2.25rem;
+  }
+}
+
+@container (min-width: 56rem) {
+  .home-index__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (pointer: coarse) {
+  .home-index__list a {
+    min-height: 2.75rem;
+  }
 }

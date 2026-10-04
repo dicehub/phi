@@ -49,6 +49,17 @@ test("opens a block guide from the home list with the keyboard", async ({ page }
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Page Header");
 });
 
+test("shows the complete directory within a desktop viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/docs/");
+  const links = page.getByRole("main").getByRole("link");
+  await expect(links.last()).toBeVisible();
+  expect(await links.evaluateAll((items) => items.every((item) => {
+    const bounds = item.getBoundingClientRect();
+    return bounds.top >= 0 && bounds.bottom <= innerHeight;
+  }))).toBe(true);
+});
+
 test("keeps the home list within a narrow viewport in both themes", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 800 });
   await page.goto("/docs/");
