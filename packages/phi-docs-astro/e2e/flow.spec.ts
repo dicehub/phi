@@ -101,15 +101,3 @@ test.describe("Flow", () => {
   });
 
 });
-
-test("Home Flow card renders a real flow diagram", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Flow" }) });
-
-  await expect(card.locator(".phi-flow")).toHaveCount(1);
-  await expect(card.locator(".phi-flow-node")).toHaveText(["Start", "A", "B", "End"]);
-  await expect(card.locator(".phi-flow__connector-path")).toHaveCount(4);
-});

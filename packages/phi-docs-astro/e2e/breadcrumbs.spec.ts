@@ -103,14 +103,3 @@ test.describe("Breadcrumbs", () => {
     await expect(clipboard).toHaveAttribute("aria-label", "Copied");
   });
 });
-
-test("Home breadcrumbs card renders a real breadcrumb trail", async ({ page }) => {
-  await page.goto("/");
-
-  const breadcrumbsCard = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Breadcrumbs" }) });
-
-  await expect(breadcrumbsCard.locator(".phi-breadcrumbs")).toHaveCount(1);
-  await expect(breadcrumbsCard.locator(".phi-breadcrumbs__current")).toContainText("Project");
-});

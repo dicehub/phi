@@ -146,19 +146,6 @@ test.describe("Radio", () => {
   });
 });
 
-test("Home Radio card renders a real radio group", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Radio" }) });
-
-  await expect(card.getByRole("link", { name: "Radio" })).toHaveAttribute("href", "/docs/components/radio");
-  await expect(card.locator(".phi-radio-group")).toHaveCount(1);
-  await expect(card.getByRole("radio", { name: "Email" })).toBeChecked();
-  await expect(card.getByRole("radio", { name: "SMS" })).not.toBeChecked();
-});
-
 test("Radio is reachable in the left docs navigation after Popover", async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto("/");

@@ -100,18 +100,6 @@ test.describe("Text", () => {
   });
 });
 
-test("Home Text card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Text", exact: true }) });
-
-  await expect(card.getByRole("link", { name: "Text", exact: true })).toHaveAttribute("href", "/docs/components/text");
-  await expect(card.locator("[data-phi-component='Text']")).toHaveCount(3);
-  await expect(card.locator(".home-static--text")).toHaveCount(0);
-});
-
 test("Text is reachable in the left docs navigation after Tag Input", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

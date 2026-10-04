@@ -254,19 +254,6 @@ test.describe("Tabs", () => {
   });
 });
 
-test("Home Tabs card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Tabs" }) });
-
-  await expect(card.getByRole("link", { name: "Tabs" })).toHaveAttribute("href", "/docs/components/tabs");
-  await expect(card.locator(".phi-tabs")).toHaveCount(1);
-  await expect(card.getByRole("tab")).toHaveText(["Overview", "Analytics", "Settings"]);
-  await expect(card.locator(".home-static--tabs")).toHaveCount(0);
-});
-
 test("Tabs is reachable in the left docs navigation after Table of Contents", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

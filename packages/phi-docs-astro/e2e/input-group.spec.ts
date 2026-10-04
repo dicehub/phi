@@ -258,19 +258,3 @@ test.describe("InputGroup", () => {
     });
   });
 });
-
-test("Home InputGroup card renders a real Phi input group", async ({ page }) => {
-  await page.goto("/");
-
-  const inputGroupCard = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "InputGroup", exact: true }) });
-
-  await expect(inputGroupCard.locator(".phi-input-group")).toHaveCount(1);
-  await expect(inputGroupCard.locator(".phi-input-group-addon")).toHaveText("https://");
-  await expect(inputGroupCard.locator(".phi-input-group-input")).toHaveValue("phi.example.com");
-  await expect(inputGroupCard.getByRole("link", { name: "InputGroup", exact: true })).toHaveAttribute(
-    "href",
-    "/docs/components/input-group",
-  );
-});

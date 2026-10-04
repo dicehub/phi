@@ -350,11 +350,3 @@ test.describe("DatePicker", () => {
     await expect(page.locator("#date-picker-content-api + .docs-api-table tbody tr")).toHaveCount(1);
   });
 });
-
-test("Home DatePicker card renders a real date picker", async ({ page }) => {
-  await page.goto("/docs");
-
-  const card = page.locator(".home-gallery__item").filter({ has: page.getByRole("link", { name: "DatePicker" }) });
-  await expect(card.locator(".home-date-picker.phi-date-picker")).toHaveCount(1);
-  await expect(card.getByPlaceholder("Pick a day")).toBeVisible();
-});

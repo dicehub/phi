@@ -169,19 +169,6 @@ test.describe("Docs responsive layout", () => {
     });
   });
 
-  test("keeps the home gallery inside narrow viewports", async ({ page }) => {
-    await page.setViewportSize({ width: 360, height: 800 });
-    await page.goto("/");
-
-    await expect(page.locator(".home-gallery")).toBeVisible();
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
-
-    const overflowingItems = await page.locator(".home-gallery__item").evaluateAll((items) =>
-      items.filter((item) => item.scrollWidth > item.clientWidth + 1).length,
-    );
-    expect(overflowingItems).toBe(0);
-  });
-
   test("keeps the mobile shell and medium spacing on tablets", async ({ page }) => {
     await page.setViewportSize({ width: 820, height: 1180 });
     await page.goto("/docs/components/button");

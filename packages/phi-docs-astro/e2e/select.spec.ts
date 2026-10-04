@@ -208,15 +208,3 @@ test.describe("Select", () => {
     await expect(sidebar.getByRole("link", { name: "Select" })).toHaveAttribute("href", "/docs/components/select");
   });
 });
-
-test("Home Select card renders the Phi Select component", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Select" }) });
-
-  await expect(card.getByRole("link", { name: "Select" })).toHaveAttribute("href", "/docs/components/select");
-  await expect(card.locator(".phi-select-trigger")).toHaveCount(1);
-  await expect(card.locator(".phi-select-value")).toHaveText("All deployed versions");
-});

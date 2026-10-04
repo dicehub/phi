@@ -162,22 +162,6 @@ test.describe("Toolbar", () => {
   });
 });
 
-test("Home Toolbar card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  await page.locator(".home-gallery__item").first().waitFor({ timeout: 1500 }).catch(() => undefined);
-  test.skip(
-    (await page.locator(".home-gallery__item").count()) === 0,
-    "Home gallery did not hydrate on the current dev server.",
-  );
-
-  const card = page.locator('.home-gallery__item:has(.home-gallery__title[href="/docs/components/toolbar"])');
-
-  await expect(card.locator(".home-gallery__title")).toHaveText("Toolbar");
-  await expect(card.getByRole("toolbar")).toHaveCount(1);
-  await expect(card.locator(".home-static--toolbar")).toHaveCount(0);
-});
-
 test("Toolbar is reachable in the left docs navigation after Text", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

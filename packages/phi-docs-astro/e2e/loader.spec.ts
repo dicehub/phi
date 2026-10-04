@@ -67,17 +67,3 @@ test.describe("Loader", () => {
     await expect(page.locator("#api-reference")).not.toContainText("aria-label");
   });
 });
-
-test("Home Loader card renders a real loader", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Loader" }) });
-
-  await expect(card.locator(".phi-loader")).toHaveCount(1);
-  await expect(card.getByRole("status", { name: "Loading" })).toBeVisible();
-  await expect
-    .poll(async () => card.locator(".phi-loader").boundingBox().then((box) => Math.round(box?.width ?? Number.NaN)))
-    .toBe(32);
-});

@@ -120,15 +120,3 @@ test.describe("Layer Card", () => {
     await expect(filterExample.locator(".layer-card-demo__footer")).toHaveText("Showing 1 of 3");
   });
 });
-
-test("Home LayerCard card renders a real layered card", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "LayerCard" }) });
-
-  await expect(card.locator(".phi-layer-card")).toHaveCount(1);
-  await expect(card.locator(".phi-layer-card__secondary")).toContainText("Next Steps");
-  await expect(card.locator(".phi-layer-card__primary")).toContainText("Get started with Phi");
-});

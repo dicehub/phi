@@ -114,22 +114,6 @@ test.describe("Table of Contents", () => {
   });
 });
 
-test("Home Table of Contents card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Table of Contents" }) });
-
-  await expect(card.getByRole("link", { name: "Table of Contents" })).toHaveAttribute(
-    "href",
-    "/docs/components/table-of-contents",
-  );
-  await expect(card.locator(".phi-table-of-contents")).toHaveCount(1);
-  await expect(card.locator(".phi-table-of-contents-item")).toHaveText(["Overview", "Usage", "API"]);
-  await expect(card.locator(".home-static--table-of-contents")).toHaveCount(0);
-});
-
 test("Table of Contents is reachable in the left docs navigation after Table", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

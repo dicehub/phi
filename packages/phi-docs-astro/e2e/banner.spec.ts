@@ -183,18 +183,3 @@ test.describe("Banner", () => {
     await expect(page.locator("#preview .phi-banner--default").first()).toHaveCSS("color", "oklch(0.707 0.165 254.624)");
   });
 });
-
-test("Home banner card renders a real banner", async ({ page }) => {
-  await page.goto("/");
-
-  await page.locator(".home-gallery__item").first().waitFor({ timeout: 1500 }).catch(() => undefined);
-  test.skip(
-    (await page.locator(".home-gallery__item").count()) === 0,
-    "Home gallery did not hydrate on the current dev server.",
-  );
-
-  const bannerCard = page.locator('.home-gallery__item:has(.home-gallery__title[href="/docs/components/banner"])');
-
-  await expect(bannerCard.locator(".phi-banner")).toHaveCount(1);
-  await expect(bannerCard.getByText("Session expiring")).toBeVisible();
-});

@@ -27,6 +27,7 @@ const smokeSpecs = [
   "choice-cards.spec.ts",
   "clipboard-text.spec.ts",
   "dialog.spec.ts",
+  "docs-home.spec.ts",
   "inline-copy-text.spec.ts",
   "docs-layout.spec.ts",
   "popover.spec.ts",

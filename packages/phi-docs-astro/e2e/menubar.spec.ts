@@ -106,16 +106,3 @@ test.describe("MenuBar", () => {
     await expect(eventRows.first()).toContainText("MenuBarSelectDetails");
   });
 });
-
-test("Home MenuBar card renders a real menu bar", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "MenuBar" }) });
-
-  await expect(card.getByRole("link", { name: "MenuBar" })).toHaveAttribute("href", "/docs/components/menu-bar");
-  await expect(card.locator(".phi-menubar")).toHaveCount(1);
-  await expect(card.getByRole("button", { name: "Bold" })).toHaveAttribute("aria-pressed", "true");
-  await expect(card.getByRole("button", { name: "Italic" })).toHaveAttribute("aria-pressed", "false");
-});

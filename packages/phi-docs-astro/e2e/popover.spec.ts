@@ -278,20 +278,6 @@ test.describe("Popover", () => {
   });
 });
 
-test("Home Popover card renders a real popover control", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Popover" }) });
-
-  await expect(card.getByRole("link", { name: "Popover" })).toHaveAttribute("href", "/docs/components/popover");
-  await expect(card.locator(".home-static--popover")).toHaveCount(0);
-  await card.getByRole("button", { name: "Notifications" }).click();
-  await expect(page.locator(".phi-popover-content")).toBeVisible();
-  await expect(page.getByText("All caught up.")).toBeVisible();
-});
-
 test("Popover is reachable in the left docs navigation", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

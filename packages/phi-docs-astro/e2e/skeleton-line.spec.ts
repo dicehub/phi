@@ -82,21 +82,6 @@ test.describe("Skeleton Line", () => {
   });
 });
 
-test("Home SkeletonLine card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "SkeletonLine" }) });
-
-  await expect(card.getByRole("link", { name: "SkeletonLine" })).toHaveAttribute(
-    "href",
-    "/docs/components/skeleton-line",
-  );
-  await expect(card.locator(".phi-skeleton-line")).toHaveCount(3);
-  await expect(card.locator(".home-static--skeleton-line")).toHaveCount(0);
-});
-
 test("Skeleton Line is reachable in the left docs navigation", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
