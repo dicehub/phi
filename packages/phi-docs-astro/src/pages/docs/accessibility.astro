@@ -1,0 +1,237 @@
+---
+import CodeBlock from "../../components/CodeBlock.astro";
+import CopyPageControls from "../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const toc = [
+  { id: "component-foundations", label: "Component foundations" },
+  { id: "labels-and-errors", label: "Labels and errors" },
+  { id: "keyboard-and-focus", label: "Keyboard and focus" },
+  { id: "dialogs-and-overlays", label: "Dialogs and overlays" },
+  { id: "color-and-motion", label: "Color and motion" },
+  { id: "test-your-interface", label: "Test your interface" },
+  { id: "report-a-problem", label: "Report a problem" },
+];
+
+const labelsCode = `<script setup>
+import { Input } from "@dicehub/phi/components/input";
+</script>
+
+<template>
+  <Input
+    label="Email"
+    name="email"
+    type="email"
+    autocomplete="email"
+    description="We will send your receipt here."
+    required
+  />
+</template>`;
+
+const errorCode = `<Input
+  label="Email"
+  type="email"
+  default-value="invalid-email"
+  error="Enter an email address, such as name@example.com."
+/>`;
+
+const iconButtonCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+import { PhTrash } from "@phosphor-icons/vue";
+</script>
+
+<template>
+  <Button type="button" shape="square" aria-label="Delete file">
+    <PhTrash aria-hidden="true" />
+  </Button>
+</template>`;
+---
+
+<DocsLayout title="Accessibility" description="Build and test accessible interfaces with Phi components.">
+  <div class="docs-page">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Accessibility</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">Build and test accessible interfaces with Phi components.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article">
+        <section id="component-foundations" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#component-foundations">Component foundations</a></h2>
+          <p>
+            Phi uses native HTML and Ark UI primitives for many interactive components.
+            These provide a starting point for semantics, keyboard behavior, and focus management.
+            Your application supplies meaningful labels, content, and a logical page structure.
+          </p>
+          <p>
+            Check the complete interface after you compose components or change styles.
+            Using Phi does not by itself establish WCAG conformance.
+            Use the accessibility notes on each component page for its specific API and behavior.
+          </p>
+        </section>
+
+        <section id="labels-and-errors" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#labels-and-errors">Labels and errors</a></h2>
+          <p>
+            Give each control an accessible name. Prefer a visible label for form fields.
+            Placeholder text disappears during input and must not replace a label.
+            See the <a class="docs-link" href="https://www.w3.org/WAI/tutorials/forms/labels/">WAI guide to labeling controls</a>.
+          </p>
+          <p>
+            <a class="docs-link" href="/docs/components/input">Input</a> connects its label, description, and error text
+            to the control. Use the <code>label</code> and <code>description</code> props for this common case:
+          </p>
+          <CodeBlock code={labelsCode} lang="vue" />
+          <p>
+            Supply validation results with <code>error</code>. State what went wrong and how to correct it.
+            Phi displays the message and marks the field invalid; your application performs the validation.
+          </p>
+          <CodeBlock code={errorCode} lang="vue" />
+          <p>
+            When composing a custom field with <a class="docs-link" href="/docs/components/field">Field</a>,
+            give the Field and its control the same <code>id</code>. If a control has no visible label,
+            supply <code>aria-label</code> or <code>aria-labelledby</code>.
+          </p>
+          <p>
+            Name icon buttons by their action and hide decorative icons from assistive technology.
+            A tooltip can provide extra help, but the control still needs its own accessible name.
+          </p>
+          <CodeBlock code={iconButtonCode} lang="vue" />
+        </section>
+
+        <section id="keyboard-and-focus" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#keyboard-and-focus">Keyboard and focus</a></h2>
+          <ul class="docs-section-list list-disc">
+            <li>
+              Use buttons for actions and links with an <code>href</code> for navigation.
+              Keep the DOM order aligned with the visual reading order.
+            </li>
+            <li>
+              Use Tab and Shift+Tab to move between controls. Composite widgets such as{" "}
+              <a class="docs-link" href="/docs/components/tabs">Tabs</a> and <a class="docs-link" href="/docs/components/radio">Radio</a>{" "}
+              use arrow keys within the group.
+            </li>
+            <li>
+              Keep focus indicators visible. Avoid positive <code>tabindex</code> values and CSS
+              that removes outlines without a visible replacement.
+            </li>
+            <li>
+              When you remove a focused item or change the page, move focus to a logical destination.
+              Check customized keyboard handlers for conflicts with the component's own behavior.
+            </li>
+          </ul>
+          <p>
+            Follow the{" "}
+            <a class="docs-link" href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/">ARIA keyboard interface guidance</a>{" "}
+            when building a custom interaction.
+          </p>
+        </section>
+
+        <section id="dialogs-and-overlays" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#dialogs-and-overlays">Dialogs and overlays</a></h2>
+          <p>
+            Give a <a class="docs-link" href="/docs/components/dialog">Dialog</a> a <code>Dialog.Title</code>.
+            Use <code>Dialog.Description</code> for a short explanation when needed and provide a
+            visible close or cancel control. The default modal dialog traps focus and restores it
+            on close; check both behaviors in your application.
+          </p>
+          <p>
+            Set <code>initialFocusEl</code> on <code>Dialog.Root</code> when the first focus target needs
+            to change, such as focusing Cancel in a destructive confirmation.
+            If the trigger is removed after an action, move focus to the next logical control.
+          </p>
+          <p>
+            Keep essential instructions visible. A <a class="docs-link" href="/docs/components/tooltip">Tooltip</a>{" "}
+            is for supplementary text; use a <a class="docs-link" href="/docs/components/popover">Popover</a>{" "}
+            or Dialog for interactive content. Test nested overlays with both keyboard and pointer input.
+          </p>
+        </section>
+
+        <section id="color-and-motion" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#color-and-motion">Color and motion</a></h2>
+          <p>
+            Start with the <a class="docs-link" href="/docs/colors">semantic color tokens</a>, then check the actual
+            foreground and background combinations in each theme. For WCAG AA, normal text requires
+            at least 4.5:1 contrast; large text requires 3:1. See the{" "}
+            <a class="docs-link" href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">WCAG contrast guidance</a>{" "}
+            for definitions and exceptions.
+          </p>
+          <ul class="docs-section-list list-disc">
+            <li>Pair color with text or another visible cue for errors, status, and selected states.</li>
+            <li>Check focus indicators, disabled states, and custom colors in light and dark themes.</li>
+            <li>Respect <code>prefers-reduced-motion</code> in animations you add.</li>
+            <li>
+              Give charts a text summary or data table so the values and meaning are available
+              without color or pointer hover.
+            </li>
+          </ul>
+        </section>
+
+        <section id="test-your-interface" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#test-your-interface">Test your interface</a></h2>
+          <ol class="docs-section-list list-decimal">
+            <li>
+              Complete the main task using only the keyboard. Check focus order, visible focus,
+              selection keys, and Escape where dismissal is supported.
+            </li>
+            <li>
+              Use a screen reader, such as NVDA or VoiceOver. Check control names, roles, states,
+              descriptions, and error announcements.
+            </li>
+            <li>
+              Zoom the browser to 200% and test a narrow viewport. Confirm that content and controls
+              remain readable and usable.
+            </li>
+            <li>Test light and dark themes, reduced motion, and the browsers your application supports.</li>
+            <li>
+              Run automated accessibility checks and add browser regressions for failures.
+              Automated checks cannot verify every interaction or the clarity of your content.
+            </li>
+          </ol>
+          <p>
+            The <a class="docs-link" href="https://www.w3.org/WAI/test-evaluate/preliminary/">WAI Easy Checks</a>{" "}
+            provide an initial manual review. For changes to Phi itself, also run the{" "}
+            <a class="docs-link" href="/docs/contributing#checks">contribution checks</a>.
+          </p>
+        </section>
+
+        <section id="report-a-problem" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#report-a-problem">Report a problem</a></h2>
+          <p>
+            Open a <a class="docs-link" href="https://github.com/dicehub/phi/issues">GitHub issue</a> with the Phi version,
+            component, reproduction steps, and expected behavior. Include the browser, operating system,
+            and assistive technology and version when relevant.
+          </p>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            {toc.map((section) => (
+              <li><a href={`#${section.id}`} data-toc-link={section.id}>{section.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>

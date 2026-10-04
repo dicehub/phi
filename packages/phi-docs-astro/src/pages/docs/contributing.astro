@@ -1,0 +1,173 @@
+---
+import CodeBlock from "../../components/CodeBlock.astro";
+import CopyPageControls from "../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
+import DocsLayout from "../../layouts/DocsLayout.astro";
+
+const toc = [
+  { id: "before-you-start", label: "Before you start" },
+  { id: "local-setup", label: "Local setup" },
+  { id: "make-a-change", label: "Make a change" },
+  { id: "checks", label: "Checks" },
+  { id: "changesets", label: "Changesets" },
+  { id: "submit-for-review", label: "Submit for review" },
+];
+
+const setupCode = `git clone https://github.com/YOUR_USERNAME/phi.git
+cd phi
+git switch dev
+git switch -c fix/your-change
+corepack enable
+corepack install
+pnpm install --frozen-lockfile
+pnpm --filter @dicehub/phi-docs-astro exec playwright install chromium
+pnpm --filter @dicehub/phi build
+pnpm dev`;
+
+const checksCode = `pnpm --filter @dicehub/phi build
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm --filter @dicehub/phi validate:package
+pnpm --filter @dicehub/phi-docs-astro build
+pnpm --filter @dicehub/phi-docs-astro test:markdown`;
+---
+
+<DocsLayout title="Contributing" description="Set up the workspace, test a change, and submit it for review.">
+  <div class="docs-page">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner">
+        <div class="docs-page-header__content">
+          <div class="docs-page-header__mobile-copy">
+            <CopyPageControls client:only="vue" align="center" />
+          </div>
+          <div class="docs-page-header__title-row">
+            <h1>Contributing</h1>
+            <div class="docs-page-header__navigation-actions">
+              <div class="docs-page-header__desktop-copy">
+                <CopyPageControls client:only="vue" />
+              </div>
+              <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+            </div>
+          </div>
+          <p class="docs-page-header__lede">Set up the workspace, test a change, and submit it for review.</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="docs-page-body">
+      <article class="docs-article">
+        <section id="before-you-start" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#before-you-start">Before you start</a></h2>
+          <p>
+            Search the <a class="docs-link" href="https://github.com/dicehub/phi/issues">GitHub issues</a> for related work.
+            Open an issue before a large change or a public API change. For a bug report, include the Phi
+            version, a small reproduction, and the expected and actual results.
+          </p>
+          <p>
+            Report suspected security problems privately to <a class="docs-link" href="mailto:info@dicehub.com">info@dicehub.com</a>{" "}
+            with the subject <code>Phi security report</code>. Follow the{" "}
+            <a class="docs-link" href="https://github.com/dicehub/phi/blob/dev/SECURITY.md">security policy</a>.
+          </p>
+          <p>
+            The repository's <a class="docs-link" href="https://github.com/dicehub/phi/blob/dev/CONTRIBUTING.md">contribution guide</a>{" "}
+            is the reference for the workflow below.
+          </p>
+        </section>
+
+        <section id="local-setup" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#local-setup">Local setup</a></h2>
+          <p>
+            Use Node.js 22.12.0 or later and pnpm 10.26.0. Fork{" "}
+            <a class="docs-link" href="https://github.com/dicehub/phi">dicehub/phi</a>, then replace{" "}
+            <code>YOUR_USERNAME</code> below with your GitHub username.
+          </p>
+          <p>
+            On Node.js 22, set <code>NODE_OPTIONS=--experimental-strip-types</code> in your shell before
+            running the build, development server, or checks.
+          </p>
+          <CodeBlock code={setupCode} lang="bash" />
+          <p>
+            Open the local URL printed by Astro. The docs site is also the component playground
+            and loads library source changes during development. Build the library before production
+            docs builds and package checks.
+          </p>
+        </section>
+
+        <section id="make-a-change" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#make-a-change">Make a change</a></h2>
+          <ul class="docs-section-list list-disc">
+            <li>
+              Library components, styles, and tokens are in <code>packages/phi</code>.
+              Keep their public APIs generic and independent of application stores or routers.
+            </li>
+            <li>
+              Pages, examples, and browser tests are in <code>packages/phi-docs-astro</code>.
+              Update the relevant guide or component page when behavior or an API changes.
+            </li>
+            <li>
+              Keep each change focused. For a bug fix, add a regression test that fails before the fix
+              and passes after it when practical.
+            </li>
+            <li>
+              Check keyboard use, labels, and focus when changing an interactive component.
+              Use the <a class="docs-link" href="/docs/accessibility">Accessibility guide</a> as a starting point.
+            </li>
+          </ul>
+        </section>
+
+        <section id="checks" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#checks">Checks</a></h2>
+          <p>Run these commands from the repository root before you request review:</p>
+          <CodeBlock code={checksCode} lang="bash" />
+          <p>
+            The checks cover generated files, types, library behavior, browser behavior, the packed package,
+            and HTML and Markdown documentation. The local browser suite uses Chromium.
+            CI also runs selected tests in Firefox and WebKit.
+          </p>
+        </section>
+
+        <section id="changesets" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#changesets">Changesets</a></h2>
+          <p>Add a Changeset when a change affects the published <code>@dicehub/phi</code> package:</p>
+          <CodeBlock code="pnpm changeset" lang="bash" />
+          <p>
+            Select <code>patch</code> for compatible fixes or <code>minor</code> for compatible features.
+            Discuss breaking changes in an issue before implementation. Changes limited to documentation,
+            tests, or internal build tooling usually do not need a Changeset.
+          </p>
+        </section>
+
+        <section id="submit-for-review" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#submit-for-review">Submit for review</a></h2>
+          <ol class="docs-section-list list-decimal">
+            <li>Use a Conventional Commit message, such as <code>fix: restore dialog focus</code>.</li>
+            <li>Push your branch to your fork and open a draft pull request against <code>dev</code>.</li>
+            <li>Describe the problem, the resulting behavior, and the checks you ran. Link the related issue.</li>
+          </ol>
+          <p>
+            GitLab is the canonical repository. Maintainers transfer accepted GitHub contributions to
+            GitLab and update the GitHub mirror. GitLab CI handles package releases; see{" "}
+            <a class="docs-link" href="https://github.com/dicehub/phi/blob/dev/RELEASING.md">Publishing Phi</a>.
+          </p>
+          <p>
+            Contributions are distributed under the{" "}
+            <a class="docs-link" href="https://github.com/dicehub/phi/blob/dev/LICENSE">MIT license</a>.
+          </p>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+
+      <aside class="docs-page-toc" aria-label="On this page">
+        <div class="docs-page-toc__inner">
+          <span class="docs-page-toc__title">On this page</span>
+          <ul>
+            {toc.map((section) => (
+              <li><a href={`#${section.id}`} data-toc-link={section.id}>{section.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+</DocsLayout>
