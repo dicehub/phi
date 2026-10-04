@@ -29,7 +29,7 @@ test.describe("Empty", () => {
     await expect(empty).toContainText("No packages found");
     await expect(empty).toContainText("Get started by installing your first package.");
     await expect(empty).toContainText("$");
-    await expect(empty).toContainText("pnpm add @dicehub/phi");
+    await expect(empty).toContainText("pnpm add @dicehub/phi@beta");
     await expect
       .poll(async () =>
         colorRedChannel(empty.locator(".phi-empty__icon svg")),
@@ -52,7 +52,7 @@ test.describe("Empty", () => {
     await expect(preview.getByRole("button", { name: "See examples" })).toBeVisible();
     await expect(preview.getByRole("button", { name: "View documentation" })).toBeVisible();
     await expect(snippet).toContainText('from "@dicehub/phi/components/empty"');
-    await expect(snippet).toContainText('command-line="pnpm add @dicehub/phi"');
+    await expect(snippet).toContainText('command-line="pnpm add @dicehub/phi@beta"');
     await expect(snippet).not.toContainText("v-for");
     await expect(preview.locator(".docs-code-copy")).toHaveCSS("opacity", "1");
   });
@@ -83,7 +83,7 @@ test.describe("Empty", () => {
 
     await expect(usage.locator(".docs-component-preview .phi-empty")).toContainText("No packages found");
     await expect(usage.locator(".docs-code-block")).toContainText("<Empty");
-    await expect(usage.locator(".docs-code-block")).toContainText('command-line="pnpm add @dicehub/phi"');
+    await expect(usage.locator(".docs-code-block")).toContainText('command-line="pnpm add @dicehub/phi@beta"');
   });
 
   test("renders every documented example with snippets and API rows", async ({ page }) => {
@@ -158,7 +158,7 @@ test.describe("Empty", () => {
     const preview = page.locator("#preview .phi-empty");
     await preview.getByRole("button", { name: "Copy command" }).click();
     await expect(preview).toHaveAttribute("data-copied", "true");
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe("pnpm add @dicehub/phi");
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe("pnpm add @dicehub/phi@beta");
 
     const command = exampleById(page, "with-command-line").locator(".phi-empty");
     await command.getByRole("button", { name: "Copy command" }).click();

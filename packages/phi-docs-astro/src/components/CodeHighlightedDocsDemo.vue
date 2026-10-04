@@ -67,7 +67,7 @@ const count = ref(0);
   <button @click="count++">Count: {{ count }}</button>
 </template>`,
   bash: `# Install Phi
-pnpm add @dicehub/phi
+pnpm add @dicehub/phi@beta
 
 # Start development server
 pnpm dev`,
@@ -214,7 +214,7 @@ export function useWindowSize() {
 
       <CodeHighlighted
         v-else-if="variant === 'copy-button'"
-        code="pnpm add @dicehub/phi"
+        code="pnpm add @dicehub/phi@beta"
         lang="bash"
         show-copy-button
       />

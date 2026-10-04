@@ -36,5 +36,6 @@ Maintainers run:
 pnpm version-packages
 ```
 
-This consumes pending changesets and updates package versions and changelogs. Automated package publishing is not
-configured yet. A Git tag does not publish a package.
+This updates package versions and changelogs from the pending changesets.
+Protected release tags publish through GitLab CI after all checks pass.
+See [RELEASING.md](../RELEASING.md) for prerelease versioning and publishing.

@@ -28,7 +28,7 @@ const mutedIconProps = {
       :icon="PhPackage"
       title="No packages found"
       description="Get started by installing your first package."
-      command-line="pnpm add @dicehub/phi"
+      command-line="pnpm add @dicehub/phi@beta"
     >
       <Button :icon="PhCode">See examples</Button>
       <Button :icon="PhGlobe" variant="primary">View documentation</Button>
@@ -39,7 +39,7 @@ const mutedIconProps = {
       :icon="PhPackage"
       title="No packages found"
       description="Get started by installing your first package."
-      command-line="pnpm add @dicehub/phi"
+      command-line="pnpm add @dicehub/phi@beta"
     />
 
     <Empty

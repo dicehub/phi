@@ -2,15 +2,13 @@
 
 Phi is a Vue port of [Kumo](https://github.com/cloudflare/kumo), rebuilt on Ark UI.
 
-Phi provides accessible Vue components, styling tokens, and reusable interface blocks. The first public release will
-be `0.5.0-beta.0`. The package is not yet available from npm.
+Phi provides accessible Vue components, styling tokens, and reusable interface blocks.
+Version `0.5.0-beta.0` is the first public beta. APIs can change before the stable release.
 
 ## Install
 
-After the first beta release:
-
 ```bash
-pnpm add @dicehub/phi
+pnpm add @dicehub/phi@beta
 ```
 
 ## Quick start
@@ -33,8 +31,8 @@ import "@dicehub/phi/styles/standalone";
 
 ## Documentation
 
-The component documentation is in `packages/phi-docs-astro`. Public documentation will be available before the
-first beta release.
+API guides and examples are in the [documentation source](./packages/phi-docs-astro/src/pages/docs).
+Run `pnpm dev` to view the documentation locally.
 
 ## Development
 
@@ -56,7 +54,7 @@ pnpm --filter @dicehub/phi validate:package
 
 ## Source and support
 
-The public source mirror and issue tracker will be available at [github.com/dicehub/phi](https://github.com/dicehub/phi).
+The public source mirror and issue tracker are at [github.com/dicehub/phi](https://github.com/dicehub/phi).
 
 Use the [documentation source](./packages/phi-docs-astro) for API details and examples. Report reproducible bugs
 and request features in [GitHub issues](https://github.com/dicehub/phi/issues). Support has no guaranteed response

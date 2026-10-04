@@ -47,7 +47,7 @@ test.describe("PageHeader block", () => {
     await page.goto("/docs/blocks/page-header#installation");
 
     const installation = page.locator("#installation");
-    await expect(installation).toContainText("pnpm dlx @dicehub/phi add PageHeader");
+    await expect(installation).toContainText("pnpm dlx @dicehub/phi@beta add PageHeader");
     await expect(installation).toContainText('import PageHeader from "./components/phi/page-header/PageHeader.vue";');
     await expect(installation).not.toContainText("Preview design");
   });
