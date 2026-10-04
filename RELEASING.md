@@ -30,38 +30,39 @@ options and replace this workflow before that change takes effect. See the
 ## Prepare a version
 
 1. Review the pending Changesets on `dev`.
-2. For the first beta, run `pnpm changeset pre enter beta`, then
-   `pnpm version-packages`. Review the generated version and changelog. The
-   planned first public version is `0.5.0-beta.0`.
-3. Run the checks in [CONTRIBUTING.md](./CONTRIBUTING.md#checks). Before the first
-   release, update `README.md`, `packages/phi/README.md`, and the documentation
-   installation page to match the released version and npm channel, including
-   CLI commands. The beta channel requires `@beta` in install commands.
+2. Run `pnpm version-packages`. Review the generated version and changelog.
+3. Run the checks in [CONTRIBUTING.md](./CONTRIBUTING.md#checks). Keep
+   `README.md`, `packages/phi/README.md`, and the documentation installation
+   page aligned with the released version and npm channel, including CLI
+   commands. Stable install commands use `@dicehub/phi` without a channel suffix.
 4. Merge the version and changelog changes into `dev` with a successful pipeline.
 
-For later beta versions, keep prerelease mode active and run
-`pnpm version-packages`. For the stable release, run `pnpm changeset pre exit`
-before versioning. Do not edit generated changelog entries by hand.
+Prerelease mode is off after the `1.0.0` release. To start a future beta, run
+`pnpm changeset pre enter beta` before versioning. Keep prerelease mode active
+for later beta versions. To return to stable releases, run
+`pnpm changeset pre exit` before versioning. Do not edit generated changelog
+entries by hand.
 
 ## Publish from GitLab
 
 Create a tag on the verified `dev` commit. The tag must match the package name
-and version exactly, for example `@dicehub/phi@0.5.0-beta.0`.
+and version exactly, for example `@dicehub/phi@1.0.0`.
 
 ```bash
-git tag '@dicehub/phi@0.5.0-beta.0' <verified-commit>
-git push origin 'refs/tags/@dicehub/phi@0.5.0-beta.0'
+git tag '@dicehub/phi@1.0.0' <verified-commit>
+git push origin 'refs/tags/@dicehub/phi@1.0.0'
 ```
 
 The tag pipeline runs all package, documentation, and browser checks before
 the `publish-npm` job publishes the package. Stable versions use npm's `latest`
 channel. Prerelease versions must end in `-alpha.N`, `-beta.N`, or `-rc.N`
 and use that channel.
-Users install the beta with `pnpm add @dicehub/phi@beta`.
+Users install the stable release with `pnpm add @dicehub/phi`. A beta release
+requires `pnpm add @dicehub/phi@beta`.
 
 After the job succeeds, check the published version with
-`pnpm view @dicehub/phi@beta version --registry=https://registry.npmjs.org/`.
-For a stable release, use `@latest` instead of `@beta`.
+`pnpm view @dicehub/phi@latest version --registry=https://registry.npmjs.org/`.
+For a beta release, use `@beta` instead of `@latest`.
 
 If publishing fails, inspect the job log and registry before retrying. Check
 the token's validity, package write permission, bypass-2FA setting, and npm

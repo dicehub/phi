@@ -229,7 +229,7 @@ test.describe("CodeHighlighted", () => {
     await copyExample.scrollIntoViewIfNeeded();
     await copyExample.locator(".phi-code-highlighted__copy").click();
 
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe("pnpm add @dicehub/phi@beta");
+    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe("pnpm add @dicehub/phi");
     await expect(copyExample.getByRole("button", { name: "Copied!" })).toBeVisible();
   });
 });

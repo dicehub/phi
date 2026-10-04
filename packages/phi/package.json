@@ -1,6 +1,6 @@
 {
   "name": "@dicehub/phi",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0",
   "private": false,
   "type": "module",
   "description": "Vue component library rebuilt on Ark UI.",
@@ -10,7 +10,7 @@
     "url": "git+https://github.com/dicehub/phi.git",
     "directory": "packages/phi"
   },
-  "homepage": "https://github.com/dicehub/phi#readme",
+  "homepage": "https://phi-ui.com",
   "bugs": {
     "url": "https://github.com/dicehub/phi/issues"
   },

@@ -49,8 +49,8 @@ describe("block installation docs", () => {
   it("keeps the installation guide aligned with the shipped CLI", () => {
     const installation = readFileSync(join(docsRoot, "pages", "docs", "installation.astro"), "utf8");
 
-    assert.match(installation, /pnpm dlx @dicehub\/phi@beta init/);
-    assert.match(installation, /pnpm dlx @dicehub\/phi@beta add PageHeader/);
+    assert.match(installation, /pnpm dlx @dicehub\/phi init/);
+    assert.match(installation, /pnpm dlx @dicehub\/phi add PageHeader/);
     assert.doesNotMatch(installation, /CLI is not available|once the CLI ships/);
   });
 });

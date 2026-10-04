@@ -1,4 +1,4 @@
-export const deleteResourceInstallCode = `pnpm add @dicehub/phi@beta`;
+export const deleteResourceInstallCode = `pnpm add @dicehub/phi`;
 
 export const deleteResourceImportCode = `import { DeleteResource } from "@dicehub/phi/blocks/delete-resource";`;
 

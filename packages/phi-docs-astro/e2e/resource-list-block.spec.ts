@@ -60,7 +60,7 @@ test.describe("ResourceListPage block", () => {
     await page.goto("/docs/blocks/resource-list#installation");
 
     const installation = page.locator("#installation");
-    await expect(installation).toContainText("pnpm dlx @dicehub/phi@beta add ResourceListPage");
+    await expect(installation).toContainText("pnpm dlx @dicehub/phi add ResourceListPage");
     await expect(installation).toContainText(
       'import ResourceListPage from "./components/phi/resource-list-page/ResourceListPage.vue";',
     );

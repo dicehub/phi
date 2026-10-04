@@ -2,12 +2,12 @@
 
 Phi is a Vue port of [Kumo](https://github.com/cloudflare/kumo), rebuilt on Ark UI.
 
-This is a public beta. APIs can change before the stable release.
+Read the [documentation](https://phi-ui.com) for API guides and examples.
 
 ## Install
 
 ```bash
-pnpm add @dicehub/phi@beta
+pnpm add @dicehub/phi
 ```
 
 ## Usage
