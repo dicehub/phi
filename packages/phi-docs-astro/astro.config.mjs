@@ -12,7 +12,7 @@ const isDev = process.argv.includes("dev");
 const phiStyles = resolve(__dirname, "../phi/src/styles");
 
 export default defineConfig({
-  site: "https://phi-ui.dh.fo",
+  site: "https://phi-ui.com",
   integrations: [mdx(), vue(), markdownPages()],
   prefetch: {
     prefetchAll: true,

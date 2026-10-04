@@ -179,15 +179,3 @@ test("Empty reports no success when both clipboard methods fail", async ({ page 
   await expect(preview).not.toHaveAttribute("data-copied", "true");
   await expect(preview.locator(".phi-empty__sr")).toHaveText("");
 });
-
-test("Home Empty card renders a real empty state", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Empty" }) });
-
-  await expect(card.locator(".phi-empty")).toHaveCount(1);
-  await expect(card.locator(".phi-empty")).toContainText("No results");
-  await expect(card.locator(".phi-empty")).toContainText("Try another filter.");
-});

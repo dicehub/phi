@@ -36,7 +36,10 @@ module. See the [package guide](./packages/phi/README.md#charts).
 
 ## Documentation
 
-API guides and examples are in the [documentation source](./packages/phi-docs-astro/src/pages/docs).
+Read the [documentation](https://phi-ui.com) for API guides and examples.
+The [www.phi-ui.com](https://www.phi-ui.com) alias serves the same site.
+The [docs home](https://phi-ui.com/docs/) lists every component, chart, and block, with links to their guides.
+The [documentation source](./packages/phi-docs-astro/src/pages/docs) is in this repository.
 Run `pnpm dev` to view the documentation locally.
 
 ## Development

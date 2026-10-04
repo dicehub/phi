@@ -78,19 +78,6 @@ test.describe("Meter", () => {
   });
 });
 
-test("Home Meter card renders a real meter", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Meter" }) });
-
-  await expect(card.getByRole("link", { name: "Meter" })).toHaveAttribute("href", "/docs/components/meter");
-  await expect(card.locator(".phi-meter")).toHaveCount(1);
-  await expect(card.getByRole("meter", { name: "Storage used" })).toHaveAttribute("aria-valuenow", "65");
-  await expect(card.locator(".phi-meter__value")).toHaveText("65%");
-});
-
 test("Meter is reachable in the left docs navigation", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

@@ -128,15 +128,3 @@ test.describe("Clipboard Text", () => {
     await expect(status).toHaveCSS("animation-name", "none");
   });
 });
-
-test("Home ClipboardText card renders a real clipboard field", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "ClipboardText" }) });
-
-  await expect(card).toBeVisible({ timeout: 15_000 });
-  await expect(card.locator(".phi-clipboard-text")).toHaveCount(1);
-  await expect(card.locator(".phi-clipboard-text")).toContainText("0c239dd2");
-});

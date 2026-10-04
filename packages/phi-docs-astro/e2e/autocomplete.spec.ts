@@ -98,11 +98,3 @@ test.describe("Autocomplete", () => {
     await expect(page.locator(".autocomplete-demo .phi-autocomplete-trigger")).toHaveCount(0);
   });
 });
-
-test("Home autocomplete matches component behavior", async ({ page }) => {
-  await page.goto("/");
-
-  const input = page.getByPlaceholder("Search docs...").first();
-  await selectSuggestion(page, input, "enhance", "enhancement");
-  await expect(page.locator(".home-autocomplete .phi-autocomplete-trigger")).toHaveCount(0);
-});

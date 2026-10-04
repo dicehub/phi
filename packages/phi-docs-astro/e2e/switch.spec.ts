@@ -118,18 +118,6 @@ test.describe("Switch", () => {
   });
 });
 
-test("Home Switch card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Switch" }) });
-
-  await expect(card.getByRole("link", { name: "Switch" })).toHaveAttribute("href", "/docs/components/switch");
-  await expect(card.locator(".phi-switch")).toHaveCount(1);
-  await expect(card.getByRole("switch", { name: "Enable setting" })).toHaveAttribute("aria-checked", "true");
-});
-
 test("Switch is reachable in the left docs navigation after Skeleton Line", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

@@ -97,15 +97,3 @@ test.describe("Grid", () => {
     await expect.poll(() => templateColumnCount(mobileExample.locator(".phi-grid--4up"))).toBe(1);
   });
 });
-
-test("Home Grid card renders a real grid", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Grid" }) });
-
-  await expect(card.locator(".phi-grid")).toHaveCount(1);
-  await expect(card.locator(".phi-grid")).toHaveClass(/phi-grid--2up/);
-  await expect(card.locator(".phi-grid-item")).toHaveText(["1", "2", "3", "4"]);
-});

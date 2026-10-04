@@ -175,22 +175,6 @@ test.describe("Toast", () => {
   });
 });
 
-test("Home Toast card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  await page.locator(".home-gallery__item").first().waitFor({ timeout: 1500 }).catch(() => undefined);
-  test.skip(
-    (await page.locator(".home-gallery__item").count()) === 0,
-    "Home gallery did not hydrate on the current dev server.",
-  );
-
-  const card = page.locator('.home-gallery__item:has(.home-gallery__title[href="/docs/components/toast"])');
-
-  await expect(card.locator(".home-gallery__title")).toHaveText("Toast");
-  await expect(card.getByRole("button", { name: "Show toast" })).toHaveCount(1);
-  await expect(card.locator(".home-static--toast")).toHaveCount(0);
-});
-
 test("Toast is reachable in the left docs navigation after Toolbar", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

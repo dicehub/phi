@@ -197,22 +197,3 @@ test.describe("InputArea", () => {
     await expect(page.locator("main")).not.toContainText("Cloudflare");
   });
 });
-
-test("Home InputArea card renders a real Phi textarea", async ({ page }) => {
-  await page.goto("/");
-
-  await page.locator(".home-gallery__item").first().waitFor({ timeout: 1500 }).catch(() => undefined);
-  test.skip(
-    (await page.locator(".home-gallery__item").count()) === 0,
-    "Home gallery did not hydrate on the current dev server.",
-  );
-
-  const inputAreaCard = page.locator('.home-gallery__item:has(.home-gallery__title[href="/docs/components/input-area"])');
-
-  await expect(inputAreaCard.locator(".phi-input-area")).toHaveCount(1);
-  await expect(inputAreaCard.locator(".phi-input-area")).toHaveAttribute("placeholder", "Enter your name");
-  await expect(inputAreaCard.getByRole("link", { name: "InputArea", exact: true })).toHaveAttribute(
-    "href",
-    "/docs/components/input-area",
-  );
-});

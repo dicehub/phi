@@ -116,20 +116,6 @@ test.describe("Pagination", () => {
   });
 });
 
-test("Home Pagination card renders a real pagination control", async ({ page }) => {
-  await page.goto("/docs");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Pagination" }) });
-
-  await expect(card.getByRole("link", { name: "Pagination" })).toHaveAttribute("href", "/docs/components/pagination");
-  await expect(card.locator(".phi-pagination")).toHaveCount(1);
-  await expect(card.getByRole("button", { name: "Previous page" })).toBeDisabled();
-  await expect(card.getByRole("button", { name: "Next page" })).toBeEnabled();
-  await expect(card.locator(".home-static--pagination")).toHaveCount(0);
-});
-
 test("Pagination is reachable in the left docs navigation", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

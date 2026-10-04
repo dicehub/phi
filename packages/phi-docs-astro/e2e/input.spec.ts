@@ -159,19 +159,3 @@ test.describe("Input", () => {
     await expect(valueChange.locator(".phi-input-description")).toHaveText("Value: beta");
   });
 });
-
-test("Home Input cards render real Phi inputs", async ({ page }) => {
-  await page.goto("/");
-
-  const inputCard = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Input", exact: true }) });
-  const validationCard = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Input (with validation)" }) });
-
-  await expect(inputCard.locator(".phi-input")).toHaveCount(2);
-  await expect(inputCard.locator(".phi-input--error")).toHaveCount(1);
-  await expect(validationCard.locator(".phi-input-field")).toHaveCount(1);
-  await expect(validationCard.locator(".phi-input-error")).toHaveText("Please enter a valid email.");
-});

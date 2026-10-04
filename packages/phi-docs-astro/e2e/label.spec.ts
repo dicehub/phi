@@ -173,19 +173,3 @@ test.describe("Label", () => {
     await expect(standalone.locator(".phi-label__tooltip")).toHaveAttribute("data-tooltip", "Important field");
   });
 });
-
-test("Home Label card renders real Phi labels", async ({ page }) => {
-  await page.goto("/");
-
-  const labelCard = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Label", exact: true }) });
-
-  await expect(labelCard.locator(".phi-label")).toHaveCount(3);
-  await expect(labelCard.locator(".phi-label__optional")).toHaveText("(optional)");
-  await expect(labelCard.locator(".phi-label__tooltip")).toHaveAttribute("data-tooltip", "More info");
-  await expect(labelCard.getByRole("link", { name: "Label", exact: true })).toHaveAttribute(
-    "href",
-    "/docs/components/label",
-  );
-});

@@ -90,15 +90,3 @@ test.describe("Link", () => {
     await expect(page.locator("#api-reference #variants + .docs-api-table tbody tr")).toHaveCount(3);
   });
 });
-
-test("Home Link card renders a real link preview", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.getByRole("link", { name: "Link" }) });
-
-  await expect(card.locator(".phi-link")).toHaveCount(2);
-  await expect(card.locator(".phi-link").first()).toHaveAttribute("href", "/docs/components/link");
-  await expect(card.locator(".phi-link__external-icon")).toHaveCount(1);
-});

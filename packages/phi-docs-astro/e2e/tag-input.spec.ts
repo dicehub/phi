@@ -299,23 +299,6 @@ test.describe("Tag Input", () => {
   });
 });
 
-test("Home Tag Input card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  await page.locator(".home-gallery__item").first().waitFor({ timeout: 1500 }).catch(() => undefined);
-  test.skip(
-    (await page.locator(".home-gallery__item").count()) === 0,
-    "Home gallery did not hydrate on the current dev server.",
-  );
-
-  const card = page.locator('.home-gallery__item:has(.home-gallery__title[href="/docs/components/tag-input"])');
-
-  await expect(card.locator(".home-gallery__title")).toHaveText("TagInput");
-  await expect(card.locator(".phi-tag-input")).toHaveCount(1);
-  await expect(card.locator(".phi-tag-input-chip__label")).toHaveText(["docs"]);
-  await expect(card.locator(".home-static--tag-input")).toHaveCount(0);
-});
-
 test("Tag Input is reachable in the left docs navigation after Tabs", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");

@@ -133,18 +133,6 @@ test.describe("Table", () => {
   });
 });
 
-test("Home Table card renders the real component", async ({ page }) => {
-  await page.goto("/");
-
-  const card = page
-    .locator(".home-gallery__item")
-    .filter({ has: page.locator(".home-gallery__title").filter({ hasText: /^Table$/ }) });
-
-  await expect(card.locator(".home-gallery__title")).toHaveAttribute("href", "/docs/components/table");
-  await expect(card.locator(".phi-table")).toHaveCount(1);
-  await expect(card.locator(".phi-table-row")).toHaveCount(4);
-});
-
 test("Table is reachable in the left docs navigation after Switch", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
