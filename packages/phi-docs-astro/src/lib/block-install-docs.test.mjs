@@ -32,7 +32,7 @@ describe("block installation docs", () => {
     for (const path of sources) {
       const content = readFileSync(path, "utf8");
 
-      for (const match of content.matchAll(/phi\s+add\s+([A-Z][A-Za-z0-9]*)/g)) {
+      for (const match of content.matchAll(/phi(?:@beta)?\s+add\s+([A-Z][A-Za-z0-9]*)/g)) {
         if (!installableBlocks.has(match[1])) {
           offenders.push(`${relative(docsRoot, path)}: ${match[1]}`);
         }
@@ -49,8 +49,8 @@ describe("block installation docs", () => {
   it("keeps the installation guide aligned with the shipped CLI", () => {
     const installation = readFileSync(join(docsRoot, "pages", "docs", "installation.astro"), "utf8");
 
-    assert.match(installation, /pnpm dlx @dicehub\/phi init/);
-    assert.match(installation, /pnpm dlx @dicehub\/phi add PageHeader/);
+    assert.match(installation, /pnpm dlx @dicehub\/phi@beta init/);
+    assert.match(installation, /pnpm dlx @dicehub\/phi@beta add PageHeader/);
     assert.doesNotMatch(installation, /CLI is not available|once the CLI ships/);
   });
 });

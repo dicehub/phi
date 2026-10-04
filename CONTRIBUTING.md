@@ -68,6 +68,12 @@ On Node.js 22, set `NODE_OPTIONS=--experimental-strip-types` before you run the 
 
 The browser test suite uses Chromium locally. CI also tests Firefox and WebKit.
 
+## Releases
+
+GitLab CI publishes releases after all checks pass. See
+[RELEASING.md](./RELEASING.md) for the release checks, protected tags, npm
+channels, and the planned change to npm token support.
+
 ## License
 
 By submitting a contribution, you agree that it can be distributed under the [MIT license](./LICENSE).

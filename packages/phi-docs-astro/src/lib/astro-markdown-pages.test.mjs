@@ -49,11 +49,18 @@ describe("Markdown build output", () => {
     }
   });
 
-  it("emits one complete changelog page with its current empty state", () => {
+  it("emits one complete changelog page with all release versions", () => {
     const changelogPath = join(distDir, "docs/changelog.md");
     assert.equal(existsSync(changelogPath), true);
     assert.equal(existsSync(join(distDir, "docs/changelog/all.md")), false);
-    assert.match(readFileSync(changelogPath, "utf8"), /No changelog entries yet\./);
+    const markdown = readFileSync(changelogPath, "utf8");
+    const source = readFileSync(join(import.meta.dirname, "../../../phi/CHANGELOG.md"), "utf8");
+    const versions = [...source.matchAll(/^## (.+)$/gm)].map((match) => match[1]);
+    assert.ok(versions.length > 0, "The published package must have release notes.");
+    for (const version of versions) {
+      assert.ok(markdown.includes(`[${version}]`), `Missing release ${version}`);
+    }
+    assert.doesNotMatch(markdown, /No changelog entries yet\./);
   });
 
   it("writes readable GFM content without page controls", () => {

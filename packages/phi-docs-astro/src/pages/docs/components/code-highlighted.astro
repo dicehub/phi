@@ -42,7 +42,7 @@ const vueCode = `<CodeHighlighted
   lang="html"
 />`;
 
-const bashCode = `<CodeHighlighted code="pnpm add @dicehub/phi" lang="bash" />`;
+const bashCode = `<CodeHighlighted code="pnpm add @dicehub/phi@beta" lang="bash" />`;
 
 const jsonCode = `<CodeHighlighted :code="packageJson" lang="json" />`;
 
@@ -61,7 +61,7 @@ const lineNumbersCode = `<CodeHighlighted
 />`;
 
 const copyButtonCode = `<CodeHighlighted
-  code="pnpm add @dicehub/phi"
+  code="pnpm add @dicehub/phi@beta"
   lang="bash"
   show-copy-button
 />`;
@@ -124,7 +124,7 @@ import { ShikiProvider, CodeHighlighted } from "@dicehub/phi/code";
       show-copy-button
     />
     <CodeHighlighted
-      code="pnpm add @dicehub/phi"
+      code="pnpm add @dicehub/phi@beta"
       lang="bash"
       show-copy-button
       :labels="{ copy: 'Befehl kopieren', copied: 'Befehl kopiert' }"
