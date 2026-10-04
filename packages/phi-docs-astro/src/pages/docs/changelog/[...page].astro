@@ -94,14 +94,16 @@ const badgeConfig = {
                         <ul class="changelog-entries">
                           {section.entries.map((entry) => (
                             <li class="changelog-entry">
-                              <a
-                                class="changelog-entry__hash"
-                                href={getCommitUrl(entry.hash)}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {entry.displayHash}
-                              </a>
+                              {entry.hash && (
+                                <a
+                                  class="changelog-entry__hash"
+                                  href={getCommitUrl(entry.hash)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {entry.displayHash}
+                                </a>
+                              )}
                               <div class="changelog-entry__content" set:html={entry.html} />
                             </li>
                           ))}
