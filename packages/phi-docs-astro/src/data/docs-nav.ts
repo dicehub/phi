@@ -60,7 +60,6 @@ export const primaryNav: NavLink[] = [
   topLevel("Contributing", "Contribute to Phi development and documentation."),
   topLevel("Colors", "Use the Phi color system and semantic tokens."),
   topLevel("Accessibility", "Build accessible interfaces with Phi."),
-  topLevel("Figma Resources", "Find Phi design resources for Figma."),
   topLevel("CLI", "Use the Phi command-line interface."),
   topLevel("Registry", "Use Phi's generated component metadata."),
   topLevel("Changelog", "Review Phi releases and notable changes."),
