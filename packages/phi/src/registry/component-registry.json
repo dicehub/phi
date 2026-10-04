@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "package": {"name":"@dicehub/phi","version":"0.5.0-beta.0"},
+  "package": {"name":"@dicehub/phi","version":"1.0.0-beta.1"},
   "components": {
     "Autocomplete": {"name":"Autocomplete","type":"component","group":"autocomplete","importPath":"@dicehub/phi/components/autocomplete","sourceFile":"components/autocomplete/Autocomplete.vue","description":"Autocomplete component exported by the Autocomplete module.","parts":["Root","Content","Empty","Group","GroupLabel","InputGroup","Item","ItemIndicator","ItemText","Label","List","Separator"]},
     "AutocompleteContent": {"name":"AutocompleteContent","type":"component","group":"autocomplete","importPath":"@dicehub/phi/components/autocomplete","sourceFile":"components/autocomplete/AutocompleteContent.vue","description":"AutocompleteContent component exported by the Autocomplete module."},

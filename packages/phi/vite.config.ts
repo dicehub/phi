@@ -1,8 +1,9 @@
-import { copyFileSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
-import { basename, resolve } from "node:path";
+import { copyFileSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { basename, relative, resolve } from "node:path";
 import vue from "@vitejs/plugin-vue";
 import dts from "unplugin-dts/vite";
 import { defineConfig, type Plugin } from "vite";
+import { preserveCompoundDeclarations } from "./scripts/declaration-barrels.mjs";
 
 const source = (...parts: string[]) => resolve(__dirname, "src", ...parts);
 
@@ -66,6 +67,16 @@ export default defineConfig({
   plugins: [
     vue(),
     dts({
+      beforeWriteFile(filePath, content) {
+        const outputPath = relative(resolve(__dirname, "dist"), filePath);
+        if (/^(blocks|components)\/[^/]+\/index\.d\.ts$/.test(outputPath)) {
+          content = preserveCompoundDeclarations(
+            readFileSync(source(outputPath.replace(/\.d\.ts$/, ".ts")), "utf8"),
+            content,
+          );
+        }
+        return { content };
+      },
       afterDiagnostic(diagnostics) {
         if (diagnostics.length > 0) {
           throw new Error(`Declaration generation failed with ${diagnostics.length} TypeScript diagnostic(s).`);

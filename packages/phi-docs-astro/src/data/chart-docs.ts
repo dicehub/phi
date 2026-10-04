@@ -29,8 +29,6 @@ echarts.use([
   CanvasRenderer,
 ]);`;
 
-export const chartBarrelCode = `import { Chart, TimeseriesChart, BubbleMap, ChoroplethMap, ChartLegend, ChartPalette } from "@dicehub/phi";`;
-
 export const chartGranularCode = `import { Chart, TimeseriesChart, BubbleMap, ChoroplethMap, ChartLegend, ChartPalette } from "@dicehub/phi/components/chart";`;
 
 export const timeseriesUsageCode = `<script setup lang="ts">

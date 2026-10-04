@@ -146,7 +146,7 @@ function sideEffectImports(entrypoints) {
     .join("\n")}\n`;
 }
 
-function consumerManifest(tarballPath) {
+function consumerManifest(tarballPath, includeOptionalPeers) {
   const devDependencies = packageJson.devDependencies;
 
   return {
@@ -156,7 +156,7 @@ function consumerManifest(tarballPath) {
     packageManager: workspaceJson.packageManager,
     dependencies: {
       [packageJson.name]: `file:${tarballPath}`,
-      echarts: devDependencies.echarts,
+      ...(includeOptionalPeers ? { echarts: devDependencies.echarts } : {}),
       vue: devDependencies.vue,
     },
     devDependencies: {
@@ -169,10 +169,13 @@ function consumerManifest(tarballPath) {
   };
 }
 
-function prepareConsumer(consumerRoot, tarballPath) {
+function prepareConsumer(consumerRoot, tarballPath, includeOptionalPeers) {
   cpSync(fixtureRoot, consumerRoot, { recursive: true });
 
-  const { assets, modules } = collectEntrypoints();
+  const { assets, modules: allModules } = collectEntrypoints();
+  const modules = allModules.filter(
+    ({ exportPath }) => includeOptionalPeers || exportPath !== "./components/chart",
+  );
   const browserModules = modules.filter(
     ({ exportPath }) => exportPath !== "./code/server",
   );
@@ -180,7 +183,7 @@ function prepareConsumer(consumerRoot, tarballPath) {
 
   writeFileSync(
     resolve(consumerRoot, "package.json"),
-    `${JSON.stringify(consumerManifest(tarballPath), null, 2)}\n`,
+    `${JSON.stringify(consumerManifest(tarballPath, includeOptionalPeers), null, 2)}\n`,
   );
   writeFileSync(
     resolve(sourceRoot, "all-exports.ts"),
@@ -222,7 +225,7 @@ function linkDependency(consumerRoot, name) {
   symlinkSync(realpathSync(sourcePath), targetPath, "junction");
 }
 
-function installTarball(consumerRoot, tarballPath) {
+function installTarball(consumerRoot, tarballPath, includeOptionalPeers) {
   const unpackRoot = resolve(temporaryRoot, "unpacked");
   const installedPackageRoot = resolve(
     consumerRoot,
@@ -246,11 +249,19 @@ function installTarball(consumerRoot, tarballPath) {
 
   const declaredDependencies = new Set([
     ...Object.keys(installedManifest.dependencies ?? {}),
-    ...Object.keys(installedManifest.peerDependencies ?? {}),
+    ...Object.keys(installedManifest.peerDependencies ?? {}).filter(
+      (name) => includeOptionalPeers || !installedManifest.peerDependenciesMeta?.[name]?.optional,
+    ),
     ...consumerTooling,
   ]);
   for (const dependency of declaredDependencies) {
     linkDependency(consumerRoot, dependency);
+  }
+  if (!includeOptionalPeers) {
+    ensure(
+      !existsSync(resolve(consumerRoot, "node_modules", "echarts")),
+      "The basic consumer must not install optional ECharts.",
+    );
   }
 
   console.log(
@@ -363,7 +374,6 @@ function cleanup() {
 
 async function validatePackageConsumer() {
   const tarballRoot = resolve(temporaryRoot, "tarball");
-  const consumerRoot = resolve(temporaryRoot, "consumer");
   mkdirSync(tarballRoot, { recursive: true });
 
   try {
@@ -381,22 +391,26 @@ async function validatePackageConsumer() {
     run(pnpmCommand, ["exec", "publint", tarballPath, "--strict"]);
     validateAttw(tarballPath);
 
-    const counts = prepareConsumer(consumerRoot, tarballPath);
-    const installedPackageRoot = installTarball(consumerRoot, tarballPath);
-    await validateInstalledCli(consumerRoot, installedPackageRoot);
-    run(process.execPath, [resolve(consumerRoot, "runtime-imports.mjs")], {
-      cwd: consumerRoot,
-    });
-    run(resolve(packageRoot, "node_modules", ".bin", "vue-tsc"), ["--noEmit"], {
-      cwd: consumerRoot,
-    });
-    run(resolve(packageRoot, "node_modules", ".bin", "vite"), ["build"], {
-      cwd: consumerRoot,
-    });
+    for (const includeOptionalPeers of [false, true]) {
+      const consumerRoot = resolve(temporaryRoot, includeOptionalPeers ? "consumer-with-charts" : "consumer-core");
+      console.log(`\nValidating strict consumer ${includeOptionalPeers ? "with" : "without"} optional chart dependencies.`);
+      const counts = prepareConsumer(consumerRoot, tarballPath, includeOptionalPeers);
+      const installedPackageRoot = installTarball(consumerRoot, tarballPath, includeOptionalPeers);
+      await validateInstalledCli(consumerRoot, installedPackageRoot);
+      run(process.execPath, [resolve(consumerRoot, "runtime-imports.mjs")], {
+        cwd: consumerRoot,
+      });
+      run(resolve(packageRoot, "node_modules", ".bin", "vue-tsc"), ["--noEmit"], {
+        cwd: consumerRoot,
+      });
+      run(resolve(packageRoot, "node_modules", ".bin", "vite"), ["build"], {
+        cwd: consumerRoot,
+      });
 
-    console.log(
-      `Validated the installed package through ${counts.moduleCount} JavaScript entrypoints and ${counts.assetCount} asset entrypoints.`,
-    );
+      console.log(
+        `Validated the installed package through ${counts.moduleCount} JavaScript entrypoints and ${counts.assetCount} asset entrypoints.`,
+      );
+    }
   } finally {
     cleanup();
   }

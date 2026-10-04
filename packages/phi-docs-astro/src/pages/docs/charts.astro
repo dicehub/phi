@@ -4,7 +4,6 @@ import CodeBlock from "../../components/CodeBlock.astro";
 import CopyPageControls from "../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
 import {
-  chartBarrelCode,
   chartGranularCode,
   chartInstallCode,
   chartProps,
@@ -45,10 +44,8 @@ import "../../styles/component-docs.css";
           <CodeBlock code={chartInstallCode} lang="bash" />
           <CodeBlock code={chartRegisterCode} lang="typescript" />
 
-          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
-          <CodeBlock code={chartBarrelCode} lang="typescript" />
-
-          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <h3 id="imports"><a class="docs-section-anchor" href="#imports">Imports</a></h3>
+          <p>Import charts from their dedicated module. This keeps ECharts optional for other Phi components.</p>
           <CodeBlock code={chartGranularCode} lang="typescript" />
         </section>
 

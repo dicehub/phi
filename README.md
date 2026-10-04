@@ -3,7 +3,7 @@
 Phi is a Vue port of [Kumo](https://github.com/cloudflare/kumo), rebuilt on Ark UI.
 
 Phi provides accessible Vue components, styling tokens, and reusable interface blocks.
-Version `0.5.0-beta.0` is the first public beta. APIs can change before the stable release.
+Phi is in public beta. APIs can change before the stable release.
 
 ## Install
 
@@ -23,6 +23,11 @@ import "@dicehub/phi/styles/standalone";
   <Button>Save</Button>
 </template>
 ```
+
+Phi's types support `skipLibCheck: false` with TypeScript's `Bundler` module
+resolution. Charts require the optional ECharts peer and use
+`@dicehub/phi/components/chart`; move any previous root chart imports to that
+module. See the [package guide](./packages/phi/README.md#charts).
 
 ## Packages
 

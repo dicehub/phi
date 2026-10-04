@@ -13,7 +13,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
-    "@ark-ui/vue": "^5.36.1",
+    "@ark-ui/vue": "5.37.2",
     "@astrojs/mdx": "^7.0.3",
     "@astrojs/vue": "^7.0.1",
     "@dicehub/phi": "workspace:*",

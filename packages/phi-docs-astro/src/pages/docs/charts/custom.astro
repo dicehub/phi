@@ -11,7 +11,6 @@ import {
 import DocsLayout from "../../../layouts/DocsLayout.astro";
 import "../../../styles/component-docs.css";
 
-const chartBarrelCode = `import { Chart, type PhiChartOption } from "@dicehub/phi";`;
 const chartGranularCode = `import { Chart, type PhiChartOption } from "@dicehub/phi/components/chart";`;
 const customPreviewCode = `<Chart :echarts="echarts" :options="options" :height="400" />`;
 const customTooltipCode = `<script setup lang="ts">
@@ -106,10 +105,7 @@ const options: PhiChartOption = {
           <p>Chart requires ECharts with the renderer and chart modules registered by the consumer.</p>
           <CodeBlock code={chartInstallCode} lang="bash" />
 
-          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
-          <CodeBlock code={chartBarrelCode} lang="typescript" />
-
-          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <h3 id="imports"><a class="docs-section-anchor" href="#imports">Imports</a></h3>
           <CodeBlock code={chartGranularCode} lang="typescript" />
         </section>
 

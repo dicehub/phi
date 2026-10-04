@@ -4,7 +4,6 @@ export * from "./banner";
 export * from "./button";
 export * from "./button-group";
 export * from "./breadcrumbs";
-export * from "./chart";
 export * from "./checkbox";
 export * from "./clipboard-text";
 export * from "./code";

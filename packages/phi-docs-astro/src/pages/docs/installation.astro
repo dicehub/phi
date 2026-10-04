@@ -20,6 +20,8 @@ const toc: TocItem[] = [
     label: "Install Package",
     children: [{ id: "peer-dependencies", label: "Peer Dependencies" }],
   },
+  { id: "typescript", label: "TypeScript" },
+  { id: "optional-charts", label: "Optional Charts" },
   { id: "import-components", label: "Import Components" },
   { id: "ark-ui-primitives", label: "Ark UI Primitives" },
   {
@@ -93,6 +95,27 @@ const toc: TocItem[] = [
         <h4 id="peer-dependencies"><a class="docs-section-anchor" href="#peer-dependencies">Peer Dependencies</a></h4>
         <p>Phi expects Vue to already exist in your application.</p>
         <CodeBlock code="pnpm add vue" lang="bash" />
+      </section>
+
+      <section id="typescript" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#typescript">TypeScript</a></h2>
+        <p>
+          Phi's published declarations support <code>skipLibCheck: false</code> with
+          TypeScript's <code>Bundler</code> module resolution. You can keep dependency
+          declaration checking enabled.
+        </p>
+      </section>
+
+      <section id="optional-charts" class="docs-section">
+        <h2><a class="docs-section-anchor" href="#optional-charts">Optional Charts</a></h2>
+        <p>Install ECharts only for applications that use charts.</p>
+        <CodeBlock code="pnpm add echarts@^6.0.0" lang="bash" />
+        <CodeBlock code={`import { Chart, TimeseriesChart, type PhiChartOption } from "@dicehub/phi/components/chart";`} lang="typescript" />
+        <p>
+          Chart components, palettes, legends, and chart types use this dedicated module.
+          Change any previous imports of these exports from <code>@dicehub/phi</code> to
+          <code>@dicehub/phi/components/chart</code>. Other components do not require ECharts.
+        </p>
       </section>
 
       <!-- Import Components -->
