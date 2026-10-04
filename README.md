@@ -24,6 +24,11 @@ import "@dicehub/phi/styles/standalone";
 </template>
 ```
 
+Phi's types support `skipLibCheck: false` with TypeScript's `Bundler` module
+resolution. Charts require the optional ECharts peer and use
+`@dicehub/phi/components/chart`; move any previous root chart imports to that
+module. See the [package guide](./packages/phi/README.md#charts).
+
 ## Packages
 
 - `@dicehub/phi`: Vue components, primitives, styles, blocks, and CLI

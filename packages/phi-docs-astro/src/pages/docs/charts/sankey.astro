@@ -99,7 +99,6 @@ const examples = [
   },
 ] as const;
 
-const sankeyBarrelCode = `import { SankeyChart, ChartPalette, type SankeyTooltipParams } from "@dicehub/phi";`;
 const sankeyGranularCode = `import { SankeyChart, ChartPalette, type SankeyTooltipParams } from "@dicehub/phi/components/chart";`;
 const sankeyPreviewCode = `<SankeyChart
   :echarts="echarts"
@@ -150,10 +149,7 @@ const sankeyPreviewCode = `<SankeyChart
           <p>SankeyChart requires ECharts with the Sankey chart module registered.</p>
           <CodeBlock code={chartInstallCode} lang="bash" />
 
-          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
-          <CodeBlock code={sankeyBarrelCode} lang="typescript" />
-
-          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <h3 id="imports"><a class="docs-section-anchor" href="#imports">Imports</a></h3>
           <CodeBlock code={sankeyGranularCode} lang="typescript" />
         </section>
 

@@ -7,7 +7,6 @@ import { chartInstallCode, choroplethMapProps, choroplethMapUsageCode, mapProps,
 import DocsLayout from "../../../layouts/DocsLayout.astro";
 import "../../../styles/component-docs.css";
 
-const mapBarrelCode = `import { BubbleMap, ChoroplethMap, type MapGeoJson } from "@dicehub/phi";`;
 const mapGranularCode = `import { BubbleMap, ChoroplethMap, type MapGeoJson } from "@dicehub/phi/components/chart";`;
 const mapPreviewCode = `<script setup lang="ts">
 const cloudflareLocations = [
@@ -106,10 +105,7 @@ const choroplethMapCode = `<ChoroplethMap
           <p>Map charts require ECharts. Consumers provide GeoJSON; components do not fetch map data or tiles.</p>
           <CodeBlock code={chartInstallCode} lang="bash" />
 
-          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
-          <CodeBlock code={mapBarrelCode} lang="typescript" />
-
-          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <h3 id="imports"><a class="docs-section-anchor" href="#imports">Imports</a></h3>
           <CodeBlock code={mapGranularCode} lang="typescript" />
         </section>
 

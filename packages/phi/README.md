@@ -17,6 +17,25 @@ import { Button } from "@dicehub/phi";
 import "@dicehub/phi/styles/standalone";
 ```
 
+Phi's published declarations support TypeScript with `skipLibCheck: false` and
+`moduleResolution: "Bundler"`.
+
+## Charts
+
+Install ECharts only when you use charts:
+
+```bash
+pnpm add echarts@^6.0.0
+```
+
+```ts
+import { Chart, TimeseriesChart, type PhiChartOption } from "@dicehub/phi/components/chart";
+```
+
+Chart components, palettes, legends, and chart types use this dedicated module.
+If you imported them from `@dicehub/phi`, change that import to
+`@dicehub/phi/components/chart`. This keeps ECharts optional for other components.
+
 ## Theme Generation
 
 `src/styles/theme-phi.css` is generated from `scripts/theme-generator/config.ts`. Edit the config, then regenerate the CSS:
@@ -37,7 +56,7 @@ Run the release-facing package gate with:
 pnpm --filter @dicehub/phi validate:package
 ```
 
-The gate builds a real package tarball, validates its files and export map with Publint and Are The Types Wrong, then checks the installed result from an isolated Vue consumer. The consumer imports every JavaScript entrypoint, typechecks root and granular imports, and production-bundles all browser and asset entrypoints with Vite.
+The gate builds a real package tarball and validates its files and export map with Publint and Are The Types Wrong. It checks two isolated Vue consumers with `skipLibCheck: false`: one without optional ECharts and one with all peers installed. Together they import every JavaScript entrypoint, check root and granular imports, and production-bundle all browser and asset entrypoints with Vite.
 
 The fixture uses TypeScript's `Bundler` module resolution, matching Phi's supported Vite consumer setup. ATTW skips CSS/JSON entrypoints and Node-specific internal-resolution diagnostics; the consumer's `vue-tsc` and Vite checks cover those paths instead.
 
