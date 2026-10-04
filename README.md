@@ -3,12 +3,11 @@
 Phi is a Vue port of [Kumo](https://github.com/cloudflare/kumo), rebuilt on Ark UI.
 
 Phi provides accessible Vue components, styling tokens, and reusable interface blocks.
-Phi is in public beta. APIs can change before the stable release.
 
 ## Install
 
 ```bash
-pnpm add @dicehub/phi@beta
+pnpm add @dicehub/phi
 ```
 
 ## Quick start
