@@ -77,7 +77,7 @@ test.describe("documentation pagination", () => {
     );
   });
 
-  test("omits links at section boundaries and supports placeholder guides", async ({ page }) => {
+  test("omits links at section boundaries and supports guides", async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto("/docs/components/autocomplete");
 

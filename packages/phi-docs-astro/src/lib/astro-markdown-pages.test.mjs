@@ -3,6 +3,7 @@ import { existsSync, globSync, readFileSync } from "node:fs";
 import { basename, dirname, join, sep } from "node:path";
 import { describe, it } from "node:test";
 import { markdownPathToHtmlPath } from "./markdown-route-paths.ts";
+import { docsSearchItems } from "../data/docs-nav.ts";
 
 const distDir = join(import.meta.dirname, "../../dist");
 
@@ -20,6 +21,16 @@ describe("Markdown route mapping", () => {
 });
 
 describe("Markdown build output", () => {
+  it("backs every navigation entry with a real documentation page", () => {
+    for (const { href } of docsSearchItems) {
+      const htmlFile = join(distDir, href.slice(1), "index.html");
+      assert.equal(existsSync(htmlFile), true, `${href} should resolve to a built page`);
+      const html = readFileSync(htmlFile, "utf8");
+      assert.match(html, /<main\b[\s\S]*?<h1\b/, `${href} should have a main heading`);
+      assert.doesNotMatch(html, /This navigation placeholder|docs-placeholder-title-row/);
+    }
+  });
+
   it("backs every rendered Copy Page control with a Markdown file", () => {
     const htmlFiles = globSync(join(distDir, "docs", "**", "index.html"));
     const copyPageFiles = htmlFiles.filter((htmlFile) =>
@@ -43,6 +54,8 @@ describe("Markdown build output", () => {
       "docs/components/button.md",
       "docs/components/dialog.md",
       "docs/installation.md",
+      "docs/contributing.md",
+      "docs/accessibility.md",
       "docs/colors.md",
     ]) {
       assert.equal(existsSync(join(distDir, relativePath)), true, `${relativePath} should exist`);
