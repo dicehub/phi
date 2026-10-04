@@ -40,7 +40,7 @@ export function parseChangelog(raw) {
   let currentLines = [];
 
   const flushEntry = () => {
-    if (!currentSection || !currentHash || currentLines.length === 0) {
+    if (!currentSection || currentLines.length === 0) {
       currentLines = [];
       currentHash = "";
       return;
@@ -108,15 +108,15 @@ export function parseChangelog(raw) {
       continue;
     }
 
-    const entryMatch = line.match(/^- ([a-f0-9]{7,40}):\s*(.*)/);
+    const entryMatch = line.match(/^- (?:([a-f0-9]{7,40}):\s*)?(.*)/);
     if (entryMatch && currentSection) {
       flushEntry();
-      currentHash = entryMatch[1];
+      currentHash = entryMatch[1] ?? "";
       currentLines.push(entryMatch[2]);
       continue;
     }
 
-    if (currentHash && currentSection) {
+    if (currentLines.length > 0 && currentSection) {
       currentLines.push(line);
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "@dicehub/phi",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "private": false,
   "type": "module",
   "description": "Vue component library rebuilt on Ark UI.",
