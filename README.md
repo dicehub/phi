@@ -3,7 +3,7 @@
 Phi is a Vue port of [Kumo](https://github.com/cloudflare/kumo), rebuilt on Ark UI.
 
 Phi provides accessible Vue components, styling tokens, and reusable interface blocks.
-Version `0.5.0-beta.0` is the first public beta. APIs can change before the stable release.
+Phi is in public beta. APIs can change before the stable release.
 
 ## Install
 

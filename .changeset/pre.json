@@ -40,6 +40,7 @@
     "sidebar-transition-completion",
     "smooth-collapsible-defaults",
     "stable-shiki-lifecycle",
+    "strict-published-declarations",
     "support-unknown-pagination-totals",
     "toast-manager-callback-update",
     "unify-combobox-select-chevrons"
