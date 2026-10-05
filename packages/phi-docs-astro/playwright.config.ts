@@ -1,6 +1,7 @@
 import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { defineConfig, devices, type Project } from "@playwright/test";
+import { analyticsEnv } from "./e2e/analytics-fixture";
 
 const packageDir = fileURLToPath(new URL(".", import.meta.url));
 
@@ -28,6 +29,7 @@ const smokeSpecs = [
   "clipboard-text.spec.ts",
   "dialog.spec.ts",
   "docs-home.spec.ts",
+  "docs-analytics.spec.ts",
   "inline-copy-text.spec.ts",
   "docs-layout.spec.ts",
   "popover.spec.ts",
@@ -77,6 +79,7 @@ export default defineConfig({
         // The preview command exits once its background server is up, so the long sleep keeps the
         // Playwright process alive for the run.
         command: `pnpm build && pnpm exec astro preview --host 127.0.0.1 --port ${PORT} && sleep infinity`,
+        env: analyticsEnv,
         url: baseURL,
         reuseExistingServer: false,
         timeout: 120_000,
