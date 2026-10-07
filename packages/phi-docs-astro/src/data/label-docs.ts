@@ -39,6 +39,27 @@ import { Label } from "@dicehub/phi/components/label";
   <Label tooltip="This field is mandatory">Username</Label>
 </template>`;
 
+export const labelTranslationsCode = `<script setup>
+import { Input, Label, LocaleProvider } from "@dicehub/phi";
+const translations = {
+  label: { optional: "(opcional)", tooltip: "Mais informações" },
+};
+</script>
+
+<template>
+  <LocaleProvider :translations="translations">
+    <Input label="Nome" :required="false" label-tooltip="Ajuda" />
+    <Label show-optional tooltip="Ajuda">Nome</Label>
+    <Label show-optional optional-label="(custom)" tooltip="Ajuda" tooltip-aria-label="Custom help">
+      Custom
+    </Label>
+    <Label show-optional>
+      Rich content
+      <template #optionalLabel><strong>(custom rich text)</strong></template>
+    </Label>
+  </LocaleProvider>
+</template>`;
+
 const optionalFieldCode = `<script setup>
 import { Input } from "@dicehub/phi/components/input";
 </script>
@@ -173,7 +194,10 @@ export const labelProps = [
   { name: "default", type: "slot", defaultValue: "-", description: "Label content." },
   { name: "htmlFor", type: "string", defaultValue: "-", description: "ID of the form control this label is associated with. In templates, use html-for." },
   { name: "showOptional", type: "boolean", defaultValue: "false", description: 'Shows gray "(optional)" text after the label.' },
+  { name: "optionalLabel", type: "string", defaultValue: "LocaleProvider text", description: "Overrides the optional marker. Empty text hides the marker text." },
+  { name: "optionalLabel", type: "slot", defaultValue: "-", description: "Rich optional-marker content. Takes precedence over the prop and provider." },
   { name: "tooltip", type: "string", defaultValue: "-", description: "Tooltip text shown from the info icon." },
+  { name: "tooltipAriaLabel", type: "string", defaultValue: "LocaleProvider text", description: "Overrides the tooltip button's accessible name." },
   { name: "as", type: '"label" | "span"', defaultValue: '"label"', description: "Element rendered by the root." },
   { name: "asContent", type: "boolean", defaultValue: "false", description: "Renders inline content styling without standalone label typography." },
 ];

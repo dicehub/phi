@@ -15,6 +15,7 @@ test("discovers Vue components, aliases, compound barrels, charts, and blocks", 
   const { components } = registry;
 
   assert.equal(components.Button.importPath, "@dicehub/phi/components/button");
+  assert.equal(components.Slider.importPath, "@dicehub/phi/components/slider");
   assert.deepEqual(components.Banner.parts, ["Action"]);
   assert.equal(components.BannerAction.sourceFile, "components/banner/BannerAction.vue");
   assert.equal(components.Textarea.sourceFile, "components/input/InputArea.vue");

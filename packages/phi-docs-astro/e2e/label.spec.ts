@@ -12,8 +12,8 @@ test.describe("Label", () => {
 
   test("renders expected page sections and snippets", async ({ page }) => {
     await expect(page.locator("main h1").first()).toHaveText("Label");
-    await expect(page.locator(".docs-component-example")).toHaveCount(6);
-    await expect(page.locator(".docs-code-block")).toHaveCount(10);
+    await expect(page.locator(".docs-component-example")).toHaveCount(7);
+    await expect(page.locator(".docs-code-block")).toHaveCount(11);
     await expect(page.locator("#preview .docs-code-block")).toContainText('from "@dicehub/phi/components/label"');
     await expect(page.locator("#preview .docs-code-block")).toContainText("show-optional");
     await expect(page.locator(".docs-page-header__primitive-link")).toHaveAttribute(
@@ -23,7 +23,7 @@ test.describe("Label", () => {
     await expect(page.locator("main")).not.toContainText("Cloudflare");
     await expect(page.locator("main")).not.toContainText("React");
     await expect(page.locator("#api-reference .docs-api-table")).toHaveCount(2);
-    await expect(page.locator("#label-props + p + .docs-api-table tbody tr")).toHaveCount(6);
+    await expect(page.locator("#label-props + p + .docs-api-table tbody tr")).toHaveCount(9);
     await expect(page.locator("#form-component-label-props + p + .docs-api-table tbody tr")).toHaveCount(3);
   });
 
@@ -41,6 +41,7 @@ test.describe("Label", () => {
       "Rich Label Content",
       "Form with Mixed Fields",
       "Standalone Label",
+      "Translations",
       "API Reference",
       "Label Props",
       "Form Component Label Props",

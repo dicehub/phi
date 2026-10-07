@@ -34,6 +34,7 @@ export * from "./select";
 export * from "./sensitive-input";
 export * from "./sidebar";
 export * from "./skeleton-line";
+export * from "./slider";
 export * from "./switch";
 export * from "./table";
 export * from "./table-of-contents";

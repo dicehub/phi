@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useLocale } from "../../utils/locale-provider";
 import { computed, onBeforeUnmount, ref, useAttrs, useSlots, watch } from "vue";
 import {
   INPUT_DEFAULT_SIZE,
@@ -67,6 +68,7 @@ const emit = defineEmits<{
 }>();
 
 const attrs = useAttrs();
+const locale = useLocale();
 const slots = useSlots();
 const textareaRef = ref<HTMLTextAreaElement | null>(null);
 const generatedId = nextInputAreaId();
@@ -221,11 +223,11 @@ const handleInput = (event: Event) => {
     <label v-if="hasLabel" :id="labelId" class="phi-input-label" :for="inputAreaId">
       <span class="phi-input-label__content">
         <slot name="label">{{ label }}</slot>
-        <span v-if="showOptional" class="phi-input-label__optional">(optional)</span>
+        <span v-if="showOptional" class="phi-input-label__optional">{{ locale.label.optional }}</span>
         <span
           v-if="labelTooltip"
           class="phi-input-label__tooltip"
-          aria-label="More information"
+          :aria-label="locale.label.tooltip"
           :data-tooltip="labelTooltip"
           tabindex="0"
         >

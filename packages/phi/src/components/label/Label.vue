@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, useAttrs } from "vue";
 import { LABEL_DEFAULT_AS, type LabelAs } from "./label";
+import { useLocale } from "../../utils/locale-provider";
 
 defineOptions({ inheritAttrs: false });
 
@@ -10,7 +11,9 @@ const props = withDefaults(
     asContent?: boolean;
     htmlFor?: string;
     showOptional?: boolean;
+    optionalLabel?: string;
     tooltip?: string;
+    tooltipAriaLabel?: string;
   }>(),
   {
     as: LABEL_DEFAULT_AS,
@@ -20,6 +23,7 @@ const props = withDefaults(
 );
 
 const attrs = useAttrs();
+const locale = useLocale();
 const tag = computed(() => (props.asContent ? "span" : props.as));
 const resolvedFor = computed(() => props.htmlFor ?? (attrs.for as string | undefined));
 const passthroughAttrs = computed(() => {
@@ -39,12 +43,14 @@ const passthroughAttrs = computed(() => {
   >
     <span class="phi-label__content">
       <slot />
-      <span v-if="showOptional" class="phi-label__optional">(optional)</span>
+      <span v-if="showOptional" class="phi-label__optional">
+        <slot name="optionalLabel">{{ optionalLabel ?? locale.label.optional }}</slot>
+      </span>
       <button
         v-if="tooltip"
         type="button"
         class="phi-label__tooltip"
-        aria-label="More information"
+        :aria-label="tooltipAriaLabel ?? locale.label.tooltip"
         :data-tooltip="tooltip"
         @click.stop.prevent
       >

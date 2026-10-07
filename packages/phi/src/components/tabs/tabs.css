@@ -289,11 +289,6 @@
     width 200ms ease;
 }
 
-.phi-tabs__indicator[data-rendered="false"] {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
 .phi-tabs__indicator--segmented {
   top: var(--top, 0.125rem);
   width: var(--width, 0);

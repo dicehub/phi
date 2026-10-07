@@ -4,6 +4,7 @@ import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
 import LabelDocsDemo from "../../../components/LabelDocsDemo.vue";
+import LabelTranslationsDemo from "../../../components/LabelTranslationsDemo.vue";
 import {
   formLabelProps,
   labelBarrelCode,
@@ -13,6 +14,7 @@ import {
   labelPreviewCode,
   labelProps,
   labelStandaloneUsageCode,
+  labelTranslationsCode,
 } from "../../../data/label-docs";
 import DocsLayout from "../../../layouts/DocsLayout.astro";
 import "../../../styles/component-docs.css";
@@ -109,6 +111,25 @@ import "../../../styles/component-docs.css";
           }
         </section>
 
+        <section id="translations" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#translations">Translations</a></h2>
+          <p>
+            Wrap a form in <code>LocaleProvider</code> to translate optional markers and tooltip accessible names.
+            Label, Input, InputArea, InputGroup, Field, Select, and Checkbox use these translations.
+            Defaults are <code>(optional)</code> and <code>More information</code>.
+          </p>
+          <p>
+            The provider adds no wrapper element. Translation changes update mounted controls.
+            Nested providers inherit text that they do not override. Use <code>optional-label</code>, the
+            <code>optionalLabel</code> slot, and <code>tooltip-aria-label</code> for individual Label overrides.
+            These overrides take precedence over provider text.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--label"><LabelTranslationsDemo client:only="vue" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={labelTranslationsCode} lang="vue" /></div>
+          </div>
+        </section>
+
         <section id="api-reference" class="docs-section">
           <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
 
@@ -202,6 +223,7 @@ import "../../../styles/component-docs.css";
             <li><a href="#rich-label-content">Rich Label Content</a></li>
             <li><a href="#form-with-mixed-fields">Form with Mixed Fields</a></li>
             <li><a href="#standalone-label">Standalone Label</a></li>
+            <li><a href="#translations">Translations</a></li>
             <li><a href="#api-reference">API Reference</a></li>
             <li><a href="#label-props">Label Props</a></li>
             <li><a href="#form-component-label-props">Form Component Label Props</a></li>

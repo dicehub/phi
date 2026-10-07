@@ -1,0 +1,80 @@
+.phi-slider {
+  --phi-slider-radius: 0.375rem;
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: var(--phi-default);
+  font-family: var(--phi-font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.phi-slider--sm {
+  --phi-slider-radius: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.phi-slider[data-disabled] { opacity: 0.5; }
+.phi-slider__label { font-weight: 500; }
+.phi-slider__frame {
+  box-sizing: border-box;
+  height: 2rem;
+  padding: 3px;
+  border-radius: 0.5rem;
+  background: var(--phi-recessed);
+  box-shadow: 0 0 0 1px var(--phi-line);
+}
+.phi-slider--sm .phi-slider__frame { height: 1.5rem; border-radius: 0.375rem; }
+.phi-slider__control, .phi-slider__track { height: 100%; }
+.phi-slider__indicator {
+  position: absolute;
+  inset-block: 0;
+  border-radius: var(--phi-slider-radius);
+  background: var(--phi-base);
+  box-shadow: var(--phi-shadow), 0 0 0 1px var(--phi-line);
+  pointer-events: none;
+}
+.phi-slider__thumb {
+  top: 0;
+  width: 1rem;
+  height: 100%;
+  border-radius: var(--phi-slider-radius);
+  cursor: grab;
+  outline: none;
+}
+.phi-slider__thumb[data-focus], .phi-slider__thumb:focus-visible { outline: 2px solid var(--phi-focus); }
+.phi-slider__thumb[data-dragging] { cursor: grabbing; }
+.phi-slider__thumb[data-disabled] { cursor: not-allowed; }
+.phi-slider__grip {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: 2px;
+  height: 50%;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--phi-contrast) 25%, transparent);
+  transform: translate(-50%, -50%);
+}
+.phi-slider[dir="rtl"] .phi-slider__grip { transform: translate(50%, -50%); }
+.phi-slider__badge {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 11px;
+  padding-inline: 0.375rem;
+  border-radius: 0.25rem;
+  background: var(--phi-accent);
+  color: var(--phi-accent-contrast);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.phi-slider__limits {
+  display: flex;
+  justify-content: space-between;
+  color: var(--phi-subtle);
+  font-variant-numeric: tabular-nums;
+}

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useSlots, watchEffect } from "vue";
+import { Label } from "../label";
 import {
   CHECKBOX_DEFAULT_VARIANT,
   isCheckboxVariant,
@@ -22,6 +23,7 @@ const props = withDefaults(
     indeterminate?: boolean;
     invalid?: boolean;
     label?: string;
+    labelTooltip?: string;
     name?: string;
     readOnly?: boolean;
     required?: boolean;
@@ -123,9 +125,11 @@ watchEffect(() => {
     />
     <span class="phi-checkbox__control" :data-state="dataState" aria-hidden="true" />
     <span v-if="hasLabel" class="phi-checkbox__label">
-      <slot name="label">
-        <slot>{{ label }}</slot>
-      </slot>
+      <Label as-content :show-optional="required === false" :tooltip="labelTooltip">
+        <slot name="label">
+          <slot>{{ label }}</slot>
+        </slot>
+      </Label>
     </span>
   </label>
 </template>

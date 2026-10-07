@@ -3,6 +3,7 @@
 export * from "./components";
 export * from "./primitives";
 export * from "./blocks";
+export { LocaleProvider, useLocale, type Translations, type TranslationsPartial } from "./utils/locale-provider";
 export type { RegistryComponentName } from "./registry/generated";
 export type {
   ComponentRegistry,

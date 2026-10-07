@@ -54,7 +54,7 @@ describe("docs page navigation", () => {
   it("contains every documentation page exactly once", () => {
     const hrefs = docsPageSequences.flatMap((sequence) => sequence.map((link) => link.href));
     assert.equal(docsPageSequences.length, 4);
-    assert.equal(hrefs.length, 63);
+    assert.equal(hrefs.length, 64);
     assert.equal(new Set(hrefs).size, hrefs.length);
   });
 });
