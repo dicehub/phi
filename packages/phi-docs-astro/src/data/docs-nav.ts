@@ -104,6 +104,7 @@ export const navGroups: NavGroup[] = [
     "Sensitive Input",
     "Sidebar",
     "Skeleton Line",
+    "Slider",
     "Switch",
     "Table",
     "Table of Contents",

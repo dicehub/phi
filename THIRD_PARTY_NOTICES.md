@@ -37,7 +37,7 @@ THE SOFTWARE.
 
 ## Bundled dependencies
 
-The built package contains code from 58 dependency packages. Packages with identical license
+The built package contains code from 59 dependency packages. Packages with identical license
 and notice texts are grouped without changing those texts.
 
 ### `@ark-ui/vue@5.37.2`
@@ -389,7 +389,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### `@zag-js/anatomy@1.41.2`, `@zag-js/aria-hidden@1.41.2`, `@zag-js/auto-resize@1.41.2`, `@zag-js/collapsible@1.41.2`, `@zag-js/collection@1.41.2`, `@zag-js/combobox@1.41.2`, `@zag-js/core@1.41.2`, `@zag-js/date-picker@1.41.2`, `@zag-js/date-utils@1.41.2`, `@zag-js/dialog@1.41.2`, `@zag-js/dismissable@1.41.2`, `@zag-js/dom-query@1.41.2`, `@zag-js/focus-trap@1.41.2`, `@zag-js/focus-visible@1.41.2`, `@zag-js/interact-outside@1.41.2`, `@zag-js/live-region@1.41.2`, `@zag-js/menu@1.41.2`, `@zag-js/popover@1.41.2`, `@zag-js/popper@1.41.2`, `@zag-js/presence@1.41.2`, `@zag-js/rect-utils@1.41.2`, `@zag-js/remove-scroll@1.41.2`, `@zag-js/select@1.41.2`, `@zag-js/tabs@1.41.2`, `@zag-js/tooltip@1.41.2`, `@zag-js/types@1.41.2`, `@zag-js/utils@1.41.2`, `@zag-js/vue@1.41.2`
+### `@zag-js/anatomy@1.41.2`, `@zag-js/aria-hidden@1.41.2`, `@zag-js/auto-resize@1.41.2`, `@zag-js/collapsible@1.41.2`, `@zag-js/collection@1.41.2`, `@zag-js/combobox@1.41.2`, `@zag-js/core@1.41.2`, `@zag-js/date-picker@1.41.2`, `@zag-js/date-utils@1.41.2`, `@zag-js/dialog@1.41.2`, `@zag-js/dismissable@1.41.2`, `@zag-js/dom-query@1.41.2`, `@zag-js/focus-trap@1.41.2`, `@zag-js/focus-visible@1.41.2`, `@zag-js/interact-outside@1.41.2`, `@zag-js/live-region@1.41.2`, `@zag-js/menu@1.41.2`, `@zag-js/popover@1.41.2`, `@zag-js/popper@1.41.2`, `@zag-js/presence@1.41.2`, `@zag-js/rect-utils@1.41.2`, `@zag-js/remove-scroll@1.41.2`, `@zag-js/select@1.41.2`, `@zag-js/slider@1.41.2`, `@zag-js/tabs@1.41.2`, `@zag-js/tooltip@1.41.2`, `@zag-js/types@1.41.2`, `@zag-js/utils@1.41.2`, `@zag-js/vue@1.41.2`
 
 Declared license: `MIT`
 
@@ -416,6 +416,7 @@ Declared license: `MIT`
 - `@zag-js/rect-utils@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/rect>
 - `@zag-js/remove-scroll@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/remove-scroll>
 - `@zag-js/select@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/select>
+- `@zag-js/slider@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/slider>
 - `@zag-js/tabs@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/tabs>
 - `@zag-js/tooltip@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/tooltip>
 - `@zag-js/types@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/types>

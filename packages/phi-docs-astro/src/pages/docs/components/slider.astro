@@ -1,0 +1,89 @@
+---
+import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
+import CodeBlock from "../../../components/CodeBlock.astro";
+import CopyPageControls from "../../../components/CopyPageControls.vue";
+import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import SliderDocsDemo from "../../../components/SliderDocsDemo.vue";
+import { sliderBarrelCode, sliderExamples, sliderGranularCode, sliderPreviewCode, sliderProps } from "../../../data/slider-docs";
+import DocsLayout from "../../../layouts/DocsLayout.astro";
+import "../../../styles/component-docs.css";
+---
+
+<DocsLayout title="Slider" description="Choose a number or range with keyboard and pointer controls.">
+  <div class="docs-page docs-page--component">
+    <header class="docs-page-header">
+      <div class="docs-page-header__inner"><div class="docs-page-header__content">
+        <div class="docs-page-header__mobile-copy"><CopyPageControls client:only="vue" align="center" /></div>
+        <div class="docs-page-header__title-row">
+          <h1>Slider</h1><ArkUiDocsLink />
+          <div class="docs-page-header__navigation-actions">
+            <div class="docs-page-header__desktop-copy"><CopyPageControls client:only="vue" /></div>
+            <DocsPageNavigation currentPath={Astro.url.pathname} variant="compact" />
+          </div>
+        </div>
+        <p class="docs-page-header__lede">Choose a number or range with keyboard and pointer controls.</p>
+      </div></div>
+    </header>
+    <div class="docs-page-body">
+      <article class="docs-article docs-article--component">
+        <section id="preview" class="docs-section">
+          <div class="docs-component-example">
+            <div class="docs-component-preview"><SliderDocsDemo client:only="vue" /></div>
+            <div class="docs-component-example__code"><CodeBlock code={sliderPreviewCode} lang="vue" /></div>
+          </div>
+        </section>
+        <section id="installation" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#installation">Installation</a></h2>
+          <h3 id="barrel"><a class="docs-section-anchor" href="#barrel">Barrel</a></h3>
+          <CodeBlock code={sliderBarrelCode} lang="typescript" />
+          <h3 id="granular"><a class="docs-section-anchor" href="#granular">Granular</a></h3>
+          <CodeBlock code={sliderGranularCode} lang="typescript" />
+        </section>
+        <section id="usage" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>Use a number for one thumb and an array for a range. The control is horizontal.</p>
+          <p>
+            <code>valueChange</code> and <code>valueChangeEnd</code> emit <code>{"{ value }"}</code>, with a number
+            or array matching the input type. The <code>update:modelValue</code> and <code>update:value</code>
+            events emit the value directly. A change-end event occurs when a drag or keyboard change finishes.
+          </p>
+        </section>
+        <section id="examples" class="docs-section docs-section--component-examples">
+          <h2><a class="docs-section-anchor" href="#examples">Examples</a></h2>
+          {sliderExamples.map((example) => <>
+            <h3 id={example.id}><a class="docs-section-anchor" href={`#${example.id}`}>{example.title}</a></h3>
+            <p>{example.description}</p>
+            <div class="docs-component-example">
+              <div class="docs-component-preview"><SliderDocsDemo client:only="vue" variant={example.variant} /></div>
+              <div class="docs-component-example__code"><CodeBlock code={example.code} lang="vue" /></div>
+            </div>
+          </>)}
+        </section>
+        <section id="api-reference" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
+          <div class="docs-api-table"><table>
+            <thead><tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>{sliderProps.map(([name, type, defaultValue, description]) => <tr>
+              <td><code>{name}</code></td><td><code>{type}</code></td><td><code>{defaultValue}</code></td><td>{description}</td>
+            </tr>)}</tbody>
+          </table></div>
+        </section>
+        <section id="accessibility" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#accessibility">Accessibility</a></h2>
+          <p>Give each thumb an accessible name. For ranges, use getAriaLabel to distinguish the minimum and maximum.</p>
+          <p>Use Left and Right to change a value, Home and End for the range ends, and Page Up and Page Down for larger steps.</p>
+        </section>
+        <DocsPageNavigation currentPath={Astro.url.pathname} />
+      </article>
+      <aside class="docs-page-toc" aria-label="On this page"><div class="docs-page-toc__inner">
+        <span class="docs-page-toc__title">On this page</span>
+        <ul>
+          <li><a href="#installation">Installation</a><ul><li><a href="#barrel">Barrel</a></li><li><a href="#granular">Granular</a></li></ul></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#examples">Examples</a><ul>{sliderExamples.map(example => <li><a href={`#${example.id}`}>{example.title}</a></li>)}</ul></li>
+          <li><a href="#api-reference">API Reference</a></li><li><a href="#accessibility">Accessibility</a></li>
+        </ul>
+      </div></aside>
+    </div>
+  </div>
+</DocsLayout>

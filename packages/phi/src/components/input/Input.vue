@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, useAttrs, useSlots } from "vue";
+import { useLocale } from "../../utils/locale-provider";
 import {
   INPUT_DEFAULT_SIZE,
   normalizeInputError,
@@ -59,6 +60,7 @@ const emit = defineEmits<{
 }>();
 
 const attrs = useAttrs();
+const locale = useLocale();
 const slots = useSlots();
 const generatedId = nextInputId();
 const inputId = computed(() => props.id ?? generatedId);
@@ -127,11 +129,11 @@ const handleInput = (event: Event) => {
     <label v-if="hasLabel" :id="labelId" class="phi-input-label" :for="inputId">
       <span class="phi-input-label__content">
         <slot name="label">{{ label }}</slot>
-        <span v-if="showOptional" class="phi-input-label__optional">(optional)</span>
+        <span v-if="showOptional" class="phi-input-label__optional">{{ locale.label.optional }}</span>
         <span
           v-if="labelTooltip"
           class="phi-input-label__tooltip"
-          aria-label="More information"
+          :aria-label="locale.label.tooltip"
           :data-tooltip="labelTooltip"
           tabindex="0"
         >

@@ -1,13 +1,14 @@
 export const checkboxProps = [
   { name: "variant", type: '"default" | "error"', defaultValue: '"default"', description: "Sets the visual variant. Use error for validation styling." },
   { name: "label", type: "string", defaultValue: "-", description: "Visible label rendered next to the checkbox." },
+  { name: "labelTooltip", type: "string", defaultValue: "-", description: "Tooltip text next to the label. LocaleProvider translates its accessible name." },
   { name: "controlFirst", type: "boolean", defaultValue: "true", description: "Places the checkbox before the label. Set false for label-first layout." },
   { name: "checked", type: 'boolean | "indeterminate"', defaultValue: "-", description: "Controlled checked state. Use v-model:checked in Vue." },
   { name: "defaultChecked", type: 'boolean | "indeterminate"', defaultValue: "-", description: "Initial checked state for uncontrolled usage." },
   { name: "indeterminate", type: "boolean", defaultValue: "-", description: "Compatibility prop that renders the mixed state." },
   { name: "disabled", type: "boolean", defaultValue: "-", description: "Disables pointer and keyboard interaction." },
   { name: "name", type: "string", defaultValue: "-", description: "Native checkbox name for form submission." },
-  { name: "required", type: "boolean", defaultValue: "-", description: "Marks the checkbox as required." },
+  { name: "required", type: "boolean", defaultValue: "-", description: "Marks the checkbox as required. False displays the optional marker, which LocaleProvider can translate." },
 ];
 
 export const groupProps = [

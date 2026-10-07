@@ -224,6 +224,10 @@
       "types": "./dist/components/skeleton-line/index.d.ts",
       "import": "./dist/components/skeleton-line.js"
     },
+    "./components/slider": {
+      "types": "./dist/components/slider/index.d.ts",
+      "import": "./dist/components/slider.js"
+    },
     "./components/switch": {
       "types": "./dist/components/switch/index.d.ts",
       "import": "./dist/components/switch.js"

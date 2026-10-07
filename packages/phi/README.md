@@ -20,6 +20,44 @@ import "@dicehub/phi/styles/standalone";
 Phi's published declarations support TypeScript with `skipLibCheck: false` and
 `moduleResolution: "Bundler"`.
 
+## Slider
+
+Import `Slider` from the root package or `@dicehub/phi/components/slider`.
+
+Values follow the grid anchored at `min`, in positive `step` increments. A `max`
+between steps stops at the last complete step. Fractional `minStepsBetweenThumbs`
+counts round up to a complete step; the limits must fit every thumb gap.
+Use `v-model` with a number for one thumb or an array for a range. `defaultValue`
+supports uncontrolled use. `sm` and `base` sizes include value badges and limit
+labels. `format` and `locale` use `Intl.NumberFormat`.
+Default IDs use Vue's SSR-compatible `useId`. When a page contains separate Vue
+apps or Astro islands, give each Slider a distinct `id`.
+
+```vue
+<Slider v-model="volume" label="Volume" />
+<Slider v-model="priceRange" label="Price range"
+  :get-aria-label="index => index === 0 ? 'Minimum price' : 'Maximum price'" />
+```
+
+## Label translations
+
+Import `LocaleProvider` from the root package or `@dicehub/phi/utils`.
+It translates generated optional markers and tooltip names in Label and the
+form components without adding a wrapper element. Defaults remain English.
+Changes to `translations` update mounted controls. Nested providers inherit
+text that they do not override.
+
+```vue
+<LocaleProvider :translations="{ label: { optional: '(opcional)', tooltip: 'Mais informações' } }">
+  <Input label="Nome" :required="false" label-tooltip="Ajuda" />
+</LocaleProvider>
+```
+
+Individual Labels support `optional-label`, an `optionalLabel` slot for rich
+content, and `tooltip-aria-label`. These overrides take precedence over the
+provider. The provider translates built-in copy; it does not set the locale or
+direction of Ark UI controls.
+
 ## Charts
 
 Install ECharts only when you use charts:

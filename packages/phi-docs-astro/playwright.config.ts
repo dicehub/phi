@@ -34,6 +34,8 @@ const smokeSpecs = [
   "docs-layout.spec.ts",
   "popover.spec.ts",
   "portal-stacking.spec.ts",
+  "slider.spec.ts",
+  "label-translations.spec.ts",
   "tooltip.spec.ts",
 ];
 

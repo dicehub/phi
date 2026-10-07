@@ -118,7 +118,7 @@ test.describe("Switch", () => {
   });
 });
 
-test("Switch is reachable in the left docs navigation after Skeleton Line", async ({ page }) => {
+test("Switch is reachable in the left docs navigation after Slider", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
 
@@ -131,5 +131,5 @@ test("Switch is reachable in the left docs navigation after Skeleton Line", asyn
   await expect(switchLink).toHaveAttribute("href", "/docs/components/switch");
 
   const labels = await links.evaluateAll((items) => items.map((item) => item.textContent?.trim()));
-  expect(labels.indexOf("Switch")).toBe(labels.indexOf("Skeleton Line") + 1);
+  expect(labels.indexOf("Switch")).toBe(labels.indexOf("Slider") + 1);
 });
