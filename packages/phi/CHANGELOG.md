@@ -1,5 +1,11 @@
 # @dicehub/phi
 
+## 1.1.0
+
+### Minor Changes
+
+- 32db652: Add a Slider for single values and ranges, with keyboard controls, value badges, number formatting, and corrected track ends. Add LocaleProvider translations for optional markers and label tooltip names, with Label-level overrides. Remove unused Tabs indicator entrance styles.
+
 ## 1.0.0
 
 ### Major Changes
