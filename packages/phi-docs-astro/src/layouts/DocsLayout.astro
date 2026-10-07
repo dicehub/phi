@@ -19,6 +19,8 @@ const pathname = Astro.url.pathname;
 const pageTitle = title === "Home" ? "Phi" : "Phi / " + title;
 const showHeaderTitle = title !== "Home";
 const showHeaderSourceIcon = Boolean(Astro.props.headerSourceIcon);
+const umamiScriptUrl = import.meta.env.PUBLIC_UMAMI_SCRIPT_URL?.trim();
+const umamiWebsiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID?.trim();
 ---
 
 <html lang="en" class="phi-docs-root">
@@ -41,6 +43,19 @@ const showHeaderSourceIcon = Boolean(Astro.props.headerSourceIcon);
       media="(prefers-color-scheme: dark)"
     />
     <ClientRouter />
+    {umamiScriptUrl && umamiWebsiteId && (
+      <script
+        is:inline
+        defer
+        id="phi-analytics"
+        src={umamiScriptUrl}
+        data-website-id={umamiWebsiteId}
+        data-domains="phi-ui.com,www.phi-ui.com"
+        data-auto-track="false"
+        data-exclude-search="true"
+        data-exclude-hash="true"
+      ></script>
+    )}
     <script is:inline>
       (function () {
         const stored = localStorage.getItem("theme");
@@ -232,6 +247,7 @@ const showHeaderSourceIcon = Boolean(Astro.props.headerSourceIcon);
 
     <script>
       import "../scripts/docs-shell";
+      import "../scripts/docs-analytics";
     </script>
   </body>
 </html>

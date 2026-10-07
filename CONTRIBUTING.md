@@ -68,6 +68,17 @@ On Node.js 22, set `NODE_OPTIONS=--experimental-strip-types` before you run the 
 
 The browser test suite uses Chromium locally. CI also tests Firefox and WebKit.
 
+Docs analytics is optional. The build includes the Umami tracker only when both
+`PUBLIC_UMAMI_SCRIPT_URL` and `PUBLIC_UMAMI_WEBSITE_ID` are set. Maintainers supply
+these values through protected GitLab CI variables with environment scope `*`,
+so the `verify-package` build can read them before deployment. The values become
+public in the generated HTML; never use an admin token here.
+
+The docs site sends page views only from `phi-ui.com` and `www.phi-ui.com`.
+Local and preview hosts do not send analytics. Playwright builds use dummy
+analytics values and intercept tracker and collector requests in the analytics
+tests, so test visits do not enter live statistics.
+
 ## Releases
 
 GitLab CI publishes releases after all checks pass. See
