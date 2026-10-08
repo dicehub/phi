@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import SegmentedRadioDocsDemo from "./SegmentedRadioDocsDemo.vue";
 import { Badge } from "@dicehub/phi/components/badge";
 import { Radio, type RadioValue } from "@dicehub/phi/components/radio";
 
@@ -8,6 +9,10 @@ type RadioDemoVariant =
   | "usage"
   | "default"
   | "horizontal"
+  | "segmented"
+  | "segmented-states"
+  | "segmented-legends"
+  | "segmented-form"
   | "description"
   | "control-position"
   | "card"
@@ -52,8 +57,9 @@ const theme = ref<RadioValue>("system");
       'radio-demo--full-width': variant === 'card-horizontal',
     }"
   >
+    <SegmentedRadioDocsDemo v-if="variant.startsWith('segmented')" :variant="variant" />
     <Radio.Group
-      v-if="variant === 'basic'"
+      v-else-if="variant === 'basic'"
       v-model="basicValue"
       legend="Notification preference"
     >

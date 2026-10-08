@@ -56,7 +56,7 @@ const resolvedAppearance = computed(() =>
   isRadioAppearance(props.appearance) ? props.appearance : RADIO_DEFAULT_VARIANTS.appearance,
 );
 const resolvedOrientation = computed(() =>
-  isRadioOrientation(props.orientation) ? props.orientation : "vertical",
+  resolvedAppearance.value === "segmented" ? "horizontal" : isRadioOrientation(props.orientation) ? props.orientation : "vertical",
 );
 const isInvalid = computed(() => props.invalid || Boolean(props.error));
 

@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { DatePicker as ArkDatePicker, type DateValue } from "@ark-ui/vue/date-picker";
+import { computed } from "vue";
+import { DatePicker as ArkDatePicker, type DateValue, type UseDatePickerReturn } from "@ark-ui/vue/date-picker";
+import { shouldShowDatePickerDay } from "./date-picker";
+import { useDatePickerContent, useDatePickerOutsideDays } from "./date-picker-context";
 import {
   DatePickerNextTrigger,
   DatePickerPrevTrigger,
@@ -13,6 +16,16 @@ import {
   DatePickerView,
 } from "./DatePickerParts";
 
+const props = withDefaults(defineProps<{ showOutsideDays?: boolean }>(), { showOutsideDays: undefined });
+const rootOutsideDays = useDatePickerOutsideDays();
+const hasContent = useDatePickerContent();
+const outsideDays = computed(() => props.showOutsideDays ?? rootOutsideDays?.value);
+const showDay = (day: DateValue, month: DateValue, count: number) => shouldShowDatePickerDay(day, month, count, outsideDays.value);
+const syncClickedDay = (event: MouseEvent, datePicker: UseDatePickerReturn["value"], day: DateValue) => {
+  // Ark processes selection first; focus can then change the visible month.
+  if (event.defaultPrevented || (event.currentTarget as HTMLElement).getAttribute("aria-disabled") === "true") return;
+  datePicker.setFocusedValue(day);
+};
 const monthOffset = (monthIndex: number) => ({ months: monthIndex });
 const formatMonthTitle = (datePicker: { format: (value: DateValue, opts?: Intl.DateTimeFormatOptions) => string }, value: DateValue) =>
   datePicker.format(value, { month: "long", year: "numeric" });
@@ -30,7 +43,7 @@ const formatWeekdayLabel = (day: { long: string; short: string }) => weekdayLabe
 
 <template>
   <ArkDatePicker.Context v-slot="datePicker">
-    <div class="phi-date-picker-calendar">
+    <div v-bind="datePicker.inline && !hasContent ? datePicker.getContentProps() : {}" class="phi-date-picker-calendar">
       <DatePickerView view="day">
         <div class="phi-date-picker-nav">
           <DatePickerPrevTrigger aria-label="Previous month">
@@ -81,8 +94,15 @@ const formatWeekdayLabel = (day: { long: string; short: string }) => weekdayLabe
                     :key="day.toString()"
                     :value="day"
                     :visible-range="datePicker.getOffset(monthOffset(monthIndex - 1)).visibleRange"
+                    :data-hidden="showDay(day, datePicker.getOffset(monthOffset(monthIndex - 1)).visibleRange.start, datePicker.numOfMonths) ? undefined : ''"
+                    :aria-hidden="showDay(day, datePicker.getOffset(monthOffset(monthIndex - 1)).visibleRange.start, datePicker.numOfMonths) ? undefined : true"
                   >
-                    <DatePickerTableCellTrigger>{{ day.day }}</DatePickerTableCellTrigger>
+                    <DatePickerTableCellTrigger
+                      v-if="showDay(day, datePicker.getOffset(monthOffset(monthIndex - 1)).visibleRange.start, datePicker.numOfMonths)"
+                      @click="syncClickedDay($event, datePicker, day)"
+                    >
+                      {{ day.day }}
+                    </DatePickerTableCellTrigger>
                   </DatePickerTableCell>
                 </DatePickerTableRow>
               </DatePickerTableBody>

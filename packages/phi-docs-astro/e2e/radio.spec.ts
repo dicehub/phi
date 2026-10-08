@@ -57,6 +57,10 @@ test.describe("Radio", () => {
       "Examples",
       "Default (Vertical)",
       "Horizontal",
+      "Segmented",
+      "Segmented States",
+      "Segmented Legends",
+      "Segmented Form Values",
       "With Description",
       "Control Position",
       "Radio Card",
@@ -80,7 +84,7 @@ test.describe("Radio", () => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto("/docs/components/radio");
 
-    await expect(page.locator("#examples .docs-component-example")).toHaveCount(13);
+    await expect(page.locator("#examples .docs-component-example")).toHaveCount(17);
 
     const descriptionGroup = exampleById(page, "with-description").locator("fieldset");
     await expect(descriptionGroup).toHaveCSS("gap", "16px");

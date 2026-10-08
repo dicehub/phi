@@ -1,11 +1,12 @@
 export const RADIO_VARIANTS = ["default", "error"] as const;
-export const RADIO_APPEARANCES = ["default", "card"] as const;
+export const RADIO_APPEARANCES = ["default", "card", "segmented"] as const;
 export const RADIO_ORIENTATIONS = ["vertical", "horizontal"] as const;
 export const RADIO_CONTROL_POSITIONS = ["start", "end"] as const;
 
 export type RadioVariant = (typeof RADIO_VARIANTS)[number];
 export type PhiRadioVariant = RadioVariant;
 export type RadioAppearance = (typeof RADIO_APPEARANCES)[number];
+export type RadioItemAppearance = Exclude<RadioAppearance, "segmented">;
 export type PhiRadioAppearance = RadioAppearance;
 export type RadioOrientation = (typeof RADIO_ORIENTATIONS)[number];
 export type RadioControlPosition = (typeof RADIO_CONTROL_POSITIONS)[number];
@@ -48,6 +49,10 @@ export const RADIO_VARIANT_DEFINITIONS = {
       classes: "phi-radio--appearance-card",
       description: "Choice card with border, padding, and highlighted selection state",
     },
+    segmented: {
+      classes: "phi-radio--appearance-segmented",
+      description: "Compact grouped buttons for short, mutually exclusive options",
+    },
   },
 } as const;
 
@@ -66,6 +71,8 @@ export const isRadioVariant = (value: unknown): value is RadioVariant =>
 
 export const isRadioAppearance = (value: unknown): value is RadioAppearance =>
   typeof value === "string" && RADIO_APPEARANCES.includes(value as RadioAppearance);
+
+export const isRadioItemAppearance = (value: unknown): value is RadioItemAppearance => value === "default" || value === "card";
 
 export const isRadioOrientation = (value: unknown): value is RadioOrientation =>
   typeof value === "string" && RADIO_ORIENTATIONS.includes(value as RadioOrientation);

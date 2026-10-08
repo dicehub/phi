@@ -86,6 +86,8 @@ async function expectAnchoredPopover(page: Page, id: string) {
       headerTopDelta: Math.abs(titleBox.top - navBox.top),
       outsideDayOpacity: outsideDay ? Number.parseFloat(getComputedStyle(outsideDay).opacity) : undefined,
       outsideDayTextDecoration: outsideDay ? getComputedStyle(outsideDay).textDecorationLine : undefined,
+      monthCount: content.querySelectorAll(".phi-date-picker-month").length,
+      hiddenOutsideDays: content.querySelectorAll(".phi-date-picker-table-cell[data-hidden]").length,
       shadow: getComputedStyle(content).boxShadow,
       titleFontSize: Number.parseFloat(getComputedStyle(title).fontSize),
       x: getComputedStyle(positioner).getPropertyValue("--x"),
@@ -100,8 +102,13 @@ async function expectAnchoredPopover(page: Page, id: string) {
   expect(metrics!.caretContent).toBe('""');
   expect(metrics!.headerCenterDelta).toBeLessThanOrEqual(1);
   expect(metrics!.headerTopDelta).toBeLessThanOrEqual(1);
-  expect(metrics!.outsideDayOpacity).toBeLessThanOrEqual(0.45);
-  expect(metrics!.outsideDayTextDecoration).toBe("none");
+  if (metrics!.monthCount === 1) {
+    expect(metrics!.outsideDayOpacity).toBeLessThanOrEqual(0.45);
+    expect(metrics!.outsideDayTextDecoration).toBe("none");
+  } else {
+    expect(metrics!.outsideDayOpacity).toBeUndefined();
+    expect(metrics!.hiddenOutsideDays).toBeGreaterThan(0);
+  }
   expect(metrics!.titleFontSize).toBeLessThanOrEqual(14);
   expect(Math.abs(metrics!.contentDeltaFromTrigger)).toBeLessThanOrEqual(1);
   expect(Math.max(metrics!.contentBelowTriggerBy, metrics!.contentAboveTriggerBy)).toBeGreaterThanOrEqual(4);
@@ -114,16 +121,16 @@ test.describe("DatePicker", () => {
 
   test("renders expected page sections and snippets", async ({ page }) => {
     await expect(page.locator("main h1").first()).toHaveText("DatePicker");
-    await expect(page.locator(".docs-component-example")).toHaveCount(12);
-    await expect(page.locator(".docs-code-block")).toHaveCount(14);
+    await expect(page.locator(".docs-component-example")).toHaveCount(13);
+    await expect(page.locator(".docs-code-block")).toHaveCount(15);
     await expect(page.locator("#preview .docs-code-block")).toContainText('from "@dicehub/phi/components/date-picker"');
     await expect(page.locator("#preview .docs-code-block")).toContainText("v-model:selected");
-    await expect(page.locator("#examples .docs-code-block").filter({ hasText: "mode=\"range\"" })).toHaveCount(5);
+    await expect(page.locator("#examples .docs-code-block").filter({ hasText: "mode=\"range\"" })).toHaveCount(6);
     await expect(page.locator("#examples .docs-code-block").filter({ hasText: "range-min-days" })).toHaveCount(1);
     await expect(page.locator("#examples .docs-code-block").filter({ hasText: "PresetTrigger" })).toHaveCount(2);
     await expect(page.locator("#preview .phi-date-picker-table-header")).toHaveText(["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]);
 
-    await expect(page.locator(".phi-date-picker")).toHaveCount(12);
+    await expect(page.locator(".phi-date-picker")).toHaveCount(13);
     const datePickerIds = await page.locator(".phi-date-picker").evaluateAll((nodes) => nodes.map((node) => node.id));
     expect(new Set(datePickerIds).size).toBe(datePickerIds.length);
     await expect(page.locator("#month-1")).toHaveCount(0);
@@ -141,6 +148,7 @@ test.describe("DatePicker", () => {
       "Single Date",
       "Multiple Dates",
       "Date Range",
+      "Outside-Month Days",
       "Range Constraints",
       "Popup",
       "Popup Range",
@@ -156,7 +164,7 @@ test.describe("DatePicker", () => {
     ]);
     await expect(toc.locator("a[href='#preview']")).toHaveCount(0);
     await expect(toc.locator("a[href='#installation'] + ul a")).toHaveCount(2);
-    await expect(toc.locator("a[href='#examples'] + ul a")).toHaveCount(10);
+    await expect(toc.locator("a[href='#examples'] + ul a")).toHaveCount(11);
     await expect(toc.locator("a[href='#api-reference'] + ul a")).toHaveCount(3);
   });
 
@@ -345,7 +353,7 @@ test.describe("DatePicker", () => {
       "DatePicker.ValueText",
       "DatePicker.RangeText",
     ]);
-    await expect(page.locator("#date-picker-root-api + .docs-api-table tbody tr")).toHaveCount(12);
+    await expect(page.locator("#date-picker-root-api + .docs-api-table tbody tr")).toHaveCount(13);
     await expect(page.locator("#date-picker-calendar-api + .docs-api-table tbody tr")).toHaveCount(1);
     await expect(page.locator("#date-picker-content-api + .docs-api-table tbody tr")).toHaveCount(1);
   });

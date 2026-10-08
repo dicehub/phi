@@ -395,6 +395,12 @@
   text-decoration: none;
 }
 
+/* Keep the calendar grid aligned while removing duplicate dates and highlights. */
+.phi-date-picker-table-cell[data-hidden] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .phi-date-picker-cell-trigger[data-today]:not([data-selected]):not([data-range-start]):not([data-range-end]):not([data-unavailable]) {
   color: var(--phi-date-picker-today, var(--phi-info, #175cd3));
   font-weight: 600;
