@@ -63,6 +63,19 @@ const selected = ref<DatePickerDateRange>({
   />
 </template>`;
 
+export const outsideDaysCode = `<script setup lang="ts">
+import { DatePicker } from "@dicehub/phi/components/date-picker";
+</script>
+
+<template>
+  <!-- Multi-month calendars hide outside dates by default. -->
+  <DatePicker mode="range" :number-of-months="2" inline />
+  <!-- Explicitly show outside dates. Calendar can override the root. -->
+  <DatePicker :number-of-months="2" show-outside-days inline>
+    <DatePicker.Calendar />
+  </DatePicker>
+</template>`;
+
 export const rangeConstraintsCode = `<script setup lang="ts">
 import { ref } from "vue";
 import { DatePicker, type DatePickerDateRange } from "@dicehub/phi/components/date-picker";
@@ -288,6 +301,7 @@ export const apiGroups = [
       { name: "selected", type: "Date | Date[] | { from?: Date; to?: Date }", defaultValue: "-", description: "Date-based controlled value alias. Use v-model:selected." },
       { name: "selectionMode / mode", type: '"single" | "multiple" | "range"', defaultValue: '"single"', description: "Selection behavior. `mode` is an alias for `selectionMode`." },
       { name: "numOfMonths / numberOfMonths", type: "number", defaultValue: "1", description: "Number of calendar months to display." },
+      { name: "showOutsideDays", type: "boolean", defaultValue: "true for one month; false for multiple months", description: "Shows dates outside each displayed month. False removes duplicate buttons and highlights while keeping the week grid aligned. Applies to built-in and custom Calendar children." },
       { name: "min / max", type: "DateValue", defaultValue: "-", description: "Ark-native date boundaries." },
       { name: "minDate / maxDate", type: "Date", defaultValue: "-", description: "Date-object aliases for date boundaries." },
       { name: "rangeMinDays / rangeMaxDays", type: "number", defaultValue: "-", description: "Rejects completed ranges outside day-length limits." },
@@ -302,7 +316,7 @@ export const apiGroups = [
     id: "date-picker-calendar-api",
     title: "DatePicker.Calendar",
     props: [
-      { name: "-", type: "-", defaultValue: "-", description: "No custom props. Calendar reads DatePicker root state." },
+      { name: "showOutsideDays", type: "boolean", defaultValue: "root setting or month-count default", description: "Overrides the root's outside-day visibility for this calendar. Other state comes from DatePicker.Root." },
     ],
   },
   {

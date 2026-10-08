@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import DatePickerOutsideDaysDemo from "./DatePickerOutsideDaysDemo.vue";
 import {
   DatePicker,
   dateToDateValue,
@@ -12,6 +13,7 @@ type DemoVariant =
   | "single"
   | "multiple"
   | "range"
+  | "outside-days"
   | "range-constraints"
   | "popup"
   | "popup-range"
@@ -90,7 +92,8 @@ const popoverPositioning = { placement: "bottom", gutter: 8 } as const;
 
 <template>
   <div class="date-picker-demo" :class="`date-picker-demo--${variant}`">
-    <template v-if="variant === 'hero'">
+    <DatePickerOutsideDaysDemo v-if="variant === 'outside-days'" />
+    <template v-else-if="variant === 'hero'">
       <DatePicker
         :id="pickerId"
         v-model:selected="heroSelected"

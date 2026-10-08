@@ -3,9 +3,9 @@ import { computed, useSlots } from "vue";
 import { useRadioGroupContext } from "./radio-context";
 import {
   RADIO_DEFAULT_VARIANTS,
-  isRadioAppearance,
+  isRadioItemAppearance,
   isRadioVariant,
-  type RadioAppearance,
+  type RadioItemAppearance,
   type RadioValue,
   type RadioValueChangeDetails,
   type RadioVariant,
@@ -15,7 +15,7 @@ defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{
-    appearance?: RadioAppearance;
+    appearance?: RadioItemAppearance;
     description?: string;
     disabled?: boolean;
     label?: string;
@@ -37,13 +37,15 @@ const emit = defineEmits<{
 const slots = useSlots();
 const groupContext = useRadioGroupContext();
 const resolvedAppearance = computed(() => {
-  if (isRadioAppearance(props.appearance)) return props.appearance;
+  if (groupContext?.appearance.value === "segmented") return "segmented";
+  if (isRadioItemAppearance(props.appearance)) return props.appearance;
   return groupContext?.appearance.value ?? RADIO_DEFAULT_VARIANTS.appearance;
 });
 const resolvedVariant = computed(() =>
   isRadioVariant(props.variant) ? props.variant : RADIO_DEFAULT_VARIANTS.variant,
 );
 const isCard = computed(() => resolvedAppearance.value === "card");
+const isSegmented = computed(() => resolvedAppearance.value === "segmented");
 const isJoined = computed(() => isCard.value && groupContext?.appearance.value === "card");
 const effectiveControlPosition = computed(() =>
   groupContext?.controlPosition.value ?? (isCard.value ? "end" : "start"),
@@ -90,7 +92,7 @@ const handleChange = (event: Event) => {
       :value="stringValue"
       @change="handleChange"
     />
-    <span class="phi-radio__control" :data-state="isSelected ? 'checked' : 'unchecked'" aria-hidden="true">
+    <span v-if="!isSegmented" class="phi-radio__control" :data-state="isSelected ? 'checked' : 'unchecked'" aria-hidden="true">
       <span class="phi-radio__dot" />
     </span>
     <span class="phi-radio__content">

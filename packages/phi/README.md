@@ -20,6 +20,32 @@ import "@dicehub/phi/styles/standalone";
 Phi's published declarations support TypeScript with `skipLibCheck: false` and
 `moduleResolution: "Bundler"`.
 
+## DatePicker outside days
+
+Multi-month calendars hide dates outside each month, so date buttons and range
+highlights appear once. Single-month calendars keep outside dates visible.
+Set `show-outside-days` to choose a value explicitly. `DatePicker.Calendar`
+inherits the root setting and can override it with its own `show-outside-days`.
+
+```vue
+<DatePicker mode="range" :number-of-months="2" inline />
+<DatePicker :number-of-months="2" show-outside-days inline />
+```
+
+## Segmented Radio
+
+Use `appearance="segmented"` on `Radio.Group` for short, mutually exclusive
+options. The group uses one horizontal row with native radio controls and
+keyboard focus. Item appearance overrides do not change a segmented group.
+`RadioItemAppearance` permits only `default` and `card`.
+
+```vue
+<Radio.Group v-model="theme" appearance="segmented" legend="Theme">
+  <Radio.Item label="Light" value="light" />
+  <Radio.Item label="Dark" value="dark" />
+</Radio.Group>
+```
+
 ## Slider
 
 Import `Slider` from the root package or `@dicehub/phi/components/slider`.

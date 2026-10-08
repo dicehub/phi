@@ -36,6 +36,7 @@ const smokeSpecs = [
   "portal-stacking.spec.ts",
   "slider.spec.ts",
   "label-translations.spec.ts",
+  "kumo-date-radio-sync.spec.ts",
   "tooltip.spec.ts",
 ];
 

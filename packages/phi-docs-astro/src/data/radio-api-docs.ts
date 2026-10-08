@@ -6,8 +6,8 @@ export const radioApiSections = [
     rows: [
       { name: "legend", type: "string", defaultValue: "-", description: "Legend text for the group. For custom styling, omit this prop and pass `Radio.Legend` as a direct child. Legends render above the items; this prop takes precedence." },
       { name: "default slot", type: "unknown", defaultValue: "-", description: "Child `Radio.Item` components and optionally a `Radio.Legend`." },
-      { name: "orientation", type: '"vertical" | "horizontal"', defaultValue: '"vertical"', description: "Layout direction. Horizontal card groups use two columns, or one column below 641px." },
-      { name: "appearance", type: '"default" | "card"', defaultValue: '"default"', description: "Card groups share one outline with internal dividers. Individual items can override this with `appearance`; default items retain padding inside a card group, and a card item in a default group keeps its own border." },
+      { name: "orientation", type: '"vertical" | "horizontal"', defaultValue: '"vertical"', description: "Layout direction. Horizontal card groups use two columns, or one column below 641px. Segmented groups always use a horizontal row." },
+      { name: "appearance", type: '"default" | "card" | "segmented"', defaultValue: '"default"', description: "Card groups share one outline with internal dividers. Segmented groups use compact buttons on one line. Individual appearance overrides apply only to default and card groups." },
       { name: "description", type: "string", defaultValue: "-", description: "Helper text displayed below the group." },
       { name: "error", type: "string", defaultValue: "-", description: "Validation message displayed below the group." },
       { name: "defaultValue", type: "RadioValue", defaultValue: "-", description: "Initial selected value for uncontrolled usage." },
@@ -36,7 +36,7 @@ export const radioApiSections = [
     description: "Individual radio button within Radio.Group.",
     rows: [
       { name: "variant", type: '"default" | "error"', defaultValue: '"default"', description: "Visual variant for validation states." },
-      { name: "appearance", type: '"default" | "card"', defaultValue: "-", description: "Overrides the group-level appearance." },
+      { name: "appearance", type: '"default" | "card"', defaultValue: "-", description: "Overrides default and card group appearances. A segmented group keeps its appearance for every item." },
       { name: "label", type: "string", defaultValue: "-", description: "Visible label rendered next to the radio item." },
       { name: "label slot", type: "unknown", defaultValue: "-", description: "Rich Vue content for the item label." },
       { name: "description", type: "string", defaultValue: "-", description: "Description text displayed below the label in card appearance." },

@@ -8,10 +8,22 @@ import {
   isRangeWithinDayLimits,
   resolveDatePickerRangeValue,
   selectedToDateValues,
+  shouldShowDatePickerDay,
 } from "./date-picker.ts";
 
 const valueKey = (value) => `${value.year}-${value.month}-${value.day}`;
 const selectedKey = (value) => `${value.getUTCFullYear()}-${value.getUTCMonth() + 1}-${value.getUTCDate()}`;
+
+test("outside-day defaults and overrides preserve one-month behavior across a year boundary", () => {
+  const december = new CalendarDate(2026, 12, 1);
+  const inside = new CalendarDate(2026, 12, 31);
+  const outside = new CalendarDate(2027, 1, 1);
+  assert.equal(shouldShowDatePickerDay(outside, december, 1), true);
+  assert.equal(shouldShowDatePickerDay(outside, december, 2), false);
+  assert.equal(shouldShowDatePickerDay(outside, december, 3, true), true);
+  assert.equal(shouldShowDatePickerDay(outside, december, 1, false), false);
+  assert.equal(shouldShowDatePickerDay(inside, december, 3, false), true);
+});
 
 test("converts Date aliases to DateValue arrays by mode", () => {
   const single = new Date(Date.UTC(2026, 4, 20));

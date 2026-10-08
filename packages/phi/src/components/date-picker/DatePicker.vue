@@ -23,6 +23,7 @@ import {
   type DateValue,
 } from "@ark-ui/vue/date-picker";
 import DatePickerCalendar from "./DatePickerCalendar.vue";
+import { provideDatePickerContent, provideDatePickerOutsideDays } from "./date-picker-context";
 import {
   DatePickerClearTrigger,
   DatePickerContent,
@@ -64,6 +65,7 @@ const props = withDefaults(
     positioning: () => ({ placement: "bottom-start", gutter: 8 }),
     readOnly: undefined,
     required: undefined,
+    showOutsideDays: undefined,
     showWeekNumbers: undefined,
     startOfWeek: 1,
   },
@@ -85,6 +87,8 @@ const emit = defineEmits<{
 }>();
 
 const slots = useSlots();
+provideDatePickerOutsideDays(computed(() => props.showOutsideDays));
+provideDatePickerContent(false);
 const vnodeProps = getCurrentInstance()?.vnode.props ?? {};
 const hasProp = (...names: string[]) =>
   names.some((name) => Object.prototype.hasOwnProperty.call(vnodeProps, name));

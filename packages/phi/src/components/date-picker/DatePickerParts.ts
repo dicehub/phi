@@ -1,13 +1,15 @@
 import { DatePicker as ArkDatePicker } from "@ark-ui/vue/date-picker";
 import { defineComponent, h, type Component } from "vue";
+import { provideDatePickerContent } from "./date-picker-context";
 
 const ArkDatePickerParts = ArkDatePicker as unknown as Record<string, Component>;
 
-const withClass = (name: string, component: Component, className: string) =>
+const withClass = (name: string, component: Component, className: string, setupContext?: () => void) =>
   defineComponent({
     name,
     inheritAttrs: false,
     setup(_, { attrs, slots }) {
+      setupContext?.();
       return () =>
         h(
           component,
@@ -34,7 +36,7 @@ export const DatePickerPositioner = withClass(
   ArkDatePickerParts.Positioner,
   "phi-date-picker-positioner",
 );
-export const DatePickerContent = withClass("DatePickerContent", ArkDatePickerParts.Content, "phi-date-picker-content");
+export const DatePickerContent = withClass("DatePickerContent", ArkDatePickerParts.Content, "phi-date-picker-content", provideDatePickerContent);
 export const DatePickerView = withClass("DatePickerView", ArkDatePickerParts.View, "phi-date-picker-view");
 export const DatePickerViewControl = withClass(
   "DatePickerViewControl",

@@ -1,6 +1,7 @@
 import {
   fromDate,
   getLocalTimeZone,
+  isSameMonth,
   toCalendarDate,
   type DateValue,
 } from "@internationalized/date";
@@ -68,6 +69,7 @@ export type DatePickerProps = {
   required?: boolean;
   selected?: DatePickerSelected;
   selectionMode?: DatePickerMode;
+  showOutsideDays?: boolean;
   showWeekNumbers?: boolean;
   startOfWeek?: number;
   timeZone?: string;
@@ -79,6 +81,9 @@ export const DATE_PICKER_MODES: DatePickerMode[] = ["single", "multiple", "range
 
 export const isDatePickerMode = (value: unknown): value is DatePickerMode =>
   typeof value === "string" && DATE_PICKER_MODES.includes(value as DatePickerMode);
+
+export const shouldShowDatePickerDay = (day: DateValue, month: DateValue, numberOfMonths: number, showOutsideDays?: boolean) =>
+  (showOutsideDays ?? numberOfMonths === 1) || isSameMonth(day, month);
 
 export const resolveDatePickerTimeZone = (timeZone?: string) => timeZone ?? getLocalTimeZone();
 

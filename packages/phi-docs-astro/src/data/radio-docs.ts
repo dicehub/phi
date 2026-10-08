@@ -1,3 +1,5 @@
+import { segmentedRadioExamples } from "./radio-segmented-docs";
+
 export const radioBarrelCode = `import { Radio } from "@dicehub/phi";`;
 
 export const radioGranularCode = `import { Radio } from "@dicehub/phi/components/radio";`;
@@ -397,6 +399,7 @@ export const radioExamples = [
     variant: "horizontal",
     code: radioHorizontalCode,
   },
+  ...segmentedRadioExamples,
   {
     id: "with-description",
     title: "With Description",
