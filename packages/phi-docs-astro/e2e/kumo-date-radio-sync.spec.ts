@@ -195,6 +195,16 @@ test.describe("Segmented Radio", () => {
     await expect(group.locator(".phi-radio-group__items")).toHaveCSS("flex-wrap", "nowrap");
     for (const mode of ["light", "dark"]) {
       await expect(page.locator("html")).toHaveAttribute("data-mode", mode);
+      const selectedLabel = group.locator(".phi-radio--checked .phi-radio__label");
+      const inverse = await selectedLabel.evaluate(element => {
+        const probe = document.createElement("span");
+        probe.style.color = "var(--text-color-phi-inverse)";
+        element.append(probe);
+        const color = getComputedStyle(probe).color;
+        probe.remove();
+        return color;
+      });
+      await expect(selectedLabel).toHaveCSS("color", inverse);
       const geometry = await group.locator(".phi-radio").evaluateAll(items => items.map(item => ({ y: item.getBoundingClientRect().y, height: item.getBoundingClientRect().height })));
       expect(geometry.every(item => item.height === 34 && item.y === geometry[0].y)).toBe(true);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);

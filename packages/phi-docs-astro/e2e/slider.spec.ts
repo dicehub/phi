@@ -1,6 +1,14 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 
 const example = (page: Page, variant: string) => page.locator(`.slider-demo--${variant}`);
+const tokenColor = (root: Locator, name: string) => root.evaluate((element, name) => {
+  const probe = document.createElement("span");
+  probe.style.backgroundColor = `var(${name})`;
+  element.append(probe);
+  const color = getComputedStyle(probe).backgroundColor;
+  probe.remove();
+  return color;
+}, name);
 const geometry = (root: Locator) => root.evaluate(element => {
   const rect = (selector: string) => element.querySelector(selector)!.getBoundingClientRect();
   const track = rect(".phi-slider__track");
@@ -16,6 +24,43 @@ const geometry = (root: Locator) => root.evaluate(element => {
 });
 
 test.beforeEach(async ({ page }) => { await page.goto("/docs/components/slider"); });
+
+for (const mode of ["light", "dark"]) {
+  test(`uses contrasting badge colors and neutral disabled badges in ${mode} mode`, async ({ page }) => {
+    if (mode === "dark") await page.getByRole("button", { name: "Toggle theme" }).first().click();
+    await expect(page.locator("html")).toHaveAttribute("data-mode", mode);
+    const preview = example(page, "preview");
+    await expect(preview.getByRole("slider")).toBeVisible();
+    const contrast = await tokenColor(preview, "--color-phi-contrast");
+    const inverse = await tokenColor(preview, "--text-color-phi-inverse");
+    const fill = await tokenColor(preview, "--color-phi-fill");
+    const text = await tokenColor(preview, "--text-color-phi-default");
+    const overlay = await tokenColor(preview, "--color-phi-overlay");
+    for (const variant of ["preview", "range", "small"]) {
+      const demo = example(page, variant);
+      await expect(demo.locator(".phi-slider__badge")).toHaveCount(variant === "range" ? 2 : 1);
+      for (const badge of await demo.locator(".phi-slider__badge").all()) {
+        await expect(badge).toHaveCSS("background-color", contrast);
+        await expect(badge).toHaveCSS("color", inverse);
+      }
+      await expect(demo.locator(".phi-slider__indicator")).toHaveCSS("background-color", overlay);
+    }
+    const disabled = example(page, "disabled").getByRole("slider", { name: "Disabled", exact: true });
+    await expect(disabled.locator(".phi-slider__badge")).toHaveCSS("background-color", fill);
+    await expect(disabled.locator(".phi-slider__badge")).toHaveCSS("color", text);
+    const readOnly = example(page, "disabled").getByRole("slider", { name: "Read only", exact: true });
+    await expect(readOnly.locator(".phi-slider__badge")).toHaveCSS("background-color", contrast);
+    await expect(readOnly.locator(".phi-slider__badge")).toHaveCSS("color", inverse);
+    const reactive = example(page, "availability");
+    const badge = reactive.locator(".phi-slider__badge");
+    await reactive.getByRole("button", { name: "Disable slider", exact: true }).click();
+    await expect(badge).toHaveCSS("background-color", fill);
+    await expect(badge).toHaveCSS("color", text);
+    await reactive.getByRole("button", { name: "Enable slider", exact: true }).click();
+    await expect(badge).toHaveCSS("background-color", contrast);
+    await expect(badge).toHaveCSS("color", inverse);
+  });
+}
 
 test("supports controlled numeric values, keyboard changes, and commit events", async ({ page }) => {
   const ids = await page.locator(".phi-slider [id], .phi-slider[id]").evaluateAll(elements => elements.map(element => element.id));

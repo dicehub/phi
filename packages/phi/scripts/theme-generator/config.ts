@@ -155,6 +155,7 @@ export const THEME_CONFIG = {
     "--phi-fill": "var(--color-phi-fill)",
     "--phi-fill-hover": "var(--color-phi-fill-hover)",
     "--phi-default": "var(--text-color-phi-default)",
+    "--phi-inverse": "var(--text-color-phi-inverse)",
     "--phi-strong": "var(--text-color-phi-strong)",
     "--phi-subtle": "var(--text-color-phi-subtle)",
     "--phi-muted": "var(--text-color-phi-placeholder)",
