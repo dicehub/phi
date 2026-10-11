@@ -31,7 +31,7 @@
   position: absolute;
   inset-block: 0;
   border-radius: var(--phi-slider-radius);
-  background: var(--phi-base);
+  background: var(--phi-overlay);
   box-shadow: var(--phi-shadow), 0 0 0 1px var(--phi-line);
   pointer-events: none;
 }
@@ -64,13 +64,17 @@
   margin-top: 11px;
   padding-inline: 0.375rem;
   border-radius: 0.25rem;
-  background: var(--phi-accent);
-  color: var(--phi-accent-contrast);
+  background: var(--phi-contrast);
+  color: var(--phi-inverse);
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   transform: translateX(-50%);
   pointer-events: none;
+}
+.phi-slider__thumb[data-disabled] .phi-slider__badge {
+  background: var(--phi-fill);
+  color: var(--phi-default);
 }
 .phi-slider__limits {
   display: flex;
