@@ -1,5 +1,17 @@
 # @dicehub/phi
 
+## 1.2.0
+
+### Minor Changes
+
+- 7ba3733: Add group-only segmented Radio buttons for short, mutually exclusive options. Hide outside-month dates by default in multi-month DatePicker calendars and support explicit showOutsideDays overrides on the root and calendar.
+
+  Keep DatePicker keyboard navigation aligned with the focused date when starting a new range.
+
+### Patch Changes
+
+- 947dfea: Sync Kumo's Slider contrast colors: use contrasting value badges, neutral disabled badges, and a lighter filled track in dark mode. Define the inverse text alias used by Slider and segmented Radio so selected text remains readable in both themes.
+
 ## 1.1.0
 
 ### Minor Changes
