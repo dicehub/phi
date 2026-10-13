@@ -314,7 +314,7 @@
 }
 
 .phi-combobox-item[data-highlighted] {
-  background: var(--phi-overlay, rgba(16, 24, 40, 0.06));
+  background: var(--phi-tint, #f4f6f9);
 }
 
 .phi-combobox-item[data-disabled] {
