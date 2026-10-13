@@ -169,6 +169,8 @@ const handleBlur = (event: FocusEvent) => {
 const handleKeydown = (event: KeyboardEvent) => {
   (attrs.onKeydown as ((event: KeyboardEvent) => void) | undefined)?.(event);
   if (event.defaultPrevented) return;
+  // IME confirmation must not create a tag. Safari can end composition before keydown.
+  if (event.isComposing || event.keyCode === 229) return;
 
   if (event.key === "Backspace" && inputValue.value === "") {
     if (values.value.length > 0) setValues(values.value.slice(0, -1));
