@@ -72,6 +72,7 @@ import "../../../styles/component-docs.css";
             Use <code>v-model</code> for controlled tags and <code>defaultValue</code> for uncontrolled usage.
             Enter, comma, Tab, and blur commit the current text.
           </p>
+          <p>During input method editor (IME) composition, Enter, comma, and Tab confirm text without creating a tag.</p>
           <CodeBlock code={tagInputUsageCode} lang="vue" />
           <p>
             The component exposes its native input as <code>input</code>, so a template ref can focus the
