@@ -9,6 +9,7 @@ type DemoVariant =
   | "preview"
   | "interactive"
   | "scroll-tracking"
+  | "hash-tracking"
   | "no-active"
   | "group"
   | "without-title"
@@ -41,6 +42,10 @@ const scrollspySections = [
   { id: "scrollspy-demo-api", title: "API" },
 ];
 const inactiveScrollspyId = ref<string | null>(null);
+const hashIds = ["50%-off", "café", "hash-tracking-valid"];
+const hashTracking = props.variant === "hash-tracking"
+  ? useTableOfContentsActiveId({ ids: hashIds })
+  : undefined;
 const scrollTracking = props.variant === "scroll-tracking"
   ? useTableOfContentsActiveId({
       ids: scrollspySections.map((section) => section.id),
@@ -63,7 +68,21 @@ const scrollToSection = (id: string) => {
 
 <template>
   <div class="table-of-contents-demo">
-    <TableOfContents v-if="variant === 'interactive'">
+    <TableOfContents v-if="variant === 'hash-tracking'" data-hash-tracking>
+      <TableOfContents.Title>Hash selection</TableOfContents.Title>
+      <TableOfContents.List>
+        <TableOfContents.Item
+          v-for="id in hashIds"
+          :key="id"
+          :href="`#${id}`"
+          :active="hashTracking?.activeId.value === id"
+        >
+          {{ id }}
+        </TableOfContents.Item>
+      </TableOfContents.List>
+    </TableOfContents>
+
+    <TableOfContents v-else-if="variant === 'interactive'">
       <TableOfContents.Title>On this page</TableOfContents.Title>
       <TableOfContents.List>
         <TableOfContents.Item

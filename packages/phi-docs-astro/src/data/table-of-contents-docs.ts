@@ -271,6 +271,28 @@ export const tableOfContentsCustomElementSnippets = [
 
 export const tableOfContentsExamples = [
   {
+    id: "hash-tracking",
+    title: "Hash tracking",
+    variant: "hash-tracking",
+    description: "Hash selection decodes URL escapes and matches literal percent signs in known IDs. Unknown hashes are ignored. Try these links to select an item without a scroll target.",
+    code: `<script setup>
+import { TableOfContents, useTableOfContentsActiveId } from "@dicehub/phi/components/table-of-contents";
+
+const ids = ["50%-off", "café", "hash-tracking-valid"];
+const { activeId } = useTableOfContentsActiveId({ ids });
+</script>
+
+<template>
+  <TableOfContents>
+    <TableOfContents.List>
+      <TableOfContents.Item v-for="id in ids" :key="id" :href="\`#\${id}\`" :active="activeId === id">
+        {{ id }}
+      </TableOfContents.Item>
+    </TableOfContents.List>
+  </TableOfContents>
+</template>`,
+  },
+  {
     id: "interactive",
     title: "Interactive",
     variant: "interactive",
