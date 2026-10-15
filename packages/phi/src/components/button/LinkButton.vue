@@ -8,6 +8,7 @@ import {
   type PropType,
   type VNodeChild,
 } from "vue";
+import { hasMeaningfulSlotContent } from "../../utils/slot-content";
 import Tooltip from "../tooltip/Tooltip.vue";
 import {
   BUTTON_DEFAULT_SHAPE,
@@ -69,10 +70,17 @@ export default defineComponent({
     const resolvedVariant = computed(() => resolveButtonVariant(props.variant, props.tone));
     const resolvedSize = computed(() => resolveButtonSize(props.size));
     const resolvedShape = computed(() => resolveButtonShape(props.shape));
-    const hasLabel = computed(() => Boolean(slots.default) || !props.icon);
+    const hasDefaultSlotContent = computed(
+      () => slots.default?.().some(hasMeaningfulSlotContent) ?? false,
+    );
+    const hasLabel = computed(() => hasDefaultSlotContent.value || !props.icon);
     const classes = computed(() => [
       "phi-button",
       "phi-link-button",
+      {
+        "phi-button--text": resolvedShape.value === "base" && hasLabel.value,
+        "phi-button--with-icon": resolvedShape.value === "base" && hasLabel.value && props.icon,
+      },
       `phi-button--${resolvedVariant.value}`,
       `phi-button--${resolvedSize.value}`,
       resolvedShape.value !== "base" ? `phi-button--${resolvedShape.value}` : undefined,

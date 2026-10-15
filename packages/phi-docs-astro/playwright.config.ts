@@ -26,6 +26,7 @@ if (!externalBaseURL && process.env.TEST_WORKER_INDEX === undefined) {
 const smokeSpecs = [
   "sidebar-list.spec.ts",
   "table-of-contents-hash.spec.ts",
+  "button-alignment.spec.ts",
   "tag-input-ime.spec.ts",
   "autocomplete-highlight.spec.ts",
   "combobox-highlight.spec.ts",

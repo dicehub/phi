@@ -1,6 +1,7 @@
 ---
 import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
 import ButtonDocsDemo from "../../../components/ButtonDocsDemo.vue";
+import ButtonAlignmentDocsDemo from "../../../components/ButtonAlignmentDocsDemo.vue";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
@@ -318,8 +319,10 @@ const props = [
           </div>
 
           <h3 id="with-icon"><a class="docs-section-anchor" href="#with-icon">With Icon</a></h3>
+          <p>Button and LinkButton lift text slightly for optical alignment. Buttons with a leading icon use less padding at the start. Icons stay centered; square and circle buttons keep their geometry.</p>
           <div class="docs-component-example">
             <div class="docs-component-preview docs-component-preview--button"><ButtonDocsDemo client:only="vue" variant="with-icon" /></div>
+            <div class="docs-component-preview docs-component-preview--button"><ButtonAlignmentDocsDemo client:only="vue" /></div>
             <div class="docs-component-example__code"><CodeBlock code={withIconCode} lang="vue" /></div>
           </div>
 
