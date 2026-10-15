@@ -1,6 +1,6 @@
 .phi-dropdown-positioner {
-  --z-index: 1000;
-  z-index: 1000 !important;
+  --z-index: 1300;
+  z-index: var(--phi-dropdown-z-index, 1300) !important;
 }
 
 .phi-dropdown-content {

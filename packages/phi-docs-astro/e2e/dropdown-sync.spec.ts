@@ -10,6 +10,10 @@ test.beforeEach(async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1080 });
 });
 
+test.afterEach(async ({ page }) => {
+  expect(await page.pageErrors()).toEqual([]);
+});
+
 for (const mode of ["light", "dark"]) {
   test(`Dropdown uses tint and aligns submenu rows in ${mode}`, async ({ page }) => {
     await page.goto("/docs/components/dropdown");

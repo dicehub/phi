@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { PhGear, PhUser } from "@phosphor-icons/vue";
-import { LocaleProvider as ArkLocaleProvider } from "@ark-ui/vue/locale";
+import { PrimitiveLocaleProvider } from "@dicehub/phi/primitives";
 import { Button } from "@dicehub/phi/components/button";
 import { DropdownMenu } from "@dicehub/phi/components/dropdown";
 
@@ -47,7 +47,7 @@ const container = ref<HTMLElement | null>(null);
       </DropdownMenu.Content>
     </DropdownMenu>
     <div ref="container" data-dropdown-container />
-    <ArkLocaleProvider locale="ar-EG">
+    <PrimitiveLocaleProvider locale="ar-EG">
       <DropdownMenu id="dropdown-contained">
         <DropdownMenu.Trigger><Button>Contained RTL menu</Button></DropdownMenu.Trigger>
         <DropdownMenu.Content :container="container ?? 'body'">
@@ -60,6 +60,6 @@ const container = ref<HTMLElement | null>(null);
           </DropdownMenu.Sub>
         </DropdownMenu.Content>
       </DropdownMenu>
-    </ArkLocaleProvider>
+    </PrimitiveLocaleProvider>
   </div>
 </template>

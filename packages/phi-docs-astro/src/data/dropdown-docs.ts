@@ -196,7 +196,7 @@ export const dropdownExamples = [
     id: "icon-alignment",
     title: "Icon Alignment",
     variant: "alignment",
-    description: "Rows and labels without icons align automatically when their popup contains an icon. Each submenu tracks its own icons. Use the icon slot for custom content, and inset to force padding. Submenus use a 2px side gap and a -6px alignment offset, including flipped alignment. Use positioning.offset to override the gap or cross-axis offset. Content and SubContent accept a container for local portal targets; Ark's locale provider controls RTL behavior.",
+    description: "Rows and labels without icons align automatically when their popup contains an icon. Each submenu tracks its own icons. Use the icon slot for custom content, and inset to force padding. Submenus use a 2px side gap and a -6px alignment offset, including flipped alignment. Use positioning.offset to override the gap or cross-axis offset. Content and SubContent accept a container for local portal targets. Import PrimitiveLocaleProvider from @dicehub/phi/primitives and set locale to control text direction, including nested menus. Use the Phi export so the provider shares the library's Ark context. Portaled menus use z-index 1300 by default; --phi-dropdown-z-index overrides it.",
     code: `<DropdownMenu.Sub :positioning="{ offset: { mainAxis: 14, crossAxis: 3 } }">
   <DropdownMenu.SubTrigger>
     <template #icon><PhGear /></template>
