@@ -24,6 +24,7 @@ if (!externalBaseURL && process.env.TEST_WORKER_INDEX === undefined) {
 // clipboard controls, and responsive overflow. Later feature MRs extend this
 // list (portal isolation guide, ButtonGroup focus).
 const smokeSpecs = [
+  "sidebar-list.spec.ts",
   "tag-input-ime.spec.ts",
   "autocomplete-highlight.spec.ts",
   "combobox-highlight.spec.ts",

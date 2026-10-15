@@ -141,6 +141,10 @@ export const sidebarApiSections = [
 
 export const sidebarAccessibilityRows = [
   {
+    title: "Submenu Lists",
+    description: "`Sidebar.MenuSub` uses list items for every direct child. Its decorative guide is hidden with `aria-hidden` and does not receive pointer input.",
+  },
+  {
     title: "Landmark Semantics",
     description: "Desktop sidebars render as `aside`; mobile sidebars render as a labeled navigation drawer with `aria-hidden` and `inert` while closed.",
   },
