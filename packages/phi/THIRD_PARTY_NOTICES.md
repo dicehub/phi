@@ -37,7 +37,7 @@ THE SOFTWARE.
 
 ## Bundled dependencies
 
-The built package contains code from 59 dependency packages. Packages with identical license
+The built package contains code from 60 dependency packages. Packages with identical license
 and notice texts are grouped without changing those texts.
 
 ### `@ark-ui/vue@5.37.2`
@@ -389,7 +389,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### `@zag-js/anatomy@1.41.2`, `@zag-js/aria-hidden@1.41.2`, `@zag-js/auto-resize@1.41.2`, `@zag-js/collapsible@1.41.2`, `@zag-js/collection@1.41.2`, `@zag-js/combobox@1.41.2`, `@zag-js/core@1.41.2`, `@zag-js/date-picker@1.41.2`, `@zag-js/date-utils@1.41.2`, `@zag-js/dialog@1.41.2`, `@zag-js/dismissable@1.41.2`, `@zag-js/dom-query@1.41.2`, `@zag-js/focus-trap@1.41.2`, `@zag-js/focus-visible@1.41.2`, `@zag-js/interact-outside@1.41.2`, `@zag-js/live-region@1.41.2`, `@zag-js/menu@1.41.2`, `@zag-js/popover@1.41.2`, `@zag-js/popper@1.41.2`, `@zag-js/presence@1.41.2`, `@zag-js/rect-utils@1.41.2`, `@zag-js/remove-scroll@1.41.2`, `@zag-js/select@1.41.2`, `@zag-js/slider@1.41.2`, `@zag-js/tabs@1.41.2`, `@zag-js/tooltip@1.41.2`, `@zag-js/types@1.41.2`, `@zag-js/utils@1.41.2`, `@zag-js/vue@1.41.2`
+### `@zag-js/anatomy@1.41.2`, `@zag-js/aria-hidden@1.41.2`, `@zag-js/auto-resize@1.41.2`, `@zag-js/collapsible@1.41.2`, `@zag-js/collection@1.41.2`, `@zag-js/combobox@1.41.2`, `@zag-js/core@1.41.2`, `@zag-js/date-picker@1.41.2`, `@zag-js/date-utils@1.41.2`, `@zag-js/dialog@1.41.2`, `@zag-js/dismissable@1.41.2`, `@zag-js/dom-query@1.41.2`, `@zag-js/focus-trap@1.41.2`, `@zag-js/focus-visible@1.41.2`, `@zag-js/i18n-utils@1.41.2`, `@zag-js/interact-outside@1.41.2`, `@zag-js/live-region@1.41.2`, `@zag-js/menu@1.41.2`, `@zag-js/popover@1.41.2`, `@zag-js/popper@1.41.2`, `@zag-js/presence@1.41.2`, `@zag-js/rect-utils@1.41.2`, `@zag-js/remove-scroll@1.41.2`, `@zag-js/select@1.41.2`, `@zag-js/slider@1.41.2`, `@zag-js/tabs@1.41.2`, `@zag-js/tooltip@1.41.2`, `@zag-js/types@1.41.2`, `@zag-js/utils@1.41.2`, `@zag-js/vue@1.41.2`
 
 Declared license: `MIT`
 
@@ -407,6 +407,7 @@ Declared license: `MIT`
 - `@zag-js/dom-query@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/dom-helpers>
 - `@zag-js/focus-trap@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/focus-trap>
 - `@zag-js/focus-visible@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/focus-visible>
+- `@zag-js/i18n-utils@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/i18n-utils>
 - `@zag-js/interact-outside@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/interact-outside>
 - `@zag-js/live-region@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/utilities/live-region>
 - `@zag-js/menu@1.41.2`: <https://github.com/chakra-ui/zag/tree/main/packages/menu>
