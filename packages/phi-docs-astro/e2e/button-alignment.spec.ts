@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 for (const dir of ["ltr", "rtl"]) {
   test(`Button and LinkButton balance icons and text in ${dir}`, async ({ page }) => {
     await page.goto("/docs/components/button");
-    await page.locator("html").evaluate((element, value) => { element.dir = value; }, dir);
+    await page.locator("html").evaluate((element, value) => { element.setAttribute("dir", value); }, dir);
     for (const size of ["xs", "sm", "base", "lg"]) {
       const row = page.locator(`[data-alignment-size='${size}']`);
       const text = row.locator("[data-alignment='text']");

@@ -27,6 +27,7 @@ const smokeSpecs = [
   "sidebar-list.spec.ts",
   "table-of-contents-hash.spec.ts",
   "button-alignment.spec.ts",
+  "dropdown-sync.spec.ts",
   "tag-input-ime.spec.ts",
   "autocomplete-highlight.spec.ts",
   "combobox-highlight.spec.ts",

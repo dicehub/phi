@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed, type Component } from "vue";
 import { Menu } from "@ark-ui/vue/menu";
+import DropdownMenuIcon from "./DropdownMenuIcon.vue";
+import { useMenuIcons } from "./dropdown-icons";
 
 defineOptions({ inheritAttrs: false });
+
+const menuIcons = useMenuIcons();
 
 const props = withDefaults(
   defineProps<{
@@ -24,15 +28,10 @@ const triggerClass = computed(() => ({
   <Menu.TriggerItem
     class="phi-dropdown-item phi-dropdown-sub-trigger"
     :class="triggerClass"
+    :data-auto-inset="menuIcons?.hasIcons.value || undefined"
     v-bind="$attrs"
   >
-    <component
-      :is="icon"
-      v-if="icon"
-      class="phi-dropdown-item__icon"
-      v-bind="iconProps"
-      aria-hidden="true"
-    />
+    <DropdownMenuIcon :icon="icon" :icon-props="iconProps"><slot name="icon" /></DropdownMenuIcon>
     <slot />
     <svg class="phi-dropdown-sub-trigger__caret" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <path d="m6 3.75 4.25 4.25L6 12.25" />

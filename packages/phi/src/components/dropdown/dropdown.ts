@@ -1,3 +1,10 @@
+import type { MenuContentProps } from "@ark-ui/vue/menu";
+
+export type DropdownMenuContentProps = MenuContentProps & {
+  /** Popup portal target. Defaults to document.body. */
+  container?: string | HTMLElement;
+};
+
 export const DROPDOWN_MENU_ITEM_VARIANTS = ["default", "danger"] as const;
 
 export type DropdownMenuItemVariant = (typeof DROPDOWN_MENU_ITEM_VARIANTS)[number];

@@ -15,8 +15,9 @@ import {
 } from "@phosphor-icons/vue";
 import { Button } from "@dicehub/phi/components/button";
 import { DropdownMenu } from "@dicehub/phi/components/dropdown";
+import DropdownAlignmentDocsDemo from "./DropdownAlignmentDocsDemo.vue";
 
-type DemoVariant = "basic" | "inset" | "actions" | "checkbox" | "nested" | "avatar" | "links";
+type DemoVariant = "basic" | "inset" | "actions" | "checkbox" | "nested" | "avatar" | "links" | "alignment";
 
 const props = withDefaults(
   defineProps<{
@@ -39,7 +40,8 @@ const menuId = computed(() => props.idPrefix ?? `dropdown-${props.variant}`);
 
 <template>
   <div class="dropdown-demo">
-    <DropdownMenu v-if="variant === 'basic'" :id="menuId" :positioning="{ placement: 'bottom-start', gutter: 8 }">
+    <DropdownAlignmentDocsDemo v-if="variant === 'alignment'" />
+    <DropdownMenu v-else-if="variant === 'basic'" :id="menuId" :positioning="{ placement: 'bottom-start', gutter: 8 }">
       <DropdownMenu.Trigger>
         <Button :icon="PhPlus">Add</Button>
       </DropdownMenu.Trigger>
