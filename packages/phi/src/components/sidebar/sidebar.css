@@ -443,6 +443,8 @@
 
 .phi-sidebar-menu-sub__line {
   position: absolute;
+  display: block;
+  pointer-events: none;
   inset-block: 1px;
   left: 19px;
   z-index: 1;

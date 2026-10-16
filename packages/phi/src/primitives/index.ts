@@ -2,6 +2,7 @@ export * from "./select";
 export * from "./tabs";
 export * from "./tooltip";
 export * from "./field";
+export { LocaleProvider as PrimitiveLocaleProvider } from "@ark-ui/vue/locale";
 
 export {
   Dialog as PrimitiveDialog,

@@ -192,12 +192,27 @@ import { DropdownMenu } from "@dicehub/phi/components/dropdown";
 </template>`;
 
 export const dropdownExamples = [
+  {
+    id: "icon-alignment",
+    title: "Icon Alignment",
+    variant: "alignment",
+    description: "Rows and labels without icons align automatically when their popup contains an icon. Each submenu tracks its own icons. Use the icon slot for custom content, and inset to force padding. Submenus use a 2px side gap and a -6px alignment offset, including flipped alignment. Use positioning.offset to override the gap or cross-axis offset. Content and SubContent accept a container for local portal targets. Import PrimitiveLocaleProvider from @dicehub/phi/primitives and set locale to control text direction, including nested menus. Use the Phi export so the provider shares the library's Ark context. Portaled menus use z-index 1300 by default; --phi-dropdown-z-index overrides it.",
+    code: `<DropdownMenu.Sub :positioning="{ offset: { mainAxis: 14, crossAxis: 3 } }">
+  <DropdownMenu.SubTrigger>
+    <template #icon><PhGear /></template>
+    Settings
+  </DropdownMenu.SubTrigger>
+  <DropdownMenu.SubContent>
+    <DropdownMenu.Item value="general">General</DropdownMenu.Item>
+  </DropdownMenu.SubContent>
+</DropdownMenu.Sub>`,
+  },
   { id: "basic-dropdown", title: "Basic Dropdown", variant: "basic", code: basicCode },
   {
     id: "inset-items",
     title: "Inset Items",
     variant: "inset",
-    description: "Use inset on items without an icon to align their text with items that have one.",
+    description: "Rows without icons align automatically with icons in the same popup. Use inset to force the same spacing when no icons are present.",
     code: insetCode,
   },
   {
@@ -267,8 +282,9 @@ export const dropdownApiGroups = [
   {
     id: "dropdown-menu-content-api",
     title: "DropdownMenu.Content",
-    description: "Positioned menu surface rendered inside an Ark positioner.",
+    description: "Positioned menu surface rendered inside an Ark positioner and portaled to body by default.",
     props: [
+      { name: "container", type: "string | HTMLElement", defaultValue: '"body"', description: "Element or selector for the popup portal target. Use a container within a local theme boundary when needed." },
       { name: "attrs", type: "Menu.ContentProps", defaultValue: "-", description: "Forwards Ark content props and HTML attributes to Menu.Content." },
       { name: "class", type: "string | object | array", defaultValue: "-", description: "Additional classes are merged with the Phi dropdown content classes." },
     ],
@@ -280,7 +296,7 @@ export const dropdownApiGroups = [
     props: [
       { name: "value", type: "string", defaultValue: "-", description: "Required item value used by Ark for selection and typeahead." },
       { name: "variant", type: '"default" | "danger"', defaultValue: '"default"', description: "Visual style of the item." },
-      { name: "icon", type: "Component", defaultValue: "-", description: "Vue icon component displayed before the label." },
+      { name: "icon", type: "Component", defaultValue: "-", description: "Vue icon component displayed before the label. Use the icon slot for custom content." },
       { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the icon component." },
       { name: "inset", type: "boolean", defaultValue: "false", description: "Adds left padding to align text with icon-bearing items." },
       { name: "selected", type: "boolean", defaultValue: "false", description: "Shows a trailing check mark indicator." },
@@ -300,7 +316,7 @@ export const dropdownApiGroups = [
       { name: "target", type: "string", defaultValue: "-", description: 'Anchor target attribute, for example "_blank".' },
       { name: "rel", type: "string", defaultValue: 'target === "_blank" ? "noreferrer" : undefined', description: "Anchor rel attribute. External-tab links default to noreferrer." },
       { name: "variant", type: '"default" | "danger"', defaultValue: '"default"', description: "Visual style of the link item." },
-      { name: "icon", type: "Component", defaultValue: "-", description: "Vue icon component displayed before the label." },
+      { name: "icon", type: "Component", defaultValue: "-", description: "Vue icon component displayed before the label. Use the icon slot for custom content." },
       { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the icon component." },
       { name: "inset", type: "boolean", defaultValue: "false", description: "Adds left padding to align text with icon-bearing items." },
       { name: "disabled", type: "boolean", defaultValue: "false", description: "When true, the item cannot be interacted with." },
@@ -346,7 +362,7 @@ export const dropdownApiGroups = [
       { name: "id", type: "string", defaultValue: "-", description: "Stable Ark machine id for the submenu." },
       { name: "open", type: "boolean", defaultValue: "-", description: "Controlled submenu open state." },
       { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial open state for uncontrolled usage." },
-      { name: "positioning", type: "Menu.PositioningOptions", defaultValue: '{ placement: "right-start", gutter: 6 }', description: "Floating UI placement options for the submenu." },
+      { name: "positioning", type: "Menu.PositioningOptions", defaultValue: '{ offset: { mainAxis: 2 }, shift: -6 }', description: "Submenu offsets. Ark selects the side for the text direction and flips at viewport edges. Explicit crossAxis skips the default alignment shift; an explicit shift follows Ark precedence." },
       { name: "@update:open", type: "(open: boolean) => void", defaultValue: "-", description: "Emitted when the submenu open state changes." },
     ],
   },
@@ -355,7 +371,7 @@ export const dropdownApiGroups = [
     title: "DropdownMenu.SubTrigger",
     description: "Menu item that opens a nested submenu and displays a caret.",
     props: [
-      { name: "icon", type: "Component", defaultValue: "-", description: "Vue icon component displayed before the label." },
+      { name: "icon", type: "Component", defaultValue: "-", description: "Vue icon component displayed before the label. Use the icon slot for custom content." },
       { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the icon component." },
       { name: "inset", type: "boolean", defaultValue: "false", description: "Adds left padding to align text with icon-bearing items." },
       { name: "disabled", type: "boolean", defaultValue: "false", description: "When true, the submenu trigger cannot be interacted with." },
@@ -364,8 +380,9 @@ export const dropdownApiGroups = [
   {
     id: "dropdown-menu-sub-content-api",
     title: "DropdownMenu.SubContent",
-    description: "Positioned surface for submenu content.",
+    description: "Positioned submenu surface, portaled to body by default. The container prop accepts an element or selector.",
     props: [
+      { name: "container", type: "string | HTMLElement", defaultValue: '"body"', description: "Element or selector for the submenu portal target." },
       { name: "attrs", type: "Menu.ContentProps", defaultValue: "-", description: "Forwards Ark content props and HTML attributes to the submenu content." },
       { name: "class", type: "string | object | array", defaultValue: "-", description: "Additional classes are merged with the Phi submenu content classes." },
     ],
@@ -403,7 +420,7 @@ export const dropdownApiGroups = [
     description: "Radio-style selectable menu item.",
     props: [
       { name: "value", type: "string", defaultValue: "-", description: "Required value for this radio item." },
-      { name: "icon", type: "Component", defaultValue: "-", description: "Vue icon component displayed before the label." },
+      { name: "icon", type: "Component", defaultValue: "-", description: "Vue icon component displayed before the label. Use the icon slot for custom content." },
       { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the icon component." },
       { name: "inset", type: "boolean", defaultValue: "false", description: "Adds left padding to align text with icon-bearing items." },
       { name: "disabled", type: "boolean", defaultValue: "false", description: "When true, the item cannot be interacted with." },

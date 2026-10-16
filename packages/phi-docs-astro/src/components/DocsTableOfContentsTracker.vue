@@ -14,7 +14,7 @@ const getLinkId = (link: HTMLAnchorElement) => {
   try {
     return decodeURIComponent(link.hash.slice(1));
   } catch {
-    return "";
+    return link.hash.slice(1);
   }
 };
 

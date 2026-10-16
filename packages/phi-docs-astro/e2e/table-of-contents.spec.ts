@@ -38,6 +38,7 @@ test.describe("Table of Contents", () => {
       "Granular",
       "Usage",
       "Examples",
+      "Hash tracking",
       "Interactive",
       "No active item",
       "Scroll tracking",
@@ -66,7 +67,7 @@ test.describe("Table of Contents", () => {
     const withoutTitle = exampleById(page, "without-title");
     const customElement = exampleById(page, "custom-element");
 
-    await expect(examples.locator(".docs-component-example")).toHaveCount(6);
+    await expect(examples.locator(".docs-component-example")).toHaveCount(7);
 
     await interactive.locator(".phi-table-of-contents-item").filter({ hasText: "Installation" }).click();
     await expect(interactive.locator(".phi-table-of-contents-item--active")).toHaveText("Installation");

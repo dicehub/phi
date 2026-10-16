@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { computed, type Component } from "vue";
 import { Menu } from "@ark-ui/vue/menu";
+import DropdownMenuIcon from "./DropdownMenuIcon.vue";
+import { useMenuIcons } from "./dropdown-icons";
 import { resolveDropdownMenuItemVariant, type DropdownMenuItemVariant } from "./dropdown";
 
 defineOptions({ inheritAttrs: false });
+
+const menuIcons = useMenuIcons();
 
 const props = withDefaults(
   defineProps<{
@@ -44,16 +48,10 @@ const itemClass = computed(() => [
   <Menu.Item
     class="phi-dropdown-item"
     :class="itemClass"
+    :data-auto-inset="menuIcons?.hasIcons.value || undefined"
     v-bind="{ ...itemProps, ...$attrs }"
   >
-    <component
-      :is="icon"
-      v-if="icon"
-      class="phi-dropdown-item__icon"
-      v-bind="iconProps"
-      aria-hidden="true"
-    />
-    <slot v-else name="icon" />
+    <DropdownMenuIcon :icon="icon" :icon-props="iconProps"><slot name="icon" /></DropdownMenuIcon>
     <slot />
     <span v-if="selected" class="phi-dropdown-radio-indicator" aria-hidden="true">
       <svg viewBox="0 0 16 16" focusable="false">

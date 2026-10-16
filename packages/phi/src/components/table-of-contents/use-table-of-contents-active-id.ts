@@ -118,11 +118,11 @@ export function useTableOfContentsActiveId(
   const syncFromHash = () => {
     if (!trackHash.value || typeof window === "undefined") return;
 
-    let id = "";
+    let id = window.location.hash.slice(1);
     try {
-      id = decodeURIComponent(window.location.hash.slice(1));
+      id = decodeURIComponent(id);
     } catch {
-      return;
+      // Browsers can leave literal percent signs unescaped in valid IDs.
     }
 
     if (id && currentIds().includes(id)) selectSection(id);

@@ -104,8 +104,8 @@ export const provideSidebarMenuItemContext = () => {
   provide(sidebarMenuItemContextKey, ref(true));
 };
 
-export const provideSidebarMenuSubItemContext = () => {
-  provide(sidebarMenuSubItemContextKey, ref(true));
+export const provideSidebarMenuSubItemContext = (insideItem = true) => {
+  provide(sidebarMenuSubItemContextKey, ref(insideItem));
 };
 
 export const useSidebarMenuItemContext = () => inject(sidebarMenuItemContextKey, ref(false));

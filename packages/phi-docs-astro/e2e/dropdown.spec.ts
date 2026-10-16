@@ -37,12 +37,12 @@ test.describe("Dropdown Menu", () => {
     await expect(arkLink).toHaveAttribute("rel", "noopener noreferrer");
     await expect(arkLink.locator("svg")).toHaveAttribute("aria-label", "Ark UI");
 
-    await expect(page.locator(".docs-component-example")).toHaveCount(8);
-    await expect(page.locator(".docs-code-block")).toHaveCount(11);
+    await expect(page.locator(".docs-component-example")).toHaveCount(9);
+    await expect(page.locator(".docs-code-block")).toHaveCount(12);
     await expect(page.locator("#preview .docs-code-block")).toContainText('from "@dicehub/phi/components/dropdown"');
     await expect(page.locator("#preview .docs-code-block")).toContainText("<DropdownMenu.Item value=\"worker\">Worker</DropdownMenu.Item>");
     await expect(page.locator("#examples .docs-code-block").filter({ hasText: "DropdownMenu.CheckboxItem" })).toHaveCount(1);
-    await expect(page.locator("#examples .docs-code-block").filter({ hasText: "DropdownMenu.SubTrigger" })).toHaveCount(1);
+    await expect(page.locator("#examples .docs-code-block").filter({ hasText: "DropdownMenu.SubTrigger" })).toHaveCount(2);
     await expect(page.locator("#examples .docs-code-block").filter({ hasText: "DropdownMenu.LinkItem" })).toHaveCount(1);
     await expect(page.locator(".docs-code-block").filter({ hasText: "v-for" })).toHaveCount(0);
     await expect(page.locator("#api-reference .docs-api-table")).toHaveCount(16);
@@ -60,6 +60,7 @@ test.describe("Dropdown Menu", () => {
       "Granular",
       "Usage",
       "Examples",
+      "Icon Alignment",
       "Basic Dropdown",
       "Inset Items",
       "Handling Item Clicks",

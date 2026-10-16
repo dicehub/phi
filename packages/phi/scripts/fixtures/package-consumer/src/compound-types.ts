@@ -1,5 +1,7 @@
 import { Button, DatePicker, Dialog, Radio, Select } from "@dicehub/phi";
 import { DialogRoot } from "@dicehub/phi/components/dialog";
+import { PrimitiveLocaleProvider } from "@dicehub/phi/primitives";
+import { DropdownMenu, type DropdownMenuContentProps } from "@dicehub/phi/components/dropdown";
 import type { RadioItemAppearance } from "@dicehub/phi/components/radio";
 import { Slider, type SliderValue } from "@dicehub/phi/components/slider";
 import { LocaleProvider } from "@dicehub/phi";
@@ -27,6 +29,10 @@ const rootOutsideDays: DatePickerProps["showOutsideDays"] = false;
 const calendarOutsideDays: CalendarProps["showOutsideDays"] = true;
 const segmentedGroup: RadioGroupProps["appearance"] = "segmented";
 const cardItem: RadioItemAppearance = "card";
+const menuPortal: DropdownMenuContentProps["container"] = "#menu-layer";
+type SubmenuProps = InstanceType<typeof DropdownMenu.Sub>["$props"];
+const submenuPositioning: SubmenuProps["positioning"] = { offset: { mainAxis: 14, crossAxis: 3 } };
+const menuLocale: InstanceType<typeof PrimitiveLocaleProvider>["$props"]["locale"] = "ar-EG";
 
 // Invalid values must still be rejected after preserving component identities.
 // @ts-expect-error Button sizes are strings, not numbers.
@@ -41,8 +47,11 @@ const invalidSliderValue: SliderProps["modelValue"] = "40";
 const invalidItemAppearance: RadioItemProps["appearance"] = "segmented";
 // @ts-expect-error Outside-day visibility is boolean.
 const invalidOutsideDays: DatePickerProps["showOutsideDays"] = "true";
+// @ts-expect-error Popup containers are elements or selectors.
+const invalidMenuPortal: DropdownMenuContentProps["container"] = 42;
 
 void [dialogRoot, dialog, buttonSize, dialogOpen, selectDisabled];
 void [invalidButtonSize, invalidDialogOpen, invalidSelectDisabled];
 void [sliderValue, singleSliderValue, translations, localeProvider, invalidSliderValue];
 void [rootOutsideDays, calendarOutsideDays, segmentedGroup, cardItem, invalidItemAppearance, invalidOutsideDays];
+void [menuPortal, submenuPositioning, invalidMenuPortal, menuLocale];

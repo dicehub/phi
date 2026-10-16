@@ -90,7 +90,7 @@ test.describe("DicehubLogo", () => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin });
     await menuExample.getByRole("button", { name: "Logo" }).click();
 
-    const menuContent = page.locator(".phi-dropdown-content").filter({ hasText: "Copy mark as SVG" });
+    const menuContent = page.getByRole("menu", { name: /Logo$/ });
     await expect(menuContent).toBeVisible();
     await expect
       .poll(async () => {
@@ -107,10 +107,10 @@ test.describe("DicehubLogo", () => {
       })
       .toBe(true);
 
-    await menuExample.getByRole("menuitem", { name: "Copy mark as SVG" }).click();
+    await menuContent.getByRole("menuitem", { name: "Copy mark as SVG" }).click();
 
     await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toContain("dicehub logo");
     await menuExample.getByRole("button", { name: "Logo" }).click();
-    await expect(menuExample.getByRole("menuitem", { name: "Copied!" })).toBeVisible();
+    await expect(menuContent.getByRole("menuitem", { name: "Copied!" })).toBeVisible();
   });
 });

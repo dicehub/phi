@@ -59,11 +59,11 @@ export {
   isDropdownMenuItemVariant,
   resolveDropdownMenuItemVariant,
   type DropdownMenuItemVariant,
+  type DropdownMenuContentProps,
 } from "./dropdown";
 
 export type {
   MenuCheckboxItemProps as DropdownMenuCheckboxItemProps,
-  MenuContentProps as DropdownMenuContentProps,
   MenuItemGroupLabelProps as DropdownMenuLabelProps,
   MenuItemGroupProps as DropdownMenuGroupProps,
   MenuItemProps as DropdownMenuItemProps,

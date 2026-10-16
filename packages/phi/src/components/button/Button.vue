@@ -1,16 +1,14 @@
 <script lang="ts">
 import {
-  Comment,
-  Text,
   computed,
   defineComponent,
   h,
-  isVNode,
   mergeProps,
   type Component,
   type PropType,
   type VNodeChild,
 } from "vue";
+import { hasMeaningfulSlotContent } from "../../utils/slot-content";
 import Tooltip from "../tooltip/Tooltip.vue";
 import {
   BUTTON_DEFAULT_SHAPE,
@@ -23,19 +21,6 @@ import {
   type ButtonTone,
   type ButtonVariant,
 } from "./button";
-
-const hasMeaningfulSlotContent = (node: unknown): boolean => {
-  if (node === null || node === undefined || typeof node === "boolean") return false;
-  if (Array.isArray(node)) return node.some(hasMeaningfulSlotContent);
-  if (typeof node === "string") return node.trim().length > 0;
-  if (typeof node === "number") return true;
-  if (!isVNode(node)) return false;
-  if (node.type === Comment) return false;
-  if (node.type === Text) return typeof node.children === "string" && node.children.trim().length > 0;
-  if (Array.isArray(node.children)) return node.children.some(hasMeaningfulSlotContent);
-
-  return true;
-};
 
 export default defineComponent({
   name: "Button",
@@ -126,7 +111,11 @@ export default defineComponent({
             `phi-button--${resolvedVariant.value}`,
             `phi-button--${resolvedSize.value}`,
             resolvedShape.value !== "base" ? `phi-button--${resolvedShape.value}` : undefined,
-            { "phi-button--loading": props.loading },
+            {
+              "phi-button--loading": props.loading,
+              "phi-button--text": resolvedShape.value === "base" && hasLabel.value,
+              "phi-button--with-icon": resolvedShape.value === "base" && hasLabel.value && (props.icon || props.loading),
+            },
           ],
           "aria-busy": props.loading ? "true" : undefined,
         }),
