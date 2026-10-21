@@ -132,7 +132,8 @@ const anchorOffset = (item: HTMLElement, type: "start" | "end") => {
 
   const anchorRect = anchor.getBoundingClientRect();
   const itemRect = item.getBoundingClientRect();
-  return anchorRect.top - itemRect.top + anchorRect.height / 2;
+  const marginTop = parseFloat(getComputedStyle(item).marginTop) || 0;
+  return anchorRect.top - itemRect.top + marginTop + anchorRect.height / 2;
 };
 
 const collectNodeMeasurements = (): FlowNodeMeasurements => {

@@ -42,7 +42,7 @@ const emit = defineEmits<{
 }>();
 
 const slots = useSlots();
-const editingPage = ref(props.page);
+const editingPage = ref(String(props.page));
 const hasCustomLayout = computed(() => Boolean(slots.default));
 const currentHasNextPage = computed(() => props.hasNextPage);
 const resolvedLabels = computed(() => ({ ...PAGINATION_DEFAULT_LABELS, ...props.labels }));
@@ -70,7 +70,7 @@ function updatePage(page: number) {
 watch(
   () => props.page,
   (page) => {
-    editingPage.value = page;
+    editingPage.value = String(page);
   },
 );
 
@@ -82,7 +82,7 @@ providePaginationContext({
   page: currentPage,
   pageShowingRange,
   perPage: currentPerPage,
-  setEditingPage: (page: number) => {
+  setEditingPage: (page: string) => {
     editingPage.value = page;
   },
   setPage: updatePage,

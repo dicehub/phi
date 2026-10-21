@@ -51,13 +51,14 @@ async function expectHorizontallyCentered(block: Locator, subject: Locator) {
 }
 
 async function expectPopupWidthToMatchTrigger(page: Page, trigger: Locator) {
-  const triggerBox = await trigger.boundingBox();
-  const popupBox = await openContent(page).first().boundingBox();
-
-  expect(triggerBox).not.toBeNull();
-  expect(popupBox).not.toBeNull();
-  expect(popupBox!.width).toBeGreaterThanOrEqual(triggerBox!.width - POPUP_WIDTH_TOLERANCE);
-  expect(popupBox!.width).toBeLessThanOrEqual(triggerBox!.width + POPUP_WIDTH_TOLERANCE);
+  const popup = openContent(page).first();
+  await popup.evaluate(async (element) => {
+    await Promise.all(element.getAnimations().map((animation) => animation.finished));
+  });
+  await expect.poll(async () => {
+    const [triggerBox, popupBox] = await Promise.all([trigger.boundingBox(), popup.boundingBox()]);
+    return triggerBox && popupBox ? Math.abs(popupBox.width - triggerBox.width) : Infinity;
+  }, { message: "The open popup width must match its trigger" }).toBeLessThanOrEqual(POPUP_WIDTH_TOLERANCE);
 }
 
 test.describe("Combobox", () => {

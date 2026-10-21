@@ -10,6 +10,7 @@ type DemoVariant =
   | "localization"
   | "fallback-names"
   | "disabled"
+  | "readonly"
   | "bare"
   | "sizes";
 
@@ -24,6 +25,8 @@ withDefaults(
 
 const recipients = ref(["ava@example.com"]);
 const environments = ref(["staging"]);
+const locked = ref(true);
+const readOnlyTags = ref(["reviewed"]);
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -90,6 +93,16 @@ const spanishLabels = {
     <div v-else-if="variant === 'fallback-names'" class="tag-input-demo__stack">
       <TagInput placeholder="Add a tag" :default-value="['draft']" />
       <TagInput placeholder="Agregar una etiqueta" :labels="{ input: 'Agregar etiqueta' }" />
+    </div>
+
+    <div v-else-if="variant === 'readonly'" class="tag-input-demo__stack">
+      <button type="button" @mousedown.prevent @click="locked = !locked">
+        {{ locked ? 'Allow tag changes' : 'Lock tag changes' }}
+      </button>
+      <form data-readonly-tag-form @submit.prevent>
+        <TagInput v-model="readOnlyTags" label="Reviewed labels" name="labels" required :read-only="locked" />
+        <TagInput label="Empty read-only tags" required :readonly="locked" />
+      </form>
     </div>
 
     <TagInput

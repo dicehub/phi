@@ -35,6 +35,7 @@ const props = withDefaults(
     modelValue?: string[];
     name?: string;
     placeholder?: string;
+    readOnly?: boolean;
     required?: boolean;
     size?: InputSize;
     validateValue?: (value: string, acceptedValues: string[]) => boolean;
@@ -44,6 +45,7 @@ const props = withDefaults(
     autoComplete: "off",
     defaultValue: () => [],
     disabled: false,
+    readOnly: false,
     required: undefined,
     size: INPUT_DEFAULT_SIZE,
   },
@@ -97,6 +99,9 @@ const ariaLabel = computed(() => {
   return labels.value.input;
 });
 const formId = computed(() => (typeof attrs.form === "string" ? attrs.form : undefined));
+// Read attrs on each call: useAttrs values update, but are not reactive dependencies.
+const isReadOnly = () =>
+  props.readOnly || (attrs.readonly !== undefined && attrs.readonly !== null && attrs.readonly !== false);
 const passthroughAttrs = computed(() => {
   const {
     class: _class,
@@ -122,6 +127,7 @@ const setValues = (nextValue: string[]) => {
 };
 
 const commit = (rawValue: string) => {
+  if (props.disabled || isReadOnly()) return false;
   const entries = splitTagInputValues(rawValue);
   const nextValues = [...values.value];
 
@@ -153,6 +159,7 @@ const commit = (rawValue: string) => {
 };
 
 const removeValue = (value: string) => {
+  if (props.disabled || isReadOnly()) return;
   setValues(values.value.filter((item) => item !== value));
 };
 
@@ -163,12 +170,12 @@ const handleInput = (event: Event) => {
 
 const handleBlur = (event: FocusEvent) => {
   (attrs.onBlur as ((event: FocusEvent) => void) | undefined)?.(event);
-  if (!event.defaultPrevented) commit(inputValue.value);
+  if (!event.defaultPrevented && !isReadOnly()) commit(inputValue.value);
 };
 
 const handleKeydown = (event: KeyboardEvent) => {
   (attrs.onKeydown as ((event: KeyboardEvent) => void) | undefined)?.(event);
-  if (event.defaultPrevented) return;
+  if (event.defaultPrevented || props.disabled || isReadOnly()) return;
   // IME confirmation must not create a tag. Safari can end composition before keydown.
   if (event.isComposing || event.keyCode === 229) return;
 
@@ -184,13 +191,16 @@ const handleKeydown = (event: KeyboardEvent) => {
 
 const handlePaste = (event: ClipboardEvent) => {
   (attrs.onPaste as ((event: ClipboardEvent) => void) | undefined)?.(event);
-  if (event.defaultPrevented) return;
+  if (event.defaultPrevented || props.disabled || isReadOnly()) return;
 
   const text = event.clipboardData?.getData("text") ?? "";
   if (!/[\n,]/.test(text)) return;
 
   event.preventDefault();
-  commit(text);
+  const input = event.currentTarget as HTMLInputElement;
+  const start = input.selectionStart ?? inputValue.value.length;
+  const end = input.selectionEnd ?? start;
+  commit(inputValue.value.slice(0, start) + text + inputValue.value.slice(end));
 };
 
 defineExpose({ input: inputRef });
@@ -221,7 +231,7 @@ defineExpose({ input: inputRef });
           type="button"
           class="phi-tag-input-chip__remove"
           :aria-label="labels.removeValue(item)"
-          :disabled="disabled"
+          :disabled="disabled || isReadOnly()"
           @mousedown.prevent
           @click.stop="removeValue(item)"
         >
@@ -244,6 +254,7 @@ defineExpose({ input: inputRef });
         :value="inputValue"
         :placeholder="placeholder"
         :disabled="disabled"
+        :readonly="isReadOnly()"
         :autocomplete="autoComplete"
         :required="required && values.length === 0"
         :aria-label="ariaLabel"

@@ -44,7 +44,7 @@ export const loaderProps = [
     name: "size",
     type: '"sm" | "base" | "lg" | number',
     defaultValue: '"base"',
-    description: 'Size of the spinner. Presets map to 16px, 24px, and 32px; numbers are treated as pixels.',
+    description: 'SVG width and height. Presets map to 16px, 24px, and 32px; numbers are treated as pixels. CSS width and height can override this size.',
   },
   { name: "class", type: "string", defaultValue: "-", description: "Additional CSS classes." },
 ] as const;

@@ -44,7 +44,7 @@ export function clampPaginationPage(value: number, min: number, max: number) {
 }
 
 export function getPaginationMaxPage(totalCount?: number, perPage?: number) {
-  return Math.ceil((totalCount ?? 1) / (perPage ?? 1));
+  return Math.max(Math.ceil((totalCount ?? 1) / (perPage ?? 1)), 1);
 }
 
 export function getPaginationShowingRange(page: number, perPage?: number, totalCount?: number) {

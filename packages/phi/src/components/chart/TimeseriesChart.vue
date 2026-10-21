@@ -110,10 +110,12 @@ const options = computed<PhiChartOption>(() => {
       : ({ type: "line", showSymbol: false } as const);
   const thresholdAnnotations = buildTimeseriesThresholdAnnotations(props.thresholds);
   const thresholdExtent = getThresholdValueExtent(props.thresholds);
-  const markerClusters = clusterTimeseriesMarkers(
-    props.markers,
-    getApproximateMarkerClusterInterval(getTimestamps(props.data, props.markers), props.xAxisTickCount ?? 5),
-  );
+  const markerClusters = props.markers?.length
+    ? clusterTimeseriesMarkers(
+        props.markers,
+        getApproximateMarkerClusterInterval(getTimestamps(props.data, props.markers), props.xAxisTickCount ?? 5),
+      )
+    : [];
   const markerAnnotations = buildTimeseriesMarkerAnnotations(markerClusters, {
     color: markerColor.value,
     labelBackgroundColor: markerLabelBackgroundColor.value,
@@ -336,6 +338,8 @@ watch(
   () => {
     void nextTick(syncBrushMode);
   },
+  // Chart also applies nested data changes. Only notMerge exposes options here.
+  { deep: true },
 );
 
 watch(

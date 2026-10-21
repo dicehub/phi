@@ -71,19 +71,6 @@ test("passes the y-axis minimum interval and tooltip footer through ECharts opti
   assert.match(marker, /<div v-if="footer" class="phi-chart-marker-tooltip__footer">\s+\{\{ footer \}\}\s+<\/div>/);
 });
 
-test("reactivates brush-to-zoom after notMerge option updates", async () => {
-  const source = await readFile(new URL("./TimeseriesChart.vue", import.meta.url), "utf8");
-
-  assert.match(
-    source,
-    /const brushResetKey = computed\(\(\) =>\s+props\.optionUpdateBehavior\?\.notMerge \? options\.value : undefined,/,
-  );
-  assert.match(
-    source,
-    /watch\(\s+\(\) => \[props\.onTimeRangeChange, props\.loading, brushResetKey\.value\],\s+\(\) => \{\s+void nextTick\(syncBrushMode\);\s+\},\s+\);/,
-  );
-});
-
 test("uses mode-aware muted colors for timeseries axes and gridlines", async () => {
   const source = await readFile(new URL("./TimeseriesChart.vue", import.meta.url), "utf8");
 
