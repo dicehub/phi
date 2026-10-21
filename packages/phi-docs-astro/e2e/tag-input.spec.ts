@@ -12,8 +12,8 @@ test.describe("Tag Input", () => {
 
   test("renders expected page sections and snippets", async ({ page }) => {
     await expect(page.locator("main h1").first()).toHaveText("Tag Input");
-    await expect(page.locator(".docs-component-example")).toHaveCount(9);
-    await expect(page.locator(".docs-code-block")).toHaveCount(12);
+    await expect(page.locator(".docs-component-example")).toHaveCount(10);
+    await expect(page.locator(".docs-code-block")).toHaveCount(13);
     await expect(page.locator("#preview .docs-code-block")).toContainText('from "@dicehub/phi/components/tag-input"');
     await expect(page.locator("#preview .docs-code-block")).toContainText('label="Recipients"');
     await expect(page.locator("#api-reference .docs-api-table")).toHaveCount(4);
