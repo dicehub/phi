@@ -338,6 +338,8 @@ watch(
   () => {
     void nextTick(syncBrushMode);
   },
+  // Chart also applies nested data changes. Only notMerge exposes options here.
+  { deep: true },
 );
 
 watch(

@@ -115,7 +115,7 @@ const examples = [
   {
     id: "time-range-selection",
     title: "Time Range Selection",
-    description: "Provide onTimeRangeChange to let users drag across the chart and select a time range.",
+    description: "Provide onTimeRangeChange to let users drag across the chart and select a time range. Selection stays active after in-place data updates, including when optionUpdateBehavior uses notMerge.",
     variant: "time-range",
     code: `<TimeseriesChart
   :echarts="echarts"
