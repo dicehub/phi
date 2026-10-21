@@ -46,7 +46,7 @@ test("opens a block guide from the home list with the keyboard", async ({ page }
   await expect(link).toHaveCSS("outline-style", "solid");
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/\/docs\/blocks\/page-header\/?$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Page Header");
+  await expect(page.getByRole("heading", { level: 1, name: "Page Header", exact: true })).toBeVisible();
 });
 
 test("shows the complete directory within a desktop viewport", async ({ page }) => {
