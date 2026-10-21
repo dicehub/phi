@@ -16,19 +16,14 @@ const props = withDefaults(
 );
 
 const resolvedSize = computed(() => resolveLoaderSize(props.size));
-const sizeStyle = computed(() => ({
-  height: `${resolvedSize.value}px`,
-  width: `${resolvedSize.value}px`,
-}));
 </script>
 
 <template>
   <svg
     v-bind="$attrs"
     class="phi-loader"
-    :style="sizeStyle"
-    width="24"
-    height="24"
+    :width="resolvedSize"
+    :height="resolvedSize"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
     stroke="currentColor"

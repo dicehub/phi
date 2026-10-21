@@ -25,6 +25,7 @@ if (!externalBaseURL && process.env.TEST_WORKER_INDEX === undefined) {
 // list (portal isolation guide, ButtonGroup focus).
 const smokeSpecs = [
   "flow-margins.spec.ts",
+  "loader-sizing.spec.ts",
   "sidebar-list.spec.ts",
   "table-of-contents-hash.spec.ts",
   "button-alignment.spec.ts",
