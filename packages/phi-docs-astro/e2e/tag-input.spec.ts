@@ -17,7 +17,7 @@ test.describe("Tag Input", () => {
     await expect(page.locator("#preview .docs-code-block")).toContainText('from "@dicehub/phi/components/tag-input"');
     await expect(page.locator("#preview .docs-code-block")).toContainText('label="Recipients"');
     await expect(page.locator("#api-reference .docs-api-table")).toHaveCount(4);
-    await expect(page.locator("#props + .docs-api-table tbody tr")).toHaveCount(18);
+    await expect(page.locator("#props + .docs-api-table tbody tr")).toHaveCount(19);
     await expect(page.locator("#labels + p + .docs-api-table tbody tr")).toHaveCount(4);
   });
 
@@ -33,6 +33,7 @@ test.describe("Tag Input", () => {
       "Validation",
       "Localization",
       "Fallback Accessible Name",
+      "Read-only",
       "Disabled",
       "Bare TagInput (Custom Layouts)",
       "Sizes",

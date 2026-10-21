@@ -116,7 +116,7 @@ export const tagInputExamples = [
   {
     id: "unrestricted-values",
     title: "Unrestricted Values",
-    description: "Uncontrolled usage seeds the tags with defaultValue and accepts any non-empty value.",
+    description: "Uncontrolled usage seeds the tags with defaultValue and accepts any non-empty value. Pasting a list inserts the text at the current selection and keeps the rest of the draft before splitting it into tags.",
     variant: "unrestricted",
     code: tagInputDefaultValueCode,
   },
@@ -151,6 +151,13 @@ export const tagInputExamples = [
       "Without a label or aria-label, the input keeps the labels.input name, so the control stays named. Override labels.input to localize it.",
     variant: "fallback-names",
     code: tagInputFallbackNamesCode,
+  },
+  {
+    id: "read-only",
+    title: "Read-only",
+    description: "readOnly (read-only in templates) prevents adding or removing tags while the input remains focusable. The native readonly attribute is also supported. Accepted tags remain in form data; read-only inputs do not take part in required validation.",
+    variant: "readonly",
+    code: `<TagInput label="Reviewed labels" name="labels" :default-value="['reviewed']" read-only />`,
   },
   {
     id: "disabled",
@@ -224,6 +231,12 @@ export const tagInputProps = [
     type: "boolean",
     defaultValue: "undefined",
     description: "Sets the required state. `false` renders the optional hint.",
+  },
+  {
+    name: "readOnly",
+    type: "boolean",
+    defaultValue: "false",
+    description: "Prevents adding and removing tags. Keeps focus and form values; skips native required validation.",
   },
   {
     name: "disabled",

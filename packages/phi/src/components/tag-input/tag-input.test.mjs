@@ -44,7 +44,7 @@ test("commits tags on Enter, comma, Tab, and blur", async () => {
   assert.match(source, /if \(inputValue\.value === "" \|\| !commitKeys\.includes\(event\.key\)\) return;/);
   assert.match(source, /if \(event\.key !== "Tab" \|\| didCommit\) event\.preventDefault\(\);/);
   assert.match(source, /@blur="handleBlur"/);
-  assert.match(source, /if \(!event\.defaultPrevented\) commit\(inputValue\.value\);/);
+  assert.match(source, /if \(!event\.defaultPrevented && !isReadOnly\(\)\) commit\(inputValue\.value\);/);
 });
 
 test("removes the last tag with Backspace only while the input is empty", async () => {
@@ -60,7 +60,7 @@ test("splits comma- and newline-separated pasted text", async () => {
   const source = await readFile(new URL("./TagInput.vue", import.meta.url), "utf8");
 
   assert.match(source, /if \(!\/\[\\n,\]\/\.test\(text\)\) return;/);
-  assert.match(source, /event\.preventDefault\(\);\s+commit\(text\);/);
+  assert.match(source, /commit\(inputValue\.value\.slice\(0, start\) \+ text \+ inputValue\.value\.slice\(end\)\);/);
 });
 
 test("keeps rejected values in the input and announces localized feedback", async () => {
