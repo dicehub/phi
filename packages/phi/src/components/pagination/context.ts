@@ -2,14 +2,14 @@ import { inject, provide, type ComputedRef, type Ref } from "vue";
 import type { PaginationInfoDetails, PaginationLabels } from "./pagination";
 
 export type PaginationContext = {
-  editingPage: Ref<number>;
+  editingPage: Ref<string>;
   hasNextPage: ComputedRef<boolean | undefined>;
   labels: ComputedRef<Required<PaginationLabels>>;
   maxPage: ComputedRef<number>;
   page: ComputedRef<number>;
   pageShowingRange: ComputedRef<string>;
   perPage: ComputedRef<number | undefined>;
-  setEditingPage: (page: number) => void;
+  setEditingPage: (page: string) => void;
   setPage: (page: number) => void;
   totalCount: ComputedRef<number | undefined>;
 };

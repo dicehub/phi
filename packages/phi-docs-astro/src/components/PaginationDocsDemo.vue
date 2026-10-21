@@ -16,7 +16,8 @@ type DemoVariant =
   | "custom-info"
   | "custom-layout"
   | "dropdown-page-selector"
-  | "i18n";
+  | "i18n"
+  | "empty";
 
 const props = withDefaults(
   defineProps<{
@@ -80,8 +81,9 @@ function renderUnknownTotalText() {
 
 <template>
   <div class="pagination-demo">
+    <Pagination v-if="variant === 'empty'" :page="page" :set-page="setPage" :per-page="10" :total-count="0" />
     <Pagination
-      v-if="variant === 'simple'"
+      v-else-if="variant === 'simple'"
       :page="page"
       :set-page="setPage"
       :per-page="perPage"

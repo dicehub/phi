@@ -26,6 +26,7 @@ if (!externalBaseURL && process.env.TEST_WORKER_INDEX === undefined) {
 const smokeSpecs = [
   "flow-margins.spec.ts",
   "loader-sizing.spec.ts",
+  "pagination-validation.spec.ts",
   "sidebar-list.spec.ts",
   "table-of-contents-hash.spec.ts",
   "button-alignment.spec.ts",

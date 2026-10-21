@@ -247,6 +247,13 @@ const labels: PaginationLabels = {
 
 export const paginationExamples = [
   {
+    id: "empty-results",
+    title: "Empty Results",
+    variant: "empty",
+    description: "An empty result set stays on page 1 with all navigation buttons disabled. The page input accepts whole numbers only, clamps them to the page range, and restores the current page for blank or invalid text on Enter or blur.",
+    code: `<Pagination :page="1" :per-page="10" :total-count="0" />`,
+  },
+  {
     id: "full-controls-default",
     title: "Full Controls (Default)",
     variant: "full",

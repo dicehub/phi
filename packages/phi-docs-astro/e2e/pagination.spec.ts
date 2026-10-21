@@ -53,6 +53,7 @@ test.describe("Pagination", () => {
       "Granular",
       "Usage",
       "Examples",
+      "Empty Results",
       "Full Controls (Default)",
       "Simple Controls",
       "Unknown Totals",
@@ -78,7 +79,7 @@ test.describe("Pagination", () => {
     const dropdown = exampleById(page, "dropdown-page-selector");
     const i18n = page.locator("#internationalization");
 
-    await expect(page.locator("#examples .docs-component-example")).toHaveCount(6);
+    await expect(page.locator("#examples .docs-component-example")).toHaveCount(7);
     await expect(page.locator("#compound-components .docs-component-example")).toHaveCount(5);
     await expect(simple.getByRole("button", { name: "Previous page" })).toHaveCount(1);
     await expect(simple.getByRole("button", { name: "Next page" })).toHaveCount(1);

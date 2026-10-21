@@ -38,15 +38,20 @@ function goToPage(page: number) {
     : clampPaginationPage(page, 1, context.maxPage.value);
 
   context.setPage(clamped);
-  context.setEditingPage(clamped);
+  context.setEditingPage(String(clamped));
 }
 
 function handleInput(value: string) {
-  context.setEditingPage(Number(value));
+  context.setEditingPage(value);
 }
 
 function commitInput() {
-  goToPage(context.editingPage.value);
+  const value = context.editingPage.value.trim();
+  if (!/^\d+$/.test(value)) {
+    context.setEditingPage(String(context.page.value));
+    return;
+  }
+  goToPage(Number(value));
 }
 
 function handleSelect(page: number) {
