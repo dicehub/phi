@@ -1,5 +1,30 @@
 # @dicehub/phi
 
+## 1.3.0
+
+### Minor Changes
+
+- e4fe6db: Use tint highlights for Dropdown rows and open submenu triggers. Align submenu rows with their triggers using overridable Ark positioning offsets. Add custom icon slots to submenu triggers, links, and radio items, with consistent icon sizing. Automatically inset rows and labels without icons within each popup, including grouped and dynamic content, while keeping nested popup alignment independent.
+
+  Portal menu content to body to prevent submenu clipping. Content and SubContent accept a container element or selector for local themes and custom portal targets.
+
+  Keep inline submenu offsets stable across highlight updates and place portaled menus above dialogs. Export PrimitiveLocaleProvider from the primitives entrypoint so locale and text direction share the library's Ark context.
+
+### Patch Changes
+
+- 112b644: Optically align Button and LinkButton text across sizes. Reduce leading icon padding in text buttons, including RTL layouts, while keeping icons centered. Skip text spacing for empty conditional labels and square or circle shapes.
+- 30f1b51: Ignore TagInput key handling during IME composition, including Safari's key-code 229 confirmation events, so Enter, comma, and Tab do not create tags early and Backspace does not remove existing tags.
+- 5f25e32: Use the tint color for highlighted Autocomplete suggestions to match Select and Kumo's updated highlight style.
+- 9dcecc1: Use the tint color for highlighted Combobox options to match Select, Autocomplete, and Kumo. Disabled options continue to suppress the highlight background.
+- 1bf104f: Align Flow connectors with custom anchors on nodes with top margins.
+- 47e0a61: Match raw table-of-contents hashes when URL decoding fails, so section IDs with literal percent signs remain selectable. Continue decoding escaped IDs and ignoring unknown hashes.
+- 66d83be: Set Loader dimensions with SVG attributes so CSS can override the size.
+- c8f370a: Reject invalid Pagination page input and keep empty result sets on page 1.
+- f0c8e09: Render the decorative Sidebar submenu guide as an aria-hidden list item. Reset item context at nested submenu boundaries so their buttons receive list-item wrappers. Keep list children valid and prevent the guide from intercepting pointer input.
+- 96c5b06: Prevent tag changes in read-only TagInput controls and merge pasted tags with the draft at the current selection.
+- fb97f9a: Keep TimeseriesChart drag selection active after in-place data updates when optionUpdateBehavior uses notMerge and no markers exist.
+- cb04893: Prevent TimeseriesChart argument-limit crashes on large datasets. Skip marker timestamp scans when no markers exist and iterate timestamps without copying the dataset.
+
 ## 1.2.0
 
 ### Minor Changes
