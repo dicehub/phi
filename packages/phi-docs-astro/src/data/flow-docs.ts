@@ -338,7 +338,7 @@ export const flowApiGroups = [
   {
     id: "flow-anchor-api",
     title: "Flow.Anchor",
-    description: "Marks a custom attachment point for connectors within a Flow.Node.",
+    description: "Marks a custom attachment point for connectors within a Flow.Node. Horizontal connectors include the node's top margin when locating the anchor.",
     props: [
       { name: "type", type: '"start" | "end"', defaultValue: "-", description: "Whether the anchor is outgoing, incoming, or both when omitted." },
       { name: "default slot", type: "slot", defaultValue: "-", description: "Custom anchor content." },
