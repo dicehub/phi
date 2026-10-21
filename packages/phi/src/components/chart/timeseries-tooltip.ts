@@ -34,11 +34,11 @@ export function getMarkerTooltipPosition(
   return { left, top: 12, align };
 }
 
-export function getTimestamps(data: TimeseriesData[], markers: TimeseriesMarker[] | undefined): number[] {
-  return [
-    ...data.flatMap((series) => series.data.map(([timestamp]) => timestamp)),
-    ...(markers?.map((marker) => marker.timestamp) ?? []),
-  ];
+export function* getTimestamps(data: TimeseriesData[], markers: TimeseriesMarker[]): Generator<number> {
+  for (const series of data) {
+    for (const [timestamp] of series.data) yield timestamp;
+  }
+  for (const marker of markers) yield marker.timestamp;
 }
 
 export function findNearest(data: [number, number][], timestamp: number): number | null {

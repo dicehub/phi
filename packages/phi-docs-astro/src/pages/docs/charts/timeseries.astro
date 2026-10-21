@@ -1,5 +1,6 @@
 ---
 import ChartTimeseriesDocsDemo from "../../../components/ChartTimeseriesDocsDemo.vue";
+import ChartLargeDatasetDemo from "../../../components/ChartLargeDatasetDemo.vue";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
@@ -8,6 +9,14 @@ import DocsLayout from "../../../layouts/DocsLayout.astro";
 import "../../../styles/component-docs.css";
 
 const examples = [
+  {
+    id: "large-datasets",
+    title: "Large Datasets",
+    description: "Load 200,000 points, then toggle a reference marker. Marker clustering scans timestamps without copying them or spreading them into a function call. Charts without markers skip that scan.",
+    variant: "large-dataset",
+    code: `<TimeseriesChart :echarts="echarts" :data="data" :markers="markers"
+  :option-update-behavior="{ replaceMerge: ['series'] }" />`,
+  },
   {
     id: "basic-line-chart",
     title: "Basic Line Chart",
@@ -284,7 +293,9 @@ const examples = [
             <p>{example.description}</p>
             <div class="docs-component-example">
               <div class="docs-component-preview docs-component-preview--chart">
-                <ChartTimeseriesDocsDemo client:only="vue" variant={example.variant} />
+                {example.variant === "large-dataset"
+                  ? <ChartLargeDatasetDemo client:only="vue" />
+                  : <ChartTimeseriesDocsDemo client:only="vue" variant={example.variant} />}
               </div>
               <div class="docs-component-example__code">
                 <CodeBlock code={example.code} lang="vue" />

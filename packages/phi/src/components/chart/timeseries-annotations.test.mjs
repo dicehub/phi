@@ -44,6 +44,22 @@ test("computes marker cluster interval from timestamp extent", () => {
   assert.equal(getApproximateMarkerClusterInterval([0], 5), 0);
 });
 
+test("computes marker intervals for large, unordered timestamp datasets", () => {
+  const timestamps = Array.from({ length: 200_000 }, (_, index) => 200_000 - index);
+  assert.equal(getApproximateMarkerClusterInterval(timestamps, 5), 199_999 / 5);
+});
+
+test("accepts timestamp iterators, including empty and single-value inputs", () => {
+  function* timestamps() {
+    yield 50;
+    yield -100;
+    yield 200;
+  }
+  assert.equal(getApproximateMarkerClusterInterval(timestamps(), 5), 60);
+  assert.equal(getApproximateMarkerClusterInterval([][Symbol.iterator](), 5), 0);
+  assert.equal(getApproximateMarkerClusterInterval([50][Symbol.iterator](), 5), 0);
+});
+
 test("builds threshold annotations and extents", () => {
   const thresholds = [
     { value: 55, label: "limit", color: "#f00" },

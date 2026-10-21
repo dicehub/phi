@@ -28,6 +28,7 @@ const smokeSpecs = [
   "loader-sizing.spec.ts",
   "pagination-validation.spec.ts",
   "tag-input-readonly-paste.spec.ts",
+  "chart-large-datasets.spec.ts",
   "sidebar-list.spec.ts",
   "table-of-contents-hash.spec.ts",
   "button-alignment.spec.ts",
