@@ -66,6 +66,11 @@
   overflow: hidden;
 }
 
+.phi-clipboard-text__visibility.phi-button {
+  flex: none;
+  border-radius: 0;
+}
+
 .phi-clipboard-text__button.phi-button:hover:not(:disabled) {
   background: var(--phi-tint, #f4f6f9);
   color: var(--phi-default, #17191f);

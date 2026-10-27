@@ -75,9 +75,10 @@ import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
 const props = [
   { name: "text", type: "string", defaultValue: "-", description: "Text displayed in the read-only field and copied by default." },
   { name: "textToCopy", type: "string", defaultValue: "-", description: "Alternate clipboard value. Use this when displayed text is masked or shortened." },
+  { name: "masked", type: "boolean", defaultValue: "false", description: "Initially hide text and add a reveal/hide button. Copy uses textToCopy or the original text." },
   { name: "size", type: '"sm" | "base" | "lg"', defaultValue: '"lg"', description: "Controls field and copy button height." },
   { name: "tooltip", type: '{ text?: string; copiedText?: string; side?: "top" | "bottom" | "left" | "right" }', defaultValue: "-", description: "Shows a hover tooltip and copied feedback near the copy button." },
-  { name: "labels", type: "{ copyAction?: string }", defaultValue: "-", description: "Accessible labels for the copy action." },
+  { name: "labels", type: "{ copyAction?: string; revealAction?: string; hideAction?: string }", defaultValue: "-", description: "Accessible labels for copy, reveal, and hide actions." },
   { name: "@copy", type: "(details: { text: string }) => void", defaultValue: "-", description: "Event emitted after a successful copy." },
 ];
 ---
@@ -195,6 +196,16 @@ const props = [
               <CodeBlock code={tooltipCode} lang="vue" />
             </div>
           </div>
+          <h3 id="masked-values"><a class="docs-section-anchor" href="#masked-values">Masked Values</a></h3>
+          <p>Set <code>masked</code> to hide the text initially. Reveal or hide it with the visibility button. Copy always uses the original text, or <code>textToCopy</code> when supplied.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--clipboard-text">
+              <ClipboardTextDocsDemo client:only="vue" variant="masked" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={'<ClipboardText text="sk_live_abc123" masked />'} lang="vue" />
+            </div>
+          </div>
         </section>
 
         <section id="api-reference" class="docs-section">
@@ -245,6 +256,7 @@ const props = [
                 <li><a href="#copy-alternate-text">Copy Alternate Text</a></li>
                 <li><a href="#long-text">Long Text</a></li>
                 <li><a href="#with-tooltip">With Tooltip</a></li>
+                <li><a href="#masked-values">Masked Values</a></li>
               </ul>
             </li>
             <li><a href="#api-reference">API Reference</a></li>

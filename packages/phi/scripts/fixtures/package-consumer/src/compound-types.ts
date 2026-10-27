@@ -55,3 +55,11 @@ void [invalidButtonSize, invalidDialogOpen, invalidSelectDisabled];
 void [sliderValue, singleSliderValue, translations, localeProvider, invalidSliderValue];
 void [rootOutsideDays, calendarOutsideDays, segmentedGroup, cardItem, invalidItemAppearance, invalidOutsideDays];
 void [menuPortal, submenuPositioning, invalidMenuPortal, menuLocale];
+
+// New ClipboardText props must be available from the published package.
+import { ClipboardText } from "@dicehub/phi/components/clipboard-text";
+const clipboardProps: Pick<InstanceType<typeof ClipboardText>["$props"], "masked" | "labels"> = {
+  masked: true,
+  labels: { copyAction: "Copy", revealAction: "Show", hideAction: "Hide" },
+};
+void clipboardProps;

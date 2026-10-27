@@ -15,6 +15,8 @@ export type ClipboardTextTooltip = {
 
 export type ClipboardTextLabels = {
   copyAction?: string;
+  revealAction?: string;
+  hideAction?: string;
 };
 
 export const isClipboardTextSize = (value: unknown): value is ClipboardTextSize =>

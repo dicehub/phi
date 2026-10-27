@@ -12,9 +12,10 @@ const examples = [
   {
     id: "large-datasets",
     title: "Large Datasets",
-    description: "Load 200,000 points, then toggle a reference marker. Marker clustering scans timestamps without copying them or spreading them into a function call. Charts without markers skip that scan.",
+    description: "Load 200,000 points, then toggle a reference marker. Marker clustering scans timestamps without copying them or spreading them into a function call. Charts without markers skip that scan. Toggle overlapping labels to compare the default behavior with xAxisHideLabelOverlap set to false.",
     variant: "large-dataset",
     code: `<TimeseriesChart :echarts="echarts" :data="data" :markers="markers"
+  :x-axis-hide-label-overlap="false"
   :option-update-behavior="{ replaceMerge: ['series'] }" />`,
   },
   {

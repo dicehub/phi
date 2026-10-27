@@ -192,6 +192,7 @@ export const timeseriesProps = [
   { name: "markers", type: "TimeseriesMarker[]", defaultValue: "-", description: "Vertical reference markers rendered at specific timestamps." },
   { name: "thresholds", type: "TimeseriesThreshold[]", defaultValue: "-", description: "Horizontal threshold lines rendered on the value axis." },
   { name: "xAxisName", type: "string", defaultValue: "-", description: "Label for the time axis." },
+  { name: "xAxisHideLabelOverlap", type: "boolean", defaultValue: "true", description: "Hide overlapping x-axis labels. Set false to display all tick labels." },
   { name: "xAxisTickCount", type: "number", defaultValue: "5", description: "Approximate number of x-axis ticks." },
   { name: "xAxisTickFormat", type: "(value: number) => string", defaultValue: "-", description: "Formats x-axis timestamp labels." },
   { name: "yAxisName", type: "string", defaultValue: "-", description: "Label for the value axis." },

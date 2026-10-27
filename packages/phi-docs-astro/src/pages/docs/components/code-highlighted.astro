@@ -1,4 +1,5 @@
 ---
+import CodeFallbackDocsDemo from "../../../components/CodeFallbackDocsDemo.vue";
 import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
 import CodeHighlightedDocsDemo from "../../../components/CodeHighlightedDocsDemo.vue";
 import CodeBlock from "../../../components/CodeBlock.astro";
@@ -354,6 +355,8 @@ const composableReturns = [
             <code>@dicehub/phi/components/code</code>. Use CodeHighlighted when you need syntax highlighting.
           </p>
           <CodeBlock code={plainCodeMigrationCode} lang="vue" />
+          <p>CodeHighlighted displays plain text while loading or when a language is unavailable. Both states keep the same border, background, and spacing as highlighted code.</p>
+          <CodeFallbackDocsDemo client:only="vue" />
         </section>
 
         <section id="api-reference" class="docs-section">
