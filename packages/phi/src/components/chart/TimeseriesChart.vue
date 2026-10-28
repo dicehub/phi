@@ -41,6 +41,8 @@ const props = withDefaults(
     thresholds?: TimeseriesThreshold[];
     xAxisName?: string;
     xAxisTickCount?: number;
+    /** Hide overlapping x-axis labels. Defaults to true. */
+    xAxisHideLabelOverlap?: boolean;
     xAxisTickFormat?: (value: number) => string;
     yAxisTickFormat?: (value: number) => string;
     yAxisTickLabelFormat?: (value: number) => string;
@@ -65,6 +67,7 @@ const props = withDefaults(
     onTimeRangeChange?: (from: number, to: number) => void;
   }>(),
   {
+    xAxisHideLabelOverlap: true,
     enableLegendSelection: false,
     gradient: false,
     height: 350,
@@ -249,7 +252,7 @@ const options = computed<PhiChartOption>(() => {
       axisLine: { show: false },
       axisLabel: {
         color: axisTextColor,
-        hideOverlap: true,
+        hideOverlap: props.xAxisHideLabelOverlap,
         ...(props.xAxisTickFormat ? { formatter: (value: number) => props.xAxisTickFormat?.(value) ?? "" } : {}),
       },
       splitNumber: props.xAxisTickCount ?? 5,

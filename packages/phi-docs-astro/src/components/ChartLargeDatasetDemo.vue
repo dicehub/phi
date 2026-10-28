@@ -16,6 +16,8 @@ echarts.use([
 ]);
 
 const large = ref(false);
+const hideLabelOverlap = ref<boolean | undefined>(undefined);
+const labelSummary = ref("");
 const marked = ref(false);
 const chart = ref<InstanceType<typeof TimeseriesChart> | null>(null);
 const data = computed<TimeseriesData[]>(() => [{
@@ -33,6 +35,8 @@ const summary = ref("");
 function readSummary() {
   const option = chart.value?.getChart()?.getOption();
   const series = option?.series as Array<{ name?: string; data?: unknown[]; markLine?: { data?: unknown[] } }> | undefined;
+  const axes = option?.xAxis as Array<{ axisLabel?: { hideOverlap?: boolean } }> | undefined;
+  labelSummary.value = String(axes?.[0]?.axisLabel?.hideOverlap);
   summary.value = `${series?.find((item) => item.name === 'Requests')?.data?.length ?? 0} points, ${series?.find((item) => item.name === 'Markers')?.markLine?.data?.length ?? 0} markers`;
 }
 </script>
@@ -42,10 +46,12 @@ function readSummary() {
     <div class="chart-large-demo__controls">
       <Button @click="large = true">Load 200,000 points</Button>
       <Button :aria-pressed="marked" @click="marked = !marked">Toggle marker</Button>
+      <Button :aria-pressed="hideLabelOverlap ?? true" @click="hideLabelOverlap = !(hideLabelOverlap ?? true)">Hide overlapping labels</Button>
+      <span v-if="labelSummary">Hide overlapping labels: <span data-label-summary>{{ labelSummary }}</span></span>
       <Button @click="readSummary">Read chart summary</Button>
       <output aria-live="polite">{{ summary }}</output>
     </div>
-    <TimeseriesChart ref="chart" :echarts="echarts" :data="data" :markers="markers" :height="280"
+    <TimeseriesChart ref="chart" :echarts="echarts" :data="data" :markers="markers" :height="280" :x-axis-hide-label-overlap="hideLabelOverlap"
       :option-update-behavior="{ replaceMerge: ['series'] }" />
   </div>
 </template>

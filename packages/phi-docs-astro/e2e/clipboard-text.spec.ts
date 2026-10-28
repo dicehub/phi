@@ -32,11 +32,12 @@ test.describe("Clipboard Text", () => {
       "Copy Alternate Text",
       "Long Text",
       "With Tooltip",
+      "Masked Values",
       "API Reference",
     ]);
     await expect(toc.locator("a[href='#preview']")).toHaveCount(0);
     await expect(toc.locator("a[href='#installation'] + ul a")).toHaveCount(2);
-    await expect(toc.locator("a[href='#examples'] + ul a")).toHaveCount(5);
+    await expect(toc.locator("a[href='#examples'] + ul a")).toHaveCount(6);
   });
 
   test("renders usage example above its code", async ({ page }) => {
@@ -55,8 +56,8 @@ test.describe("Clipboard Text", () => {
     await expect(examples.getByRole("heading", { name: "Copy Alternate Text" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "Long Text" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "With Tooltip" })).toBeVisible();
-    await expect(examples.locator(".docs-component-example")).toHaveCount(5);
-    await expect(snippets).toHaveCount(5);
+    await expect(examples.locator(".docs-component-example")).toHaveCount(6);
+    await expect(snippets).toHaveCount(6);
     await expect(snippets.nth(2)).toContainText('text-to-copy="sk_live_51H8_abc123"');
     await expect(snippets.filter({ hasText: "v-for" })).toHaveCount(0);
   });

@@ -17,6 +17,7 @@ defineOptions({ inheritAttrs: false });
 const props = withDefaults(
   defineProps<{
     labels?: ClipboardTextLabels;
+    masked?: boolean;
     size?: ClipboardTextSize;
     text: string;
     textToCopy?: string;
@@ -24,6 +25,7 @@ const props = withDefaults(
   }>(),
   {
     labels: () => ({}),
+    masked: false,
     size: CLIPBOARD_TEXT_DEFAULT_SIZE,
   },
 );
@@ -35,6 +37,7 @@ const emit = defineEmits<{
 const COPIED_FEEDBACK_MS = 1500;
 
 const copied = ref(false);
+const revealed = ref(false);
 const feedbackRevision = ref(0);
 const repeatCopy = ref(false);
 let copiedTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -82,7 +85,26 @@ onBeforeUnmount(() => {
     :data-tooltip-side="tooltipSide"
     :data-copied="copied ? 'true' : undefined"
   >
-    <span class="phi-clipboard-text__value">{{ text }}</span>
+    <span class="phi-clipboard-text__value">{{ masked && !revealed ? "••••••••" : text }}</span>
+    <Button
+      v-if="masked"
+      class="phi-clipboard-text__button phi-clipboard-text__visibility"
+      :size="resolvedSize"
+      tone="ghost"
+      shape="square"
+      type="button"
+      :aria-label="revealed ? (labels.hideAction ?? 'Hide value') : (labels.revealAction ?? 'Reveal value')"
+      :aria-pressed="revealed"
+      @click="revealed = !revealed"
+    >
+      <svg class="phi-clipboard-text__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+          <circle cx="12" cy="12" r="3" />
+          <path v-if="revealed" d="m3 3 18 18" />
+        </g>
+      </svg>
+    </Button>
     <span class="phi-clipboard-text__action">
       <Button
         class="phi-clipboard-text__button"
