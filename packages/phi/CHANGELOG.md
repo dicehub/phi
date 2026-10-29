@@ -1,5 +1,23 @@
 # @dicehub/phi
 
+## 1.4.0
+
+### Minor Changes
+
+- b3dc178: Add masked ClipboardText values with accessible reveal/hide controls and label overrides. Copy keeps using the original or alternate value.
+
+  Add TimeseriesChart xAxisHideLabelOverlap, enabled by default, to control overlapping tick labels.
+
+  Reset CodeHighlighted pre corner radii so fallback and highlighted code remain consistent under global pre styles.
+
+### Patch Changes
+
+- 04f563e: Keep tooltip-only and optional-only labels in Field, Input, InputArea, and TagInput. Omit labels for empty or conditional comment-only label slots so controls retain their accessible names. Reevaluate label slots on render when their content changes.
+
+  Preserve explicit accessible names when labels contain only help or optional indicators. Keep Toolbar.Input free of field labels when native required=false is forwarded by a primitive.
+
+- 04f563e: Keep Tooltip's internal trigger out of the tab order while the tooltip is disabled. Custom as-child triggers retain their native or explicit focus behavior.
+
 ## 1.3.0
 
 ### Minor Changes
