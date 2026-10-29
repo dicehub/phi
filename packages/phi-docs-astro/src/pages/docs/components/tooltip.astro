@@ -3,6 +3,7 @@ import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import TooltipDisabledDocsDemo from "../../../components/TooltipDisabledDocsDemo.vue";
 import TooltipDocsDemo from "../../../components/TooltipDocsDemo.vue";
 import {
   tooltipApiSections,
@@ -92,6 +93,12 @@ import "../../../styles/component-docs.css";
           }
         </section>
 
+        <section id="disabled-triggers" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#disabled-triggers">Disabled triggers</a></h2>
+          <p>A disabled tooltip removes its internal trigger from the tab order. An as-child trigger keeps its own focus behavior, so disabling help does not disable the control.</p>
+          <TooltipDisabledDocsDemo client:only="vue" />
+        </section>
+
         <section id="api-reference" class="docs-section">
           <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
 
@@ -142,6 +149,7 @@ import "../../../styles/component-docs.css";
                 {tooltipExamples.map((example) => <li><a href={`#${example.id}`}>{example.title}</a></li>)}
               </ul>
             </li>
+            <li><a href="#disabled-triggers">Disabled triggers</a></li>
             <li>
               <a href="#api-reference">API Reference</a>
               <ul>

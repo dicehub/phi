@@ -70,6 +70,7 @@ const emitValueChange = (value: string) => {
 </script>
 
 <template>
+  <!-- Toolbar controls have no field labels. Native false must not add an optional label. -->
   <Input
     v-bind="inputAttrs"
     class="phi-toolbar__item phi-toolbar__input"
@@ -79,7 +80,7 @@ const emitValueChange = (value: string) => {
     :placeholder="placeholder"
     :disabled="nativeDisabled"
     :read-only="readOnly || (disabled && focusableWhenDisabled)"
-    :required="required"
+    :required="required || undefined"
     :size="resolvedSize"
     :model-value="modelValue"
     :default-value="defaultValue"

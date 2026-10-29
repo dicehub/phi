@@ -164,6 +164,7 @@ export const tooltipApiSections = [
     description: "The root convenience component. It renders the trigger and tooltip content.",
     rows: [
       { name: "content", type: "string | number | null", defaultValue: "-", description: "Text shown inside the tooltip. Use the content slot for custom content." },
+      { name: "disabled", type: "boolean", defaultValue: "false", description: "Disable the tooltip. Phi’s internal trigger is removed from the tab order; as-child triggers retain their own focus behavior." },
       { name: "asChild", type: "boolean", defaultValue: "false", description: "Render the slotted element as the trigger. In templates, use as-child." },
       { name: "side", type: '"top" | "bottom" | "left" | "right"', defaultValue: '"top"', description: "Preferred side of the trigger." },
       { name: "align", type: '"start" | "center" | "end"', defaultValue: '"center"', description: "Alignment along the trigger." },

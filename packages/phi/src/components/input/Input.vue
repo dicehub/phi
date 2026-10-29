@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { hasRenderedLabelContent } from "../../utils/slot-content";
 import { computed, useAttrs, useSlots } from "vue";
 import { useLocale } from "../../utils/locale-provider";
 import {
@@ -67,11 +68,13 @@ const inputId = computed(() => props.id ?? generatedId);
 const labelId = computed(() => `${inputId.value}-label`);
 const descriptionId = computed(() => `${inputId.value}-description`);
 const errorId = computed(() => `${inputId.value}-error`);
-const hasLabel = computed(() => Boolean(props.label || slots.label));
+// Evaluate slots during rendering, not in a cached computed: slot presence is not reactive.
+const hasLabelText = () => hasRenderedLabelContent(slots.label, props.label);
+const hasLabel = () => hasLabelText() || Boolean(props.labelTooltip) || props.required === false;
 const hasDescription = computed(() => Boolean(props.description || slots.description));
 const errorMessage = computed(() => normalizeInputError(props.error));
 const hasError = computed(() => Boolean(errorMessage.value || slots.error || props.invalid));
-const shouldWrapField = computed(() => hasLabel.value || hasDescription.value || hasError.value);
+const shouldWrapField = () => Boolean(slots.label) || hasLabel() || hasDescription.value || hasError.value;
 const resolvedSize = computed(() => resolveInputSize(props.size));
 const variantError = computed(() => props.error ?? (props.invalid ? "invalid" : undefined));
 const resolvedVariant = computed(() => resolveInputVariant(props.variant, variantError.value));
@@ -107,9 +110,8 @@ const inputPassthroughAttrs = computed(() => ({
   ...inputValueAttrs.value,
   ...passwordManagerAttrs.value,
 }));
-const ariaLabelledBy = computed(() =>
-  hasLabel.value ? labelId.value : (attrs["aria-labelledby"] as string | undefined),
-);
+const ariaLabelledBy = () =>
+  hasLabelText() ? labelId.value : (attrs["aria-labelledby"] as string | undefined);
 
 const handleInput = (event: Event) => {
   const target = event.target as HTMLInputElement;
@@ -121,12 +123,12 @@ const handleInput = (event: Event) => {
 
 <template>
   <div
-    v-if="shouldWrapField"
+    v-if="shouldWrapField()"
     class="phi-input-field"
     :data-invalid="hasError ? '' : undefined"
     :data-disabled="disabled ? '' : undefined"
   >
-    <label v-if="hasLabel" :id="labelId" class="phi-input-label" :for="inputId">
+    <label v-if="hasLabel()" :id="labelId" class="phi-input-label" :for="inputId">
       <span class="phi-input-label__content">
         <slot name="label">{{ label }}</slot>
         <span v-if="showOptional" class="phi-input-label__optional">{{ locale.label.optional }}</span>
@@ -155,7 +157,7 @@ const handleInput = (event: Event) => {
       :disabled="disabled"
       :readonly="readOnly"
       :required="required"
-      :aria-labelledby="ariaLabelledBy"
+      :aria-labelledby="ariaLabelledBy()"
       :aria-describedby="describedBy"
       :aria-invalid="hasError ? 'true' : undefined"
       class="phi-input"

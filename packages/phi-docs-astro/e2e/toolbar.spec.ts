@@ -156,8 +156,14 @@ test.describe("Toolbar", () => {
     await expect(statusSettings).toBeFocused();
 
     const valueTrigger = comboboxExample.getByRole("button", { name: "Choose status" });
+    await valueTrigger.scrollIntoViewIfNeeded();
     await valueTrigger.click();
-    await page.getByRole("option", { name: "Paused" }).click();
+    const popup = page.getByRole("listbox");
+    await expect(popup).toBeVisible();
+    await popup.evaluate(async (element) => {
+      await Promise.all(element.getAnimations({ subtree: true }).map((animation) => animation.finished));
+    });
+    await popup.getByRole("option", { name: "Paused" }).click();
     await expect(valueTrigger).toHaveText("Paused");
   });
 });

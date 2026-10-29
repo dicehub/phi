@@ -253,6 +253,7 @@ onBeforeUnmount(() => {
   >
     <ArkTooltip.Trigger
       :as-child="asChild"
+      :tabindex="!asChild && disabled ? -1 : undefined"
       :class="[asChild ? 'phi-tooltip-trigger-as-child' : 'phi-tooltip-trigger', className]"
       data-phi-component="Tooltip"
       data-phi-part="trigger"

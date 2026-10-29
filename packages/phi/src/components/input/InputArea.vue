@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { hasRenderedLabelContent } from "../../utils/slot-content";
 import { useLocale } from "../../utils/locale-provider";
 import { computed, onBeforeUnmount, ref, useAttrs, useSlots, watch } from "vue";
 import {
@@ -76,11 +77,13 @@ const inputAreaId = computed(() => props.id ?? generatedId);
 const labelId = computed(() => `${inputAreaId.value}-label`);
 const descriptionId = computed(() => `${inputAreaId.value}-description`);
 const errorId = computed(() => `${inputAreaId.value}-error`);
-const hasLabel = computed(() => Boolean(props.label || slots.label));
+// Evaluate slots during rendering, not in a cached computed: slot presence is not reactive.
+const hasLabelText = () => hasRenderedLabelContent(slots.label, props.label);
+const hasLabel = () => hasLabelText() || Boolean(props.labelTooltip) || props.required === false;
 const hasDescription = computed(() => Boolean(props.description || slots.description));
 const errorMessage = computed(() => normalizeInputError(props.error));
 const hasError = computed(() => Boolean(errorMessage.value || slots.error || props.invalid));
-const shouldWrapField = computed(() => hasLabel.value || hasDescription.value || hasError.value);
+const shouldWrapField = () => Boolean(slots.label) || hasLabel() || hasDescription.value || hasError.value;
 const resolvedSize = computed(() => resolveInputSize(props.size));
 const resolvedMinRows = computed(() => resolveInputAreaRowCount(props.minRows));
 const resolvedMaxRows = computed(() => resolveInputAreaMaxRows(props.maxRows, resolvedMinRows.value));
@@ -110,9 +113,8 @@ const textareaPassthroughAttrs = computed(() => ({
   ...Object.fromEntries(Object.entries(attrs).filter(([name]) => name !== "rows")),
   ...textareaValueAttrs.value,
 }));
-const ariaLabelledBy = computed(() =>
-  hasLabel.value ? labelId.value : (attrs["aria-labelledby"] as string | undefined),
-);
+const ariaLabelledBy = () =>
+  hasLabelText() ? labelId.value : (attrs["aria-labelledby"] as string | undefined);
 
 let resizeObserver: ResizeObserver | undefined;
 let observedTextarea: HTMLTextAreaElement | undefined;
@@ -215,12 +217,12 @@ const handleInput = (event: Event) => {
 
 <template>
   <div
-    v-if="shouldWrapField"
+    v-if="shouldWrapField()"
     class="phi-input-field"
     :data-invalid="hasError ? '' : undefined"
     :data-disabled="disabled ? '' : undefined"
   >
-    <label v-if="hasLabel" :id="labelId" class="phi-input-label" :for="inputAreaId">
+    <label v-if="hasLabel()" :id="labelId" class="phi-input-label" :for="inputAreaId">
       <span class="phi-input-label__content">
         <slot name="label">{{ label }}</slot>
         <span v-if="showOptional" class="phi-input-label__optional">{{ locale.label.optional }}</span>
@@ -250,7 +252,7 @@ const handleInput = (event: Event) => {
       :readonly="readOnly"
       :required="required"
       :rows="textareaRows"
-      :aria-labelledby="ariaLabelledBy"
+      :aria-labelledby="ariaLabelledBy()"
       :aria-describedby="describedBy"
       :aria-invalid="hasError ? 'true' : undefined"
       class="phi-input-area"
