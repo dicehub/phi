@@ -1,4 +1,4 @@
-import { Comment, Text, isVNode } from "vue";
+import { Comment, Fragment, Text, isVNode } from "vue";
 
 export const hasMeaningfulSlotContent = (node: unknown): boolean => {
   if (node === null || node === undefined || typeof node === "boolean") return false;
@@ -13,3 +13,19 @@ export const hasMeaningfulSlotContent = (node: unknown): boolean => {
   return true;
 };
 
+// Match Vue renderSlot's fallback rule: empty Text nodes are valid slot content,
+// but comments and fragments containing only comments are not.
+const hasValidSlotContent = (nodes: unknown[]): boolean => nodes.some((node) => {
+  if (!isVNode(node)) return true;
+  if (node.type === Comment) return false;
+  if (node.type === Fragment && Array.isArray(node.children)) return hasValidSlotContent(node.children);
+  return true;
+});
+
+/** Check the content that a label slot will render, including Vue's prop fallback. */
+export const hasRenderedLabelContent = (slot: (() => unknown[]) | undefined, label: unknown): boolean => {
+  const nodes = slot?.();
+  return nodes && hasValidSlotContent(nodes)
+    ? hasMeaningfulSlotContent(nodes)
+    : hasMeaningfulSlotContent(label);
+};

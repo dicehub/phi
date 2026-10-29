@@ -24,6 +24,9 @@ if (!externalBaseURL && process.env.TEST_WORKER_INDEX === undefined) {
 // clipboard controls, and responsive overflow. Later feature MRs extend this
 // list (portal isolation guide, ButtonGroup focus).
 const smokeSpecs = [
+  "field-label-content.spec.ts",
+  "tooltip-disabled.spec.ts",
+  "toolbar.spec.ts",
   "kumo-clipboard-chart-code.spec.ts",
   "flow-margins.spec.ts",
   "loader-sizing.spec.ts",

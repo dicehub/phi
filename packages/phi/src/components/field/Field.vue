@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { hasRenderedLabelContent } from "../../utils/slot-content";
 import { computed, useSlots } from "vue";
 import { Field as ArkField } from "@ark-ui/vue/field";
 import { Label } from "../label";
@@ -49,7 +50,10 @@ const props = withDefaults(
 
 const slots = useSlots();
 const normalizedError = computed(() => normalizeFieldError(props.error));
-const hasLabel = computed(() => Boolean(props.label || slots.label));
+// Evaluate slots during rendering, not in a cached computed: slot presence is not reactive.
+const hasLabel = () => Boolean(
+  hasRenderedLabelContent(slots.label, props.label) || props.labelTooltip || props.required === false,
+);
 const hasError = computed(() => Boolean(normalizedError.value || slots.error));
 const hasDescription = computed(() => Boolean(props.description || slots.description));
 const isInvalid = computed(() => Boolean(props.invalid || hasError.value));
@@ -71,7 +75,7 @@ const rootClass = computed(() => [
     :class="rootClass"
   >
     <ArkField.Label
-      v-if="!hideLabel && hasLabel"
+      v-if="!hideLabel && hasLabel()"
       class="phi-field__label"
       :class="labelClassName"
     >

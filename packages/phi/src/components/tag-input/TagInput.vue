@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { hasRenderedLabelContent } from "../../utils/slot-content";
 import { computed, ref, useAttrs, useSlots } from "vue";
 import { Label } from "../label";
 import {
@@ -71,7 +72,9 @@ const inputId = computed(() => props.id ?? generatedId);
 const labelId = computed(() => `${inputId.value}-label`);
 const descriptionId = computed(() => `${inputId.value}-description`);
 const errorId = computed(() => `${inputId.value}-error`);
-const hasLabel = computed(() => Boolean(props.label || slots.label));
+// Evaluate slots during rendering, not in a cached computed: slot presence is not reactive.
+const hasLabelText = () => hasRenderedLabelContent(slots.label, props.label);
+const hasLabel = () => hasLabelText() || Boolean(props.labelTooltip) || props.required === false;
 const hasDescription = computed(() => Boolean(props.description || slots.description));
 const errorMessage = computed(() => normalizeInputError(props.error) ?? message.value);
 const hasError = computed(() => Boolean(errorMessage.value || slots.error || props.invalid));
@@ -89,15 +92,14 @@ const describedBy = computed(() => {
 
   return ids.filter(Boolean).join(" ") || undefined;
 });
-const ariaLabelledBy = computed(() =>
-  hasLabel.value ? labelId.value : (attrs["aria-labelledby"] as string | undefined),
-);
-const ariaLabel = computed(() => {
+const ariaLabelledBy = () =>
+  hasLabelText() ? labelId.value : (attrs["aria-labelledby"] as string | undefined);
+const ariaLabel = () => {
   if (typeof attrs["aria-label"] === "string") return attrs["aria-label"];
-  if (hasLabel.value) return undefined;
+  if (hasLabelText()) return undefined;
 
   return labels.value.input;
-});
+};
 const formId = computed(() => (typeof attrs.form === "string" ? attrs.form : undefined));
 // Read attrs on each call: useAttrs values update, but are not reactive dependencies.
 const isReadOnly = () =>
@@ -214,7 +216,7 @@ defineExpose({ input: inputRef });
     :data-invalid="hasError ? '' : undefined"
     :data-disabled="disabled ? '' : undefined"
   >
-    <label v-if="hasLabel" :id="labelId" class="phi-tag-input-label" :for="inputId">
+    <label v-if="hasLabel()" :id="labelId" class="phi-tag-input-label" :for="inputId">
       <Label as-content :show-optional="showOptional" :tooltip="labelTooltip">
         <slot name="label">{{ label }}</slot>
       </Label>
@@ -257,8 +259,8 @@ defineExpose({ input: inputRef });
         :readonly="isReadOnly()"
         :autocomplete="autoComplete"
         :required="required && values.length === 0"
-        :aria-label="ariaLabel"
-        :aria-labelledby="ariaLabelledBy"
+        :aria-label="ariaLabel()"
+        :aria-labelledby="ariaLabelledBy()"
         :aria-describedby="describedBy"
         :aria-invalid="hasError ? 'true' : undefined"
         @blur="handleBlur"

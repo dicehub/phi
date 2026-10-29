@@ -3,6 +3,7 @@ import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
+import FieldLabelContentDemo from "../../../components/FieldLabelContentDemo.vue";
 import FieldDocsDemo from "../../../components/FieldDocsDemo.vue";
 import {
   fieldBarrelCode,
@@ -85,6 +86,12 @@ import "../../../styles/component-docs.css";
           }
         </section>
 
+        <section id="label-content" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#label-content">Label content</a></h2>
+          <p>Field, Input, InputArea, and TagInput omit empty labels, including conditional label slots that render only comments or empty text. A tooltip or an explicit optional indicator still renders the label. Supply an accessible name when there is no label text; tooltip-only and optional-only labels preserve that name. Field's hideLabel option hides the entire label.</p>
+          <FieldLabelContentDemo client:only="vue" />
+        </section>
+
         <section id="api-reference" class="docs-section">
           <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
 
@@ -156,6 +163,7 @@ import "../../../styles/component-docs.css";
                 ))}
               </ul>
             </li>
+            <li><a href="#label-content">Label content</a></li>
             <li>
               <a href="#api-reference">API Reference</a>
               <ul>
