@@ -118,6 +118,7 @@ onBeforeUnmount(() => {
     :style="viewportStyle"
   >
     <TransitionGroup
+      appear
       class="phi-toast-list"
       name="phi-toast-transition"
       tag="ol"

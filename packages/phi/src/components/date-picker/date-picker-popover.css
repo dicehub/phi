@@ -97,3 +97,9 @@
     transform: translateY(-0.2rem) scale(0.98);
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .phi-date-picker-content[data-state] {
+    animation: none;
+  }
+}

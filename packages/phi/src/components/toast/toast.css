@@ -267,6 +267,10 @@
   animation: phi-toast-bump 220ms ease;
 }
 
+.phi-toast--bump-alternate {
+  animation: phi-toast-bump-alternate 220ms ease;
+}
+
 .phi-toast-transition-enter-active,
 .phi-toast-transition-leave-active,
 .phi-toast-transition-move {
@@ -287,6 +291,12 @@
   }
 }
 
+@keyframes phi-toast-bump-alternate {
+  50% {
+    transform: scale(1.02);
+  }
+}
+
 @media (min-width: 40rem) {
   .phi-toast-viewport {
     right: 2rem;
@@ -297,10 +307,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .phi-toast,
+  .phi-toast-list,
+  .phi-toast-list__item,
+  .phi-toast-list__item[data-state="closing"],
+  .phi-toast-list:hover .phi-toast-list__item[data-state="closing"],
+  .phi-toast-list:focus-within .phi-toast-list__item[data-state="closing"],
   .phi-toast-transition-enter-active,
   .phi-toast-transition-leave-active,
   .phi-toast-transition-move {
     animation: none;
-    transition-duration: 1ms;
+    transition-property: opacity;
   }
 }

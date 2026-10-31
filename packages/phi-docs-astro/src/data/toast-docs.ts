@@ -432,12 +432,12 @@ export const toastManagerMethods = [
   {
     name: "add",
     type: "(options: PhiToastOptions) => string",
-    description: "Creates a toast and returns its id. Adding an existing id updates that toast instead.",
+    description: "Creates a toast and returns its id. Adding an open id updates and bumps that toast; closing ids are ignored.",
   },
   {
     name: "update",
     type: "(id: string, options: Partial<PhiToastOptions> | ((toast: PhiToast) => Partial<PhiToastOptions>)) => string",
-    description: "Merges a patch into an existing toast. A callback receives the current `PhiToast`.",
+    description: "Merges a patch into an open toast. A callback receives the current `PhiToast`. Only `bump: true` replays motion.",
   },
   {
     name: "dismiss",
@@ -494,6 +494,18 @@ export const toastToastyProps = [
 ] as const;
 
 export const toastOptionsProps = [
+  {
+    name: "id",
+    type: "string",
+    defaultValue: "generated",
+    description: "Stable identifier used to update or repeat an existing toast.",
+  },
+  {
+    name: "bump",
+    type: "boolean",
+    defaultValue: "true for duplicate adds; false otherwise",
+    description: "Replays the bump for this operation only. Reduced motion disables it.",
+  },
   {
     name: "title",
     type: "string",

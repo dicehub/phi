@@ -43,6 +43,7 @@ test.describe("Toast", () => {
       "Action Buttons",
       "Promise",
       "Update a Toast",
+      "Duplicate Toasts",
       "API Reference",
       "Toasty",
       "usePhiToastManager()",
@@ -52,7 +53,7 @@ test.describe("Toast", () => {
   });
 
   test("renders documented examples and API reference", async ({ page }) => {
-    await expect(page.locator("#examples .docs-component-example")).toHaveCount(12);
+    await expect(page.locator("#examples .docs-component-example")).toHaveCount(13);
 
     const success = exampleById(page, "success-variant");
     await success.getByRole("button", { name: "Deploy Worker" }).click();

@@ -1,0 +1,288 @@
+.phi-date-picker--inline .phi-date-picker-calendar {
+  width: max-content;
+  max-width: min(100vw - 2rem, 42rem);
+  padding: 0.75rem;
+  border-radius: 0.625rem;
+  background: var(--phi-control, #ffffff);
+  box-shadow: none;
+  outline: none;
+}
+
+.phi-date-picker--inline .phi-date-picker-nav {
+  top: 0.75rem;
+  inset-inline-end: 0.875rem;
+}
+
+.phi-date-picker-calendar {
+  --phi-date-picker-cell-size: 2rem;
+  --phi-date-picker-cell-width: 2.25rem;
+  display: grid;
+  position: relative;
+  isolation: isolate;
+  gap: 0.75rem;
+  color: var(--phi-default, #17191f);
+}
+
+.phi-date-picker-view[hidden] {
+  display: none;
+}
+
+.phi-date-picker-view-control {
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.phi-date-picker-nav {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0.125rem;
+  z-index: 1;
+  display: flex;
+  height: var(--phi-date-picker-cell-size, 2rem);
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.phi-date-picker-nav-trigger {
+  width: var(--phi-date-picker-cell-size, 2rem);
+  height: var(--phi-date-picker-cell-size, 2rem);
+}
+
+.phi-date-picker-nav-trigger:disabled,
+.phi-date-picker-nav-trigger[aria-disabled="true"],
+.phi-date-picker-preset-trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.phi-date-picker-view-trigger {
+  min-height: 2rem;
+  padding: 0 0.5rem;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.phi-date-picker-chevron {
+  width: 0.45rem;
+  height: 0.45rem;
+  border: solid currentColor;
+  transform: rotate(45deg);
+}
+
+.phi-date-picker-chevron--left {
+  border-width: 0 0 1.5px 1.5px;
+}
+
+.phi-date-picker-chevron--right {
+  border-width: 1.5px 1.5px 0 0;
+}
+
+.phi-date-picker-nav:dir(rtl) .phi-date-picker-chevron {
+  transform: rotate(225deg);
+}
+
+.phi-date-picker-months {
+  display: grid;
+  gap: 1rem;
+}
+
+.phi-date-picker-months[data-month-count="2"] {
+  grid-template-columns: repeat(2, max-content);
+}
+
+.phi-date-picker-month {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.phi-date-picker-month-title {
+  display: flex;
+  min-height: var(--phi-date-picker-cell-size, 2rem);
+  align-items: center;
+  margin: 0;
+  padding-inline: 0.125rem 4.5rem;
+  color: var(--phi-default, #17191f);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  text-align: start;
+}
+
+.phi-date-picker-table {
+  width: max-content;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.phi-date-picker-table[data-view="day"],
+.phi-date-picker-table[data-view="day"] > .phi-date-picker-table-head,
+.phi-date-picker-table[data-view="day"] > .phi-date-picker-table-body {
+  display: block;
+}
+
+.phi-date-picker-table[data-view="day"] .phi-date-picker-table-row {
+  display: flex;
+}
+
+.phi-date-picker-table[data-view="day"] .phi-date-picker-table-body > .phi-date-picker-table-row {
+  margin-block-start: 0.5rem;
+}
+
+.phi-date-picker-table-header,
+.phi-date-picker-week-number-header {
+  width: var(--phi-date-picker-cell-width, 2.25rem);
+  height: 1.25rem;
+  padding: 0;
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.phi-date-picker-table-cell,
+.phi-date-picker-week-number-cell {
+  position: relative;
+  width: var(--phi-date-picker-cell-width, 2.25rem);
+  height: var(--phi-date-picker-cell-size, 2rem);
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.phi-date-picker-week-number-cell {
+  color: var(--phi-subtle, #6c7480);
+  font-size: 0.75rem;
+}
+
+.phi-date-picker-cell-trigger {
+  position: relative;
+  display: flex;
+  width: var(--phi-date-picker-cell-size, 2rem);
+  min-width: var(--phi-date-picker-cell-size, 2rem);
+  height: var(--phi-date-picker-cell-size, 2rem);
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--phi-default, #17191f);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.phi-date-picker-cell-trigger:focus-visible {
+  z-index: 2;
+  outline: 2px solid var(--phi-accent, #4c63ff);
+  outline-offset: 0;
+}
+
+.phi-date-picker-cell-trigger:hover:not([aria-disabled="true"]):not(:disabled):not([data-selected]) {
+  background: var(--phi-tint, #f4f6f9);
+}
+
+.phi-date-picker-cell-trigger[data-outside-range],
+.phi-date-picker-cell-trigger[data-disabled],
+.phi-date-picker-cell-trigger[data-unavailable] {
+  color: var(--phi-inactive, #9aa2ae);
+  text-decoration: none;
+}
+
+.phi-date-picker-cell-trigger[data-today]:not([data-outside-range]) {
+  font-weight: 600;
+}
+
+.phi-date-picker-cell-trigger[data-today]:not([data-outside-range],[data-disabled],[data-unavailable],[data-selected]) {
+  color: var(--phi-date-picker-today, var(--text-color-phi-link, #175cd3));
+}
+
+.phi-date-picker-cell-trigger[data-in-range]:hover:not([aria-disabled="true"]):not(:disabled):not([data-selected]) {
+  background: var(--phi-interact, #e5e7eb);
+}
+
+/* Ark marks range endpoints as selected. Keep their fill above range and hover styles. */
+.phi-date-picker-cell-trigger[data-selected],
+.phi-date-picker-cell-trigger[data-selected]:hover {
+  background: var(--phi-contrast, #101217);
+  color: var(--phi-inverse, #ffffff);
+}
+
+.phi-date-picker-cell-trigger:is([aria-disabled="true"], :disabled) {
+  cursor: not-allowed;
+}
+
+.phi-date-picker-cell-trigger:is([aria-disabled="true"], :disabled):not([data-selected]):hover {
+  background: transparent;
+}
+
+/* Paint the band behind the 32px buttons, across the full 36px columns. */
+.phi-date-picker-table-cell:has(.phi-date-picker-cell-trigger[data-in-range])::before {
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 0;
+  background: var(--phi-fill, #e5e7eb);
+  content: "";
+  pointer-events: none;
+}
+
+/* Hover range markers take precedence when selecting in reverse order. */
+.phi-date-picker-table-cell:has(.phi-date-picker-cell-trigger:is([data-range-start]:not([data-in-hover-range]), [data-hover-range-start]))::before {
+  inset-inline-start: 50%;
+}
+
+.phi-date-picker-table-cell:has(.phi-date-picker-cell-trigger:is([data-range-end]:not([data-in-hover-range]), [data-hover-range-end]))::before {
+  inset-inline-end: 50%;
+}
+
+/* Week-number cells are also td elements; count only real date cells. */
+.phi-date-picker-table-cell:nth-child(1 of .phi-date-picker-table-cell)::before {
+  border-start-start-radius: 0.375rem;
+  border-end-start-radius: 0.375rem;
+}
+
+.phi-date-picker-table-cell:last-child::before {
+  border-start-end-radius: 0.375rem;
+  border-end-end-radius: 0.375rem;
+}
+
+.phi-date-picker-table-cell:not(:last-child) .phi-date-picker-cell-trigger[data-in-range]:is([data-range-start]:not([data-in-hover-range],[data-range-end]), [data-hover-range-start]:not([data-hover-range-end])) {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.phi-date-picker-table-cell:not(:nth-child(1 of .phi-date-picker-table-cell)) .phi-date-picker-cell-trigger[data-in-range]:is([data-range-end]:not([data-in-hover-range],[data-range-start]), [data-hover-range-end]:not([data-hover-range-start])) {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.phi-date-picker-table-cell:last-child:has(.phi-date-picker-cell-trigger:is([data-range-start]:not([data-in-hover-range]), [data-hover-range-start]))::before,
+.phi-date-picker-table-cell:nth-child(1 of .phi-date-picker-table-cell):has(.phi-date-picker-cell-trigger:is([data-range-end]:not([data-in-hover-range]), [data-hover-range-end]))::before {
+  content: none;
+}
+
+/* Keep the grid aligned while removing duplicate dates and highlights. */
+.phi-date-picker-table-cell[data-hidden] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .phi-date-picker-months[data-month-count="2"] {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phi-date-picker-cell-trigger {
+    transition: none;
+  }
+}

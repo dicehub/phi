@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Button } from "../button";
-import { resolveToastVariant, toastVariants, type PhiToast, type ToastAction, type ToastVariant } from "./toast";
+import { getToastBumpClass, resolveToastVariant, toastVariants, type PhiToast, type ToastAction, type ToastVariant } from "./toast";
 
 const props = defineProps<{
   fallbackVariant: ToastVariant;
@@ -28,7 +28,7 @@ const handleActionClick = (action: ToastAction, event: MouseEvent) => {
 
 <template>
   <div
-    :class="[resolvedClasses, { 'phi-toast--bump': toast.bump }]"
+    :class="[resolvedClasses, getToastBumpClass(toast)]"
     :data-state="toast.state"
     :data-variant="variant"
     :role="role"
