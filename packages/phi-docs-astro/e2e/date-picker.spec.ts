@@ -103,7 +103,7 @@ async function expectAnchoredPopover(page: Page, id: string) {
   expect(metrics!.headerCenterDelta).toBeLessThanOrEqual(1);
   expect(metrics!.headerTopDelta).toBeLessThanOrEqual(1);
   if (metrics!.monthCount === 1) {
-    expect(metrics!.outsideDayOpacity).toBeLessThanOrEqual(0.45);
+    expect(metrics!.outsideDayOpacity).toBe(1);
     expect(metrics!.outsideDayTextDecoration).toBe("none");
   } else {
     expect(metrics!.outsideDayOpacity).toBeUndefined();
@@ -179,6 +179,9 @@ test.describe("DatePicker", () => {
     const selectedDay = dayButton(preview, 21);
     await expect(selectedDay).toHaveAttribute("data-selected", "");
     await page.mouse.move(0, 0);
+    await selectedDay.evaluate(async (element) => {
+      await Promise.all(element.getAnimations().map((animation) => animation.finished));
+    });
     const selectedStyle = await selectedDay.evaluate((element) => {
       const style = getComputedStyle(element);
       return {
@@ -336,7 +339,7 @@ test.describe("DatePicker", () => {
     });
 
     expect(disabledStyle.cursor).toBe("not-allowed");
-    expect(disabledStyle.opacity).toBeLessThanOrEqual(0.45);
+    expect(disabledStyle.opacity).toBe(1);
     expect(enabledStyle.cursor).toBe("pointer");
     expect(enabledStyle.opacity).toBe(1);
   });

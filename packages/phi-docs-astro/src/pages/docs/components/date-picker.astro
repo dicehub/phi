@@ -92,6 +92,19 @@ const examples = [
 
         <section id="usage" class="docs-section">
           <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>
+            Day buttons are 32px squares in 36px columns, with 8px between weeks.
+            Selected dates use the theme's contrast and inverse colors. Ranges form one
+            continuous band, with rounded corners where a week ends. The layout follows
+            the direction from <code>PrimitiveLocaleProvider</code>, including month navigation.
+            Popup motion is disabled when the user prefers reduced motion.
+          </p>
+          <p>
+            Inline calendars keep their padding. For a custom popup, put
+            <code>DatePicker.Calendar</code> inside <code>DatePicker.Content</code> and let
+            the content set the padding. Use <code>DatePicker.MonthSelect</code> and
+            <code>DatePicker.YearSelect</code> to add month and year controls.
+          </p>
           <div class="docs-component-example">
             <div class="docs-component-preview docs-component-preview--date-picker docs-component-preview--open-space">
               <DatePickerDocsDemo client:only="vue" variant="usage" />

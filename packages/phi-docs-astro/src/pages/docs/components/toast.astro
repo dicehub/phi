@@ -3,6 +3,7 @@ import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
 import ToastDocsDemo from "../../../components/ToastDocsDemo.vue";
+import ToastMotionDocsDemo from "../../../components/ToastMotionDocsDemo.vue";
 import {
   toastBarrelCode,
   toastExamples,
@@ -17,6 +18,16 @@ import {
 } from "../../../data/toast-docs";
 import DocsLayout from "../../../layouts/DocsLayout.astro";
 import "../../../styles/component-docs.css";
+
+const duplicateToastCode = `const id = toastManager.add({ id: "saved", title: "Changes saved" });
+
+// Reuse the same toast and replay its bump without interrupting the slide-in.
+toastManager.add({ id, title: "Changes saved again" });
+toastManager.add({ id, bump: false });
+
+// Each update chooses its own bump behavior.
+toastManager.update(id, { title: "Updated quietly" });
+toastManager.update(id, { bump: true });`;
 
 const getDescriptionParts = (description: string) =>
   description.split(/(`[^`]+`)/g).map((part) => ({
@@ -115,6 +126,26 @@ const getDescriptionParts = (description: string) =>
               </div>
             </Fragment>
           ))}
+
+          <h3 id="duplicate-toasts"><a class="docs-section-anchor" href="#duplicate-toasts">Duplicate Toasts</a></h3>
+          <p>
+            Reuse an <code>id</code> to update the existing toast and replay its bump animation. Use
+            <code>bump: false</code> for a quiet repeat. Each <code>update()</code> or promise stage uses its own
+            <code>bump</code> option; ordinary updates do not replay earlier bumps. A toast that is closing finishes
+            closing and ignores further adds or updates until it is removed.
+          </p>
+          <p>
+            Repeated bumps keep keyboard focus on toast actions and do not interrupt the entrance animation.
+            Toast motion follows the user's reduced-motion setting.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--toast">
+              <ToastMotionDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={duplicateToastCode} lang="typescript" />
+            </div>
+          </div>
         </section>
 
         <section id="api-reference" class="docs-section">
@@ -239,6 +270,7 @@ const getDescriptionParts = (description: string) =>
                 <li><a href="#action-buttons">Action Buttons</a></li>
                 <li><a href="#promise">Promise</a></li>
                 <li><a href="#update-toast">Update a Toast</a></li>
+                <li><a href="#duplicate-toasts">Duplicate Toasts</a></li>
               </ul>
             </li>
             <li>

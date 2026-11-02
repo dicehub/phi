@@ -146,6 +146,17 @@ export const PHI_TOAST_STYLING = {
 } as const;
 
 const toastManagerKey: InjectionKey<PhiToastManager> = Symbol("phi-toast-manager");
+const toastBumpSequence = Symbol("phi-toast-bump-sequence");
+type InternalToast = PhiToast & { [toastBumpSequence]?: number };
+
+// Keep motion on the existing surface and alternate names instead of remounting
+// the toast: a focused action must survive every duplicate add or update.
+export const getToastBumpClass = (toast: PhiToast) => {
+  if (!toast.bump) return undefined;
+  return ((toast as InternalToast)[toastBumpSequence] ?? 1) % 2 === 0
+    ? "phi-toast--bump-alternate"
+    : "phi-toast--bump";
+};
 
 let toastId = 0;
 let toastLayer = 0;
@@ -242,9 +253,10 @@ export function createPhiToastManager(): PhiToastManager {
     );
   };
 
-  const normalizeNewToast = (options: PhiToastManagerAddOptions, id: string): PhiToast => ({
+  const normalizeNewToast = (options: PhiToastManagerAddOptions, id: string): InternalToast => ({
     ...normalizeToastOptions(options),
     bump: Boolean(options.bump),
+    [toastBumpSequence]: options.bump ? 1 : 0,
     createdAt: Date.now(),
     id,
     state: "open",
@@ -260,9 +272,10 @@ export function createPhiToastManager(): PhiToastManager {
       const existing = toasts.value.find((toast) => toast.id === id);
 
       if (existing) {
+        if (existing.state === "closing") return id;
         manager.update(id, {
           ...normalizeToastOptions(options),
-          bump: options.bump ?? !existing.bump,
+          bump: options.bump ?? true,
         });
         return id;
       }
@@ -296,6 +309,7 @@ export function createPhiToastManager(): PhiToastManager {
     async promise(promise, options) {
       const id = manager.add({
         ...options.loading,
+        bump: options.loading.bump ?? false,
         timeout: options.loading.timeout ?? 0,
       });
 
@@ -336,16 +350,18 @@ export function createPhiToastManager(): PhiToastManager {
     toasts: readonly(toasts) as Readonly<ShallowRef<readonly PhiToast[]>>,
 
     update(id, options) {
-      let nextToast: PhiToast | undefined;
+      let nextToast: InternalToast | undefined;
 
       toasts.value = toasts.value.map((toast) => {
-        if (toast.id !== id) return toast;
+        if (toast.id !== id || toast.state === "closing") return toast;
 
-        const patch = typeof options === "function" ? options(toast) : options;
+        const patch = normalizeToastOptions(typeof options === "function" ? options(toast) : options);
+        const bumpSequence = (toast as InternalToast)[toastBumpSequence] ?? 0;
         nextToast = {
           ...toast,
           ...patch,
-          bump: patch.bump ?? toast.bump,
+          bump: Boolean(patch.bump),
+          [toastBumpSequence]: bumpSequence + (patch.bump ? 1 : 0),
           id,
           state: "open",
           timeout: patch.timeout ?? toast.timeout,

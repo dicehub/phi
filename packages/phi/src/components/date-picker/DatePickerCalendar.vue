@@ -88,7 +88,9 @@ const formatWeekdayLabel = (day: { long: string; short: string }) => weekdayLabe
                     :week-index="weekIndex"
                     :week="week"
                     class="phi-date-picker-week-number-cell"
-                  />
+                  >
+                    {{ datePicker.getWeekNumber(week) }}
+                  </ArkDatePicker.WeekNumberCell>
                   <DatePickerTableCell
                     v-for="day in week"
                     :key="day.toString()"
