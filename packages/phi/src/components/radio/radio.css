@@ -367,3 +367,11 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (forced-colors: active) {
+  .phi-radio:has(.phi-radio__input:focus-visible) .phi-radio__control,
+  .phi-radio--appearance-segmented:has(.phi-radio__input:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}

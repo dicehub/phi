@@ -440,6 +440,16 @@
   color: var(--phi-default, #17191f);
 }
 
+@media (forced-colors: active) {
+  .phi-combobox-control:has(:focus-visible),
+  .phi-combobox-multi-control:has(:focus-visible),
+  .phi-combobox-value-trigger:focus-visible,
+  .phi-combobox-search-input:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
+
 @keyframes phi-combobox-in {
   from {
     opacity: 0;

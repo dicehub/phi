@@ -687,3 +687,13 @@
     transition: none;
   }
 }
+
+@media (forced-colors: active) {
+  .phi-sidebar-menu-button:focus-visible,
+  .phi-sidebar-menu-sub-button:focus-visible,
+  .phi-sidebar-trigger:focus-visible,
+  .phi-sidebar-resize-handle:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

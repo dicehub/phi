@@ -283,3 +283,10 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
+@media (forced-colors: active) {
+  .phi-checkbox:has(.phi-checkbox__input:focus-visible) .phi-checkbox__control {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}

@@ -233,3 +233,10 @@
     transition: none;
   }
 }
+
+@media (forced-colors: active) {
+  .phi-switch:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}

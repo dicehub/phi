@@ -235,3 +235,11 @@
 .phi-input-field > .phi-input-description {
   color: var(--phi-subtle, #6c7480);
 }
+
+@media (forced-colors: active) {
+  .phi-input:focus-visible,
+  .phi-input-label__tooltip:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}

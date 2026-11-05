@@ -191,3 +191,11 @@
 .phi-tag-input-field > .phi-tag-input-description {
   color: var(--phi-subtle, #6c7480);
 }
+
+@media (forced-colors: active) {
+  .phi-tag-input:has(:focus-visible),
+  .phi-tag-input-chip__remove:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}

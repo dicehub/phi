@@ -2,6 +2,23 @@ export const barrelCode = `import { Dialog } from "@dicehub/phi";`;
 
 export const granularCode = `import { Dialog } from "@dicehub/phi/components/dialog";`;
 
+export const longContentCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+import { Dialog } from "@dicehub/phi/components/dialog";
+</script>
+
+<template>
+  <Dialog.Root>
+    <Dialog.Trigger><Button>Open settings</Button></Dialog.Trigger>
+    <Dialog style="padding: 1.5rem">
+      <Dialog.Title>Review settings</Dialog.Title>
+      <Dialog.Description>Read all settings before you save.</Dialog.Description>
+      <div style="height: 900px">Long form content</div>
+      <Dialog.Close as-child><Button>Save settings</Button></Dialog.Close>
+    </Dialog>
+  </Dialog.Root>
+</template>`;
+
 export const previewCode = `<script setup>
 import { Button } from "@dicehub/phi/components/button";
 import { Dialog } from "@dicehub/phi/components/dialog";

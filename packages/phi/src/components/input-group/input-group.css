@@ -341,3 +341,15 @@
     transform: rotate(360deg);
   }
 }
+
+@media (forced-colors: active) {
+  .phi-input-group:has(:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .phi-input-group-button.phi-button:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

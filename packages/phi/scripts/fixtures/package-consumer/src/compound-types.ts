@@ -4,6 +4,13 @@ import { PrimitiveLocaleProvider } from "@dicehub/phi/primitives";
 import { DropdownMenu, type DropdownMenuContentProps } from "@dicehub/phi/components/dropdown";
 import type { RadioItemAppearance } from "@dicehub/phi/components/radio";
 import { Slider, type SliderValue } from "@dicehub/phi/components/slider";
+import {
+  SkeletonLine,
+  PHI_SKELETON_LINE_DEFAULT_VARIANTS,
+  PHI_SKELETON_LINE_VARIANTS,
+  type SkeletonLineVariant,
+  type PhiSkeletonLineVariant,
+} from "@dicehub/phi/components/skeleton-line";
 import { LocaleProvider } from "@dicehub/phi";
 import { LocaleProvider as UtilsLocaleProvider, type TranslationsPartial } from "@dicehub/phi/utils";
 
@@ -33,6 +40,11 @@ const menuPortal: DropdownMenuContentProps["container"] = "#menu-layer";
 type SubmenuProps = InstanceType<typeof DropdownMenu.Sub>["$props"];
 const submenuPositioning: SubmenuProps["positioning"] = { offset: { mainAxis: 14, crossAxis: 3 } };
 const menuLocale: InstanceType<typeof PrimitiveLocaleProvider>["$props"]["locale"] = "ar-EG";
+const skeletonVariant: SkeletonLineVariant = "sketch";
+const skeletonAlias: PhiSkeletonLineVariant = skeletonVariant;
+const skeletonProp: InstanceType<typeof SkeletonLine>["$props"]["variant"] = skeletonVariant;
+const defaultSkeletonVariant: SkeletonLineVariant = PHI_SKELETON_LINE_DEFAULT_VARIANTS.variant;
+const skeletonDescription: string = PHI_SKELETON_LINE_VARIANTS.variant.sketch.description;
 
 // Invalid values must still be rejected after preserving component identities.
 // @ts-expect-error Button sizes are strings, not numbers.
@@ -49,12 +61,18 @@ const invalidItemAppearance: RadioItemProps["appearance"] = "segmented";
 const invalidOutsideDays: DatePickerProps["showOutsideDays"] = "true";
 // @ts-expect-error Popup containers are elements or selectors.
 const invalidMenuPortal: DropdownMenuContentProps["container"] = 42;
+// @ts-expect-error SkeletonLine accepts only the default and sketch variants.
+const invalidSkeletonVariant: SkeletonLineVariant = "outline";
+// @ts-expect-error The component must retain its public variant union.
+const invalidSkeletonProp: InstanceType<typeof SkeletonLine>["$props"]["variant"] = "outline";
 
 void [dialogRoot, dialog, buttonSize, dialogOpen, selectDisabled];
 void [invalidButtonSize, invalidDialogOpen, invalidSelectDisabled];
 void [sliderValue, singleSliderValue, translations, localeProvider, invalidSliderValue];
 void [rootOutsideDays, calendarOutsideDays, segmentedGroup, cardItem, invalidItemAppearance, invalidOutsideDays];
 void [menuPortal, submenuPositioning, invalidMenuPortal, menuLocale];
+void [skeletonVariant, skeletonAlias, skeletonProp, defaultSkeletonVariant, skeletonDescription];
+void [invalidSkeletonVariant, invalidSkeletonProp];
 
 // New ClipboardText props must be available from the published package.
 import { ClipboardText } from "@dicehub/phi/components/clipboard-text";

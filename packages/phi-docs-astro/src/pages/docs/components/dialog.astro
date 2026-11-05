@@ -1,6 +1,7 @@
 ---
 import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
 import DialogDocsDemo from "../../../components/DialogDocsDemo.vue";
+import DialogScrollDocsDemo from "../../../components/DialogScrollDocsDemo.vue";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
@@ -16,6 +17,7 @@ import {
   dropdownCode,
   granularCode,
   maxWidthCode,
+  longContentCode,
   previewCode,
   selectCode,
   subComponents,
@@ -90,6 +92,11 @@ const examples = [
             Dialogs open near the viewport top: 32px on small screens and 64px from 640px upward. This keeps long
             content visible and gives modal workflows a stable starting point.
           </p>
+          <p>
+            Tall dialogs scroll inside the panel. The panel stays within the current viewport, and its final actions
+            remain available by scroll or keyboard. Direct child sections keep their natural height, including
+            <code>LayerCard</code> sections.
+          </p>
           <div class="docs-component-example">
             <div class="docs-component-preview docs-component-preview--dialog">
               <DialogDocsDemo client:only="vue" variant="usage" />
@@ -142,6 +149,15 @@ const examples = [
               </div>
             </>
           ))}
+          <h3 id="long-content"><a class="docs-section-anchor" href="#long-content">Long Content</a></h3>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--dialog">
+              <DialogScrollDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={longContentCode} lang="vue" />
+            </div>
+          </div>
         </section>
 
         <section id="sub-components" class="docs-section">
@@ -202,6 +218,7 @@ const examples = [
                 {examples.map((example) => (
                   <li><a href={`#${example.id}`}>{example.title}</a></li>
                 ))}
+                <li><a href="#long-content">Long Content</a></li>
               </ul>
             </li>
             <li><a href="#sub-components">Sub-components</a></li>

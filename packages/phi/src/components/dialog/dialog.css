@@ -27,12 +27,15 @@
   --phi-dialog-easing: var(--phi-transition-easing, cubic-bezier(0.4, 0, 0.2, 1));
   --phi-dialog-width: 24rem;
 
+  box-sizing: border-box;
   width: calc(100vw - 2rem);
   min-width: 0;
   max-width: min(var(--phi-dialog-max-width, calc(100vw - 2rem)), calc(100vw - 2rem));
   max-height: calc(100vh - var(--phi-dialog-viewport-spacing, 3rem));
   max-height: calc(100dvh - var(--phi-dialog-viewport-spacing, 3rem));
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border-radius: 0.75rem;
   background: var(--phi-control, #ffffff);
   color: var(--phi-default, #17191f);
@@ -42,6 +45,10 @@
     var(--phi-dialog-shadow, 0 20px 25px -5px rgba(16, 24, 40, 0.06), 0 8px 10px -6px rgba(16, 24, 40, 0.05));
   font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
   outline: none;
+}
+
+.phi-dialog-content > * {
+  flex-shrink: 0;
 }
 
 .phi-dialog-content--sm {
@@ -119,6 +126,14 @@
   position: relative;
   width: 0.875rem;
   height: 0.875rem;
+}
+
+@media (forced-colors: active) {
+  .phi-dialog-close:focus-visible,
+  .phi-dialog-close-trigger:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
 }
 
 .phi-dialog-close__icon::before,

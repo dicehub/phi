@@ -2,6 +2,7 @@
 import CodeBlock from "../../components/CodeBlock.astro";
 import CopyPageControls from "../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../components/DocsPageNavigation.astro";
+import ForcedColorsDocsDemo from "../../components/ForcedColorsDocsDemo.vue";
 import DocsLayout from "../../layouts/DocsLayout.astro";
 
 const toc = [
@@ -141,6 +142,19 @@ import { PhTrash } from "@phosphor-icons/vue";
             <a class="docs-link" href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/">ARIA keyboard interface guidance</a>{" "}
             when building a custom interaction.
           </p>
+          <h3>Forced-colors focus</h3>
+          <p>
+            Windows contrast themes can remove box shadows. Phi uses system-color outlines
+            in forced-colors mode to keep keyboard focus visible. Shared input containers show
+            their focus outline around the group. Tabs keep the outline inside each tab so
+            the scrolling list does not clip it. Other color modes keep the usual focus rings.
+          </p>
+          <p>
+            Enable a contrast theme, then select a start control below and press Tab.
+            Use arrow keys within radio groups, sliders, and tabs. Check that you can see
+            which control has focus at each step.
+          </p>
+          <ForcedColorsDocsDemo client:load />
         </section>
 
         <section id="dialogs-and-overlays" class="docs-section">
@@ -198,7 +212,7 @@ import { PhTrash } from "@phosphor-icons/vue";
               Zoom the browser to 200% and test a narrow viewport. Confirm that content and controls
               remain readable and usable.
             </li>
-            <li>Test light and dark themes, reduced motion, and the browsers your application supports.</li>
+            <li>Test light and dark themes, forced colors, reduced motion, and the browsers your application supports.</li>
             <li>
               Run automated accessibility checks and add browser regressions for failures.
               Automated checks cannot verify every interaction or the clarity of your content.

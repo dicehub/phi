@@ -100,3 +100,10 @@
 .phi-input-area--auto-resize::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+@media (forced-colors: active) {
+  .phi-input-area:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}

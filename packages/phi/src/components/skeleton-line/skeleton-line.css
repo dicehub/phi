@@ -16,14 +16,18 @@
 
 .phi-skeleton-line {
   position: relative;
-  overflow: hidden;
   width: var(--skeleton-width, 100%);
   height: 0.5rem;
+}
+
+.phi-skeleton-line:not(:where([data-variant="sketch"])) {
+  overflow: hidden;
   border-radius: 2px;
   background-color: #f3f4f6;
 }
 
-.phi-skeleton-line::after {
+.phi-skeleton-line:not(:where([data-variant="sketch"]))::after,
+.phi-skeleton-line__fill::after {
   position: absolute;
   inset: 0;
   animation: phi-skeleton-line-shimmer var(--shimmer-duration, 1.5s) var(--shimmer-delay, 0s) infinite ease-in-out;
@@ -31,11 +35,11 @@
   content: "";
 }
 
-:where([data-phi-theme="dark"], html.phi-docs-root[data-mode="dark"]) .phi-skeleton-line {
+:where([data-phi-theme="dark"], html.phi-docs-root[data-mode="dark"]) .phi-skeleton-line:not(:where([data-variant="sketch"])) {
   background-color: rgba(255, 255, 255, 0.06);
 }
 
-:where([data-phi-theme="dark"], html.phi-docs-root[data-mode="dark"]) .phi-skeleton-line::after {
+:where([data-phi-theme="dark"], html.phi-docs-root[data-mode="dark"]) .phi-skeleton-line:not(:where([data-variant="sketch"]))::after {
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
@@ -44,8 +48,55 @@
   );
 }
 
+.phi-skeleton-line__fill,
+.phi-skeleton-line__outline {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.5rem;
+}
+
+.phi-skeleton-line__fill {
+  overflow: hidden;
+  background: var(--phi-recessed, #f7f8fa);
+}
+
+.phi-skeleton-line__fill::after {
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--phi-contrast, #101217) 8%, transparent), transparent);
+}
+
+.phi-skeleton-line__stroke {
+  position: absolute;
+  background: var(--phi-fill, rgba(17, 24, 39, 0.1));
+}
+
+.phi-skeleton-line__stroke--top,
+.phi-skeleton-line__stroke--bottom {
+  right: -4px;
+  left: -4px;
+  height: 1px;
+}
+
+.phi-skeleton-line__stroke--top { top: 0; }
+.phi-skeleton-line__stroke--bottom { bottom: 0; }
+
+.phi-skeleton-line__stroke--left,
+.phi-skeleton-line__stroke--right {
+  top: -4px;
+  bottom: -4px;
+  width: 1px;
+}
+
+.phi-skeleton-line__stroke--left { left: 0; }
+.phi-skeleton-line__stroke--right { right: 0; }
+
+.phi-skeleton-line__outline {
+  box-sizing: border-box;
+  border: 1px solid var(--phi-interact, #e5e7eb);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .phi-skeleton-line::after {
+  .phi-skeleton-line:not(:where([data-variant="sketch"]))::after,
+  .phi-skeleton-line__fill::after {
     animation: none;
   }
 }
