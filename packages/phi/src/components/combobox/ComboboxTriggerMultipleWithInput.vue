@@ -2,12 +2,13 @@
 import { computed } from "vue";
 import { Combobox, useComboboxContext } from "@ark-ui/vue/combobox";
 import ComboboxChip from "./ComboboxChip.vue";
+import { getComboboxAriaProps, type ComboboxAriaProps } from "./combobox-aria";
 import { usePhiComboboxContext, type ComboboxSize } from "./combobox-context";
 
 defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
-  defineProps<{
+  defineProps<ComboboxAriaProps & {
     clearable?: boolean;
     inputSide?: "right" | "top";
     placeholder?: string;
@@ -23,6 +24,7 @@ const props = withDefaults(
 
 const arkCombobox = useComboboxContext();
 const phiCombobox = usePhiComboboxContext();
+const ariaProps = computed(() => getComboboxAriaProps(props, phiCombobox.describedBy.value));
 const resolvedSize = computed(() => props.size ?? phiCombobox.size.value);
 const selectedItems = computed(() => arkCombobox.value.selectedItems ?? phiCombobox.collection.value.findMany(arkCombobox.value.value ?? []));
 const itemToKey = (item: unknown) => phiCombobox.collection.value.getItemValue(item) ?? String(item ?? "");
@@ -40,8 +42,8 @@ const itemToKey = (item: unknown) => phiCombobox.collection.value.getItemValue(i
         <ComboboxChip v-for="item in selectedItems" :key="itemToKey(item)" :item="item" />
       </slot>
       <Combobox.Input
+        v-bind="ariaProps"
         class="phi-combobox-multi-input"
-        :aria-describedby="phiCombobox.describedBy.value"
         :placeholder="placeholder"
       />
     </div>

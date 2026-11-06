@@ -173,18 +173,20 @@
   gap: 0.5rem;
 }
 
-.phi-switch-group__description,
-.phi-switch-group__error {
+.phi-switch-group > .phi-switch-group__description,
+.phi-switch-group > .phi-switch-group__error {
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-.phi-switch-group__description {
+.phi-switch-group > .phi-switch-group__description {
   color: var(--phi-subtle, #6c7480);
+  line-height: 1.375;
+  text-wrap: pretty;
 }
 
-.phi-switch-group__error {
+.phi-switch-group > .phi-switch-group__error {
   color: var(--phi-danger, #b42318);
 }
 

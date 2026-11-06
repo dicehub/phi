@@ -112,7 +112,10 @@ import { Switch } from "@dicehub/phi/components/switch";
 </script>
 
 <template>
-  <Switch.Group legend="Notification settings">
+  <Switch.Group
+    legend="Notification settings"
+    description="Choose which notifications you want to receive when your projects need attention. You can change these settings at any time."
+  >
     <Switch.Item label="Email notifications" />
     <Switch.Item label="SMS notifications" />
     <Switch.Item label="Push notifications" />
@@ -190,7 +193,7 @@ export const switchExamples = [
     id: "switch-group",
     title: "Switch Group",
     variant: "group",
-    description: "Group related switches with `Switch.Group`. Provides a shared legend, description, and error message for the group.",
+    description: "Group related switches with `Switch.Group`. Provides a shared legend, description, and error message for the group. Descriptions use consistent line spacing and wrap to avoid short final lines.",
     code: switchGroupCode,
   },
   {

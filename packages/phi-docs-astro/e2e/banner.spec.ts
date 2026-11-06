@@ -146,13 +146,14 @@ test.describe("Banner", () => {
     await expect(examples.getByRole("heading", { name: "With Icon" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "With Action" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "With Multiple Actions" })).toBeVisible();
+    await expect(examples.getByRole("heading", { name: "With Link Actions" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "Compact Size" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "With Inline Link" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "With CTA" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "Without Action" })).toBeVisible();
     await expect(examples.getByRole("heading", { name: "Custom Content" })).toBeVisible();
-    await expect(examples.locator(".docs-component-example")).toHaveCount(11);
-    await expect(examples.locator(".docs-code-block")).toHaveCount(11);
+    await expect(examples.locator(".docs-component-example")).toHaveCount(12);
+    await expect(examples.locator(".docs-code-block")).toHaveCount(12);
   });
 
   test("keeps code examples inside the page width", async ({ page }) => {

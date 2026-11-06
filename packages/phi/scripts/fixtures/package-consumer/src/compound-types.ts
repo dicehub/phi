@@ -1,4 +1,5 @@
-import { Button, DatePicker, Dialog, Radio, Select } from "@dicehub/phi";
+import { Banner, Button, Combobox, DatePicker, Dialog, Radio, Select } from "@dicehub/phi";
+import type { BannerActionProps } from "@dicehub/phi/components/banner";
 import { DialogRoot } from "@dicehub/phi/components/dialog";
 import { PrimitiveLocaleProvider } from "@dicehub/phi/primitives";
 import { DropdownMenu, type DropdownMenuContentProps } from "@dicehub/phi/components/dropdown";
@@ -45,6 +46,16 @@ const skeletonAlias: PhiSkeletonLineVariant = skeletonVariant;
 const skeletonProp: InstanceType<typeof SkeletonLine>["$props"]["variant"] = skeletonVariant;
 const defaultSkeletonVariant: SkeletonLineVariant = PHI_SKELETON_LINE_DEFAULT_VARIANTS.variant;
 const skeletonDescription: string = PHI_SKELETON_LINE_VARIANTS.variant.sketch.description;
+const bannerHref: BannerActionProps["href"] = "/billing";
+const externalBannerLink: InstanceType<typeof Banner.Action>["$props"]["external"] = true;
+type ComboboxMultiProps = InstanceType<typeof Combobox.TriggerMultipleWithInput>["$props"];
+type ComboboxValueProps = InstanceType<typeof Combobox.TriggerValue>["$props"];
+const comboboxMultiAria: Pick<ComboboxMultiProps, "ariaLabel" | "ariaLabelledby" | "ariaDescribedby"> = {
+  ariaLabel: "Regions",
+  ariaLabelledby: "region-label",
+  ariaDescribedby: "region-help",
+};
+const comboboxValueAria: Pick<ComboboxValueProps, "ariaLabel" | "ariaLabelledby" | "ariaDescribedby"> = comboboxMultiAria;
 
 // Invalid values must still be rejected after preserving component identities.
 // @ts-expect-error Button sizes are strings, not numbers.
@@ -65,6 +76,14 @@ const invalidMenuPortal: DropdownMenuContentProps["container"] = 42;
 const invalidSkeletonVariant: SkeletonLineVariant = "outline";
 // @ts-expect-error The component must retain its public variant union.
 const invalidSkeletonProp: InstanceType<typeof SkeletonLine>["$props"]["variant"] = "outline";
+// @ts-expect-error Banner action destinations must be strings.
+const invalidBannerHref: BannerActionProps["href"] = 42;
+// @ts-expect-error External link behavior is boolean.
+const invalidExternalBannerLink: InstanceType<typeof Banner.Action>["$props"]["external"] = "yes";
+// @ts-expect-error Multi-input accessible names must be strings.
+const invalidComboboxMultiName: ComboboxMultiProps["ariaLabel"] = 42;
+// @ts-expect-error Trigger descriptions must be space-separated ID strings.
+const invalidComboboxValueDescription: ComboboxValueProps["ariaDescribedby"] = ["hint"];
 
 void [dialogRoot, dialog, buttonSize, dialogOpen, selectDisabled];
 void [invalidButtonSize, invalidDialogOpen, invalidSelectDisabled];
@@ -73,6 +92,8 @@ void [rootOutsideDays, calendarOutsideDays, segmentedGroup, cardItem, invalidIte
 void [menuPortal, submenuPositioning, invalidMenuPortal, menuLocale];
 void [skeletonVariant, skeletonAlias, skeletonProp, defaultSkeletonVariant, skeletonDescription];
 void [invalidSkeletonVariant, invalidSkeletonProp];
+void [bannerHref, externalBannerLink, invalidBannerHref, invalidExternalBannerLink];
+void [comboboxMultiAria, comboboxValueAria, invalidComboboxMultiName, invalidComboboxValueDescription];
 
 // New ClipboardText props must be available from the published package.
 import { ClipboardText } from "@dicehub/phi/components/clipboard-text";

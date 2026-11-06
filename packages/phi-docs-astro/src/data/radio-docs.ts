@@ -403,7 +403,7 @@ export const radioExamples = [
   {
     id: "with-description",
     title: "With Description",
-    description: "Add helper text below the radio items using the description prop.",
+    description: "Add helper text below the radio items using the description prop. Group and card descriptions use consistent line spacing and wrap to avoid short final lines.",
     variant: "description",
     code: radioDescriptionCode,
   },

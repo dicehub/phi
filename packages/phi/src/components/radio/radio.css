@@ -95,6 +95,8 @@
 
 .phi-radio-group > .phi-radio-group__description {
   color: var(--phi-subtle, #6c7480);
+  line-height: 1.375;
+  text-wrap: pretty;
 }
 
 .phi-radio-group > .phi-radio-group__error {
@@ -315,7 +317,8 @@
 .phi-radio__description {
   color: var(--phi-subtle, #6c7480);
   font-size: 0.8125rem;
-  line-height: 1.176;
+  line-height: 1.375;
+  text-wrap: pretty;
 }
 
 /* The group owns the outline. Items draw only the internal dividers. */

@@ -135,18 +135,20 @@
   gap: 0.5rem;
 }
 
-.phi-checkbox-group__description,
-.phi-checkbox-group__error {
+.phi-checkbox-group > .phi-checkbox-group__description,
+.phi-checkbox-group > .phi-checkbox-group__error {
   margin: 0;
   font-size: 0.8125rem;
   line-height: 1.25rem;
 }
 
-.phi-checkbox-group__description {
+.phi-checkbox-group > .phi-checkbox-group__description {
   color: var(--phi-subtle, #6c7480);
+  line-height: 1.375;
+  text-wrap: pretty;
 }
 
-.phi-checkbox-group__error {
+.phi-checkbox-group > .phi-checkbox-group__error {
   color: var(--phi-danger, #b42318);
 }
 
@@ -205,7 +207,8 @@
 .phi-checkbox__description {
   color: var(--phi-subtle, #6c7480);
   font-size: 0.8125rem;
-  line-height: 1.176;
+  line-height: 1.375;
+  text-wrap: pretty;
 }
 
 .phi-checkbox-group--card {

@@ -69,7 +69,11 @@ const customIdChecked = ref(false);
       label="Custom ID"
     />
 
-    <Switch.Group v-else-if="variant === 'group'" legend="Notification settings">
+    <Switch.Group
+      v-else-if="variant === 'group'"
+      legend="Notification settings"
+      description="Choose which notifications you want to receive when your projects need attention. You can change these settings at any time."
+    >
       <Switch.Item label="Email notifications" />
       <Switch.Item label="SMS notifications" />
       <Switch.Item label="Push notifications" />

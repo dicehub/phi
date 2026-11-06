@@ -3,7 +3,7 @@ export const checkboxCardExamples = [
     id: "checkbox-card",
     title: "Checkbox Card",
     variant: "card",
-    description: 'Use appearance="card" to join items inside one outline with dividers. Items can include a description prop or slot. The checkbox follows the label by default.',
+    description: 'Use appearance="card" to join items inside one outline with dividers. Items can include a description prop or slot. Card descriptions use consistent line spacing and wrap to avoid short final lines. The checkbox follows the label by default.',
     code: `<script setup>
 import { ref } from "vue";
 import { Checkbox } from "@dicehub/phi/components/checkbox";
