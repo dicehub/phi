@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { Combobox, useComboboxContext } from "@ark-ui/vue/combobox";
+import { getComboboxAriaProps, type ComboboxAriaProps } from "./combobox-aria";
 import { usePhiComboboxContext, type ComboboxSize } from "./combobox-context";
 
 defineOptions({ inheritAttrs: false });
@@ -9,7 +10,7 @@ defineSlots<{
   default?: (props: { items: unknown[]; label: string; value: string[] }) => unknown;
 }>();
 
-const props = defineProps<{
+const props = defineProps<ComboboxAriaProps & {
   asChild?: boolean;
   placeholder?: string;
   size?: ComboboxSize;
@@ -17,6 +18,7 @@ const props = defineProps<{
 
 const arkCombobox = useComboboxContext();
 const phiCombobox = usePhiComboboxContext();
+const ariaProps = computed(() => getComboboxAriaProps(props, phiCombobox.describedBy.value));
 const resolvedSize = computed(() => props.size ?? phiCombobox.size.value);
 const selectedLabel = computed(() => arkCombobox.value.valueAsString);
 const selectedValue = computed(() => arkCombobox.value.value);
@@ -27,9 +29,8 @@ const displayLabel = computed(() => selectedLabel.value || props.placeholder || 
 <template>
   <Combobox.Trigger
     v-if="asChild"
-    v-bind="$attrs"
+    v-bind="{ ...$attrs, ...ariaProps }"
     as-child
-    :aria-describedby="phiCombobox.describedBy.value"
     :data-invalid="phiCombobox.invalid.value ? '' : undefined"
   >
     <slot :items="selectedItems" :label="displayLabel" :value="selectedValue" />
@@ -37,10 +38,9 @@ const displayLabel = computed(() => selectedLabel.value || props.placeholder || 
 
   <Combobox.Trigger
     v-else
-    v-bind="$attrs"
+    v-bind="{ ...$attrs, ...ariaProps }"
     class="phi-combobox-value-trigger"
     :class="`phi-combobox-value-trigger--${resolvedSize}`"
-    :aria-describedby="phiCombobox.describedBy.value"
     :data-invalid="phiCombobox.invalid.value ? '' : undefined"
   >
     <span class="phi-combobox-value-trigger__label" :data-placeholder="selectedLabel ? undefined : ''">

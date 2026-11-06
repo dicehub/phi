@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { SkeletonLine } from "@dicehub/phi/components/skeleton-line";
 
-type DemoVariant = "preview" | "custom-widths" | "custom-height" | "block-height" | "card";
+type DemoVariant = "preview" | "custom-widths" | "custom-height" | "block-height" | "sketch" | "sketch-card" | "card";
 
 withDefaults(
   defineProps<{
@@ -40,6 +40,27 @@ withDefaults(
       <div class="skeleton-line-demo__block-row">
         <span class="skeleton-line-demo__block-label">64px</span>
         <SkeletonLine :block-height="64" />
+      </div>
+    </div>
+
+    <div v-else-if="variant === 'sketch'" class="skeleton-line-demo__stack">
+      <SkeletonLine variant="sketch" />
+      <SkeletonLine variant="sketch" />
+      <SkeletonLine variant="sketch" />
+    </div>
+
+    <div v-else-if="variant === 'sketch-card'" class="skeleton-line-demo__card">
+      <div class="skeleton-line-demo__card-title">
+        <SkeletonLine variant="sketch" :block-height="16" :min-width="40" :max-width="60" />
+      </div>
+      <div class="skeleton-line-demo__stack">
+        <SkeletonLine variant="sketch" />
+        <SkeletonLine variant="sketch" />
+        <SkeletonLine variant="sketch" :min-width="50" :max-width="70" />
+      </div>
+      <div class="skeleton-line-demo__actions">
+        <SkeletonLine variant="sketch" :min-width="100" :max-width="100" class-name="h-9 w-24" />
+        <SkeletonLine variant="sketch" :min-width="100" :max-width="100" class-name="h-9 w-24" />
       </div>
     </div>
 
@@ -98,6 +119,20 @@ withDefaults(
 
 .skeleton-line-demo .h-8 {
   height: 2rem;
+}
+
+.skeleton-line-demo .h-9 {
+  height: 2.25rem;
+}
+
+.skeleton-line-demo .w-24 {
+  width: 6rem;
+}
+
+.skeleton-line-demo__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
 }
 
 .skeleton-line-demo__block-list {

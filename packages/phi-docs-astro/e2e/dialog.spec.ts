@@ -21,8 +21,8 @@ test.describe("Dialog", () => {
     await expect(arkLink).toHaveAttribute("rel", "noopener noreferrer");
     await expect(arkLink.locator("svg")).toHaveAttribute("aria-label", "Ark UI");
 
-    await expect(page.locator(".docs-component-example")).toHaveCount(10);
-    await expect(page.locator(".docs-code-block")).toHaveCount(12);
+    await expect(page.locator(".docs-component-example")).toHaveCount(11);
+    await expect(page.locator(".docs-code-block")).toHaveCount(13);
     await expect(page.locator("#preview .docs-code-block")).toContainText('from "@dicehub/phi/components/dialog"');
     await expect(page.locator("#preview .docs-code-block")).toContainText("<Button>Delete</Button>");
     await expect(page.locator("#preview .docs-code-block")).not.toContainText("dialog-demo__panel--alert");
@@ -51,6 +51,7 @@ test.describe("Dialog", () => {
       "With Select",
       "With Combobox",
       "With Dropdown",
+      "Long Content",
       "Sub-components",
       "API Reference",
       "Dialog",
@@ -103,7 +104,8 @@ test.describe("Dialog", () => {
         closeHeight: closeBox?.height ?? null,
         closeIconWidth: closeIconBox?.width ?? null,
         height: contentBox.height,
-        overflow: style.overflow,
+        overflowX: style.overflowX,
+        overflowY: style.overflowY,
         paddingTop: Number.parseFloat(style.paddingTop),
         radius: Number.parseFloat(style.borderRadius),
         top: contentBox.top,
@@ -126,7 +128,8 @@ test.describe("Dialog", () => {
     expect(metrics.actionTopGap).toBeGreaterThanOrEqual(31);
     expect(metrics.radius).toBe(12);
     expect(metrics.top).toBe(64);
-    expect(metrics.overflow).toBe("hidden");
+    expect(metrics.overflowX).toBe("hidden");
+    expect(metrics.overflowY).toBe("auto");
   });
 
   test("uses alertdialog role and keeps alert dialogs open on outside click", async ({ page }) => {

@@ -60,6 +60,39 @@ import { SkeletonLine } from "@dicehub/phi/components/skeleton-line";
   </div>
 </template>`;
 
+const sketchCode = `<script setup>
+import { SkeletonLine } from "@dicehub/phi/components/skeleton-line";
+</script>
+
+<template>
+  <div class="skeleton-line-stack">
+    <SkeletonLine variant="sketch" />
+    <SkeletonLine variant="sketch" />
+    <SkeletonLine variant="sketch" />
+  </div>
+</template>`;
+
+const sketchCardCode = `<script setup>
+import { SkeletonLine } from "@dicehub/phi/components/skeleton-line";
+</script>
+
+<template>
+  <div class="skeleton-card">
+    <div class="skeleton-card__title">
+      <SkeletonLine variant="sketch" :block-height="16" :min-width="40" :max-width="60" />
+    </div>
+    <div class="skeleton-line-stack">
+      <SkeletonLine variant="sketch" />
+      <SkeletonLine variant="sketch" />
+      <SkeletonLine variant="sketch" :min-width="50" :max-width="70" />
+    </div>
+    <div class="skeleton-card__actions">
+      <SkeletonLine variant="sketch" :min-width="100" :max-width="100" class-name="h-9 w-24" />
+      <SkeletonLine variant="sketch" :min-width="100" :max-width="100" class-name="h-9 w-24" />
+    </div>
+  </div>
+</template>`;
+
 const cardLoadingStateCode = `<script setup>
 import { SkeletonLine } from "@dicehub/phi/components/skeleton-line";
 </script>
@@ -101,6 +134,22 @@ export const skeletonLineExamples = [
     code: blockHeightCode,
   },
   {
+    id: "sketch-variant",
+    title: "Sketch Variant",
+    variant: "sketch",
+    description:
+      'Set `variant="sketch"` for a rounded fill with a sliding shimmer, a 1px outline, and construction strokes that extend 4px past each corner. Leave 4px of space around the line so a parent with `overflow: hidden` does not clip the strokes. The shimmer stops when the user prefers reduced motion.',
+    code: sketchCode,
+  },
+  {
+    id: "sketch-card",
+    title: "Sketch Card",
+    variant: "sketch-card",
+    description:
+      "Set a height and fixed width with `className` to use the sketch variant for buttons, icons, and badges next to text lines. `blockHeight` still centers the line in its container.",
+    code: sketchCardCode,
+  },
+  {
     id: "card-loading-state",
     title: "Card Loading State",
     variant: "card",
@@ -110,6 +159,12 @@ export const skeletonLineExamples = [
 ] as const;
 
 export const skeletonLineProps = [
+  {
+    name: "variant",
+    type: '"default" | "sketch"',
+    defaultValue: '"default"',
+    description: "Visual style of the placeholder. Sketch strokes extend 4px outside the line.",
+  },
   {
     name: "minWidth",
     type: "number",

@@ -149,24 +149,26 @@ test.describe("Combobox", () => {
       "Disabled Items",
       "Error State",
       "Positioning and Dropdown Size",
+      "Accessible Names and Descriptions",
       "Sub-components",
       "API Reference",
       "Combobox.Root",
       "Combobox.Item",
       "Combobox.TriggerInput",
       "Combobox.TriggerValue",
+      "Combobox.TriggerMultipleWithInput",
       "Combobox.Content",
     ]);
     await expect(toc.locator("a[href='#preview']")).toHaveCount(0);
     await expect(toc.locator("a[href='#installation'] + ul a")).toHaveCount(2);
     await expect(toc.locator("a[href='#examples'] + ul a")).toHaveCount(10);
-    await expect(toc.locator("a[href='#api-reference'] + ul a")).toHaveCount(5);
+    await expect(toc.locator("a[href='#api-reference'] + ul a")).toHaveCount(6);
   });
 
   test("renders every example with a corresponding snippet", async ({ page }) => {
     const examples = page.locator("#examples");
 
-    await expect(page.locator(".docs-component-example")).toHaveCount(14);
+    await expect(page.locator(".docs-component-example")).toHaveCount(15);
     await expect(examples.locator(".docs-component-example")).toHaveCount(11);
     await expect(examples.locator(".docs-code-block")).toHaveCount(11);
     await expect(examples.locator(".docs-code-block").filter({ hasText: "Combobox.TriggerInput" })).toHaveCount(6);
@@ -199,7 +201,8 @@ test.describe("Combobox", () => {
     await expect(page.locator("#combobox-root-api + .docs-api-table tbody tr")).toHaveCount(12);
     await expect(page.locator("#combobox-item-api + .docs-api-table tbody tr")).toHaveCount(2);
     await expect(page.locator("#combobox-trigger-input-api + .docs-api-table tbody tr")).toHaveCount(2);
-    await expect(page.locator("#combobox-trigger-value-api + .docs-api-table tbody tr")).toHaveCount(2);
+    await expect(page.locator("#combobox-trigger-value-api + .docs-api-table tbody tr")).toHaveCount(5);
+    await expect(page.locator("#combobox-trigger-multiple-api + .docs-api-table tbody tr")).toHaveCount(3);
     const contentApi = page.locator("#combobox-content-api + .docs-api-table");
 
     await expect(contentApi.locator("tbody tr")).toHaveCount(23);

@@ -350,3 +350,18 @@
     background-position: -200% 0;
   }
 }
+
+@media (forced-colors: active) {
+  .phi-select-trigger:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  /* Ark focuses the content or its list and marks the active option. */
+  .phi-select-item:focus-visible,
+  .phi-select-content:focus-visible .phi-select-item[data-highlighted],
+  .phi-select-content:has(:focus-visible) .phi-select-item[data-highlighted] {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
+}

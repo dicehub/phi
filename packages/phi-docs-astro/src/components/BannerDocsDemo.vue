@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { PhInfo, PhWarning, PhWarningCircle, PhX } from "@phosphor-icons/vue";
 import { Banner } from "@dicehub/phi/components/banner";
 import { Link } from "@dicehub/phi/components/link";
@@ -12,6 +13,7 @@ type DemoVariant =
   | "icon"
   | "action"
   | "actions"
+  | "links"
   | "compact"
   | "compact-cta"
   | "compact-none"
@@ -26,6 +28,9 @@ withDefaults(
   },
 );
 
+const disableLink = ref(false);
+const loadingLink = ref(false);
+const linkActivations = ref(0);
 </script>
 
 <template>
@@ -148,6 +153,36 @@ withDefaults(
       </template>
     </Banner>
 
+    <div v-else-if="variant === 'links'" class="banner-demo__stack" data-banner-links>
+      <Banner variant="alert" title="Review your payment method" description="Keep your billing information up to date.">
+        <template #action>
+          <Banner.Action href="#api" data-banner-action="primary" @click="linkActivations++">Manage payments</Banner.Action>
+          <Banner.Action variant="secondary" href="https://example.com/billing" external data-banner-action="external">Payment guide</Banner.Action>
+        </template>
+      </Banner>
+      <Banner size="sm" variant="error" description="Review the workspace settings before you continue.">
+        <template #action>
+          <Banner.Action
+            href="#api"
+            :disabled="disableLink"
+            :loading="loadingLink"
+            target="_blank"
+            rel="nofollow"
+            download="settings.json"
+            aria-label="Open workspace settings"
+            data-banner-action="stateful"
+            @click.prevent="linkActivations++"
+          >Settings</Banner.Action>
+          <Banner.Action variant="ghost" href="" data-banner-action="empty">Reset view</Banner.Action>
+        </template>
+      </Banner>
+      <div class="banner-demo__link-controls">
+        <label><input v-model="disableLink" type="checkbox" /> Disable action</label>
+        <label><input v-model="loadingLink" type="checkbox" /> Show loading</label>
+      </div>
+      <p role="status">Link activations: {{ linkActivations }}</p>
+    </div>
+
     <Banner
       v-else-if="variant === 'compact'"
       size="sm"
@@ -219,5 +254,11 @@ withDefaults(
   width: 1rem;
   height: 1rem;
   fill: currentColor;
+}
+
+.banner-demo__link-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 </style>

@@ -13,6 +13,12 @@ export const subComponents = [
   { component: "Combobox.Empty", description: "Fallback content when the filtered collection is empty." },
 ] as const;
 
+const triggerAriaProps = [
+  { name: "aria-label", type: "string", defaultValue: "-", description: "Accessible name for the value trigger or multi-select search input." },
+  { name: "aria-labelledby", type: "string", defaultValue: "-", description: "Space-separated IDs of elements that name the trigger or input." },
+  { name: "aria-describedby", type: "string", defaultValue: "-", description: "Description IDs combined with the root description and error IDs, without duplicates." },
+] as const;
+
 export const apiGroups = [
   {
     title: "Combobox.Root",
@@ -54,6 +60,14 @@ export const apiGroups = [
     props: [
       { name: "asChild", type: "boolean", defaultValue: "false", description: "Merges Ark UI trigger behavior into the single default-slot child." },
       { name: "default slot", type: "{ items; label; value }", defaultValue: "-", description: "Value state for the default trigger or one custom trigger child." },
+      ...triggerAriaProps,
+    ],
+  },
+  {
+    title: "Combobox.TriggerMultipleWithInput",
+    id: "combobox-trigger-multiple-api",
+    props: [
+      ...triggerAriaProps,
     ],
   },
   {

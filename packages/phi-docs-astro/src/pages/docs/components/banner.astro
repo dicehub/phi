@@ -217,6 +217,21 @@ import { Link } from "@dicehub/phi/components/link";
   </Banner>
 </template>`;
 
+const linkActionsCode = `<script setup>
+import { Banner } from "@dicehub/phi/components/banner";
+</script>
+
+<template>
+  <Banner variant="alert" title="Review your payment method">
+    <template #action>
+      <Banner.Action href="/billing">Manage payments</Banner.Action>
+      <Banner.Action variant="secondary" href="https://example.com/billing" external>
+        Payment guide
+      </Banner.Action>
+    </template>
+  </Banner>
+</template>`;
+
 const compactCtaCode = `<script setup>
 import { PhX } from "@phosphor-icons/vue";
 import { Banner } from "@dicehub/phi/components/banner";
@@ -281,11 +296,13 @@ const slots = [
 
 const actionProps = [
   { name: "variant", type: '"primary" | "secondary" | "ghost"', defaultValue: '"primary"', description: "Sets the CTA treatment while retaining the parent banner accent." },
+  { name: "href", type: "string", defaultValue: "-", description: "Renders a native link through LinkButton when provided, including an empty string." },
+  { name: "external", type: "boolean", defaultValue: "false", description: "Opens a link in a new tab with noopener noreferrer." },
   { name: "icon", type: "Component", defaultValue: "-", description: "Optional icon component. Icon-only actions should include an aria-label." },
   { name: "iconProps", type: "Record<string, unknown>", defaultValue: "{}", description: "Props forwarded to the icon component." },
-  { name: "disabled", type: "boolean", defaultValue: "false", description: "Disables the underlying button." },
-  { name: "loading", type: "boolean", defaultValue: "false", description: "Shows the button loading state and disables interaction." },
-  { name: "type", type: '"button" | "submit" | "reset"', defaultValue: '"button"', description: "Native button type." },
+  { name: "disabled", type: "boolean", defaultValue: "false", description: "Disables interaction. Disabled links render as buttons without navigation attributes." },
+  { name: "loading", type: "boolean", defaultValue: "false", description: "Shows a spinner and disables interaction. Loading links temporarily render as buttons without navigation attributes." },
+  { name: "type", type: '"button" | "submit" | "reset"', defaultValue: '"button"', description: "Native button type; ignored for links." },
 ];
 ---
 
@@ -414,6 +431,17 @@ const actionProps = [
             </div>
             <div class="docs-component-example__code">
               <CodeBlock code={multipleActionsCode} lang="vue" />
+            </div>
+          </div>
+
+          <h3>With Link Actions</h3>
+          <p>Pass <code>href</code> to render an action as a native link through Phi <code>LinkButton</code>. It retains the banner accent and size. Use <code>external</code> to open a new tab. Disabled and loading link actions render disabled buttons, so they cannot navigate.</p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BannerDocsDemo client:only="vue" variant="links" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={linkActionsCode} lang="vue" />
             </div>
           </div>
 

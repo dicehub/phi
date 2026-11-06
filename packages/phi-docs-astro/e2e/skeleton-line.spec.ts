@@ -40,6 +40,8 @@ test.describe("Skeleton Line", () => {
       "Custom Widths",
       "Custom Height",
       "Block Height",
+      "Sketch Variant",
+      "Sketch Card",
       "Card Loading State",
       "API Reference",
     ]);
@@ -52,7 +54,7 @@ test.describe("Skeleton Line", () => {
     const blockHeight = exampleById(page, "block-height");
     const card = exampleById(page, "card-loading-state");
 
-    await expect(examples.locator(".docs-component-example")).toHaveCount(4);
+    await expect(examples.locator(".docs-component-example")).toHaveCount(6);
     await expect.poll(() => skeletonWidth(customWidths.locator(".phi-skeleton-line").nth(0))).toBeGreaterThanOrEqual(80);
     await expect.poll(() => skeletonWidth(customWidths.locator(".phi-skeleton-line").nth(0))).toBeLessThanOrEqual(100);
     await expect.poll(() => skeletonWidth(customWidths.locator(".phi-skeleton-line").nth(1))).toBeGreaterThanOrEqual(60);
@@ -68,8 +70,9 @@ test.describe("Skeleton Line", () => {
     await expect.poll(() => roundedHeight(blockHeight.locator(".phi-skeleton-line__block").nth(1))).toBe(48);
     await expect.poll(() => roundedHeight(blockHeight.locator(".phi-skeleton-line__block").nth(2))).toBe(64);
     await expect(card.locator(".phi-skeleton-line")).toHaveCount(4);
-    await expect(page.locator("#api-reference tbody tr")).toHaveCount(8);
+    await expect(page.locator("#api-reference tbody tr")).toHaveCount(9);
     await expect(page.locator("#api-reference tbody tr td:first-child code")).toHaveText([
+      "variant",
       "minWidth",
       "maxWidth",
       "minDuration",

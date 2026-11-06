@@ -249,6 +249,13 @@
   background: var(--phi-hairline, rgba(16, 24, 40, 0.08));
 }
 
+@media (forced-colors: active) {
+  .phi-autocomplete-control:has(:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
+
 @keyframes phi-autocomplete-in {
   from {
     opacity: 0;

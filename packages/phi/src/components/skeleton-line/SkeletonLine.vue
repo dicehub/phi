@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import {
+  PHI_SKELETON_LINE_DEFAULT_VARIANTS,
+  PHI_SKELETON_LINE_VARIANTS,
   SKELETON_LINE_DEFAULT_MAX_DELAY,
   SKELETON_LINE_DEFAULT_MAX_DURATION,
   SKELETON_LINE_DEFAULT_MAX_WIDTH,
@@ -11,6 +13,7 @@ import {
   randomSkeletonLineInteger,
   resolveSkeletonLineBlockHeight,
   type SkeletonLineBlockHeight,
+  type SkeletonLineVariant,
 } from "./skeleton-line";
 
 defineOptions({ inheritAttrs: false });
@@ -25,6 +28,7 @@ const props = withDefaults(
     minDelay?: number;
     minDuration?: number;
     minWidth?: number;
+    variant?: SkeletonLineVariant;
   }>(),
   {
     blockHeight: undefined,
@@ -35,6 +39,7 @@ const props = withDefaults(
     minDelay: SKELETON_LINE_DEFAULT_MIN_DELAY,
     minDuration: SKELETON_LINE_DEFAULT_MIN_DURATION,
     minWidth: SKELETON_LINE_DEFAULT_MIN_WIDTH,
+    variant: PHI_SKELETON_LINE_DEFAULT_VARIANTS.variant,
   },
 );
 
@@ -59,6 +64,8 @@ const lineStyle = computed<Record<string, string>>(() => ({
 }));
 
 const hasBlockHeight = computed(() => props.blockHeight !== undefined);
+const resolvedVariant = computed(() => props.variant === "sketch" ? "sketch" : "default");
+const rootClasses = computed(() => PHI_SKELETON_LINE_VARIANTS.variant[resolvedVariant.value].classes);
 const blockStyle = computed(() => ({
   height: props.blockHeight === undefined ? undefined : resolveSkeletonLineBlockHeight(props.blockHeight),
 }));
@@ -73,20 +80,38 @@ const blockStyle = computed(() => ({
   >
     <div
       v-bind="$attrs"
-      class="phi-skeleton-line"
-      :class="className"
+      :class="[rootClasses, className]"
       :style="lineStyle"
       data-phi-component="SkeletonLine"
-    />
+      :data-variant="resolvedVariant"
+    >
+      <template v-if="resolvedVariant === 'sketch'">
+        <div class="phi-skeleton-line__fill" />
+        <div class="phi-skeleton-line__stroke phi-skeleton-line__stroke--top" />
+        <div class="phi-skeleton-line__stroke phi-skeleton-line__stroke--bottom" />
+        <div class="phi-skeleton-line__stroke phi-skeleton-line__stroke--left" />
+        <div class="phi-skeleton-line__stroke phi-skeleton-line__stroke--right" />
+        <div class="phi-skeleton-line__outline" />
+      </template>
+    </div>
   </div>
   <div
     v-else
     v-bind="$attrs"
-    class="phi-skeleton-line"
-    :class="className"
+    :class="[rootClasses, className]"
     :style="lineStyle"
     data-phi-component="SkeletonLine"
-  />
+    :data-variant="resolvedVariant"
+  >
+    <template v-if="resolvedVariant === 'sketch'">
+      <div class="phi-skeleton-line__fill" />
+      <div class="phi-skeleton-line__stroke phi-skeleton-line__stroke--top" />
+      <div class="phi-skeleton-line__stroke phi-skeleton-line__stroke--bottom" />
+      <div class="phi-skeleton-line__stroke phi-skeleton-line__stroke--left" />
+      <div class="phi-skeleton-line__stroke phi-skeleton-line__stroke--right" />
+      <div class="phi-skeleton-line__outline" />
+    </template>
+  </div>
 </template>
 
 <style src="./skeleton-line.css"></style>

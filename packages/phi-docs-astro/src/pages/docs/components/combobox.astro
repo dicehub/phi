@@ -1,11 +1,13 @@
 ---
 import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
 import ComboboxDocsDemo from "../../../components/ComboboxDocsDemo.vue";
+import ComboboxAriaDocsDemo from "../../../components/ComboboxAriaDocsDemo.vue";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
 import DocsLayout from "../../../layouts/DocsLayout.astro";
 import { apiGroups, subComponents } from "../../../data/combobox-api-docs";
+import { accessibleNamesCode } from "../../../data/combobox-aria-docs";
 import {
   barrelCode,
   customTriggerCode,
@@ -154,6 +156,26 @@ const examples = [
           </div>
         </section>
 
+        <section id="accessible-names" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#accessible-names">Accessible Names and Descriptions</a></h2>
+          <p>
+            Pass <code>aria-label</code> or <code>aria-labelledby</code> to
+            <code>Combobox.TriggerMultipleWithInput</code> to name its search input. Other attributes,
+            such as <code>class</code>, stay on the wrapper. A visible root <code>label</code> still names the input.
+          </p>
+          <p>
+            <code>Combobox.TriggerValue</code> forwards these names to its button, including a custom
+            <code>as-child</code> trigger. Both components combine <code>aria-describedby</code> with
+            the root description and error IDs. The same ID is included only once.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--combobox docs-component-preview--open-space">
+              <ComboboxAriaDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code"><CodeBlock code={accessibleNamesCode} lang="vue" /></div>
+          </div>
+        </section>
+
         <section id="sub-components" class="docs-section">
           <h2><a class="docs-section-anchor" href="#sub-components">Sub-components</a></h2>
           <div class="docs-api-table">
@@ -221,6 +243,7 @@ const examples = [
               </ul>
             </li>
             <li><a href="#customizing-dropdown-height">Positioning and Dropdown Size</a></li>
+            <li><a href="#accessible-names">Accessible Names and Descriptions</a></li>
             <li><a href="#sub-components">Sub-components</a></li>
             <li>
               <a href="#api-reference">API Reference</a>
@@ -229,6 +252,7 @@ const examples = [
                 <li><a href="#combobox-item-api">Combobox.Item</a></li>
                 <li><a href="#combobox-trigger-input-api">Combobox.TriggerInput</a></li>
                 <li><a href="#combobox-trigger-value-api">Combobox.TriggerValue</a></li>
+                <li><a href="#combobox-trigger-multiple-api">Combobox.TriggerMultipleWithInput</a></li>
                 <li><a href="#combobox-content-api">Combobox.Content</a></li>
               </ul>
             </li>

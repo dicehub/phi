@@ -95,6 +95,8 @@
 
 .phi-radio-group > .phi-radio-group__description {
   color: var(--phi-subtle, #6c7480);
+  line-height: 1.375;
+  text-wrap: pretty;
 }
 
 .phi-radio-group > .phi-radio-group__error {
@@ -315,7 +317,8 @@
 .phi-radio__description {
   color: var(--phi-subtle, #6c7480);
   font-size: 0.8125rem;
-  line-height: 1.176;
+  line-height: 1.375;
+  text-wrap: pretty;
 }
 
 /* The group owns the outline. Items draw only the internal dividers. */
@@ -365,5 +368,13 @@
 @media (max-width: 640px) {
   .phi-radio-group--card.phi-radio-group--horizontal .phi-radio-group__items {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (forced-colors: active) {
+  .phi-radio:has(.phi-radio__input:focus-visible) .phi-radio__control,
+  .phi-radio--appearance-segmented:has(.phi-radio__input:focus-visible) {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
   }
 }

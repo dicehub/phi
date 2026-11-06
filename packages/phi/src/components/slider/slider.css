@@ -82,3 +82,10 @@
   color: var(--phi-subtle);
   font-variant-numeric: tabular-nums;
 }
+
+@media (forced-colors: active) {
+  .phi-slider__thumb:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
