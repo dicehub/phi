@@ -1,5 +1,22 @@
 # @dicehub/phi
 
+## 1.6.0
+
+### Minor Changes
+
+- 718297f: Support `href` and `external` on Banner.Action while retaining banner accents and sizing. Disabled and loading link actions render disabled buttons to prevent navigation.
+- 40b0c28: Add a SkeletonLine sketch variant with a rounded fill, sliding shimmer, 1px outline, and construction strokes that extend 4px past each corner. Support width and height overrides, block height, and reduced motion.
+
+### Patch Changes
+
+- 718297f: Forward accessible names and descriptions to the input in Combobox.TriggerMultipleWithInput. Keep caller descriptions on Combobox.TriggerValue, including custom child triggers, together with the field description and error messages.
+- 718297f: Use consistent line spacing and pretty wrapping for Radio and Checkbox card descriptions, and for Radio, Checkbox, and Switch group descriptions. Keep existing font sizes, semantic colors, and error styles.
+
+  Keep Checkbox and Switch group description and error typography intact when page prose styles target paragraphs.
+
+- 40b0c28: Keep tall Dialog and alert dialog content scrollable within the viewport, preserve the height of direct child sections, and keep final actions reachable. Show Dialog close focus outlines in forced colors mode.
+- 40b0c28: Keep keyboard focus visible in forced-colors mode with system-color outlines, including shared input containers, Ark slider thumbs, and tabs in scrolling lists.
+
 ## 1.5.0
 
 ### Minor Changes
