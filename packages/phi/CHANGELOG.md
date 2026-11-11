@@ -1,5 +1,13 @@
 # @dicehub/phi
 
+## 1.6.1
+
+### Patch Changes
+
+- bf62bc0: Center Button and LinkButton labels vertically by removing the old text lift. Keep the existing line heights and leading icon spacing.
+
+  Keep DatePicker weekday header backgrounds transparent when host pages set global table header backgrounds.
+
 ## 1.6.0
 
 ### Minor Changes
