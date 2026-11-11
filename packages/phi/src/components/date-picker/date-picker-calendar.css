@@ -118,6 +118,10 @@
   table-layout: fixed;
 }
 
+.phi-date-picker-table-head {
+  background: transparent;
+}
+
 .phi-date-picker-table[data-view="day"],
 .phi-date-picker-table[data-view="day"] > .phi-date-picker-table-head,
 .phi-date-picker-table[data-view="day"] > .phi-date-picker-table-body {
