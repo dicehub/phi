@@ -66,6 +66,12 @@ import "../../../styles/component-docs.css";
 
         <section id="usage" class="docs-section">
           <h2><a class="docs-section-anchor" href="#usage">Usage</a></h2>
+          <p>
+            Primary and Secondary sections keep their natural height in a height-limited flex column. To make a section
+            shrink and scroll, give it <code>flex: 1</code>, <code>min-height: 0</code>, and <code>overflow-y: auto</code>.
+            CSS classes and Tailwind&apos;s <code>flex-1</code> utility can override the default flex sizing. See the
+            <a href="/docs/components/dialog#scrollable-body">scrollable Dialog body</a> examples.
+          </p>
           <div class="docs-component-example">
             <div class="docs-component-preview docs-component-preview--layer-card">
               <LayerCardDocsDemo client:only="vue" variant="usage" />

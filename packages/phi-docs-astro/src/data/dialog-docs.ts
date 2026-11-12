@@ -2,6 +2,31 @@ export const barrelCode = `import { Dialog } from "@dicehub/phi";`;
 
 export const granularCode = `import { Dialog } from "@dicehub/phi/components/dialog";`;
 
+export const scrollableBodyCode = `<script setup>
+import { Button } from "@dicehub/phi/components/button";
+import { Dialog } from "@dicehub/phi/components/dialog";
+</script>
+
+<template>
+  <Dialog.Root>
+    <Dialog.Trigger><Button>Open settings</Button></Dialog.Trigger>
+    <Dialog class="settings-dialog">
+      <header><Dialog.Title>Settings</Dialog.Title></header>
+      <div class="settings-dialog__body">
+        <Dialog.Description>Review your settings before saving.</Dialog.Description>
+        <!-- Long form content -->
+      </div>
+      <footer><Dialog.Close as-child><Button>Save settings</Button></Dialog.Close></footer>
+    </Dialog>
+  </Dialog.Root>
+</template>
+
+<style>
+.settings-dialog { display: flex; flex-direction: column; overflow: hidden; }
+.settings-dialog > header, .settings-dialog > footer { flex-shrink: 0; padding: 1rem; }
+.settings-dialog__body { flex: 1; min-height: 0; overflow-y: auto; padding: 1rem; }
+</style>`;
+
 export const longContentCode = `<script setup>
 import { Button } from "@dicehub/phi/components/button";
 import { Dialog } from "@dicehub/phi/components/dialog";

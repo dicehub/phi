@@ -21,8 +21,8 @@ test.describe("Dialog", () => {
     await expect(arkLink).toHaveAttribute("rel", "noopener noreferrer");
     await expect(arkLink.locator("svg")).toHaveAttribute("aria-label", "Ark UI");
 
-    await expect(page.locator(".docs-component-example")).toHaveCount(11);
-    await expect(page.locator(".docs-code-block")).toHaveCount(13);
+    await expect(page.locator(".docs-component-example")).toHaveCount(12);
+    await expect(page.locator(".docs-code-block")).toHaveCount(14);
     await expect(page.locator("#preview .docs-code-block")).toContainText('from "@dicehub/phi/components/dialog"');
     await expect(page.locator("#preview .docs-code-block")).toContainText("<Button>Delete</Button>");
     await expect(page.locator("#preview .docs-code-block")).not.toContainText("dialog-demo__panel--alert");
@@ -52,6 +52,7 @@ test.describe("Dialog", () => {
       "With Combobox",
       "With Dropdown",
       "Long Content",
+      "Scrollable Body",
       "Sub-components",
       "API Reference",
       "Dialog",
