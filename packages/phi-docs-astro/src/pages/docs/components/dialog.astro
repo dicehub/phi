@@ -2,6 +2,7 @@
 import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
 import DialogDocsDemo from "../../../components/DialogDocsDemo.vue";
 import DialogScrollDocsDemo from "../../../components/DialogScrollDocsDemo.vue";
+import DialogBodyScrollDocsDemo from "../../../components/DialogBodyScrollDocsDemo.vue";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
@@ -18,12 +19,14 @@ import {
   granularCode,
   maxWidthCode,
   longContentCode,
+  scrollableBodyCode,
   previewCode,
   selectCode,
   subComponents,
   usageCode,
 } from "../../../data/dialog-docs";
 import "../../../styles/component-docs.css";
+import "../../../styles/dialog-body-scroll-utilities.css";
 
 const examples = [
   { id: "basic-dialog", title: "Basic Dialog", variant: "basic", code: basicCode },
@@ -94,8 +97,8 @@ const examples = [
           </p>
           <p>
             Tall dialogs scroll inside the panel. The panel stays within the current viewport, and its final actions
-            remain available by scroll or keyboard. Direct child sections keep their natural height, including
-            <code>LayerCard</code> sections.
+            remain available by scroll or keyboard. <code>LayerCard</code> sections keep their natural height by
+            default. Dialog does not set the flex sizing of other child elements.
           </p>
           <div class="docs-component-example">
             <div class="docs-component-preview docs-component-preview--dialog">
@@ -156,6 +159,21 @@ const examples = [
             </div>
             <div class="docs-component-example__code">
               <CodeBlock code={longContentCode} lang="vue" />
+            </div>
+          </div>
+          <h3 id="scrollable-body"><a class="docs-section-anchor" href="#scrollable-body">Scrollable Body</a></h3>
+          <p>
+            To keep the header and footer visible, make the dialog a flex column with hidden overflow. Give the body
+            <code>flex: 1</code>, <code>min-height: 0</code>, and <code>overflow-y: auto</code>. A
+            <code>LayerCard.Primary</code> or <code>LayerCard.Secondary</code> can also be the scrollable body;
+            override its flex sizing with a CSS class or Tailwind&apos;s <code>flex-1</code> utility.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview docs-component-preview--dialog">
+              <DialogBodyScrollDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={scrollableBodyCode} lang="vue" />
             </div>
           </div>
         </section>
@@ -219,6 +237,7 @@ const examples = [
                   <li><a href={`#${example.id}`}>{example.title}</a></li>
                 ))}
                 <li><a href="#long-content">Long Content</a></li>
+                <li><a href="#scrollable-body">Scrollable Body</a></li>
               </ul>
             </li>
             <li><a href="#sub-components">Sub-components</a></li>

@@ -1,3 +1,15 @@
+/* Preserve Tailwind's layer order when this stylesheet loads first. */
+@layer theme, base, components, utilities;
+
+@layer utilities {
+  /* Keep capped sections at their natural height. Zero specificity lets flex
+     utilities override this default in either stylesheet order; unlayered
+     consumer classes can override it as well. */
+  :where(.phi-layer-card__primary, .phi-layer-card__secondary) {
+    flex-shrink: 0;
+  }
+}
+
 .phi-layer-card {
   --phi-layer-card-elevated: color-mix(in srgb, var(--phi-base, #ffffff) 98%, var(--phi-default, #17191f) 2%);
 

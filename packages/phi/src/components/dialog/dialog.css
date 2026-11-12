@@ -47,10 +47,6 @@
   outline: none;
 }
 
-.phi-dialog-content > * {
-  flex-shrink: 0;
-}
-
 .phi-dialog-content--sm {
   --phi-dialog-width: 18rem;
 }
