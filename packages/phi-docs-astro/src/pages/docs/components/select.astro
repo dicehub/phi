@@ -4,6 +4,7 @@ import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
 import DocsPageNavigation from "../../../components/DocsPageNavigation.astro";
 import SelectDocsDemo from "../../../components/SelectDocsDemo.vue";
+import SelectNamingDocsDemo from "../../../components/SelectNamingDocsDemo.vue";
 import { selectAccessibilityRows, selectApiSections } from "../../../data/select-api-docs";
 import {
   selectBarrelCode,
@@ -141,6 +142,10 @@ const getDescriptionParts = (description: string) =>
 
         <section id="accessibility" class="docs-section">
           <h2><a class="docs-section-anchor" href="#accessibility">Accessibility</a></h2>
+          <p>The label slot names both standard and custom triggers, including hidden labels. An explicit <code>aria-labelledby</code> takes precedence over <code>aria-label</code>; either replaces the component label as the accessible name. Without a label or an ARIA name, the placeholder supplies a fallback name that stays the same after selection. Set the Select <code>id</code> on Select itself so clicking its visible label focuses the trigger.</p>
+          <div class="docs-component-preview docs-component-preview--select">
+            <SelectNamingDocsDemo client:only="vue" />
+          </div>
           <div class="docs-accessibility-list">
             {
               selectAccessibilityRows.map((row) => (

@@ -24,6 +24,11 @@ const dialog: typeof Dialog.Root = DialogRoot;
 const buttonSize: ButtonProps["size"] = "sm";
 const dialogOpen: DialogProps["open"] = true;
 const selectDisabled: SelectProps["disabled"] = false;
+const selectAriaName: SelectProps["ariaLabel"] = "Target region";
+const selectAriaLabelledby: SelectProps["ariaLabelledby"] = "region-label";
+// @ts-expect-error Select accessible names must be strings.
+const invalidSelectAriaName: SelectProps["ariaLabel"] = 42;
+void [selectAriaName, selectAriaLabelledby, invalidSelectAriaName];
 type SliderProps = InstanceType<typeof Slider>["$props"];
 const sliderValue: SliderProps["modelValue"] = [25, 75];
 const singleSliderValue: SliderValue = 40;

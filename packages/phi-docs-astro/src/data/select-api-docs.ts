@@ -10,8 +10,11 @@ export const selectApiSections = [
       { name: "class", type: "string", defaultValue: "-", description: "Additional CSS classes applied to the trigger." },
       { name: "size", type: '"xs" | "sm" | "base" | "lg"', defaultValue: '"base"', description: "Trigger size. Matches the Input component sizes." },
       { name: "label", type: "string", defaultValue: "-", description: "Visible label rendered above the trigger." },
+      { name: "label slot", type: "unknown", defaultValue: "-", description: "Rich label content that also names the trigger. Supports `hideLabel`." },
+      { name: "aria-label", type: "string", defaultValue: "-", description: "Explicit accessible name. Replaces the component label unless `aria-labelledby` is also set." },
+      { name: "aria-labelledby", type: "string", defaultValue: "-", description: "Space-separated label IDs. Takes precedence over the component label and `aria-label`." },
       { name: "hideLabel", type: "boolean", defaultValue: "false", description: "Deprecated hidden-label mode. Prefer `aria-label` for selects without a visible label." },
-      { name: "placeholder", type: "string", defaultValue: "-", description: "Text shown when no value is selected." },
+      { name: "placeholder", type: "string", defaultValue: "-", description: "Text shown when no value is selected. Also supplies a fallback accessible name when no label or ARIA name is set." },
       { name: "loading", type: "boolean", defaultValue: "false", description: "Shows a skeleton value and disables the trigger." },
       { name: "disabled", type: "boolean", defaultValue: "false", description: "Disables the select trigger and all selection interaction." },
       { name: "required", type: "boolean", defaultValue: "-", description: "Native required state. When explicitly `false`, the label shows optional text." },
@@ -78,7 +81,7 @@ export const selectApiSections = [
 export const selectAccessibilityRows = [
   {
     title: "Accessible Name",
-    description: "Use a visible label when possible. For compact controls without a visible label, provide aria-label or aria-labelledby.",
+    description: "Use a visible label or label slot when possible. Explicit aria-labelledby takes precedence over aria-label, and both override the component label on standard and custom triggers. Hidden labels remain accessible.",
   },
   {
     title: "Keyboard Navigation",

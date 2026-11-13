@@ -41,6 +41,8 @@ const slots = defineSlots<{
 
 const props = withDefaults(
   defineProps<{
+    ariaLabel?: string;
+    ariaLabelledby?: string;
     autoComplete?: string;
     closeOnSelect?: boolean;
     defaultHighlightedValue?: string;
@@ -124,6 +126,13 @@ const internalValue = ref<unknown>(
 const internalOpen = ref(props.defaultOpen ?? false);
 
 const attrsForTrigger = computed(() => attrs);
+// Read slots during render so conditional label slots stay in sync.
+const triggerLabelledBy = () => props.ariaLabelledby ?? (
+  props.ariaLabel === undefined && (props.label || slots.label) ? labelId.value : undefined
+);
+const triggerAriaLabel = () => props.ariaLabel ?? (
+  !props.label && !slots.label && !props.ariaLabelledby ? props.placeholder : undefined
+);
 const isPropProvided = (name: string) => {
   const props = instance?.vnode.props ?? {};
   return Object.prototype.hasOwnProperty.call(props, name);
@@ -389,7 +398,8 @@ const handleValueChange = (details: { value: string[]; event?: Event }) => {
           v-bind="attrsForTrigger"
           :id="triggerId"
           as-child
-          :aria-labelledby="label || slots.label ? labelId : undefined"
+          :aria-label="triggerAriaLabel()"
+          :aria-labelledby="triggerLabelledBy()"
           :aria-describedby="describedBy"
           :aria-invalid="isInvalid ? 'true' : undefined"
           :aria-required="required === true ? 'true' : 'false'"
@@ -412,7 +422,8 @@ const handleValueChange = (details: { value: string[]; event?: Event }) => {
           aria-haspopup="listbox"
           :aria-controls="contentId"
           :aria-expanded="resolvedOpen ? 'true' : 'false'"
-          :aria-labelledby="label || slots.label ? labelId : undefined"
+          :aria-label="triggerAriaLabel()"
+          :aria-labelledby="triggerLabelledBy()"
           :aria-describedby="describedBy"
           :aria-invalid="isInvalid ? 'true' : undefined"
           :aria-required="required === true ? 'true' : 'false'"

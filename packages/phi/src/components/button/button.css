@@ -169,7 +169,7 @@
 }
 
 .phi-button--ghost {
-  background: inherit;
+  background: transparent;
   box-shadow: none;
   color: var(--phi-default, #17191f);
 }
