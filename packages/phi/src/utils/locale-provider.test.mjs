@@ -26,3 +26,25 @@ test("inherits untranslated text from a parent provider", async () => {
   assert.match(html, /<span>\(opcional\)\|Ajuda<\/span>/);
   assert.equal(await render(h(Probe)), "<span>(optional)|More information</span>");
 });
+
+test("breadcrumb defaults, partial values, and empty strings stay isolated between providers", async () => {
+  const BreadcrumbProbe = defineComponent({
+    setup() {
+      const locale = useLocale();
+      return () => h("span", JSON.stringify(locale.value.breadcrumbs));
+    },
+  });
+  const html = await render(h(LocaleProvider, { translations: { breadcrumbs: { label: "Chemin", copy: "Copier", copied: "Copié" } } }, {
+    default: () => h(LocaleProvider, { translations: { breadcrumbs: { copy: "", copyTooltip: "Copier le lien" } } }, {
+      default: () => h(BreadcrumbProbe),
+    }),
+  }));
+  assert.match(html, /Chemin/);
+  assert.match(html, /&quot;copy&quot;:&quot;&quot;/);
+  assert.match(html, /Copié/);
+  assert.match(html, /Copier le lien/);
+  const defaults = await render(h(BreadcrumbProbe));
+  assert.match(defaults, /breadcrumb/);
+  assert.match(defaults, /Click to copy/);
+  assert.doesNotMatch(defaults, /Chemin|Copié/);
+});
