@@ -65,7 +65,7 @@ apps or Astro islands, give each Slider a distinct `id`.
   :get-aria-label="index => index === 0 ? 'Minimum price' : 'Maximum price'" />
 ```
 
-## Label translations
+## Translations
 
 Import `LocaleProvider` from the root package or `@dicehub/phi/utils`.
 It translates generated optional markers and tooltip names in Label and the
@@ -83,6 +83,14 @@ Individual Labels support `optional-label`, an `optionalLabel` slot for rich
 content, and `tooltip-aria-label`. These overrides take precedence over the
 provider. The provider translates built-in copy; it does not set the locale or
 direction of Ark UI controls.
+
+Breadcrumbs uses `breadcrumbs.label`, `copy`, `copyTooltip`, and `copied` for its
+navigation label, copy action, tooltip, and successful-copy feedback. Partial
+values inherit from the parent provider, then English defaults. An explicit
+`aria-label` on `Breadcrumbs` takes precedence, including an empty string.
+Use meaningful navigation and clipboard labels to keep controls accessible.
+Set `dir="rtl"` on the trail or an ancestor to mirror its separators; nested
+`dir="ltr"` trails retain their direction.
 
 ## Charts
 

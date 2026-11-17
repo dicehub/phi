@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Button } from "../button";
+import { useLocale } from "../../utils/locale-provider";
 
 const props = defineProps<{
   text: string;
 }>();
 
 const isCopied = ref(false);
+const locale = useLocale();
 let copiedTimeout: number | undefined;
 
 const copyText = async () => {
@@ -31,8 +33,8 @@ const copyText = async () => {
     size="sm"
     tone="ghost"
     shape="square"
-    :aria-label="isCopied ? 'Copied' : 'Copy'"
-    :title="isCopied ? 'Copied' : 'Click to copy'"
+    :aria-label="isCopied ? locale.breadcrumbs.copied : locale.breadcrumbs.copy"
+    :title="isCopied ? locale.breadcrumbs.copied : locale.breadcrumbs.copyTooltip"
     @click="copyText"
   >
     <svg v-if="isCopied" class="phi-breadcrumbs__clipboard-icon phi-breadcrumbs__clipboard-icon--copied" viewBox="0 0 16 16" aria-hidden="true">

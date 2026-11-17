@@ -1,6 +1,7 @@
 ---
 import ArkUiDocsLink from "../../../components/ArkUiDocsLink.astro";
 import BreadcrumbsDocsDemo from "../../../components/BreadcrumbsDocsDemo.vue";
+import BreadcrumbsLocaleDocsDemo from "../../../components/BreadcrumbsLocaleDocsDemo.vue";
 import Callout from "../../../components/Callout.astro";
 import CodeBlock from "../../../components/CodeBlock.astro";
 import CopyPageControls from "../../../components/CopyPageControls.vue";
@@ -100,12 +101,37 @@ import { Breadcrumbs } from "@dicehub/phi/components/breadcrumbs";
   </Breadcrumbs>
 </template>`;
 
+const localeCode = `<script setup>
+import { Breadcrumbs, LocaleProvider } from "@dicehub/phi";
+
+const translations = {
+  breadcrumbs: {
+    label: "Fil d’Ariane",
+    copy: "Copier",
+    copyTooltip: "Cliquer pour copier",
+    copied: "Copié",
+  },
+};
+</script>
+
+<template>
+  <LocaleProvider :translations="translations">
+    <Breadcrumbs>
+      <Breadcrumbs.Link href="/">Accueil</Breadcrumbs.Link>
+      <Breadcrumbs.Separator />
+      <Breadcrumbs.Current>Paramètres</Breadcrumbs.Current>
+      <Breadcrumbs.Clipboard text="/settings" />
+    </Breadcrumbs>
+  </LocaleProvider>
+</template>`;
+
 const propGroups = [
   {
     id: "breadcrumbs",
     component: "Breadcrumbs",
     props: [
       { name: "size", type: '"sm" | "base"', defaultValue: '"base"', description: "Sets the breadcrumb trail size." },
+      { name: "aria-label", type: "string", defaultValue: "LocaleProvider text", description: "Overrides the navigation label from LocaleProvider, including an empty string. Typed as ariaLabel in props." },
     ],
   },
   {
@@ -245,6 +271,33 @@ const propGroups = [
           </div>
         </section>
 
+        <section id="localization" class="docs-section">
+          <h2><a class="docs-section-anchor" href="#localization">Localization</a></h2>
+          <p>
+            Use <code>LocaleProvider</code> to translate the navigation label and clipboard text.
+            The <code>breadcrumbs</code> keys are <code>label</code> (default: <code>breadcrumb</code>),
+            <code>copy</code> (<code>Copy</code>), <code>copyTooltip</code> (<code>Click to copy</code>),
+            and <code>copied</code> (<code>Copied</code>). The last key names the action and tooltip after a successful copy.
+            Keep the clipboard labels non-empty so the icon button has an accessible name in both states.
+          </p>
+          <p>
+            All translation keys are optional. Nested providers inherit missing keys from their parent,
+            then fall back to English. Reactive translation changes update mounted components.
+            An explicit <code>aria-label</code> on <code>Breadcrumbs</code> takes precedence.
+            Empty strings are preserved; supply a meaningful name for each navigation landmark.
+            Set <code>dir="rtl"</code> on the trail or an ancestor to mirror the SVG separators.
+            A nested <code>dir="ltr"</code> keeps its left-to-right direction. Direction does not add margins.
+          </p>
+          <div class="docs-component-example">
+            <div class="docs-component-preview">
+              <BreadcrumbsLocaleDocsDemo client:only="vue" />
+            </div>
+            <div class="docs-component-example__code">
+              <CodeBlock code={localeCode} lang="vue" />
+            </div>
+          </div>
+        </section>
+
         <section id="api-reference" class="docs-section">
           <h2><a class="docs-section-anchor" href="#api-reference">API Reference</a></h2>
           {propGroups.map((group) => (
@@ -296,6 +349,9 @@ const propGroups = [
                 <li><a href="#root">Root</a></li>
                 <li><a href="#clipboard">Clipboard</a></li>
               </ul>
+            </li>
+            <li>
+              <a href="#localization">Localization</a>
             </li>
             <li>
               <a href="#api-reference">API Reference</a>

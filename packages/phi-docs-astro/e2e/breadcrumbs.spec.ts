@@ -68,6 +68,7 @@ test.describe("Breadcrumbs", () => {
       "Loading",
       "Root",
       "Clipboard",
+      "Localization",
       "API Reference",
       "Breadcrumbs",
       "Breadcrumbs.Link",

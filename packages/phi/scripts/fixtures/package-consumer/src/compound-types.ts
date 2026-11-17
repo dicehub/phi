@@ -1,4 +1,4 @@
-import { Banner, Button, Combobox, DatePicker, Dialog, Radio, Select } from "@dicehub/phi";
+import { Banner, Breadcrumbs, Button, Combobox, DatePicker, Dialog, Radio, Select } from "@dicehub/phi";
 import type { BannerActionProps } from "@dicehub/phi/components/banner";
 import { DialogRoot } from "@dicehub/phi/components/dialog";
 import { PrimitiveLocaleProvider } from "@dicehub/phi/primitives";
@@ -13,7 +13,7 @@ import {
   type PhiSkeletonLineVariant,
 } from "@dicehub/phi/components/skeleton-line";
 import { LocaleProvider } from "@dicehub/phi";
-import { LocaleProvider as UtilsLocaleProvider, type TranslationsPartial } from "@dicehub/phi/utils";
+import { LocaleProvider as UtilsLocaleProvider, useLocale, type Translations, type TranslationsPartial } from "@dicehub/phi/utils";
 
 type ButtonProps = InstanceType<typeof Button>["$props"];
 type DialogProps = InstanceType<typeof Dialog.Root>["$props"];
@@ -34,6 +34,16 @@ const sliderValue: SliderProps["modelValue"] = [25, 75];
 const singleSliderValue: SliderValue = 40;
 const translations: TranslationsPartial = { label: { optional: "(opcional)" } };
 const localeProvider: typeof UtilsLocaleProvider = LocaleProvider;
+const legacyTranslations: Translations = { label: { optional: "(optional)", tooltip: "Help" } };
+const breadcrumbTranslations: TranslationsPartial = { breadcrumbs: { copy: "Copier", copied: "Copié" } };
+const resolvedBreadcrumbCopy = (): string => useLocale().value.breadcrumbs.copy;
+type BreadcrumbsProps = InstanceType<typeof Breadcrumbs>["$props"];
+const breadcrumbName: BreadcrumbsProps["ariaLabel"] = "Page path";
+// @ts-expect-error Breadcrumb accessible names must be strings.
+const invalidBreadcrumbName: BreadcrumbsProps["ariaLabel"] = 42;
+// @ts-expect-error Translation values must be strings.
+const invalidBreadcrumbTranslation: TranslationsPartial = { breadcrumbs: { copy: 42 } };
+void [legacyTranslations, breadcrumbTranslations, resolvedBreadcrumbCopy, breadcrumbName, invalidBreadcrumbName, invalidBreadcrumbTranslation];
 type DatePickerProps = InstanceType<typeof DatePicker>["$props"];
 type CalendarProps = InstanceType<typeof DatePicker.Calendar>["$props"];
 type RadioGroupProps = InstanceType<typeof Radio.Group>["$props"];
