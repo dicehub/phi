@@ -49,6 +49,11 @@ import { Text } from "@dicehub/phi/components/text";
     </div>
 
     <div class="text-demo-card">
+      <Text as="h2" variant="secondary" size="base" bold>Payment method</Text>
+      <Text variant="mono-secondary">text-base (14px)</Text>
+    </div>
+
+    <div class="text-demo-card">
       <Text variant="mono">Monospace</Text>
       <Text variant="mono-secondary">text-sm (13px)</Text>
     </div>
@@ -98,6 +103,7 @@ export const textSemanticCode = `<template>
 export const textRestrictionsCode = `<template>
   <Text size="sm" bold>Body</Text>
   <Text variant="secondary" bold>Body secondary</Text>
+  <Text as="h2" variant="secondary" size="base" bold>Payment method</Text>
   <Text variant="success" size="lg">Success</Text>
   <Text variant="error">Error</Text>
 

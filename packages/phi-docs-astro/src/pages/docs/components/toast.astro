@@ -98,7 +98,10 @@ const getDescriptionParts = (description: string) =>
           <h2><a class="docs-section-anchor" href="#setup">Setup</a></h2>
           <p>
             Wrap your application or a section of it with the <code>Toasty</code> provider. This sets up the toast context
-            and renders the toast viewport.
+            and renders the toast viewport. Toasts appear at the bottom inline end, on the right in left-to-right
+            layouts and on the left in right-to-left layouts. The viewport follows the direction of its portal
+            container. It uses the document body by default. For a section with its own direction, set
+            <code>container</code> to an element in that section.
           </p>
           <CodeBlock code={toastSetupCode} lang="vue" />
         </section>

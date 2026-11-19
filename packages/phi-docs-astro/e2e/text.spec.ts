@@ -31,7 +31,7 @@ test.describe("Text", () => {
     await expect(page.locator("main h1").first()).toHaveText("Text");
     await expect(page.locator(".docs-page-header__primitive-link")).toHaveCount(0);
     await expect(page.getByLabel("View source on GitLab")).toHaveCount(0);
-    await expect(cards).toHaveCount(13);
+    await expect(cards).toHaveCount(14);
     await expect.poll(() => box(cards.first()).then((card) => card.width)).toBeGreaterThanOrEqual(200);
     await expect.poll(() => box(cards.first()).then((card) => card.width)).toBeLessThanOrEqual(208);
 
@@ -47,6 +47,10 @@ test.describe("Text", () => {
     await expect(textExample(page, "Body sm")).toHaveCSS("line-height", "19.5px");
     await expect(textExample(page, "Body xs")).toHaveCSS("line-height", "18px");
     await expect(textExample(page, "Body secondary")).toHaveCSS("color", "oklch(0.556 0 0)");
+    const copyHeading = preview.getByRole("heading", { level: 2, name: "Payment method" });
+    await expect(copyHeading).toHaveCSS("font-size", "14px");
+    await expect(copyHeading).toHaveCSS("font-weight", "500");
+    await expect(copyHeading).toHaveCSS("color", "oklch(0.556 0 0)");
     await expect(textExample(page, "Monospace")).toHaveCSS("font-size", "13px");
     await expect(textExample(page, "Success")).toHaveCSS("color", "oklch(0.685 0.169 237.323)");
     await expect(textExample(page, "Error")).toHaveCSS("color", "oklch(0.637 0.237 25.331)");

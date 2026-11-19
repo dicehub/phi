@@ -62,6 +62,11 @@ withDefaults(
     </div>
 
     <div class="text-demo-card">
+      <Text as="h2" variant="secondary" size="base" bold>Payment method</Text>
+      <Text variant="mono-secondary">text-base (14px)</Text>
+    </div>
+
+    <div class="text-demo-card">
       <Text variant="mono">Monospace</Text>
       <Text variant="mono-secondary">text-sm (13px)</Text>
     </div>

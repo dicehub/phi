@@ -37,6 +37,7 @@ const smokeSpecs = [
   "skeleton-line-sketch.spec.ts",
   "date-picker-refresh.spec.ts",
   "toast-motion.spec.ts",
+  "toast-direction.spec.ts",
   "field-label-content.spec.ts",
   "tooltip-disabled.spec.ts",
   "toolbar.spec.ts",
