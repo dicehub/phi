@@ -14,6 +14,7 @@ import {
 } from "@dicehub/phi/components/skeleton-line";
 import { LocaleProvider } from "@dicehub/phi";
 import { LocaleProvider as UtilsLocaleProvider, useLocale, type Translations, type TranslationsPartial } from "@dicehub/phi/utils";
+import type { TextProps } from "@dicehub/phi/components/text";
 
 type ButtonProps = InstanceType<typeof Button>["$props"];
 type DialogProps = InstanceType<typeof Dialog.Root>["$props"];
@@ -44,6 +45,10 @@ const invalidBreadcrumbName: BreadcrumbsProps["ariaLabel"] = 42;
 // @ts-expect-error Translation values must be strings.
 const invalidBreadcrumbTranslation: TranslationsPartial = { breadcrumbs: { copy: 42 } };
 void [legacyTranslations, breadcrumbTranslations, resolvedBreadcrumbCopy, breadcrumbName, invalidBreadcrumbName, invalidBreadcrumbTranslation];
+const copyHeading: TextProps = { as: "h2", variant: "secondary", size: "base", bold: true };
+// @ts-expect-error Heading weight is controlled by the heading variant.
+const invalidHeadingWeight: TextProps = { as: "h2", variant: "heading", bold: true };
+void [copyHeading, invalidHeadingWeight];
 type DatePickerProps = InstanceType<typeof DatePicker>["$props"];
 type CalendarProps = InstanceType<typeof DatePicker.Calendar>["$props"];
 type RadioGroupProps = InstanceType<typeof Radio.Group>["$props"];

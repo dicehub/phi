@@ -77,7 +77,7 @@ const getDescriptionParts = (description: string) =>
 
           <h3>Semantic HTML</h3>
           <p>
-            The <code>variant</code> prop controls visual styling only; it does not determine the HTML element rendered.
+            Use <code>variant</code> to choose the style and <code>as</code> to choose the HTML element.
             The <code>heading</code> variant defaults to a <code>&lt;span&gt;</code>; pass <code>as</code> when the text
             belongs in the document outline. Deprecated numbered heading variants still require <code>as</code> in the
             exported <code>TextProps</code> type.
@@ -91,9 +91,10 @@ const getDescriptionParts = (description: string) =>
 
           <h3>Restrictions</h3>
           <p>
-            The <code>bold</code> prop applies only to body-style variants. The <code>heading</code> variant accepts
-            only <code>size="lg"</code>; body-style variants accept all copy sizes. Non-heading variants inherit
-            their parent line height so they fit surrounding controls and layout.
+            Copy variants accept <code>bold</code> and all copy sizes, including when you render a heading with
+            <code>as</code>. For example, use <code>variant="secondary"</code> for a compact, muted card title.
+            The <code>heading</code> variant has its own weight and accepts only <code>size="lg"</code>.
+            Copy and monospace variants inherit their parent line height.
           </p>
           <CodeBlock code={textRestrictionsCode} lang="vue" />
         </section>
