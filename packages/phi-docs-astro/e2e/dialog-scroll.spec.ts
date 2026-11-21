@@ -80,6 +80,10 @@ for (const viewport of viewports) {
       await trigger.click();
       const dialog = page.getByRole(example.role, { name: example.label, exact: true });
       await expect(dialog).toBeVisible();
+      if (example.role === "alertdialog") {
+        await expect(dialog.getByRole("button", { name: "Close", exact: true })).toHaveCount(0);
+        await expect(dialog.getByRole("button", { name: "Cancel", exact: true })).toHaveCount(1);
+      }
       await finishMotion(dialog);
 
       const metrics = await panelMetrics(dialog);

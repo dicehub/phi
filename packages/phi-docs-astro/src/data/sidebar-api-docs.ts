@@ -122,7 +122,7 @@ export const sidebarApiSections = [
     rows: [
       { name: "defaultOpen", type: "boolean", defaultValue: "false", description: "Initial open state when uncontrolled." },
       { name: "open", type: "boolean", defaultValue: "-", description: "Controlled open state." },
-      { name: "autoScrollOnOpen", type: "boolean", defaultValue: "false", description: "Scrolls expanded content into view after opening." },
+      { name: "autoScrollOnOpen", type: "boolean", defaultValue: "false", description: "Scrolls only the sidebar viewport when the section opens. Sections that start open or are already open when the sidebar expands do not trigger a scroll." },
       { name: "@open-change", type: "(open: boolean) => void", defaultValue: "-", description: "Emitted when the collapsible state changes." },
       { name: "@open-change-complete", type: "(open: boolean) => void", defaultValue: "-", description: "Emitted once the content finishes showing or hiding, including sidebar expand/collapse and mobile drawer changes. The value reports content visibility. Never emitted during initial mount." },
       { name: "@update:open", type: "(open: boolean) => void", defaultValue: "-", description: "Controlled open update event." },

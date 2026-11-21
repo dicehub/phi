@@ -58,11 +58,11 @@ const regionCollection = createComboboxCollection({
   <div class="dialog-demo" :class="`dialog-demo--${variant}`">
     <Dialog.Root v-if="variant === 'hero' || variant === 'actions'">
       <Dialog.Trigger>
-        <Button>Delete</Button>
+        <Button>Save changes</Button>
       </Dialog.Trigger>
       <Dialog class="dialog-demo__panel">
         <div class="dialog-demo__header">
-          <Dialog.Title class="dialog-demo__title">Modal Title</Dialog.Title>
+          <Dialog.Title class="dialog-demo__title">Save changes</Dialog.Title>
           <Dialog.Close />
         </div>
         <Dialog.Description>
@@ -72,12 +72,12 @@ const regionCollection = createComboboxCollection({
           <Dialog.Close as-child>
             <Button variant="secondary">Cancel</Button>
           </Dialog.Close>
-          <Button variant="destructive">Delete</Button>
+          <Dialog.Close as-child><Button variant="primary">Save</Button></Dialog.Close>
         </div>
       </Dialog>
     </Dialog.Root>
 
-    <Dialog.Root v-else-if="variant === 'usage'">
+    <Dialog.Root v-else-if="variant === 'usage'" disable-pointer-dismissal>
       <Dialog.Trigger>
         <Button>Open</Button>
       </Dialog.Trigger>
@@ -123,12 +123,12 @@ const regionCollection = createComboboxCollection({
           <Dialog.Close as-child>
             <Button variant="secondary">Cancel</Button>
           </Dialog.Close>
-          <Button variant="destructive">Delete Account</Button>
+          <Dialog.Close as-child><Button variant="destructive">Delete Account</Button></Dialog.Close>
         </div>
       </Dialog>
     </Dialog.Root>
 
-    <Dialog.Root v-else-if="variant === 'confirmation'" disable-pointer-dismissal>
+    <Dialog.Root v-else-if="variant === 'confirmation'" role="alertdialog">
       <Dialog.Trigger>
         <Button variant="destructive">Delete Project</Button>
       </Dialog.Trigger>
@@ -144,7 +144,7 @@ const regionCollection = createComboboxCollection({
           <Dialog.Close as-child>
             <Button variant="secondary">Cancel</Button>
           </Dialog.Close>
-          <Button variant="destructive">Delete</Button>
+          <Dialog.Close as-child><Button variant="destructive">Delete</Button></Dialog.Close>
         </div>
       </Dialog>
     </Dialog.Root>
@@ -188,7 +188,7 @@ const regionCollection = createComboboxCollection({
           <Dialog.Close as-child>
             <Button variant="secondary">Cancel</Button>
           </Dialog.Close>
-          <Button variant="primary">Create</Button>
+          <Dialog.Close as-child><Button variant="primary">Create</Button></Dialog.Close>
         </div>
       </Dialog>
     </Dialog.Root>
@@ -218,7 +218,7 @@ const regionCollection = createComboboxCollection({
           <Dialog.Close as-child>
             <Button variant="secondary">Cancel</Button>
           </Dialog.Close>
-          <Button variant="primary">Create</Button>
+          <Dialog.Close as-child><Button variant="primary">Create</Button></Dialog.Close>
         </div>
       </Dialog>
     </Dialog.Root>

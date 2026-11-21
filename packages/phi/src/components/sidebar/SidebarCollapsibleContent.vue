@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { isCollapsibleContentShown, useSidebarCollapseContext, useSidebarContext } from "./sidebar-context";
+import { scrollWithinSidebarViewport } from "./sidebar-scroll";
 
 const collapse = useSidebarCollapseContext();
 const sidebar = useSidebarContext();
 const content = ref<HTMLElement>();
 const isVisible = computed(() => isCollapsibleContentShown(collapse.isOpen.value, sidebar));
+let scrollPending = false;
 
 // Only this element's own row transition settles the collapse; nested or parent transitions do not.
 const handleTransitionEnd = (event: TransitionEvent) => {
@@ -15,24 +17,22 @@ const handleTransitionEnd = (event: TransitionEvent) => {
   collapse.completeOpenChange();
 };
 
-watch(isVisible, async (visible, _previousVisible, onCleanup) => {
-  if (!visible || !collapse.autoScrollOnOpen.value) return;
-  let cancelled = false;
-  let timer: number | undefined;
-  onCleanup(() => {
-    cancelled = true;
-    if (timer !== undefined) window.clearTimeout(timer);
-  });
-  await nextTick();
-  if (cancelled) return;
-  timer = window.setTimeout(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    content.value?.scrollIntoView({
-      block: "nearest",
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-    });
-  }, sidebar.animationDuration.value);
-});
+watch(
+  [collapse.isOpen, isVisible, collapse.autoScrollOnOpen],
+  ([open, visible, autoScroll], [wasOpen], onCleanup) => {
+    if (!open || !autoScroll) scrollPending = false;
+    else if (!wasOpen) scrollPending = true;
+    if (!visible || !scrollPending) return;
+
+    // Hiding the sidebar cancels this attempt. Expanding it does not schedule another.
+    scrollPending = false;
+    const timer = window.setTimeout(() => {
+      if (content.value) scrollWithinSidebarViewport(content.value, { behavior: "smooth" });
+    }, sidebar.animationDuration.value);
+    onCleanup(() => window.clearTimeout(timer));
+  },
+  { flush: "post" },
+);
 </script>
 
 <template>

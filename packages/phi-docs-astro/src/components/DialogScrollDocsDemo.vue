@@ -47,13 +47,16 @@ const examples = [
         <template v-else>
           <div class="dialog-scroll-demo__header">
             <Dialog.Title>{{ example.label }}</Dialog.Title>
-            <Dialog.Close />
+            <Dialog.Close v-if="example.role === 'dialog'" />
           </div>
           <Dialog.Description>Read all settings before you save.</Dialog.Description>
           <div class="dialog-scroll-demo__body" :style="{ height: `${example.height}px` }">
             All settings stay in this section. Scroll to the final action below.
           </div>
           <div class="dialog-scroll-demo__actions">
+            <Dialog.Close v-if="example.role === 'alertdialog'" as-child>
+              <Button variant="secondary">Cancel</Button>
+            </Dialog.Close>
             <Dialog.Close as-child>
               <Button>Save settings</Button>
             </Dialog.Close>
@@ -102,6 +105,7 @@ const examples = [
 :global(.dialog-scroll-demo__actions) {
   display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
   margin-top: 1rem;
 }
 </style>

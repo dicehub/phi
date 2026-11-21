@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Tabs, type TabsItem } from "@dicehub/phi/components/tabs";
+import { PrimitiveLocaleProvider } from "@dicehub/phi/primitives";
 
 type DemoVariant = "preview" | "segmented" | "underline" | "small" | "controlled" | "overflow";
 
@@ -31,6 +32,7 @@ const overflowTabs: TabsItem[] = [
 ];
 
 const activeTab = ref("tab1");
+const rtl = ref(false);
 </script>
 
 <template>
@@ -66,7 +68,10 @@ const activeTab = ref("tab1");
     </div>
 
     <div v-else-if="variant === 'overflow'" class="tabs-demo__overflow">
-      <Tabs :tabs="overflowTabs" selected-value="overview" />
+      <label><input v-model="rtl" type="checkbox" /> Right-to-left tabs</label>
+      <PrimitiveLocaleProvider :locale="rtl ? 'ar-EG' : 'en-US'">
+        <Tabs :tabs="overflowTabs" selected-value="overview" />
+      </PrimitiveLocaleProvider>
     </div>
   </div>
 </template>
@@ -109,5 +114,11 @@ const activeTab = ref("tab1");
   width: 100%;
   max-width: 20rem;
   min-width: 0;
+}
+
+.tabs-demo__overflow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
 }
 </style>

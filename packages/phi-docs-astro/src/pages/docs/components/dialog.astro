@@ -31,7 +31,7 @@ import "../../../styles/dialog-body-scroll-utilities.css";
 const examples = [
   { id: "basic-dialog", title: "Basic Dialog", variant: "basic", code: basicCode },
   { id: "alert-dialog", title: 'Alert Dialog (role="alertdialog")', variant: "alert", code: alertCode },
-  { id: "confirmation-dialog", title: "Confirmation Dialog (with disablePointerDismissal)", variant: "confirmation", code: confirmationCode },
+  { id: "confirmation-dialog", title: "Confirmation Dialog", variant: "confirmation", code: confirmationCode },
   { id: "with-actions", title: "With Actions", variant: "actions", code: actionsCode },
   { id: "max-width-override", title: "Max Width Override", variant: "max-width", code: maxWidthCode },
   { id: "with-select", title: "With Select", variant: "select", code: selectCode },
@@ -114,6 +114,8 @@ const examples = [
           <h2><a class="docs-section-anchor" href="#dialog-vs-alert-dialog">Dialog vs Alert Dialog</a></h2>
           <p>
             Use <code>role="dialog"</code> for ordinary modal content and <code>role="alertdialog"</code> for destructive or confirmation flows.
+            In an alert dialog, provide explicit footer actions such as Cancel and Delete. Omit the header close button.
+            Set <code>disablePointerDismissal</code> on an ordinary dialog to keep it open when users click outside it.
           </p>
           <div class="docs-api-table">
             <table>

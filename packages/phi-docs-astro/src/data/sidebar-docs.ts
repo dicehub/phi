@@ -302,7 +302,7 @@ export const sidebarExamples = [
     id: "auto-scroll",
     title: "Auto Scroll",
     variant: "auto-scroll",
-    description: "Use `autoScrollOnOpen` on long collapsible sections to keep newly revealed content in view.",
+    description: "Use `autoScrollOnOpen` on long collapsible sections to scroll the sidebar viewport vertically when the section opens. Expanding the sidebar leaves already open sections in place.",
     code: autoScrollCode,
   },
   {

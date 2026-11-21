@@ -52,12 +52,12 @@ import { Dialog } from "@dicehub/phi/components/dialog";
 <template>
   <Dialog.Root>
     <Dialog.Trigger>
-      <Button>Delete</Button>
+      <Button>Save changes</Button>
     </Dialog.Trigger>
 
     <Dialog class="dialog-demo__panel">
       <div class="dialog-demo__header">
-        <Dialog.Title class="dialog-demo__title">Modal Title</Dialog.Title>
+        <Dialog.Title class="dialog-demo__title">Save changes</Dialog.Title>
         <Dialog.Close />
       </div>
       <Dialog.Description>
@@ -67,7 +67,7 @@ import { Dialog } from "@dicehub/phi/components/dialog";
         <Dialog.Close as-child>
           <Button variant="secondary">Cancel</Button>
         </Dialog.Close>
-        <Button variant="destructive">Delete</Button>
+        <Dialog.Close as-child><Button variant="primary">Save</Button></Dialog.Close>
       </div>
     </Dialog>
   </Dialog.Root>
@@ -79,7 +79,7 @@ import { Dialog } from "@dicehub/phi/components/dialog";
 </script>
 
 <template>
-  <Dialog.Root>
+  <Dialog.Root disable-pointer-dismissal>
     <Dialog.Trigger>
       <Button>Open</Button>
     </Dialog.Trigger>
@@ -139,7 +139,7 @@ import { Dialog } from "@dicehub/phi/components/dialog";
       </Dialog.Description>
       <div class="dialog-demo__actions">
         <Dialog.Close as-child><Button variant="secondary">Cancel</Button></Dialog.Close>
-        <Button variant="destructive">Delete Account</Button>
+        <Dialog.Close as-child><Button variant="destructive">Delete Account</Button></Dialog.Close>
       </div>
     </Dialog>
   </Dialog.Root>
@@ -152,7 +152,7 @@ import { Dialog } from "@dicehub/phi/components/dialog";
 </script>
 
 <template>
-  <Dialog.Root disable-pointer-dismissal>
+  <Dialog.Root role="alertdialog">
     <Dialog.Trigger>
       <Button variant="destructive">Delete Project</Button>
     </Dialog.Trigger>
@@ -166,7 +166,7 @@ import { Dialog } from "@dicehub/phi/components/dialog";
       </Dialog.Description>
       <div class="dialog-demo__actions">
         <Dialog.Close as-child><Button variant="secondary">Cancel</Button></Dialog.Close>
-        <Button variant="destructive">Delete</Button>
+        <Dialog.Close as-child><Button variant="destructive">Delete</Button></Dialog.Close>
       </div>
     </Dialog>
   </Dialog.Root>
@@ -220,6 +220,10 @@ const region = ref("us-east");
           <option value="eu-west">EU West</option>
         </select>
       </div>
+      <div class="dialog-demo__actions">
+        <Dialog.Close as-child><Button variant="secondary">Cancel</Button></Dialog.Close>
+        <Dialog.Close as-child><Button variant="primary">Create</Button></Dialog.Close>
+      </div>
     </Dialog>
   </Dialog.Root>
 </template>`;
@@ -260,6 +264,10 @@ const collection = createComboboxCollection({
           </Combobox.List>
         </Combobox.Content>
       </Combobox>
+      <div class="dialog-demo__actions">
+        <Dialog.Close as-child><Button variant="secondary">Cancel</Button></Dialog.Close>
+        <Dialog.Close as-child><Button variant="primary">Create</Button></Dialog.Close>
+      </div>
     </Dialog>
   </Dialog.Root>
 </template>`;
@@ -317,7 +325,7 @@ export const apiGroups = [
     id: "api-root",
     title: "Dialog.Root",
     props: [
-      { name: "role", type: '"dialog" | "alertdialog"', defaultValue: '"dialog"', description: "ARIA role for general or confirmation flows." },
+      { name: "role", type: '"dialog" | "alertdialog"', defaultValue: '"dialog"', description: "For alert dialogs, provide explicit footer actions instead of a header close button." },
       { name: "disablePointerDismissal", type: "boolean", defaultValue: "false", description: "Prevents closing when the backdrop or outside area is clicked." },
       { name: "open", type: "boolean", defaultValue: "-", description: "Controlled open state forwarded to Ark UI." },
       { name: "closeOnEscape", type: "boolean", defaultValue: "true", description: "Whether Escape closes the dialog." },

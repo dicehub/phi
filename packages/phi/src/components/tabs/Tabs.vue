@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, useAttrs, watch } from "vue";
+import { DEFAULT_LOCALE, useLocaleContext } from "@ark-ui/vue/locale";
 import {
   TabIndicator,
   TabList,
@@ -61,7 +62,9 @@ const emit = defineEmits<{
 }>();
 
 const attrs = useAttrs();
+const locale = useLocaleContext(DEFAULT_LOCALE);
 const listRef = ref<HTMLElement | { $el?: HTMLElement } | null>(null);
+const isRtl = ref(locale.value.dir === "rtl");
 const isOverflowing = ref(false);
 const canScrollEnd = ref(false);
 const canScrollStart = ref(false);
@@ -79,7 +82,10 @@ let resizeObserver: ResizeObserver | undefined;
 
 const resolvedVariant = computed(() => resolveTabsVariant(props.variant));
 const resolvedSize = computed(() => resolveTabsSize(props.size));
-const resolvedLabels = computed(() => ({ ...TABS_DEFAULT_LABELS, ...props.labels }));
+const resolvedLabels = computed(() => ({
+  scrollStart: props.labels?.scrollStart ?? TABS_DEFAULT_LABELS[isRtl.value ? "scrollEnd" : "scrollStart"],
+  scrollEnd: props.labels?.scrollEnd ?? TABS_DEFAULT_LABELS[isRtl.value ? "scrollStart" : "scrollEnd"],
+}));
 const isValueControlled = computed(() => props.value !== undefined || props.modelValue !== undefined);
 const currentValue = computed(() => props.value ?? props.modelValue ?? internalValue.value);
 const activationMode = computed(() => (props.activateOnFocus ? "automatic" : "manual"));
@@ -114,19 +120,13 @@ const getListElement = () => {
 
 const updateOverflowState = () => {
   const element = getListElement();
-  const overflowing = Boolean(element && element.scrollWidth > element.clientWidth + 1);
-
-  isOverflowing.value = overflowing;
-
-  if (!overflowing || !element) {
-    canScrollStart.value = false;
-    canScrollEnd.value = false;
-    return;
-  }
-
-  const maxScrollLeft = element.scrollWidth - element.clientWidth;
-  canScrollStart.value = element.scrollLeft > 1;
-  canScrollEnd.value = element.scrollLeft < maxScrollLeft - 1;
+  isRtl.value = (element ? getComputedStyle(element).direction : locale.value.dir) === "rtl";
+  const maxScroll = element ? element.scrollWidth - element.clientWidth : 0;
+  const offset = (element?.scrollLeft ?? 0) * (isRtl.value ? -1 : 1);
+  const scrolled = Math.min(Math.max(0, offset), maxScroll);
+  isOverflowing.value = maxScroll > 1;
+  canScrollStart.value = isOverflowing.value && scrolled > 1;
+  canScrollEnd.value = isOverflowing.value && maxScroll - scrolled > 1;
 };
 
 const scrollTabIntoView = (value: string) => {
@@ -145,24 +145,21 @@ const scrollTabIntoView = (value: string) => {
     const parsed = Number.parseFloat(value);
     return Number.isFinite(parsed) ? parsed : 0;
   };
-  const startInset = Math.min(
-    parsePixels(styles.getPropertyValue("scroll-padding-inline-start") || styles.getPropertyValue("scroll-padding-left")),
-    element.clientWidth / 2,
-  );
-  const endInset = Math.min(
-    parsePixels(styles.getPropertyValue("scroll-padding-inline-end") || styles.getPropertyValue("scroll-padding-right")),
-    element.clientWidth / 2,
-  );
+  const leftInset = Math.min(parsePixels(styles.scrollPaddingLeft), element.clientWidth / 2);
+  const rightInset = Math.min(parsePixels(styles.scrollPaddingRight), element.clientWidth / 2);
   let nextScrollLeft = element.scrollLeft;
 
-  if (tabRect.left < listRect.left + startInset) {
-    nextScrollLeft -= listRect.left + startInset - tabRect.left;
-  } else if (tabRect.right > listRect.right - endInset) {
-    nextScrollLeft += tabRect.right - (listRect.right - endInset);
+  if (tabRect.left < listRect.left + leftInset) {
+    nextScrollLeft -= listRect.left + leftInset - tabRect.left;
+  } else if (tabRect.right > listRect.right - rightInset) {
+    nextScrollLeft += tabRect.right - (listRect.right - rightInset);
   }
 
   const maxScrollLeft = element.scrollWidth - element.clientWidth;
-  const clampedScrollLeft = Math.max(0, Math.min(nextScrollLeft, maxScrollLeft));
+  const rtl = styles.direction === "rtl";
+  const clampedScrollLeft = rtl
+    ? Math.max(-maxScrollLeft, Math.min(nextScrollLeft, 0))
+    : Math.max(0, Math.min(nextScrollLeft, maxScrollLeft));
   if (Math.abs(clampedScrollLeft - element.scrollLeft) <= 1) return;
 
   element.scrollTo({ left: clampedScrollLeft, behavior: "smooth" });
@@ -188,14 +185,22 @@ const scrollTabs = (direction: "start" | "end") => {
   if (!element || !isOverflowing.value) return;
 
   const distance = getTabsScrollDistance(element);
+  const towardEnd = direction === "end" ? distance : -distance;
   element.scrollBy({
-    left: direction === "start" ? -distance : distance,
+    left: isRtl.value ? -towardEnd : towardEnd,
     behavior: "smooth",
   });
 };
 
 const scheduleOverflowCheck = () => {
   void nextTick(updateOverflowState);
+};
+
+const scheduleSelectedTabReveal = () => {
+  void nextTick(() => {
+    updateOverflowState();
+    scrollTabIntoView(currentValue.value);
+  });
 };
 
 const itemTag = (item: TabsItem) => item.as ?? (item.href ? "a" : "button");
@@ -299,17 +304,14 @@ watch(
 );
 
 watch(() => props.variant, scheduleOverflowCheck);
+watch(() => locale.value.dir, scheduleSelectedTabReveal);
 
 watch(currentValue, (value) => {
   void nextTick(() => scrollTabIntoView(value));
 });
 
 onMounted(() => {
-  scheduleOverflowCheck();
-  void nextTick(() => {
-    updateOverflowState();
-    scrollTabIntoView(currentValue.value);
-  });
+  scheduleSelectedTabReveal();
   const element = getListElement();
   if (!element || typeof ResizeObserver === "undefined") return;
 
@@ -332,6 +334,7 @@ onBeforeUnmount(() => {
     :class="rootClass"
     :data-size="resolvedSize"
     :data-variant="resolvedVariant"
+    :data-overflow-rtl="isRtl || undefined"
     data-phi-component="Tabs"
     @value-change="handleValueChange"
   >

@@ -24,14 +24,13 @@ test.describe("Dialog", () => {
     await expect(page.locator(".docs-component-example")).toHaveCount(12);
     await expect(page.locator(".docs-code-block")).toHaveCount(14);
     await expect(page.locator("#preview .docs-code-block")).toContainText('from "@dicehub/phi/components/dialog"');
-    await expect(page.locator("#preview .docs-code-block")).toContainText("<Button>Delete</Button>");
+    await expect(page.locator("#preview .docs-code-block")).toContainText("<Button>Save changes</Button>");
     await expect(page.locator("#preview .docs-code-block")).not.toContainText("dialog-demo__panel--alert");
-    await expect(page.locator("#examples .docs-code-block").filter({ hasText: 'role="alertdialog"' })).toHaveCount(1);
-    await expect(page.locator("#examples .docs-code-block").filter({ hasText: "disable-pointer-dismissal" })).toHaveCount(1);
+    await expect(page.locator("#examples .docs-code-block").filter({ hasText: 'role="alertdialog"' })).toHaveCount(2);
     await expect(page.locator("#examples .docs-code-block").filter({ hasText: "Combobox" })).toHaveCount(1);
     await expect(page.locator("#examples .docs-code-block").filter({ hasText: "DropdownMenu" })).toHaveCount(1);
 
-    const topTriggerTextColor = await page.locator("#preview").getByRole("button", { name: "Delete" }).first().evaluate((element) => getComputedStyle(element).color);
+    const topTriggerTextColor = await page.locator("#preview").getByRole("button", { name: "Save changes" }).evaluate((element) => getComputedStyle(element).color);
     expect(topTriggerTextColor).not.toBe("rgb(255, 255, 255)");
   });
 
@@ -45,7 +44,7 @@ test.describe("Dialog", () => {
       "Examples",
       "Basic Dialog",
       'Alert Dialog (role="alertdialog")',
-      "Confirmation Dialog (with disablePointerDismissal)",
+      "Confirmation Dialog",
       "With Actions",
       "Max Width Override",
       "With Select",
@@ -80,8 +79,8 @@ test.describe("Dialog", () => {
   });
 
   test("matches the expected top-actions modal size and spacing", async ({ page }) => {
-    await page.locator("#preview").getByRole("button", { name: "Delete" }).first().click();
-    const dialog = page.getByRole("dialog", { name: "Modal Title" });
+    await page.locator("#preview").getByRole("button", { name: "Save changes" }).click();
+    const dialog = page.getByRole("dialog", { name: "Save changes" });
     await expect(dialog).toBeVisible();
     await expect(dialog).toContainText("Lorem ipsum");
     await waitForDialogMotion(page);
@@ -175,15 +174,25 @@ test.describe("Dialog", () => {
     await expect(dialog).toHaveCount(0);
   });
 
-  test("supports disablePointerDismissal for confirmation flows", async ({ page }) => {
+  test("uses an alert dialog with explicit actions for destructive confirmation", async ({ page }) => {
     const confirmation = exampleById(page, "confirmation-dialog");
 
     await confirmation.getByRole("button", { name: "Delete Project" }).click();
-    const dialog = page.getByRole("dialog", { name: "Delete Project?" });
+    const dialog = page.getByRole("alertdialog", { name: "Delete Project?" });
     await expect(dialog).toBeVisible();
+    await expect(dialog.getByRole("button", { name: "Close", exact: true })).toHaveCount(0);
     await page.locator(".phi-dialog-backdrop").click({ position: { x: 12, y: 12 } });
     await expect(dialog).toBeVisible();
-    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await dialog.getByRole("button", { name: "Delete", exact: true }).click();
+    await expect(dialog).toHaveCount(0);
+  });
+
+  test("can disable outside pointer dismissal on an ordinary dialog", async ({ page }) => {
+    await page.locator("#usage").getByRole("button", { name: "Open", exact: true }).click();
+    const dialog = page.getByRole("dialog", { name: "Dialog Title", exact: true });
+    await page.locator(".phi-dialog-backdrop").click({ position: { x: 12, y: 12 } });
+    await expect(dialog).toBeVisible();
+    await dialog.getByRole("button", { name: "Cancel", exact: true }).click();
     await expect(dialog).toHaveCount(0);
   });
 
