@@ -41,8 +41,8 @@ export const tabsApiSections = [
     title: "TabsLabels",
     description: "Accessible labels for horizontal overflow controls.",
     rows: [
-      { name: "scrollStart", type: "string", defaultValue: '"Scroll tabs left"', description: "Label for the control that reveals earlier tabs." },
-      { name: "scrollEnd", type: "string", defaultValue: '"Scroll tabs right"', description: "Label for the control that reveals later tabs." },
+      { name: "scrollStart", type: "string", defaultValue: '"Scroll tabs left" (LTR), "Scroll tabs right" (RTL)', description: "Label for the control that reveals earlier tabs." },
+      { name: "scrollEnd", type: "string", defaultValue: '"Scroll tabs right" (LTR), "Scroll tabs left" (RTL)', description: "Label for the control that reveals later tabs." },
     ],
   },
 ] as const;

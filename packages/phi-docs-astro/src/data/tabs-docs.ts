@@ -96,8 +96,11 @@ const activeTab = ref("tab1");
 </template>`;
 
 const overflowTabsCode = `<script setup>
+import { ref } from "vue";
 import { Tabs } from "@dicehub/phi/components/tabs";
+import { PrimitiveLocaleProvider } from "@dicehub/phi/primitives";
 
+const rtl = ref(false);
 const tabs = [
   { value: "overview", label: "Overview" },
   { value: "analytics", label: "Analytics" },
@@ -112,7 +115,10 @@ const tabs = [
 
 <template>
   <div class="tabs-demo__overflow">
-    <Tabs :tabs="tabs" selected-value="overview" />
+    <label><input v-model="rtl" type="checkbox" /> Right-to-left tabs</label>
+    <PrimitiveLocaleProvider :locale="rtl ? 'ar-EG' : 'en-US'">
+      <Tabs :tabs="tabs" selected-value="overview" />
+    </PrimitiveLocaleProvider>
   </div>
 </template>`;
 
@@ -149,7 +155,7 @@ export const tabsExamples = [
     id: "horizontal-overflow",
     title: "Horizontal Overflow",
     variant: "overflow",
-    description: "When segmented tabs overflow their container, flat scroll controls appear at the clipped edge. Use them, horizontal scrolling, or mouse drag to reveal off-screen tabs. Underline tabs keep native horizontal scrolling without controls.",
+    description: "When segmented tabs overflow their container, scroll controls appear at the clipped edge. Use them, horizontal scrolling, or mouse drag to reveal off-screen tabs. Use `PrimitiveLocaleProvider` to set the direction for keyboard navigation, controls, and edge fades. Underline tabs use native horizontal scrolling.",
     code: overflowTabsCode,
   },
 ] as const;

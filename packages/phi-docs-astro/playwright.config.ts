@@ -38,6 +38,8 @@ const smokeSpecs = [
   "date-picker-refresh.spec.ts",
   "toast-motion.spec.ts",
   "toast-direction.spec.ts",
+  "tabs-rtl-overflow.spec.ts",
+  "sidebar-auto-scroll.spec.ts",
   "field-label-content.spec.ts",
   "tooltip-disabled.spec.ts",
   "toolbar.spec.ts",

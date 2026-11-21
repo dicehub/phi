@@ -24,6 +24,7 @@ const props = withDefaults(
     persistentElements?: DialogRootProps["persistentElements"];
     preventScroll?: boolean;
     restoreFocus?: boolean;
+    /** Use alertdialog for critical confirmations with explicit footer actions instead of a header Close button. */
     role?: DialogRole;
     trapFocus?: boolean;
     triggerValue?: string | null;

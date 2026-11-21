@@ -1,11 +1,26 @@
 .phi-tabs {
   --phi-tabs-overflow-surface: var(--phi-base, #ffffff);
+  --phi-tabs-start-fade: to right;
+  --phi-tabs-end-fade: to left;
   position: relative;
   min-width: 0;
   color: var(--phi-default, #17191f);
   font-family: var(--phi-font-sans, ui-sans-serif, system-ui, sans-serif);
   font-weight: 500;
   isolation: isolate;
+}
+
+.phi-tabs[data-overflow-rtl] {
+  --phi-tabs-start-fade: to left;
+  --phi-tabs-end-fade: to right;
+}
+
+.phi-tabs[data-overflow-rtl] > .phi-tabs__overflow-control {
+  direction: rtl;
+}
+
+.phi-tabs[data-overflow-rtl] > .phi-tabs__overflow-control svg {
+  rotate: 180deg;
 }
 
 .phi-tabs--segmented {
@@ -209,7 +224,7 @@
   justify-content: flex-start;
   padding-inline-start: 0.25rem;
   background: linear-gradient(
-    to right,
+    var(--phi-tabs-start-fade),
     var(--phi-tabs-overflow-surface) 18%,
     color-mix(in srgb, var(--phi-tabs-overflow-surface) 92%, transparent) 58%,
     transparent 100%
@@ -221,7 +236,7 @@
   justify-content: flex-end;
   padding-inline-end: 0.25rem;
   background: linear-gradient(
-    to left,
+    var(--phi-tabs-end-fade),
     var(--phi-tabs-overflow-surface) 18%,
     color-mix(in srgb, var(--phi-tabs-overflow-surface) 92%, transparent) 58%,
     transparent 100%
@@ -315,7 +330,7 @@
 .phi-tabs__list--segmented[data-overflowing] {
   mask-image:
     linear-gradient(
-      to right,
+      var(--phi-tabs-start-fade),
       transparent 0,
       black var(--scroll-start-fade-width, 0px),
       black calc(100% - var(--scroll-end-fade-width, 0px)),

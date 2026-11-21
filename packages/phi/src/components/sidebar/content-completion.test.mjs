@@ -7,9 +7,16 @@ import { compileScript, parse } from "vue/compiler-sfc";
 import * as sidebar from "./sidebar.ts";
 import * as context from "./sidebar-context.ts";
 import * as completion from "./open-change-complete.ts";
+import * as scroll from "./sidebar-scroll.ts";
 
 // Compile the source components so this test does not depend on a previous library build.
-const modules = { vue, "./sidebar": sidebar, "./sidebar-context": context, "./open-change-complete": completion };
+const modules = {
+  vue,
+  "./sidebar": sidebar,
+  "./sidebar-context": context,
+  "./open-change-complete": completion,
+  "./sidebar-scroll": scroll,
+};
 const loadComponent = async (filename) => {
   const source = await readFile(new URL(filename, import.meta.url), "utf8");
   const { descriptor, errors } = parse(source, { filename });
