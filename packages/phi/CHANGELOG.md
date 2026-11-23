@@ -1,5 +1,12 @@
 # @dicehub/phi
 
+## 1.7.1
+
+### Patch Changes
+
+- ba2531f: Mirror segmented Tabs overflow controls, labels, and fades in right-to-left layouts, and reveal the selected tab in either direction. Scroll only the Sidebar viewport when a collapsible section opens with autoScrollOnOpen.
+- 2fb0e8b: Place Toast at the bottom inline end in right-to-left layouts. Mirror the close button and its reserved space with the viewport direction.
+
 ## 1.7.0
 
 ### Minor Changes
