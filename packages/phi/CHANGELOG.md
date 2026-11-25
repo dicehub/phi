@@ -1,5 +1,11 @@
 # @dicehub/phi
 
+## 1.7.2
+
+### Patch Changes
+
+- Version-only release. Component behavior and dependencies are unchanged from 1.7.1.
+
 ## 1.7.1
 
 ### Patch Changes
